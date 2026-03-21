@@ -1686,6 +1686,707 @@
   }
   .ao-t-arrow:hover { background:rgba(200,169,110,0.15); color:var(--accent); border-color:rgba(200,169,110,0.3); }
 
+
+  /* ══ AGENT DETAIL MODAL ══ */
+  .agent-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
+    z-index: 800;
+    display: flex; align-items: center; justify-content: center;
+    animation: fadeInOverlay 0.2s ease;
+  }
+  .agent-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: min(560px, 94vw);
+    max-height: 88vh;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    animation: slideUpModal 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .agent-modal-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 20px 22px; border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .agent-modal-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .agent-modal-body { overflow-y: auto; padding: 20px 22px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .agent-modal-footer { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; flex-shrink: 0; }
+  .agent-metric-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  .agent-metric-box {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .agent-metric-box-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 5px; }
+  .agent-metric-box-val { font-family: 'Instrument Serif', serif; font-size: 22px; }
+  .agent-log-row {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 12.5px;
+  }
+  .agent-log-row:last-child { border-bottom: none; }
+  .agent-toggle-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px; border-radius: 8px; font-size: 12.5px;
+    font-weight: 500; cursor: pointer; transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif; border: 1px solid;
+  }
+  .agent-toggle-btn.active {
+    background: rgba(74,155,127,0.12); border-color: rgba(74,155,127,0.35); color: var(--accent2);
+  }
+  .agent-toggle-btn.inactive {
+    background: rgba(224,90,78,0.1); border-color: rgba(224,90,78,0.3); color: var(--danger);
+  }
+  .agent-card { cursor: pointer; }
+  .agent-card:hover { border-color: rgba(200,169,110,0.4) !important; transform: translateY(-2px); }
+
+
+  /* ══ USER MANAGEMENT PANEL ══ */
+  #panel-users { flex-direction: row; overflow: hidden; }
+
+  .um-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+  }
+
+  .um-sidebar-brand {
+    padding: 18px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .um-sidebar-brand-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), #8b6d3a);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--bg); font-weight: 700;
+    font-family: 'Instrument Serif', serif;
+    flex-shrink: 0;
+  }
+  .um-sidebar-brand-name { font-size: 13px; font-weight: 600; }
+  .um-sidebar-brand-ver  { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+  .um-section-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); font-weight: 500;
+    padding: 14px 16px 6px;
+  }
+
+  .um-nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 16px; cursor: pointer;
+    font-size: 13px; color: var(--muted);
+    transition: all 0.15s; position: relative;
+    border-left: 2px solid transparent;
+  }
+  .um-nav-item:hover { background: var(--surface2); color: var(--text); }
+  .um-nav-item.active {
+    background: rgba(200,169,110,0.08);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .um-nav-item .um-badge {
+    margin-left: auto;
+    font-size: 10px; font-weight: 600;
+    background: var(--danger); color: white;
+    padding: 1px 6px; border-radius: 10px;
+  }
+  .um-nav-item .um-badge.neutral {
+    background: var(--surface2); color: var(--muted); border: 1px solid var(--border);
+  }
+  .um-nav-icon { font-size: 15px; width: 18px; text-align: center; }
+
+  .um-sidebar-footer {
+    margin-top: auto;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 2px;
+  }
+
+  /* Right content */
+  .um-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .um-topbar {
+    padding: 16px 24px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .um-breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted); margin-bottom: 8px;
+  }
+  .um-breadcrumb span { color: var(--text); font-weight: 500; }
+  .um-breadcrumb .sep { opacity: 0.4; }
+  .um-page-title { font-family: 'Instrument Serif', serif; font-size: 22px; margin-bottom: 2px; }
+  .um-page-desc { font-size: 12.5px; color: var(--muted); }
+
+  .um-topbar-right {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .um-user-pill {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border-radius: 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    font-size: 12.5px; font-weight: 500;
+  }
+  .um-avatar-sm {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  /* Content area */
+  .um-content { flex: 1; overflow-y: auto; padding: 20px 24px; }
+  .um-content-anim { animation: umSlideIn 0.25s ease both; }
+  @keyframes umSlideIn {
+    from { opacity:0; transform:translateX(12px); }
+    to   { opacity:1; transform:translateX(0); }
+  }
+
+  /* Users toolbar */
+  .um-toolbar {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+  }
+  .um-count-title { font-size: 16px; font-weight: 600; flex: 1; }
+  .um-count-title span { color: var(--accent); margin-left: 6px; font-family: 'Instrument Serif', serif; font-size: 18px; }
+  .um-search-box {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 12px; flex: 1; max-width: 220px;
+  }
+  .um-search-box input {
+    background: none; border: none; color: var(--text);
+    font-size: 12.5px; font-family: 'DM Sans', sans-serif; outline: none; width: 100%;
+  }
+  .um-search-box input::placeholder { color: var(--muted); }
+
+  /* User table */
+  .um-table { width: 100%; border-collapse: collapse; }
+  .um-table th {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); font-weight: 500; padding: 9px 12px;
+    text-align: left; border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .um-table td { padding: 11px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+  .um-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .um-table tr.um-selected td { background: rgba(200,169,110,0.05); }
+
+  .um-user-cell { display: flex; align-items: center; gap: 10px; }
+  .um-user-name { font-size: 13px; font-weight: 500; }
+  .um-user-email { font-size: 11px; color: var(--muted); }
+
+  .um-role-pill {
+    display: inline-block; padding: 2px 9px; border-radius: 5px;
+    font-size: 10.5px; font-weight: 600; margin: 0 2px;
+  }
+  .um-role-admin    { background: rgba(200,169,110,0.15); color: var(--accent); border: 1px solid rgba(200,169,110,0.3); }
+  .um-role-export   { background: rgba(74,155,127,0.12); color: var(--accent2); border: 1px solid rgba(74,155,127,0.25); }
+  .um-role-import   { background: rgba(91,141,239,0.12); color: var(--blue); border: 1px solid rgba(91,141,239,0.25); }
+  .um-role-viewer   { background: rgba(122,120,112,0.15); color: var(--muted); border: 1px solid var(--border); }
+  .um-role-agent    { background: rgba(224,90,78,0.12); color: #e05a4e; border: 1px solid rgba(224,90,78,0.2); }
+
+  .um-date { font-size: 11.5px; color: var(--muted); }
+  .um-action-btn {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: transparent; border: none; color: var(--muted);
+    cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .um-action-btn:hover { background: var(--surface2); color: var(--text); }
+
+  /* Pagination */
+  .um-pagination { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 16px 0 4px; }
+  .um-page-btn {
+    width: 32px; height: 32px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12.5px; cursor: pointer; transition: all 0.15s;
+    border: 1px solid var(--border); background: var(--surface2); color: var(--muted);
+  }
+  .um-page-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+  .um-page-btn.active-page { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+  /* Settings-style cards */
+  .um-settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .um-settings-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px;
+    transition: border-color 0.15s;
+    cursor: pointer;
+  }
+  .um-settings-card:hover { border-color: rgba(200,169,110,0.3); }
+  .um-settings-card-icon { font-size: 22px; margin-bottom: 10px; }
+  .um-settings-card-title { font-size: 13.5px; font-weight: 500; margin-bottom: 4px; }
+  .um-settings-card-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  /* Add user modal */
+  .um-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:800; display:flex; align-items:center; justify-content:center; }
+  .um-modal { background:var(--surface); border:1px solid var(--border); border-radius:16px; width:min(500px,94vw); max-height:88vh; display:flex; flex-direction:column; overflow:hidden; animation:slideUpModal 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+  .um-modal-header { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .um-modal-header h3 { font-size:15px; font-weight:500; }
+  .um-modal-body { overflow-y:auto; padding:20px; flex:1; display:flex; flex-direction:column; gap:12px; }
+  .um-modal-footer { padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:8px; justify-content:flex-end; }
+
+
+  /* ══ DMC MANAGEMENT PANEL ══ */
+  #panel-dmc { flex-direction:row; overflow:hidden; padding:0; }
+
+  .dmc-sidebar {
+    width:220px; flex-shrink:0;
+    border-right:1px solid var(--border);
+    background:var(--surface);
+    display:flex; flex-direction:column; overflow-y:auto;
+  }
+  .dmc-brand {
+    padding:18px 16px 14px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:10px;
+  }
+  .dmc-brand-icon {
+    width:36px; height:36px; border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),#7a5828);
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; color:var(--bg); flex-shrink:0;
+  }
+  .dmc-brand-name { font-size:13px; font-weight:600; line-height:1.2; }
+  .dmc-brand-role { font-size:10.5px; color:var(--muted); }
+
+  .dmc-company-selector {
+    margin:12px 14px; padding:8px 12px;
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:8px; cursor:pointer;
+    display:flex; align-items:center; gap:8px;
+    transition:border-color 0.15s;
+  }
+  .dmc-company-selector:hover { border-color:rgba(200,169,110,0.35); }
+  .dmc-company-name { font-size:11.5px; font-weight:500; flex:1; }
+  .dmc-company-sub  { font-size:10px; color:var(--muted); }
+
+  .dmc-section-lbl {
+    font-size:9.5px; text-transform:uppercase; letter-spacing:0.14em;
+    color:var(--muted); font-weight:600; padding:12px 16px 5px;
+  }
+
+  .dmc-nav {
+    display:flex; align-items:center; gap:9px;
+    padding:9px 16px; cursor:pointer;
+    font-size:12.5px; color:var(--muted);
+    transition:all 0.15s; border-left:2px solid transparent;
+  }
+  .dmc-nav:hover { background:var(--surface2); color:var(--text); }
+  .dmc-nav.active {
+    background:rgba(200,169,110,0.08);
+    color:var(--accent); border-left-color:var(--accent);
+  }
+  .dmc-nav-icon { font-size:14px; width:18px; text-align:center; }
+  .dmc-nav-badge {
+    margin-left:auto; font-size:10px; font-weight:600;
+    background:rgba(224,90,78,0.2); color:#e05a4e;
+    padding:1px 7px; border-radius:10px;
+  }
+
+  .dmc-sidebar-footer {
+    margin-top:auto; padding:12px 14px;
+    border-top:1px solid var(--border);
+  }
+
+  /* Main area */
+  .dmc-main { flex:1; display:flex; flex-direction:column; overflow:hidden; background:var(--bg); }
+
+  .dmc-topbar {
+    padding:14px 24px; border-bottom:1px solid var(--border);
+    background:var(--surface);
+    display:flex; align-items:center; justify-content:space-between;
+    flex-shrink:0;
+  }
+  .dmc-breadcrumb {
+    font-size:11.5px; color:var(--muted);
+    display:flex; align-items:center; gap:6px;
+  }
+  .dmc-breadcrumb span { color:var(--text); font-weight:500; }
+  .dmc-topbar-user {
+    display:flex; align-items:center; gap:8px;
+    font-size:12.5px; font-weight:500;
+  }
+  .dmc-topbar-role { font-size:10.5px; color:var(--muted); font-weight:400; }
+
+  /* Content */
+  .dmc-content {
+    flex:1; overflow-y:auto; padding:22px 26px;
+  }
+  .dmc-content-anim { animation:dmcSlide 0.28s cubic-bezier(0.34,1.56,0.64,1) both; }
+  @keyframes dmcSlide {
+    from { opacity:0; transform:translateY(10px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .dmc-page-title { font-family:'Instrument Serif',serif; font-size:24px; margin-bottom:2px; }
+  .dmc-page-sub { font-size:12.5px; color:var(--muted); margin-bottom:20px; }
+
+  /* Stat cards row */
+  .dmc-stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+  .dmc-stat-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:16px 18px;
+    transition:border-color 0.2s, transform 0.2s;
+  }
+  .dmc-stat-card:hover { border-color:rgba(200,169,110,0.3); transform:translateY(-2px); }
+  .dmc-stat-icon { font-size:20px; margin-bottom:10px; }
+  .dmc-stat-val  { font-family:'Instrument Serif',serif; font-size:28px; line-height:1; margin-bottom:3px; }
+  .dmc-stat-lbl  { font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+  .dmc-stat-delta { font-size:11px; margin-top:5px; }
+  .dmc-stat-delta.up { color:var(--accent2); }
+  .dmc-stat-delta.dn { color:var(--danger); }
+
+  /* Calendar */
+  .dmc-calendar {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:16px; flex-shrink:0;
+  }
+  .dmc-cal-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:12px;
+  }
+  .dmc-cal-title { font-size:13.5px; font-weight:600; }
+  .dmc-cal-nav { width:24px; height:24px; border-radius:6px; background:var(--surface2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; color:var(--muted); transition:all 0.15s; }
+  .dmc-cal-nav:hover { color:var(--text); }
+  .dmc-cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .dmc-cal-day-hdr { font-size:10px; text-align:center; color:var(--muted); padding:3px 0; font-weight:500; }
+  .dmc-cal-day {
+    font-size:11.5px; text-align:center; padding:5px 2px;
+    border-radius:6px; cursor:pointer; color:var(--muted);
+    transition:all 0.15s; position:relative;
+  }
+  .dmc-cal-day:hover { background:var(--surface2); color:var(--text); }
+  .dmc-cal-day.today { background:var(--accent); color:var(--bg); font-weight:700; }
+  .dmc-cal-day.has-booking::after {
+    content:''; position:absolute; bottom:2px; left:50%; transform:translateX(-50%);
+    width:4px; height:4px; border-radius:50%; background:var(--accent2);
+  }
+  .dmc-cal-day.has-plan::after { background:var(--accent); }
+  .dmc-cal-day.other-month { opacity:0.3; }
+
+  /* Two-col layout */
+  .dmc-two-col { display:grid; grid-template-columns:240px 1fr; gap:16px; }
+  .dmc-three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+
+  /* Delivery/booking list */
+  .dmc-list-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; overflow:hidden;
+  }
+  .dmc-list-header {
+    padding:12px 16px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .dmc-list-title { font-size:13px; font-weight:500; }
+  .dmc-list-sub   { font-size:10.5px; color:var(--muted); margin-top:1px; }
+  .dmc-list-item {
+    display:flex; align-items:flex-start; gap:12px;
+    padding:11px 16px; border-bottom:1px solid rgba(255,255,255,0.04);
+    cursor:pointer; transition:background 0.15s;
+  }
+  .dmc-list-item:last-child { border-bottom:none; }
+  .dmc-list-item:hover { background:rgba(255,255,255,0.02); }
+  .dmc-list-dest { font-size:13px; font-weight:500; margin-bottom:2px; }
+  .dmc-list-items { font-size:11px; color:var(--muted); line-height:1.7; }
+  .dmc-list-dot  { width:28px; height:28px; border-radius:8px; background:rgba(200,169,110,0.12); border:1px solid rgba(200,169,110,0.2); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:2px; }
+
+  /* Booking tabs */
+  .dmc-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); margin-bottom:14px; }
+  .dmc-tab {
+    padding:9px 16px; font-size:12.5px; color:var(--muted);
+    cursor:pointer; border-bottom:2px solid transparent;
+    transition:all 0.15s; margin-bottom:-1px;
+  }
+  .dmc-tab:hover { color:var(--text); }
+  .dmc-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+  /* Booking table */
+  .dmc-table { width:100%; border-collapse:collapse; font-size:12px; }
+  .dmc-table th {
+    font-size:10px; text-transform:uppercase; letter-spacing:0.09em;
+    color:var(--muted); font-weight:500; padding:8px 10px;
+    text-align:left; border-bottom:1px solid var(--border);
+    position:sticky; top:0; background:var(--surface); z-index:1;
+  }
+  .dmc-table td { padding:10px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
+  .dmc-table tr:hover td { background:rgba(255,255,255,0.02); cursor:pointer; }
+  .dmc-po-link { color:var(--accent); font-weight:600; font-size:11.5px; text-decoration:none; }
+  .dmc-route { font-size:11px; color:var(--muted); }
+  .dmc-status-pill { display:inline-block; padding:2px 9px; border-radius:4px; font-size:10.5px; font-weight:600; }
+  .dmc-status-pickup  { background:rgba(200,169,110,0.15); color:var(--accent); border:1px solid rgba(200,169,110,0.3); }
+  .dmc-status-arrived { background:rgba(74,155,127,0.15); color:var(--accent2); border:1px solid rgba(74,155,127,0.3); }
+  .dmc-status-invoice { background:rgba(91,141,239,0.15); color:var(--blue); border:1px solid rgba(91,141,239,0.3); }
+  .dmc-status-confirm { background:rgba(224,154,62,0.15); color:#e09a3e; border:1px solid rgba(224,154,62,0.3); }
+  .dmc-status-cancel  { background:rgba(224,90,78,0.12); color:var(--danger); border:1px solid rgba(224,90,78,0.2); }
+
+  /* Progress bars */
+  .dmc-progress-wrap { background:var(--surface2); border-radius:4px; height:8px; overflow:hidden; margin-top:6px; }
+  .dmc-progress-fill { height:100%; border-radius:4px; transition:width 1s cubic-bezier(0.34,1.56,0.64,1); }
+
+  /* Search bar */
+  .dmc-search-row { display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+  .dmc-search {
+    flex:1; background:var(--surface2); border:1px solid var(--border);
+    border-radius:8px; padding:8px 12px; color:var(--text);
+    font-size:12.5px; font-family:'DM Sans',sans-serif; outline:none;
+    transition:border-color 0.15s;
+  }
+  .dmc-search:focus { border-color:rgba(200,169,110,0.4); }
+  .dmc-search::placeholder { color:var(--muted); }
+  .dmc-filter-btn {
+    padding:8px 14px; border-radius:8px; background:var(--surface2);
+    border:1px solid var(--border); color:var(--muted); font-size:12px;
+    cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s;
+    display:flex; align-items:center; gap:5px;
+  }
+  .dmc-filter-btn:hover { color:var(--text); }
+  .dmc-per-page-sel {
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:8px; padding:7px 10px; color:var(--muted);
+    font-size:12px; font-family:'DM Sans',sans-serif; cursor:pointer; outline:none;
+  }
+
+
+  /* ══ HOLIDAY MANAGEMENT PANEL ══ */
+  #panel-holiday { flex-direction:row; overflow:hidden; padding:0; }
+
+  .hm-sidebar {
+    width:220px; flex-shrink:0;
+    border-right:1px solid var(--border);
+    background:var(--surface);
+    display:flex; flex-direction:column; overflow-y:auto;
+  }
+  .hm-brand {
+    padding:16px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:10px;
+  }
+  .hm-brand-icon {
+    width:36px; height:36px; border-radius:10px;
+    background:linear-gradient(135deg,#4a9b7f,#2d7a60);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px; flex-shrink:0;
+  }
+  .hm-brand-name { font-size:13px; font-weight:600; }
+  .hm-brand-sub  { font-size:10.5px; color:var(--muted); }
+
+  .hm-search-wrap {
+    margin:12px 12px 8px;
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:8px; padding:7px 12px;
+  }
+  .hm-search-wrap input {
+    background:none; border:none; color:var(--text);
+    font-size:12px; font-family:'DM Sans',sans-serif; outline:none; width:100%;
+  }
+  .hm-search-wrap input::placeholder { color:var(--muted); }
+
+  .hm-nav {
+    display:flex; align-items:center; gap:9px;
+    padding:9px 16px; cursor:pointer;
+    font-size:12.5px; color:var(--muted);
+    transition:all 0.15s; border-left:2px solid transparent;
+    position:relative;
+  }
+  .hm-nav:hover { background:var(--surface2); color:var(--text); }
+  .hm-nav.active { background:rgba(74,155,127,0.08); color:var(--accent2); border-left-color:var(--accent2); }
+  .hm-nav-icon { font-size:15px; width:18px; text-align:center; }
+  .hm-nav-arrow { margin-left:auto; font-size:11px; color:var(--muted); transition:transform 0.2s; }
+  .hm-nav.open .hm-nav-arrow { transform:rotate(180deg); }
+  .hm-sub-nav { display:none; padding:0 0 4px 44px; }
+  .hm-sub-nav.open { display:block; }
+  .hm-sub-item {
+    display:block; padding:6px 0; font-size:12px; color:var(--muted);
+    cursor:pointer; transition:color 0.15s;
+  }
+  .hm-sub-item:hover { color:var(--text); }
+
+  .hm-sidebar-footer {
+    margin-top:auto; padding:12px 14px 10px;
+    border-top:1px solid var(--border);
+  }
+  .hm-user-row {
+    display:flex; align-items:center; gap:9px;
+    padding:6px 2px; cursor:pointer;
+  }
+  .hm-user-name  { font-size:12.5px; font-weight:500; flex:1; }
+  .hm-user-email { font-size:10px; color:var(--muted); }
+
+  /* Main */
+  .hm-main { flex:1; display:flex; flex-direction:column; overflow:hidden; background:var(--bg); }
+  .hm-content { flex:1; overflow-y:auto; padding:22px 26px; }
+  .hm-content-anim { animation:hmSlide 0.28s cubic-bezier(0.34,1.56,0.64,1) both; }
+  @keyframes hmSlide { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* Page header */
+  .hm-page-header { margin-bottom:20px; }
+  .hm-page-title { font-family:'Instrument Serif',serif; font-size:28px; margin-bottom:3px; }
+  .hm-page-sub   { font-size:13px; color:var(--muted); }
+
+  /* Stat strip */
+  .hm-stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+  .hm-stat-box {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:14px 16px;
+    display:flex; align-items:center; gap:12px;
+    transition:all 0.2s; cursor:pointer;
+  }
+  .hm-stat-box:hover { border-color:rgba(74,155,127,0.35); transform:translateY(-2px); }
+  .hm-stat-icon-wrap {
+    width:40px; height:40px; border-radius:10px;
+    background:rgba(74,155,127,0.12); border:1px solid rgba(74,155,127,0.2);
+    display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;
+  }
+  .hm-stat-lbl { font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:3px; }
+  .hm-stat-val  { font-family:'Instrument Serif',serif; font-size:28px; line-height:1; }
+
+  /* Main grid */
+  .hm-main-grid { display:grid; grid-template-columns:1fr 300px; gap:16px; }
+
+  /* World map card */
+  .hm-map-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; overflow:hidden;
+  }
+  .hm-map-header {
+    padding:14px 16px; border-bottom:1px solid var(--border);
+    display:flex; align-items:flex-start; justify-content:space-between;
+  }
+  .hm-map-title { font-size:14px; font-weight:600; }
+  .hm-map-date  { font-size:11.5px; color:var(--accent2); margin-top:2px; }
+  .hm-map-body  { padding:16px; position:relative; }
+
+  /* Map tooltip */
+  .hm-map-tooltip {
+    position:absolute; background:var(--surface);
+    border:1px solid var(--border); border-radius:10px;
+    padding:10px 14px; font-size:12px; z-index:10;
+    box-shadow:0 8px 24px rgba(0,0,0,0.4);
+    animation:aoFadeUp 0.2s ease both;
+    pointer-events:none;
+    min-width:160px;
+  }
+  .hm-map-tooltip-country { font-size:13px; font-weight:600; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+  .hm-map-tooltip-row { display:flex; align-items:center; gap:6px; font-size:11.5px; color:var(--muted); margin-bottom:3px; }
+
+  /* Dot pulse on map */
+  .hm-map-dot {
+    position:absolute; cursor:pointer;
+    width:14px; height:14px; border-radius:50%;
+    background:rgba(74,155,127,0.4);
+    border:2px solid var(--accent2);
+    transform:translate(-50%,-50%);
+    animation:hmDotPulse 2.5s ease-in-out infinite;
+  }
+  .hm-map-dot::before {
+    content:''; position:absolute; inset:-6px;
+    border-radius:50%; background:rgba(74,155,127,0.15);
+    animation:hmDotPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes hmDotPulse {
+    0%,100%{ box-shadow:0 0 0 0 rgba(74,155,127,0.4); }
+    50%{ box-shadow:0 0 0 10px rgba(74,155,127,0); }
+  }
+
+  /* Right panel: calendar + holidays + reviews */
+  .hm-right-panel { display:flex; flex-direction:column; gap:14px; }
+
+  .hm-cal-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px;
+  }
+  .hm-cal-top {
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
+  }
+  .hm-cal-title { font-size:13.5px; font-weight:600; }
+  .hm-cal-tabs {
+    display:flex; gap:2px; background:var(--surface2);
+    border:1px solid var(--border); border-radius:8px; padding:2px;
+    margin-bottom:12px;
+  }
+  .hm-cal-tab {
+    padding:4px 10px; border-radius:6px; font-size:11px;
+    cursor:pointer; color:var(--muted); transition:all 0.15s;
+  }
+  .hm-cal-tab.active { background:var(--surface); color:var(--text); }
+
+  .hm-mini-cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; }
+  .hm-mini-cal-hdr { font-size:9.5px; text-align:center; color:var(--muted); padding:2px 0; font-weight:500; }
+  .hm-mini-cal-day {
+    font-size:11px; text-align:center; padding:4px 1px;
+    border-radius:5px; cursor:pointer; color:var(--muted);
+    transition:all 0.1s; position:relative;
+  }
+  .hm-mini-cal-day:hover { background:var(--surface2); color:var(--text); }
+  .hm-mini-cal-day.today { background:var(--accent2); color:var(--bg); font-weight:700; border-radius:50%; }
+  .hm-mini-cal-day.has-event::after {
+    content:''; position:absolute; bottom:1px; left:50%; transform:translateX(-50%);
+    width:3px; height:3px; border-radius:50%; background:var(--accent);
+  }
+  .hm-mini-cal-day.other { opacity:0.3; }
+  .hm-flag-row { display:flex; gap:8px; margin-top:10px; justify-content:center; flex-wrap:wrap; }
+
+  .hm-list-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .hm-list-hdr {
+    padding:12px 14px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .hm-list-hdr-title { font-size:13px; font-weight:600; }
+  .hm-list-row {
+    display:flex; align-items:center; gap:10px;
+    padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.04);
+    cursor:pointer; transition:background 0.1s;
+  }
+  .hm-list-row:hover { background:rgba(255,255,255,0.02); }
+  .hm-list-row:last-child { border-bottom:none; }
+  .hm-list-avatar {
+    width:32px; height:32px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:700; color:var(--bg);
+  }
+  .hm-list-name  { font-size:12.5px; font-weight:500; }
+  .hm-list-dates { font-size:10.5px; color:var(--muted); }
+  .hm-holiday-pill { font-size:10px; font-weight:600; padding:2px 8px; border-radius:4px; margin-left:auto; flex-shrink:0; }
+
+  /* Bottom section */
+  .hm-bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+  .hm-timezone-row {
+    display:flex; align-items:center; gap:10px;
+    padding:9px 14px; border-bottom:1px solid rgba(255,255,255,0.04);
+    font-size:12.5px;
+  }
+  .hm-timezone-row:last-child { border-bottom:none; }
+  .hm-tz-country { font-weight:500; flex:1; }
+  .hm-tz-code    { font-size:10.5px; color:var(--muted); }
+  .hm-tz-time    { font-size:13px; font-weight:600; color:var(--accent); font-family:monospace; }
+  .hm-ongoing-row {
+    display:flex; align-items:center; gap:10px;
+    padding:8px 14px; border-bottom:1px solid rgba(255,255,255,0.04);
+    font-size:12px; cursor:pointer; transition:background 0.1s;
+  }
+  .hm-ongoing-row:hover { background:rgba(255,255,255,0.02); }
+  .hm-ongoing-row:last-child { border-bottom:none; }
+
 </style>
 </head>
 <body>
@@ -1955,6 +2656,9 @@
       <div class="nav-link" onclick="switchPanel('services',this)">Services</div>
       <div class="nav-link" onclick="switchPanel('packages',this)">Packages</div>
       <div class="nav-link" onclick="switchPanel('proposal',this)">Proposal</div>
+      <div class="nav-link" onclick="switchPanel('users',this)">👤 Users</div>
+      <div class="nav-link" onclick="switchPanel('dmc',this)">🏢 DMC</div>
+      <div class="nav-link" onclick="switchPanel('holiday',this)">🌴 Holiday</div>
     </div>
   </div>
   <div class="topbar-right">
@@ -2527,6 +3231,287 @@
       </div>
     </div>
 
+    <!-- DMC MANAGEMENT PANEL -->
+    <div id="panel-dmc" class="panel" style="flex-direction:row;overflow:hidden;padding:0;">
+
+      <!-- LEFT SIDEBAR -->
+      <div class="dmc-sidebar">
+        <div class="dmc-brand">
+          <div class="dmc-brand-icon">🏢</div>
+          <div>
+            <div class="dmc-brand-name">NAMA DMC</div>
+            <div class="dmc-brand-role">Narayan Mallapur</div>
+          </div>
+        </div>
+
+        <div class="dmc-company-selector" onclick="showToast('🏢','Company','Switch DMC workspace')">
+          <div>
+            <div class="dmc-company-name">NAMA Travel Intelligence</div>
+            <div class="dmc-company-sub">DMC · Bengaluru, India</div>
+          </div>
+          <span style="color:var(--muted);font-size:12px">⌄</span>
+        </div>
+
+        <div class="dmc-section-lbl">Menu</div>
+        <div class="dmc-nav active" id="dmc-nav-dashboard" onclick="dmcSwitch('dashboard',this)">
+          <span class="dmc-nav-icon">📊</span> Dashboard
+        </div>
+        <div class="dmc-nav" id="dmc-nav-bookings" onclick="dmcSwitch('bookings',this)">
+          <span class="dmc-nav-icon">📋</span> Booking Management
+          <span class="dmc-nav-badge">8</span>
+        </div>
+        <div class="dmc-nav" id="dmc-nav-services" onclick="dmcSwitch('services',this)">
+          <span class="dmc-nav-icon">⚙</span> Service Management
+        </div>
+        <div class="dmc-nav" id="dmc-nav-packages" onclick="dmcSwitch('packages',this)">
+          <span class="dmc-nav-icon">📦</span> Holiday Packages
+        </div>
+        <div class="dmc-nav" id="dmc-nav-users" onclick="dmcSwitch('users',this)">
+          <span class="dmc-nav-icon">👥</span> User Management
+        </div>
+
+        <div class="dmc-section-lbl" style="margin-top:6px">Reports</div>
+        <div class="dmc-nav" onclick="dmcSwitch('reports',this)">
+          <span class="dmc-nav-icon">📈</span> Laporan
+        </div>
+        <div class="dmc-nav" onclick="dmcSwitch('master',this)">
+          <span class="dmc-nav-icon">🗂</span> Master Data
+        </div>
+
+        <div class="dmc-sidebar-footer">
+          <div class="dmc-nav" onclick="showToast('⚙','Settings','DMC settings coming soon')" style="padding:8px 0">
+            <span class="dmc-nav-icon">⚙</span> Settings
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT MAIN CONTENT -->
+      <div class="dmc-main">
+        <div class="dmc-topbar">
+          <div class="dmc-breadcrumb">
+            Home <span class="sep" style="opacity:0.4">›</span>
+            <span id="dmc-breadcrumb">Dashboard</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div class="live-badge"><div class="live-dot"></div> Live</div>
+            <div class="dmc-topbar-user">
+              <div class="um-avatar-sm" style="background:linear-gradient(135deg,var(--accent),#7a5828);width:30px;height:30px;font-size:12px">N</div>
+              <div>
+                <div>Narayan Mallapur</div>
+                <div class="dmc-topbar-role">DMC Administrator</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dmc-content" id="dmc-content"></div>
+      </div>
+    </div>
+
+    <!-- HOLIDAY MANAGEMENT PANEL -->
+    <div id="panel-holiday" class="panel" style="flex-direction:row;overflow:hidden;padding:0;">
+
+      <!-- LEFT SIDEBAR -->
+      <div class="hm-sidebar">
+        <div class="hm-brand">
+          <div class="hm-brand-icon">🌴</div>
+          <div>
+            <div class="hm-brand-name">Holiday Manager</div>
+            <div class="hm-brand-sub">NAMA Travel Intelligence</div>
+          </div>
+        </div>
+
+        <div class="hm-search-wrap">
+          <span style="color:var(--muted);font-size:13px">🔍</span>
+          <input placeholder="Search…">
+        </div>
+
+        <div style="padding:6px 0">
+          <div class="hm-nav active" id="hm-nav-dashboard" onclick="hmSwitch('dashboard',this)">
+            <span class="hm-nav-icon">📊</span> Dashboard
+          </div>
+          <div class="hm-nav" id="hm-nav-bookings" onclick="hmSwitch('bookings',this)">
+            <span class="hm-nav-icon">📋</span> Booking Management
+          </div>
+          <div class="hm-nav" id="hm-nav-services" onclick="hmSwitch('services',this)">
+            <span class="hm-nav-icon">⚙</span> Service Management
+          </div>
+          <div class="hm-nav" id="hm-nav-packages" onclick="hmSwitch('packages',this)">
+            <span class="hm-nav-icon">📦</span> Holiday Packages
+          </div>
+          <div class="hm-nav" id="hm-nav-users" onclick="hmSwitch('users',this)">
+            <span class="hm-nav-icon">👥</span> User Management
+          </div>
+          <div style="height:1px;background:var(--border);margin:8px 0"></div>
+          <div class="hm-nav" onclick="hmSwitch('analytics',this)">
+            <span class="hm-nav-icon">📈</span> Analytics
+            <span class="hm-nav-arrow">⌄</span>
+          </div>
+          <div class="hm-nav" onclick="hmSwitch('suppliers',this)">
+            <span class="hm-nav-icon">🌐</span> Supplier Network
+            <span class="hm-nav-arrow">⌄</span>
+          </div>
+          <div class="hm-nav" onclick="hmSwitch('reporting',this)">
+            <span class="hm-nav-icon">📊</span> Reports
+            <span class="hm-nav-arrow">⌄</span>
+          </div>
+        </div>
+
+        <div class="hm-sidebar-footer">
+          <div class="hm-user-row" onclick="showToast('👤','Narayan Mallapur','Profile settings')">
+            <div class="um-avatar-sm" style="background:linear-gradient(135deg,var(--accent),#8b6d3a);width:34px;height:34px;font-size:13px;flex-shrink:0">N</div>
+            <div>
+              <div class="hm-user-name">Narayan Mallapur</div>
+              <div class="hm-user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdd3dccfdcc4dcd3fdd3dcd0dcd2ce93ded2d0">[email&#160;protected]</a></div>
+            </div>
+            <div style="color:var(--muted);font-size:13px;margin-left:4px">↗</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="hm-main">
+        <div class="hm-content" id="hm-content"></div>
+      </div>
+    </div>
+
+    <!-- USER MANAGEMENT PANEL -->
+    <div id="panel-users" class="panel" style="flex-direction:row;overflow:hidden;padding:0;">
+
+      <!-- LEFT SIDEBAR -->
+      <div class="um-sidebar">
+        <div class="um-sidebar-brand">
+          <div class="um-sidebar-brand-icon">N</div>
+          <div>
+            <div class="um-sidebar-brand-name">NAMA OS</div>
+            <div class="um-sidebar-brand-ver">v2.0</div>
+          </div>
+        </div>
+
+        <div class="um-section-label">General</div>
+        <div class="um-nav-item" onclick="umSwitch('dashboard',this)">
+          <span class="um-nav-icon">📊</span> Dashboard
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('appearance',this)">
+          <span class="um-nav-icon">🎨</span> Appearance
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('database',this)">
+          <span class="um-nav-icon">🗄</span> Database
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('connections',this)">
+          <span class="um-nav-icon">🔌</span> Connections
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('timezones',this)">
+          <span class="um-nav-icon">🕐</span> Timezones
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('notifications',this)">
+          <span class="um-nav-icon">🔔</span> Notifications <span class="um-badge">4</span>
+        </div>
+
+        <div class="um-section-label" style="margin-top:4px">NAMA Workspace</div>
+        <div class="um-nav-item active" id="um-nav-users" onclick="umSwitch('users',this)">
+          <span class="um-nav-icon">👤</span> User management
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('security',this)">
+          <span class="um-nav-icon">🔑</span> Security &amp; access
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('authentication',this)">
+          <span class="um-nav-icon">🛡</span> Authentication
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('payments',this)">
+          <span class="um-nav-icon">💳</span> Payments
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('import',this)">
+          <span class="um-nav-icon">📥</span> Import data
+        </div>
+        <div class="um-nav-item" onclick="umSwitch('export',this)">
+          <span class="um-nav-icon">📤</span> Export data
+        </div>
+
+        <div class="um-sidebar-footer">
+          <div class="um-nav-item" onclick="umSwitch('settings',this)" style="padding:8px 0">
+            <span class="um-nav-icon">⚙</span> Settings
+          </div>
+          <div class="um-nav-item" onclick="umSwitch('docs',this)" style="padding:8px 0">
+            <span class="um-nav-icon">📄</span> Documentation
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT CONTENT -->
+      <div class="um-main">
+        <!-- Topbar -->
+        <div class="um-topbar">
+          <div>
+            <div class="um-breadcrumb">
+              <span style="color:var(--muted)">NAMA OS</span>
+              <span class="sep">›</span>
+              <span id="um-breadcrumb-page">User management</span>
+            </div>
+            <div class="um-page-title" id="um-page-title">User management</div>
+            <div class="um-page-desc" id="um-page-desc">Manage your team members and their account permissions here.</div>
+          </div>
+          <div class="um-topbar-right">
+            <div class="um-user-pill">
+              <div class="um-avatar-sm" style="background:linear-gradient(135deg,var(--accent),#8b6d3a)">N</div>
+              Narayan Mallapur
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic content -->
+        <div class="um-content" id="um-content"></div>
+      </div>
+    </div>
+
+    <!-- ADD USER MODAL -->
+    <div id="um-add-modal" style="display:none" class="um-modal-overlay" onclick="closeUmModal(event)">
+      <div class="um-modal">
+        <div class="um-modal-header">
+          <h3>+ Add User</h3>
+          <div class="form-modal-close" onclick="closeUmModal()">✕</div>
+        </div>
+        <div class="um-modal-body">
+          <div class="mgmt-row-2">
+            <div class="mgmt-field"><label>First Name *</label><input class="mgmt-input" id="um-fname" placeholder="Narayan"></div>
+            <div class="mgmt-field"><label>Last Name *</label><input class="mgmt-input" id="um-lname" placeholder="Mallapur"></div>
+          </div>
+          <div class="mgmt-field"><label>Email *</label><input class="mgmt-input" id="um-email" type="email" placeholder="user@namaos.com"></div>
+          <div class="mgmt-row-2">
+            <div class="mgmt-field"><label>Role</label>
+              <select class="mgmt-select" id="um-role">
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="Agent" selected>Agent</option>
+                <option value="Viewer">Viewer</option>
+              </select>
+            </div>
+            <div class="mgmt-field"><label>Department</label>
+              <select class="mgmt-select" id="um-dept">
+                <option>Sales</option>
+                <option>Operations</option>
+                <option>Finance</option>
+                <option>Technology</option>
+                <option>Management</option>
+              </select>
+            </div>
+          </div>
+          <div class="mgmt-field"><label>Access Permissions</label>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+              <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--accent)"> Data Export</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--accent)"> Data Import</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--accent)"> Admin</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--accent)"> View Leads</label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--accent)"> Manage Packages</label>
+            </div>
+          </div>
+        </div>
+        <div class="um-modal-footer">
+          <button class="btn-ghost" onclick="closeUmModal()">Cancel</button>
+          <button class="btn-primary" onclick="saveUmUser()">✦ Add User</button>
+        </div>
+      </div>
+    </div>
+
     <!-- PROPOSAL PANEL -->
     <div id="panel-proposal" class="panel">
       <div class="proposal-toolbar">
@@ -2880,7 +3865,7 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
@@ -3219,9 +4204,27 @@ function renderAnalytics() {
   `).join('');
 }
 
+const AGENT_CAPABILITIES = {
+  'Planner Agent':       ['Day-by-day itinerary','Local expertise','Budget optimisation','Pacing logic','Preference matching','Multi-destination'],
+  'Pricing Agent':       ['Dynamic margins','Demand detection','Peak pricing','Cost breakdown','Quote generation','Revenue maximisation'],
+  'Conversion Agent':    ['Lead scoring','Win probability','Follow-up triggers','Behaviour analysis','Intent detection','Pipeline ranking'],
+  'Comms Agent':         ['Email drafting','WhatsApp messaging','Personalisation','Tone matching','Multi-language','Auto follow-up'],
+  'Supply Agent':        ['Hotel availability','Flight search','Activity booking','API orchestration','Price comparison','Live inventory'],
+  'Intelligence Agent':  ['Booking analytics','Supplier performance','Market trends','Revenue insights','Anomaly detection','Forecasting'],
+};
+const AGENT_ACTIVITY = {
+  'Planner Agent':       [{t:'Just now',a:'Generated 7N Bali itinerary for Sharma Family'},{t:'4 min ago',a:'Created Switzerland 10D plan for Mehta Couple'},{t:'18 min ago',a:'Regenerated Dubai itinerary — 3 activities swapped'}],
+  'Pricing Agent':       [{t:'2 min ago',a:'Calculated 20% margin quote — ₹3,20,000'},{t:'11 min ago',a:'Peak demand detected for Bali — +5% margin applied'},{t:'1 hr ago',a:'Batch quoted 4 leads — avg margin 18.4%'}],
+  'Conversion Agent':    [{t:'Just now',a:'Sharma Family flagged Hot — probability 72%'},{t:'6 min ago',a:'Reddy Family dropped to Warm — no response 48hr'},{t:'22 min ago',a:'Mehta Couple: follow-up triggered after proposal view'}],
+  'Comms Agent':         [{t:'3 min ago',a:'WhatsApp draft sent to Sharma Family'},{t:'14 min ago',a:'Email follow-up composed for Kapoor Group'},{t:'2 hr ago',a:'Anniversary message drafted for Reddy Family'}],
+  'Supply Agent':        [{t:'Just now',a:'Fetched 142 hotel options for Bali — best match found'},{t:'5 min ago',a:'Flight availability checked — 4 routes compared'},{t:'12 min ago',a:'Viator activities synced for Dubai package'}],
+  'Intelligence Agent':  [{t:'1 hr ago',a:'Bali demand spike detected — pricing alert raised'},{t:'3 hr ago',a:'Monthly revenue report generated — ₹48.2L pipeline'},{t:'Yesterday',a:'Supplier performance review — 3 flagged for delays'}],
+};
+let currentAgentIdx = 0;
+
 function renderAgents() {
-  document.getElementById('agents-grid').innerHTML = AGENTS.map(a => `
-    <div class="agent-card">
+  document.getElementById('agents-grid').innerHTML = AGENTS.map((a,i) => `
+    <div class="agent-card" onclick="openAgentModal(${i})" style="transition:all 0.2s">
       <div class="agent-icon" style="background:${a.bg}">${a.icon}</div>
       <div class="agent-name">${a.name}</div>
       <div class="agent-desc">${a.desc}</div>
@@ -3288,15 +4291,24 @@ function renderSupply() {
 function switchPanel(name, el) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  // Also reset sidebar active if navigating away from leads
+  if (name !== 'leads') {
+    document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  }
   const panel = document.getElementById('panel-'+name);
   if (panel) panel.classList.add('active');
-  if(el) el.classList.add('active');
+  if (el) el.classList.add('active');
 
   if (name==='analytics') renderAnalytics();
-  if (name==='agents') renderAgents();
+  if (name==='agents') { setTimeout(renderAgents, 0); }
   if (name==='supply') renderSupply();
   if (name==='services') { setTimeout(renderSvcTable, 0); }
   if (name==='packages') { setTimeout(renderPkgTable, 0); }
+  if (name==='proposal') { setTimeout(renderProposal, 0); }
+  if (name==='users') { setTimeout(()=>{ umSwitch('users', document.getElementById('um-nav-users')); }, 0); }
+  if (name==='dmc') { setTimeout(()=>{ dmcSwitch('dashboard', document.getElementById('dmc-nav-dashboard')); }, 0); }
+  if (name==='holiday') { setTimeout(()=>{ hmSwitch('dashboard', document.getElementById('hm-nav-dashboard')); }, 0); }
+  if (name==='leads') { setTimeout(renderTable, 0); }
 }
 
 function switchTab(name, el) {
@@ -3550,6 +4562,1332 @@ function toggleTheme() {
   knob.textContent = isLight ? '☀️' : '🌙';
   label.textContent = isLight ? 'Light' : 'Dark';
   localStorage.setItem('nama-theme', isLight ? 'light' : 'dark');
+}
+
+// ─────────────────────────────────────────────
+// HOLIDAY MANAGEMENT
+// ─────────────────────────────────────────────
+const HM_TEAM = [
+  {name:'Narayan Mallapur',  email:'narayan@namaos.com',  color:'#c8a96e', country:'🇮🇳', dest:'Bali',       dates:'Mar 22 - Apr 5',  status:'Holidays', type:'approved'},
+  {name:'Priya Sharma',      email:'priya@namaos.com',    color:'#e05a4e', country:'🇮🇳', dest:'Maldives',   dates:'Apr 1 - Apr 8',   status:'Holidays', type:'approved'},
+  {name:'Arjun Mehta',       email:'arjun@namaos.com',    color:'#5b8def', country:'🇮🇳', dest:'Switzerland',dates:'Apr 10 - Apr 20', status:'Holidays', type:'pending'},
+  {name:'Sunita Reddy',      email:'sunita@namaos.com',   color:'#4a9b7f', country:'🇮🇳', dest:'Dubai',      dates:'Mar 28 - Apr 2',  status:'Holidays', type:'approved'},
+  {name:'Vikram Nair',       email:'vikram@namaos.com',   color:'#e09a3e', country:'🇮🇳', dest:'Thailand',   dates:'Apr 15 - Apr 22', status:'Leave',    type:'approved'},
+];
+
+const HM_TIMEZONES = [
+  {flag:'🇮🇳', country:'India',     zone:'IST (UTC+5:30)', offset:5.5},
+  {flag:'🇦🇪', country:'UAE',       zone:'GST (UTC+4)',    offset:4},
+  {flag:'🇮🇩', country:'Indonesia', zone:'WIB (UTC+7)',    offset:7},
+  {flag:'🇨🇭', country:'Switzerland',zone:'CET (UTC+1)',   offset:1},
+  {flag:'🇹🇭', country:'Thailand',  zone:'ICT (UTC+7)',    offset:7},
+  {flag:'🇺🇸', country:'USA',       zone:'EST (UTC-5)',    offset:-5},
+];
+
+const HM_MAP_DOTS = [
+  {x:'28%', y:'42%', country:'India',       flag:'🇮🇳', employees:8, holidays:'Holi · Ram Navami',      leaves:3, activeLeads:5, pkgCount:4},
+  {x:'44%', y:'35%', country:'UAE',         flag:'🇦🇪', employees:4, holidays:'Eid Al Fitr',            leaves:2, activeLeads:3, pkgCount:3},
+  {x:'72%', y:'48%', country:'Indonesia',   flag:'🇮🇩', employees:5, holidays:'Nyepi · Lebaran',        leaves:4, activeLeads:7, pkgCount:5},
+  {x:'52%', y:'28%', country:'Switzerland', flag:'🇨🇭', employees:2, holidays:'Easter · National Day',  leaves:1, activeLeads:2, pkgCount:2},
+  {x:'68%', y:'44%', country:'Thailand',    flag:'🇹🇭', employees:3, holidays:'Songkran · Loy Krathong',leaves:3, activeLeads:4, pkgCount:3},
+  {x:'18%', y:'55%', country:'Brazil',      flag:'🇧🇷', employees:1, holidays:'Carnival · Tiradentes',  leaves:1, activeLeads:1, pkgCount:1},
+];
+
+const HM_REVIEWS = [
+  {name:'Priya Sharma',    dates:'Mar 25 - Apr 5', status:'Unpaid',  badge:'Waiting Approval', badgeColor:'#e09a3e', flag:'🇮🇳'},
+  {name:'Vikram Nair',     dates:'Apr 15 - Apr 22',status:'Pending', badge:'In Review',        badgeColor:'#5b8def', flag:'🇮🇳'},
+  {name:'Arjun Mehta',     dates:'Apr 10 - Apr 20',status:'Paid',    badge:'Approved',         badgeColor:'#4a9b7f', flag:'🇮🇳'},
+];
+
+let hmActiveDot = null;
+let hmCalTab = 'all';
+
+function hmSwitch(section, el) {
+  document.querySelectorAll('.hm-nav').forEach(n=>n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  const c = document.getElementById('hm-content');
+  if (!c) return;
+  c.classList.remove('hm-content-anim');
+  void c.offsetWidth;
+  c.classList.add('hm-content-anim');
+  if      (section==='dashboard') hmRenderDashboard();
+  else if (section==='bookings')  hmRenderBookings();
+  else if (section==='services')  hmRenderServices();
+  else if (section==='packages')  hmRenderPackages();
+  else if (section==='users')     hmRenderUsers();
+  else hmRenderGeneric(section);
+}
+
+function hmGetTime(offset) {
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  const local = new Date(utc + (3600000 * offset));
+  return local.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+}
+
+function hmRenderDashboard() {
+  const c = document.getElementById('hm-content');
+  const now = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const days = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+  const year = now.getFullYear(), month = now.getMonth();
+  let firstDay = new Date(year,month,1).getDay();
+  firstDay = (firstDay===0)?6:firstDay-1;
+  const daysInMonth = new Date(year,month+1,0).getDate();
+  const hasEvent = [3,7,10,14,18,21,22,25,28];
+  let calCells = '';
+  for(let i=0;i<firstDay;i++) calCells+=`<div class="hm-mini-cal-day other">${new Date(year,month,-(firstDay-i-1)).getDate()}</div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const isT=d===now.getDate();
+    calCells+=`<div class="hm-mini-cal-day ${isT?'today':hasEvent.includes(d)?'has-event':''}" onclick="showToast('📅','${months[month]} ${d}','${hasEvent.includes(d)?'Departures/arrivals scheduled':'No travel activity'}')">${d}</div>`;
+  }
+
+  c.innerHTML = `
+    <div class="hm-page-header">
+      <div class="hm-page-title">Welcome back, <span style="color:var(--accent2)">Narayan</span></div>
+      <div class="hm-page-sub">Your live destination activity and team travel overview.</div>
+    </div>
+
+    <!-- 4 Stat boxes -->
+    <div class="hm-stat-strip">
+      <div class="hm-stat-box" onclick="hmSwitch('users',document.getElementById('hm-nav-users'))">
+        <div class="hm-stat-icon-wrap">🌍</div>
+        <div>
+          <div class="hm-stat-lbl">Active Destinations</div>
+          <div class="hm-stat-val">${HM_MAP_DOTS.length}</div>
+        </div>
+      </div>
+      <div class="hm-stat-box" onclick="hmSwitch('bookings',document.getElementById('hm-nav-bookings'))">
+        <div class="hm-stat-icon-wrap" style="background:rgba(91,141,239,0.1);border-color:rgba(91,141,239,0.2)">✈️</div>
+        <div>
+          <div class="hm-stat-lbl">Trips In Progress</div>
+          <div class="hm-stat-val" style="color:var(--blue)">4</div>
+        </div>
+      </div>
+      <div class="hm-stat-box" onclick="hmSwitch('packages',document.getElementById('hm-nav-packages'))">
+        <div class="hm-stat-icon-wrap" style="background:rgba(200,169,110,0.1);border-color:rgba(200,169,110,0.2)">📦</div>
+        <div>
+          <div class="hm-stat-lbl">Live Packages</div>
+          <div class="hm-stat-val" style="color:var(--accent)">${PKG_DATA.filter(p=>p.status==='active').length}</div>
+        </div>
+      </div>
+      <div class="hm-stat-box">
+        <div class="hm-stat-icon-wrap" style="background:rgba(224,154,62,0.1);border-color:rgba(224,154,62,0.2)">📋</div>
+        <div>
+          <div class="hm-stat-lbl">Proposals Pending</div>
+          <div class="hm-stat-val" style="color:#e09a3e">${HM_REVIEWS.length}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hm-main-grid">
+      <!-- Left: world map + bottom panels -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+
+        <!-- World map card -->
+        <div class="hm-map-card">
+          <div class="hm-map-header">
+            <div>
+              <div class="hm-map-title">Destination Activity Map</div>
+              <div class="hm-map-date">${now.getDate()} ${months[month]} ${year} · Live</div>
+            </div>
+            <button class="btn-ghost" style="font-size:11.5px;padding:5px 12px" onclick="showToast('📊','Destination Report','Generating report…')">View report</button>
+          </div>
+          <div class="hm-map-body" id="hm-map-body" style="height:220px">
+            <svg viewBox="0 0 800 400" style="width:100%;height:100%;opacity:0.35" preserveAspectRatio="xMidYMid meet">
+              <g fill="var(--muted)" opacity="0.5">
+                <rect x="80"  y="80"  width="160" height="120" rx="8" opacity="0.3"/>
+                <rect x="140" y="210" width="100" height="130" rx="8" opacity="0.3"/>
+                <rect x="340" y="60"  width="120" height="90"  rx="8" opacity="0.3"/>
+                <rect x="340" y="160" width="110" height="160" rx="8" opacity="0.3"/>
+                <rect x="460" y="60"  width="240" height="160" rx="8" opacity="0.3"/>
+                <rect x="600" y="240" width="120" height="80"  rx="8" opacity="0.3"/>
+              </g>
+              ${Array.from({length:32},(_,row)=>Array.from({length:64},(_,col)=>{
+                const x=col*12+6, y=row*12+6;
+                const inLand=(x>80&&x<240&&y>80&&y<200)||(x>140&&x<240&&y>210&&y<340)||(x>340&&x<460&&y>60&&y<150)||(x>340&&x<450&&y>160&&y<320)||(x>460&&x<700&&y>60&&y<220)||(x>600&&x<720&&y>240&&y<320);
+                return inLand?`<circle cx="${x}" cy="${y}" r="2" fill="var(--muted)" opacity="0.4"/>`:''
+              }).join('')).join('')}
+            </svg>
+            ${HM_MAP_DOTS.map((d,i)=>`
+              <div class="hm-map-dot" style="left:${d.x};top:${d.y};animation-delay:${i*0.4}s"
+                onmouseenter="hmShowTooltip(event,${i})"
+                onmouseleave="hmHideTooltip()"
+                onclick="showToast('${d.flag}','${d.country}','${d.employees} active leads · ${d.leaves} bookings live')">
+              </div>`).join('')}
+            <div id="hm-tooltip" class="hm-map-tooltip" style="display:none;top:20px;left:20px"></div>
+          </div>
+        </div>
+
+        <!-- Bottom: Destination Pipeline + Live Departures -->
+        <div class="hm-bottom-grid">
+
+          <!-- Time Zones renamed to Supplier Hubs -->
+          <div class="hm-list-card">
+            <div class="hm-list-hdr">
+              <div class="hm-list-hdr-title">Supplier Hub Timezones</div>
+            </div>
+            ${HM_TIMEZONES.map(tz=>`
+              <div class="hm-timezone-row">
+                <span style="font-size:16px">${tz.flag}</span>
+                <div style="flex:1">
+                  <div class="hm-tz-country">${tz.country}</div>
+                  <div class="hm-tz-code">${tz.zone}</div>
+                </div>
+                <div class="hm-tz-time" id="tz-${tz.country.replace(/ /g,'')}">${hmGetTime(tz.offset)}</div>
+              </div>`).join('')}
+          </div>
+
+          <!-- Ongoing departures (was "Ongoing Holidays") -->
+          <div class="hm-list-card">
+            <div class="hm-list-hdr">
+              <div class="hm-list-hdr-title">Live Departures</div>
+              <button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="hmSwitch('bookings',document.getElementById('hm-nav-bookings'))">View All</button>
+            </div>
+            ${[
+              {date:'Mar 21', dest:'Bali',        client:'Sharma Family',  status:'Departed'},
+              {date:'Mar 22', dest:'Maldives',     client:'Reddy Family',   status:'En Route'},
+              {date:'Mar 25', dest:'Dubai',        client:'Kapoor Group',   status:'Check-in'},
+              {date:'Mar 28', dest:'Switzerland',  client:'Mehta Couple',   status:'Departed'},
+              {date:'Apr 1',  dest:'Thailand',     client:'Singh Corporate',status:'Upcoming'},
+            ].map(h=>`
+              <div class="hm-ongoing-row" onclick="showToast('✈️','${h.dest}','${h.client} · ${h.date}')">
+                <span style="font-size:13px">${h.status==='En Route'?'🔵':h.status==='Upcoming'?'🕐':'✅'}</span>
+                <span style="font-size:12px;flex:1;color:var(--muted)">${h.date}</span>
+                <span style="font-size:12px;font-weight:500">${h.dest}</span>
+                <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;margin-left:8px;
+                  background:${h.status==='En Route'?'rgba(91,141,239,0.12)':h.status==='Upcoming'?'rgba(224,154,62,0.12)':'rgba(74,155,127,0.12)'};
+                  color:${h.status==='En Route'?'var(--blue)':h.status==='Upcoming'?'#e09a3e':'var(--accent2)'};
+                  border:1px solid ${h.status==='En Route'?'rgba(91,141,239,0.25)':h.status==='Upcoming'?'rgba(224,154,62,0.25)':'rgba(74,155,127,0.25)'}">${h.status}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="hm-right-panel">
+
+        <!-- Travel Calendar (was "Calendar Leaves") -->
+        <div class="hm-cal-card">
+          <div class="hm-cal-top">
+            <div style="font-size:14px;font-weight:600">Travel Calendar</div>
+            <div style="color:var(--muted);font-size:16px;cursor:pointer" onclick="showToast('···','Calendar','More options')">···</div>
+          </div>
+          <div class="hm-cal-tabs">
+            <div class="hm-cal-tab ${hmCalTab==='all'?'active':''}"       onclick="hmCalTab='all';hmRenderDashboard()">All</div>
+            <div class="hm-cal-tab ${hmCalTab==='dest'?'active':''}"  onclick="hmCalTab='dest';hmRenderDashboard()">Destinations</div>
+            <div class="hm-cal-tab ${hmCalTab==='clients'?'active':''}" onclick="hmCalTab='clients';hmRenderDashboard()">Clients</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div class="dmc-cal-nav" onclick="showToast('◀','Calendar','Previous month')">‹</div>
+            <div style="font-size:12.5px;font-weight:600">${months[month]} ${year}</div>
+            <div class="dmc-cal-nav" onclick="showToast('▶','Calendar','Next month')">›</div>
+          </div>
+          <div class="hm-mini-cal-grid">
+            ${days.map(d=>`<div class="hm-mini-cal-hdr">${d}</div>`).join('')}
+            ${calCells}
+          </div>
+          <div class="hm-flag-row">
+            ${HM_MAP_DOTS.slice(0,5).map(d=>`
+              <span style="font-size:18px;cursor:pointer" title="${d.country}: ${d.activeLeads} leads"
+                onclick="showToast('${d.flag}','${d.country}','${d.activeLeads} active leads · ${d.pkgCount} packages')">${d.flag}</span>`).join('')}
+          </div>
+        </div>
+
+        <!-- Active Bookings (was "Holidays") -->
+        <div class="hm-list-card">
+          <div class="hm-list-hdr">
+            <div class="hm-list-hdr-title">Active Bookings</div>
+            <a href="#" onclick="hmSwitch('bookings',document.getElementById('hm-nav-bookings'));return false;"
+              style="font-size:11.5px;color:var(--accent2);text-decoration:none">View all</a>
+          </div>
+          ${HM_TEAM.slice(0,4).map(m=>`
+            <div class="hm-list-row" onclick="showToast('${m.country}','${m.name}','${m.dest} · ${m.dates}')">
+              <div class="hm-list-avatar" style="background:${m.color}">${m.name[0]}</div>
+              <div style="flex:1">
+                <div class="hm-list-name">${m.name}</div>
+                <div class="hm-list-dates">${m.dates}</div>
+              </div>
+              <span class="hm-holiday-pill"
+                style="background:rgba(74,155,127,0.12);color:var(--accent2);border:1px solid rgba(74,155,127,0.25)">
+                ${m.dest}
+              </span>
+            </div>`).join('')}
+        </div>
+
+        <!-- Proposals Pending (was "Reviews Due") -->
+        <div class="hm-list-card">
+          <div class="hm-list-hdr">
+            <div class="hm-list-hdr-title">Proposals Pending</div>
+            <a href="#" style="font-size:11.5px;color:var(--accent2);text-decoration:none"
+              onclick="switchPanel('leads',document.querySelector('.nav-link'));return false;">View all</a>
+          </div>
+          ${HM_REVIEWS.map(r=>`
+            <div class="hm-list-row" onclick="showToast('📋','${r.name}','Proposal: ${r.dates}')">
+              <div class="hm-list-avatar" style="background:var(--accent)">${r.name[0]}</div>
+              <div style="flex:1">
+                <div class="hm-list-name">${r.name}</div>
+                <div class="hm-list-dates">Follow-up: ${r.dates}</div>
+                <div style="display:flex;gap:5px;margin-top:4px">
+                  <span style="font-size:10px;padding:2px 8px;border-radius:4px;
+                    background:rgba(122,120,112,0.15);color:var(--muted);border:1px solid var(--border)">
+                    ${r.status==='Paid'?'Deposit Paid':r.status==='Pending'?'Awaiting Deposit':'Unpaid'}
+                  </span>
+                  <span style="font-size:10px;padding:2px 8px;border-radius:4px;
+                    background:rgba(224,154,62,0.15);color:#e09a3e;border:1px solid rgba(224,154,62,0.25)">
+                    ${r.badge==='Waiting Approval'?'Needs Follow-up':r.badge==='In Review'?'Quote Sent':'Confirmed'}
+                  </span>
+                </div>
+              </div>
+              <span style="font-size:16px">${r.flag}</span>
+            </div>`).join('')}
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  // Live clock
+  setInterval(()=>{
+    HM_TIMEZONES.forEach(tz=>{
+      const el=document.getElementById('tz-'+tz.country.replace(/ /g,''));
+      if(el) el.textContent=hmGetTime(tz.offset);
+    });
+  }, 30000);
+}
+
+
+function hmShowTooltip(e, idx) {
+  const d = HM_MAP_DOTS[idx];
+  const tip = document.getElementById('hm-tooltip');
+  if (!tip) return;
+  const body = document.getElementById('hm-map-body');
+  const rect = body.getBoundingClientRect();
+  const x = e.clientX - rect.left + 10;
+  const y = e.clientY - rect.top - 60;
+  tip.style.left = Math.min(x, rect.width-170) + 'px';
+  tip.style.top  = Math.max(y, 4) + 'px';
+  tip.style.display = 'block';
+  tip.innerHTML = `
+    <div class="hm-map-tooltip-country"><span style="font-size:18px">${d.flag}</span>${d.country}</div>
+    <div class="hm-map-tooltip-row">🎯 ${d.activeLeads} Active Leads</div>
+    <div class="hm-map-tooltip-row">📦 ${d.pkgCount} Live Packages</div>
+    <div class="hm-map-tooltip-row" style="color:var(--accent2)">✈️ ${d.leaves} Bookings Live</div>
+    <div class="hm-map-tooltip-row" style="color:var(--muted);font-size:10.5px">📅 ${d.holidays}</div>`;
+}
+
+function hmHideTooltip() {
+  const tip = document.getElementById('hm-tooltip');
+  if (tip) tip.style.display = 'none';
+}
+
+function hmRenderBookings() {
+  const c = document.getElementById('hm-content');
+  c.innerHTML = `
+    <div class="hm-page-header">
+      <div class="hm-page-title">Booking Management</div>
+      <div class="hm-page-sub">Manage all holiday bookings, approvals and travel requests.</div>
+    </div>
+    <div class="dmc-search-row">
+      <input class="dmc-search" placeholder="🔍  Search bookings…">
+      <div class="dmc-filter-btn">⚙ Filter ⌄</div>
+      <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="openNewLeadForm()">+ New Booking</button>
+    </div>
+    <div class="dmc-list-card">
+      <table class="dmc-table">
+        <thead><tr><th></th><th>Team Member</th><th>Destination</th><th>Dates</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>
+          ${[...HM_TEAM,...HM_TEAM.map(m=>({...m,dest:m.dest==='Bali'?'Dubai':m.dest,dates:'May '+Math.floor(Math.random()*20+1)+' - May '+Math.floor(Math.random()*10+20)}))].map((m,i)=>`
+            <tr onclick="showToast('${m.country}','${m.name}','${m.dest} · ${m.dates}')">
+              <td><div class="hm-list-avatar" style="background:${m.color};width:30px;height:30px;font-size:12px">${m.name[0]}</div></td>
+              <td><div style="font-size:12.5px;font-weight:500">${m.name}</div><div style="font-size:10.5px;color:var(--muted)">${m.email}</div></td>
+              <td><div style="font-size:12.5px;font-weight:500">${m.dest}</div></td>
+              <td style="font-size:12px;color:var(--muted)">${m.dates}</td>
+              <td><span class="tag" style="font-size:10.5px">${m.status}</span></td>
+              <td><span class="dmc-status-pill ${m.type==='approved'?'dmc-status-arrived':'dmc-status-confirm'}">${m.type==='approved'?'Approved':'Pending'}</span></td>
+              <td><div style="display:flex;gap:6px">
+                <div class="mgmt-action-btn" onclick="event.stopPropagation();showToast('✏','Edit','${m.name} booking')" title="Edit">✏</div>
+                <div class="mgmt-action-btn" onclick="event.stopPropagation();showToast('✅','Approve','${m.name} approved')" title="Approve">✅</div>
+              </div></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+function hmRenderServices() {
+  const c = document.getElementById('hm-content');
+  c.innerHTML = `
+    <div class="hm-page-header">
+      <div class="hm-page-title">Service Management</div>
+      <div class="hm-page-sub">Hotels, activities, meals and transportation for your holiday packages.</div>
+    </div>
+    <div class="dmc-tabs" id="hm-svc-tabs">
+      ${['Hotel','Activity','Meal','Transportation'].map((t,i)=>`
+        <div class="dmc-tab ${i===0?'active':''}" onclick="hmSvcTab('${t.toLowerCase()}',this)">
+          ${{Hotel:'🏨',Activity:'🎭',Meal:'🍽',Transportation:'🚗'}[t]} ${t}
+        </div>`).join('')}
+    </div>
+    <div id="hm-svc-table"></div>`;
+  hmSvcTab('hotel', document.querySelector('#hm-svc-tabs .dmc-tab'));
+}
+
+function hmSvcTab(tab, el) {
+  document.querySelectorAll('#hm-svc-tabs .dmc-tab').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  const data = SVC_DATA[tab]||[];
+  const st = document.getElementById('hm-svc-table');
+  if (!st) return;
+  st.innerHTML = `
+    <div class="dmc-search-row" style="margin-top:12px">
+      <input class="dmc-search" placeholder="🔍  Search ${tab}…">
+      <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="showToast('✦','Add','Add new ${tab}')">+ Add ${tab}</button>
+    </div>
+    <div class="dmc-list-card">
+      <table class="dmc-table">
+        <thead><tr><th>ID</th><th>Name</th><th>City</th><th>Country</th><th>Category</th><th>Rating</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>${data.map(d=>`
+          <tr onclick="showToast('👁','${d.name}','${d.city}, ${d.country} · ${d.category}')">
+            <td class="mgmt-id">${d.id}</td>
+            <td style="font-weight:500;font-size:12.5px">${d.name}</td>
+            <td style="color:var(--muted);font-size:12px">${d.city}</td>
+            <td style="color:var(--muted);font-size:12px">${d.country}</td>
+            <td style="font-size:12px">${d.category}</td>
+            <td><span style="color:var(--accent)">${'★'.repeat(d.rating||3)}</span></td>
+            <td>${d.status==='active'?'<span class="mgmt-status-active">Active</span>':'<span class="mgmt-status-inactive">Inactive</span>'}</td>
+            <td><div style="display:flex;gap:5px">
+              <div class="mgmt-action-btn" onclick="event.stopPropagation();showToast('👁','View','${d.name}')">👁</div>
+              <div class="mgmt-action-btn" onclick="event.stopPropagation();showToast('✏','Edit','${d.name}')">✏</div>
+            </div></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+function hmRenderPackages() {
+  const c = document.getElementById('hm-content');
+  c.innerHTML = `
+    <div class="hm-page-header">
+      <div class="hm-page-title">Holiday Package Management</div>
+      <div class="hm-page-sub">Create and manage curated holiday packages for your clients.</div>
+    </div>
+    <div class="dmc-search-row">
+      <input class="dmc-search" placeholder="🔍  Search packages…">
+      <div class="dmc-filter-btn">Sort By ⌄</div>
+      <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="openPkgCreateModal()">+ Create Package</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      ${PKG_DATA.map(p=>`
+        <div class="dmc-stat-card" style="padding:16px;cursor:pointer" onclick="viewPkgItem(${p.id})">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
+            <span style="font-size:22px">${p.dest.includes('Bali')?'🌴':p.dest.includes('Maldives')?'🌊':p.dest.includes('Dubai')?'🏙':p.dest.includes('Swiss')?'🏔':p.dest.includes('Turkey')?'🕌':p.dest.includes('Singapore')?'🌆':'✈️'}</span>
+            ${p.status==='active'?'<span class="mgmt-status-active" style="font-size:10px">Active</span>':'<span class="mgmt-status-inactive" style="font-size:10px">Inactive</span>'}
+          </div>
+          <div style="font-size:13.5px;font-weight:500;margin-bottom:3px">${p.name}</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-bottom:8px">${p.dest} · ${p.days}D/${p.nights}N</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="color:var(--accent);font-weight:600;font-size:13px">${p.price}</span>
+            <span style="color:var(--accent);font-size:12px">${'★'.repeat(p.rating)}</span>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function hmRenderUsers() {
+  const c = document.getElementById('hm-content');
+  c.innerHTML = `
+    <div class="hm-page-header">
+      <div class="hm-page-title">User Management</div>
+      <div class="hm-page-sub">Manage team members, roles and holiday access permissions.</div>
+    </div>
+    <div class="um-toolbar" style="margin-bottom:16px">
+      <div class="um-count-title">Team <span>${UM_USERS.length}</span></div>
+      <div class="um-search-box"><span style="color:var(--muted)">🔍</span><input placeholder="Search…"></div>
+      <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="openUmModal()">+ Add Member</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+      ${UM_USERS.map(u=>`
+        <div class="dmc-stat-card" style="display:flex;align-items:center;gap:12px;padding:14px 16px" onclick="showToast('👤','${u.first} ${u.last}','${u.email} · ${u.dept}')">
+          <div class="um-avatar-sm" style="background:${u.color};width:40px;height:40px;font-size:15px;flex-shrink:0">${u.first[0]+u.last[0]}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:500">${u.first} ${u.last}</div>
+            <div style="font-size:10.5px;color:var(--muted)">${u.email}</div>
+            <div style="margin-top:5px">${u.roles.slice(0,2).map(r=>`<span class="um-role-pill ${r==='Admin'?'um-role-admin':r==='Data Export'?'um-role-export':'um-role-import'}" style="font-size:9.5px">${r}</span>`).join('')}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-size:10.5px;color:var(--accent2)">${u.lastActive}</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px">${u.dept}</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function hmRenderGeneric(section) {
+  const c = document.getElementById('hm-content');
+  const labels = {performance:'Performance',projects:'Projects',reporting:'Reporting'};
+  c.innerHTML = `
+    <div class="hm-page-header">
+      <div class="hm-page-title">${labels[section]||section}</div>
+      <div class="hm-page-sub">Manage your ${section} data.</div>
+    </div>
+    <div class="um-settings-grid">
+      ${[{icon:'📊',t:'Overview',d:'Summary metrics and KPIs'},{icon:'📋',t:'Details',d:'Detailed records and entries'},{icon:'📈',t:'Trends',d:'Historical data and trend analysis'}].map(i=>`
+        <div class="um-settings-card" onclick="showToast('${i.icon}','${i.t}','Coming soon')">
+          <div class="um-settings-card-icon">${i.icon}</div>
+          <div class="um-settings-card-title">${i.t}</div>
+          <div class="um-settings-card-desc">${i.d}</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ─────────────────────────────────────────────
+// DMC MANAGEMENT
+// ─────────────────────────────────────────────
+const DMC_BOOKINGS = [
+  {id:'BK-0041',client:'Sharma Family',dest:'Bali, Indonesia',route:'BLR → DPS → BLR',status:'On Pickup',date:'21 Mar 2025',vehicle:'Toyota Innova',driver:'Rajesh Kumar',goods:'7N Villa Package'},
+  {id:'BK-0040',client:'Mehta Couple',dest:'Switzerland',route:'BLR → ZRH → BLR',status:'Arrived',date:'20 Mar 2025',vehicle:'Mercedes V-Class',driver:'Suresh Nair',goods:'10N Alps Package'},
+  {id:'BK-0039',client:'Kapoor Group',dest:'Dubai + Abu Dhabi',route:'BLR → DXB → BLR',status:'Invoicing',date:'19 Mar 2025',vehicle:'Coaster Bus',driver:'Anil Sharma',goods:'Corporate 5N Tour'},
+  {id:'BK-0038',client:'Reddy Family',dest:'Maldives',route:'BLR → MLE → BLR',status:'Confirmed',date:'18 Mar 2025',vehicle:'Speedboat',driver:'Hassan Ali',goods:'4N Overwater Villa'},
+  {id:'BK-0037',client:'Singh Corporate',dest:'Thailand',route:'BLR → BKK → BLR',status:'On Pickup',date:'17 Mar 2025',vehicle:'Charter Van',driver:'Praveen Das',goods:'MICE Package 12 pax'},
+  {id:'BK-0036',client:'Gupta Family',dest:'Maldives',route:'BLR → MLE → BLR',status:'Arrived',date:'16 Mar 2025',vehicle:'Speedboat',driver:'Mohamed Faiz',goods:'5N Luxury Package'},
+  {id:'BK-0035',client:'Nair Family',dest:'Dubai + Abu Dhabi',route:'BLR → DXB → BLR',status:'Confirmed',date:'15 Mar 2025',vehicle:'SUV',driver:'Kumar Samy',goods:'Family 6N Tour'},
+  {id:'BK-0034',client:'Patel Family',dest:'Switzerland',route:'BLR → ZRH → BLR',status:'Invoicing',date:'14 Mar 2025',vehicle:'Rail Pass',driver:'N/A',goods:'8N Alps Package'},
+];
+
+const DMC_DESTINATIONS = [
+  {dest:'Bali', items:['The Layar Villas (3 Units)','Mt. Batur Trek (8 pax)','Kecak Dance (12 pax)','Cooking Class (6 pax)']},
+  {dest:'Dubai', items:['Marriott JBR (2 Rooms)','Desert Safari (8 pax)','Burj Khalifa Visit','Yacht Dinner (4 pax)']},
+  {dest:'Maldives', items:['Soneva Fushi (1 Villa)','Snorkeling (4 pax)','Sunset Cruise (2 pax)']},
+  {dest:'Switzerland', items:['Jungfraujoch Trip (4 pax)','NH Hotels Zurich (2 Rooms)','Lake Cruise (4 pax)']},
+  {dest:'Thailand', items:['Le Meridien Bangkok (3 Rooms)','Phi Phi Tour (12 pax)','Thai Cooking Class']},
+];
+
+let dmcBookingTab = 'all';
+let dmcBookingSearch = '';
+let dmcBookingPage = 1;
+const DMC_PER_PAGE = 5;
+
+function dmcSwitch(section, el) {
+  document.querySelectorAll('.dmc-nav').forEach(n=>n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  const titles = {
+    dashboard:'Dashboard', bookings:'Booking Management',
+    services:'Service Management', packages:'Holiday Package Management',
+    users:'User Management', reports:'Reports', master:'Master Data'
+  };
+  const bc = document.getElementById('dmc-breadcrumb');
+  if (bc) bc.textContent = titles[section] || section;
+  const c = document.getElementById('dmc-content');
+  if (!c) return;
+  c.classList.remove('dmc-content-anim');
+  void c.offsetWidth;
+  c.classList.add('dmc-content-anim');
+  if (section==='dashboard')  dmcRenderDashboard();
+  else if (section==='bookings')  dmcRenderBookings();
+  else if (section==='services')  dmcRenderServices();
+  else if (section==='packages')  dmcRenderPackages();
+  else if (section==='users')     dmcRenderUsers();
+  else dmcRenderGeneric(section);
+}
+
+// ── DASHBOARD ──
+function dmcRenderDashboard() {
+  const c = document.getElementById('dmc-content');
+  const now = new Date();
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const days   = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+  // Calendar data
+  const year = now.getFullYear(), month = now.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const hasBooking = [3,7,10,11,14,17,18,19,20,22,25];
+  const hasPlan    = [5,8,15,21,28];
+  let calCells = '';
+  for (let i=0;i<firstDay;i++) calCells += `<div class="dmc-cal-day other-month">${new Date(year,month,-(firstDay-i-1)).getDate()}</div>`;
+  for (let d=1;d<=daysInMonth;d++) {
+    const isToday = d===now.getDate();
+    const cls = isToday?'today':hasBooking.includes(d)?'has-booking':hasPlan.includes(d)?'has-plan':'';
+    calCells += `<div class="dmc-cal-day ${cls}" onclick="showToast('📅','${months[month]} ${d}','${hasBooking.includes(d)?'3 bookings scheduled':hasPlan.includes(d)?'2 plans due':'No activity'}')">${d}</div>`;
+  }
+
+  c.innerHTML = `
+    <div class="dmc-page-title">Dashboard</div>
+    <div class="dmc-page-sub">Selamat datang, <span style="color:var(--accent)">Narayan Mallapur</span> — ${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}</div>
+
+    <!-- Stats -->
+    <div class="dmc-stats-row">
+      <div class="dmc-stat-card" onclick="dmcSwitch('bookings',document.getElementById('dmc-nav-bookings'))">
+        <div class="dmc-stat-icon">📋</div>
+        <div class="dmc-stat-val" style="color:var(--accent)">80</div>
+        <div class="dmc-stat-lbl">Total Bookings</div>
+        <div class="dmc-stat-delta up">↑ 12% this month</div>
+      </div>
+      <div class="dmc-stat-card">
+        <div class="dmc-stat-icon">📦</div>
+        <div class="dmc-stat-val" style="color:var(--accent2)">200</div>
+        <div class="dmc-stat-lbl">Packages Planned</div>
+        <div class="dmc-stat-delta up">↑ 8% vs last month</div>
+      </div>
+      <div class="dmc-stat-card">
+        <div class="dmc-stat-icon">✈️</div>
+        <div class="dmc-stat-val" style="color:var(--blue)">150</div>
+        <div class="dmc-stat-lbl">Departures Sent</div>
+        <div class="dmc-stat-delta up">↑ On track</div>
+      </div>
+      <div class="dmc-stat-card">
+        <div class="dmc-stat-icon">💰</div>
+        <div class="dmc-stat-val" style="color:var(--accent)">₹48L</div>
+        <div class="dmc-stat-lbl">Revenue Pipeline</div>
+        <div class="dmc-stat-delta up">↑ 23% growth</div>
+      </div>
+    </div>
+
+    <div class="dmc-two-col" style="margin-bottom:20px">
+      <!-- Calendar -->
+      <div class="dmc-calendar">
+        <div class="dmc-cal-header">
+          <div class="dmc-cal-nav" onclick="showToast('◀','Calendar','Previous month')">‹</div>
+          <div class="dmc-cal-title">${months[month]} ${year}</div>
+          <div class="dmc-cal-nav" onclick="showToast('▶','Calendar','Next month')">›</div>
+        </div>
+        <div class="dmc-cal-grid">
+          ${days.map(d=>`<div class="dmc-cal-day-hdr">${d}</div>`).join('')}
+          ${calCells}
+        </div>
+        <div style="display:flex;gap:14px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted)">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--accent)"></div> Rencana
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted)">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--accent2)"></div> Realisasi
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted)">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--blue)"></div> Pending
+          </div>
+        </div>
+      </div>
+
+      <!-- Plan summary -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="dmc-list-card">
+          <div class="dmc-list-header">
+            <div>
+              <div class="dmc-list-title">Perencanaan Pengiriman</div>
+              <div class="dmc-list-sub">Today, ${now.getDate()} ${months[month]} ${year}</div>
+            </div>
+            <button class="btn-primary" style="font-size:11px;padding:5px 12px" onclick="dmcSwitch('bookings',document.getElementById('dmc-nav-bookings'))">Buat Pesanan →</button>
+          </div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:13px;color:var(--muted)">Rencana</span>
+              <span style="font-family:'Instrument Serif',serif;font-size:22px;color:var(--accent)">200</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:13px;color:var(--muted)">Pesanan</span>
+              <span style="font-family:'Instrument Serif',serif;font-size:22px">150</span>
+            </div>
+            <div style="height:1px;background:var(--border)"></div>
+            ${[
+              {label:'Menunggu Konfirmasi',val:50,color:'var(--accent)'},
+              {label:'Ditangguhkan',val:5,color:'var(--danger)'},
+              {label:'Dibatalkan',val:15,color:'var(--muted)'},
+            ].map(s=>`
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)">
+                  <div style="width:7px;height:7px;border-radius:50%;background:${s.color}"></div>
+                  ${s.label}
+                </div>
+                <span style="font-size:13px;font-weight:500">${s.val}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+
+        <!-- Pengiriman summary -->
+        <div class="dmc-list-card">
+          <div class="dmc-list-header">
+            <div class="dmc-list-title">Pengiriman</div>
+          </div>
+          <div style="padding:14px 16px">
+            <div style="font-family:'Instrument Serif',serif;font-size:26px;margin-bottom:14px">80 Realisasi</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              ${[
+                {lbl:'Departure',val:30,color:'var(--accent)'},
+                {lbl:'Delivery',val:35,color:'var(--accent2)'},
+                {lbl:'Destination',val:5,color:'var(--blue)'},
+                {lbl:'Receipt',val:10,color:'#e09a3e'},
+              ].map(s=>`
+                <div style="text-align:center;background:var(--surface2);border-radius:8px;padding:10px">
+                  <div style="font-family:'Instrument Serif',serif;font-size:22px;color:${s.color}">${s.val}</div>
+                  <div style="font-size:10px;color:var(--muted);margin-top:2px">${s.lbl}</div>
+                </div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rencana Pengiriman (destination list) -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="dmc-list-card">
+        <div class="dmc-list-header">
+          <div>
+            <div class="dmc-list-title">Rencana Pengiriman</div>
+            <div class="dmc-list-sub">Today, ${now.getDate()} ${months[month]} ${year}</div>
+          </div>
+        </div>
+        ${DMC_DESTINATIONS.map(d=>`
+          <div class="dmc-list-item" onclick="showToast('✈️','${d.dest}','${d.items.length} services scheduled')">
+            <div class="dmc-list-dot">✈️</div>
+            <div>
+              <div class="dmc-list-dest">${d.dest}</div>
+              <div class="dmc-list-items">${d.items.map(i=>`📦 ${i}`).join('<br>')}</div>
+            </div>
+            <div style="margin-left:auto;color:var(--muted);font-size:16px">⋮</div>
+          </div>`).join('')}
+      </div>
+
+      <!-- Progress -->
+      <div class="dmc-list-card">
+        <div class="dmc-list-header"><div class="dmc-list-title">Pencapaian Perencanaan</div></div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:14px">
+          ${[
+            {lbl:'Booking Achievement',pct:75,color:'var(--accent)'},
+            {lbl:'Service Fulfillment',pct:92,color:'var(--accent2)'},
+            {lbl:'Revenue Target',pct:68,color:'var(--blue)'},
+            {lbl:'Client Satisfaction',pct:88,color:'#e09a3e'},
+            {lbl:'On-time Delivery',pct:95,color:'var(--accent2)'},
+          ].map(p=>`
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+                <span style="color:var(--muted)">${p.lbl}</span>
+                <span style="color:${p.color};font-weight:600">${p.pct}%</span>
+              </div>
+              <div class="dmc-progress-wrap">
+                <div class="dmc-progress-fill" style="width:${p.pct}%;background:${p.color}"></div>
+              </div>
+            </div>`).join('')}
+        </div>
+        <div style="padding:12px 16px;border-top:1px solid var(--border)">
+          <button class="btn-primary" style="width:100%;font-size:12px;padding:8px" onclick="dmcSwitch('bookings',document.getElementById('dmc-nav-bookings'))">▶ Lacak Pesanan</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── BOOKINGS ──
+function dmcRenderBookings() {
+  const c = document.getElementById('dmc-content');
+  const statusFilter = {
+    all: DMC_BOOKINGS,
+    confirm: DMC_BOOKINGS.filter(b=>b.status==='Confirmed'||b.status==='On Pickup'),
+    delivery: DMC_BOOKINGS.filter(b=>b.status==='Arrived'),
+  };
+  const data = (statusFilter[dmcBookingTab]||DMC_BOOKINGS).filter(b=>
+    !dmcBookingSearch || (b.client+b.dest+b.id).toLowerCase().includes(dmcBookingSearch.toLowerCase())
+  );
+  const total = data.length;
+  const start = (dmcBookingPage-1)*DMC_PER_PAGE;
+  const pageData = data.slice(start, start+DMC_PER_PAGE);
+  const pages = Math.max(1, Math.ceil(total/DMC_PER_PAGE));
+
+  const statusCls = {
+    'On Pickup':'dmc-status-pickup','Arrived':'dmc-status-arrived',
+    'Invoicing':'dmc-status-invoice','Confirmed':'dmc-status-confirm','Cancelled':'dmc-status-cancel'
+  };
+
+  c.innerHTML = `
+    <div class="dmc-page-title">Booking Management</div>
+    <div class="dmc-page-sub">Realisasi Pengiriman — manage and track all client bookings</div>
+
+    <div class="dmc-tabs">
+      <div class="dmc-tab ${dmcBookingTab==='all'?'active':''}" onclick="dmcBookingTab='all';dmcBookingPage=1;dmcRenderBookings()">Semua (${DMC_BOOKINGS.length})</div>
+      <div class="dmc-tab ${dmcBookingTab==='confirm'?'active':''}" onclick="dmcBookingTab='confirm';dmcBookingPage=1;dmcRenderBookings()">Menunggu Konfirmasi</div>
+      <div class="dmc-tab ${dmcBookingTab==='delivery'?'active':''}" onclick="dmcBookingTab='delivery';dmcBookingPage=1;dmcRenderBookings()">Pengiriman</div>
+    </div>
+
+    <div class="dmc-search-row">
+      <input class="dmc-search" placeholder="🔍  Cari PO / Client / Destination…" value="${dmcBookingSearch}" oninput="dmcBookingSearch=this.value;dmcBookingPage=1;dmcRenderBookings()">
+      <div class="dmc-filter-btn" onclick="showToast('⚙','Filter','Filter options coming soon')">⚙ Filter ⌄</div>
+      <select class="dmc-per-page-sel">
+        <option>5</option><option>10</option><option>20</option>
+      </select>
+    </div>
+
+    <div class="dmc-list-card" style="margin-bottom:12px">
+      <table class="dmc-table">
+        <thead><tr>
+          <th>PO Number</th><th>Client</th><th>Route</th>
+          <th>Status</th><th>Date</th><th>Vehicle</th><th>Driver</th><th>Package</th>
+        </tr></thead>
+        <tbody>
+          ${pageData.map(b=>`
+            <tr onclick="showToast('📋','${b.id}','${b.client} · ${b.dest} · ${b.status}')">
+              <td><a class="dmc-po-link" href="#">${b.id}</a></td>
+              <td><div style="font-size:12.5px;font-weight:500">${b.client}</div></td>
+              <td>
+                <div style="font-size:11.5px;font-weight:500">🛫 ${b.dest}</div>
+                <div class="dmc-route">${b.route}</div>
+              </td>
+              <td><span class="dmc-status-pill ${statusCls[b.status]||'dmc-status-confirm'}">${b.status}</span></td>
+              <td class="dmc-route">${b.date}</td>
+              <td class="dmc-route">${b.vehicle}</td>
+              <td class="dmc-route">${b.driver}</td>
+              <td class="dmc-route">${b.goods}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:11.5px;color:var(--muted)">${total} Result of ${DMC_BOOKINGS.length} Rows</div>
+      <div style="display:flex;gap:5px">
+        <div class="um-page-btn" onclick="if(dmcBookingPage>1){dmcBookingPage--;dmcRenderBookings()}">‹</div>
+        ${Array.from({length:pages},(_,i)=>`<div class="um-page-btn ${i+1===dmcBookingPage?'active-page':''}" onclick="dmcBookingPage=${i+1};dmcRenderBookings()">${i+1}</div>`).join('')}
+        <div class="um-page-btn" onclick="if(dmcBookingPage<${pages}){dmcBookingPage++;dmcRenderBookings()}">›</div>
+      </div>
+    </div>
+  `;
+}
+
+// ── SERVICES ──
+function dmcRenderServices() {
+  const c = document.getElementById('dmc-content');
+  c.innerHTML = `
+    <div class="dmc-page-title">Service Management</div>
+    <div class="dmc-page-sub">Manage hotels, activities, meals and transportation for your DMC</div>
+    <div class="dmc-tabs" id="dmc-svc-tabs">
+      ${['Hotel','Activity','Meal','Transportation'].map((t,i)=>`
+        <div class="dmc-tab ${i===0?'active':''}" onclick="dmcSvcTabSwitch('${t.toLowerCase()}',this)">${t==='Hotel'?'🏨':t==='Activity'?'🎭':t==='Meal'?'🍽':'🚗'} ${t}</div>`).join('')}
+    </div>
+    <div id="dmc-svc-content"></div>
+  `;
+  dmcSvcTabSwitch('hotel', document.querySelector('#dmc-svc-tabs .dmc-tab'));
+}
+
+function dmcSvcTabSwitch(tab, el) {
+  document.querySelectorAll('#dmc-svc-tabs .dmc-tab').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  // Reuse the SVC_DATA from the existing Services panel
+  const data = SVC_DATA[tab] || [];
+  const sc = document.getElementById('dmc-svc-content');
+  if (!sc) return;
+  if (data.length===0) { sc.innerHTML='<div style="padding:30px;text-align:center;color:var(--muted)">No data available</div>'; return; }
+  sc.innerHTML = `
+    <div class="dmc-search-row" style="margin-top:12px">
+      <input class="dmc-search" placeholder="🔍  Search ${tab}…">
+      <div class="dmc-filter-btn">Sort By ⌄</div>
+      <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="showToast('✦','Create','Add new ${tab}')">+ Create New</button>
+    </div>
+    <div class="dmc-list-card">
+      <table class="dmc-table">
+        <thead><tr><th>ID</th><th>Name</th><th>City</th><th>Country</th><th>Category</th><th>Rating</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>${data.map(d=>`
+          <tr onclick="showToast('👁','${d.name}','${d.city}, ${d.country}')">
+            <td class="mgmt-id">${d.id}</td>
+            <td><div style="font-size:12.5px;font-weight:500">${d.name}</div></td>
+            <td style="color:var(--muted);font-size:12px">${d.city}</td>
+            <td style="color:var(--muted);font-size:12px">${d.country}</td>
+            <td style="font-size:12px">${d.category}</td>
+            <td><span style="color:var(--accent)">${'★'.repeat(d.rating||3)}</span></td>
+            <td>${d.status==='active'?'<span class="mgmt-status-active">Active</span>':'<span class="mgmt-status-inactive">Inactive</span>'}</td>
+            <td><div style="display:flex;gap:6px">
+              <div class="mgmt-action-btn" onclick="event.stopPropagation();showToast('👁','View','${d.name}')" title="View">👁</div>
+              <div class="mgmt-action-btn" onclick="event.stopPropagation();showToast('✏','Edit','${d.name}')" title="Edit">✏</div>
+            </div></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ── PACKAGES ──
+function dmcRenderPackages() {
+  const c = document.getElementById('dmc-content');
+  c.innerHTML = `
+    <div class="dmc-page-title">Holiday Package Management</div>
+    <div class="dmc-page-sub">Create and manage holiday packages for your DMC portfolio</div>
+    <div class="dmc-search-row">
+      <input class="dmc-search" placeholder="🔍  Search packages…">
+      <div class="dmc-filter-btn">Sort By ⌄</div>
+      <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="showToast('✦','Create Package','Package builder coming soon')">+ Create New Package</button>
+    </div>
+    <div class="dmc-list-card">
+      <table class="dmc-table">
+        <thead><tr><th>ID</th><th>Package Name</th><th>Dest</th><th>Days</th><th>Nights</th><th>Description</th><th>Rating</th><th>Hotel</th><th>Price</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>${PKG_DATA.slice(0,8).map(d=>`
+          <tr onclick="showToast('📦','${d.name}','${d.days}D/${d.nights}N · ${d.dest} · ${d.price}')">
+            <td class="mgmt-id">${d.id}</td>
+            <td><div style="font-size:12.5px;font-weight:500">${d.name}</div><div style="font-size:10.5px;color:var(--muted)">${d.category}</div></td>
+            <td style="color:var(--muted);font-size:12px">${d.dest}</td>
+            <td style="text-align:center;font-weight:500">${d.days}</td>
+            <td style="text-align:center;font-weight:500">${d.nights}</td>
+            <td><div style="max-width:180px;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${d.desc}</div></td>
+            <td><span style="color:var(--accent)">${'★'.repeat(d.rating)}</span></td>
+            <td style="font-size:11px;color:var(--muted)">${d.hotel.length>20?d.hotel.slice(0,20)+'…':d.hotel}</td>
+            <td style="color:var(--accent);font-weight:500;font-size:12px">${d.price}</td>
+            <td>${d.status==='active'?'<span class="mgmt-status-active">Active</span>':'<span class="mgmt-status-inactive">Inactive</span>'}</td>
+            <td><div style="display:flex;gap:5px">
+              <div class="mgmt-action-btn" onclick="event.stopPropagation();viewPkgItem(${d.id})" title="View">👁</div>
+              <div class="mgmt-action-btn" onclick="event.stopPropagation();showToast('✏','Edit','${d.name}')" title="Edit">✏</div>
+            </div></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ── USERS ──
+function dmcRenderUsers() {
+  const c = document.getElementById('dmc-content');
+  c.innerHTML = `
+    <div class="dmc-page-title">User Management</div>
+    <div class="dmc-page-sub">Manage DMC team members, roles and access permissions</div>
+    <div class="um-toolbar" style="margin-bottom:16px">
+      <div class="um-count-title">All users <span>${UM_USERS.length}</span></div>
+      <div class="um-search-box"><span style="color:var(--muted)">🔍</span><input placeholder="Search team…"></div>
+      <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="openUmModal()">+ Add User</button>
+    </div>
+    <table class="um-table">
+      <thead><tr>
+        <th></th><th>Name</th><th>Role</th><th>Department</th><th>Last Active</th><th>Added</th><th></th>
+      </tr></thead>
+      <tbody>${UM_USERS.map(u=>`
+        <tr>
+          <td><div class="um-avatar-sm" style="background:${u.color};width:32px;height:32px;font-size:12px">${u.first[0]+u.last[0]}</div></td>
+          <td><div class="um-user-name">${u.first} ${u.last}</div><div class="um-user-email">${u.email}</div></td>
+          <td>${u.roles.map(r=>`<span class="um-role-pill ${r==='Admin'?'um-role-admin':r==='Data Export'?'um-role-export':'um-role-import'}">${r}</span>`).join('')}</td>
+          <td style="font-size:12px;color:var(--muted)">${u.dept}</td>
+          <td class="um-date">${u.lastActive}</td>
+          <td class="um-date">${u.added}</td>
+          <td><button class="um-action-btn" onclick="showToast('👤','${u.first} ${u.last}','Edit · Change role · Remove')">⋮</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+// ── GENERIC ──
+function dmcRenderGeneric(section) {
+  const c = document.getElementById('dmc-content');
+  const items = {
+    reports:[{icon:'📊',t:'Revenue Report',d:'Monthly revenue breakdown by destination and package'},{icon:'📈',t:'Booking Trends',d:'Week-over-week booking volume and conversion rates'},{icon:'📋',t:'Client Report',d:'Top clients by revenue and booking frequency'}],
+    master:[{icon:'📍',t:'Locations',d:'Manage destination and pickup point master data'},{icon:'🗺',t:'Wilayah / Zones',d:'Geographic zones and service coverage areas'},{icon:'🚗',t:'Kendaraan',d:'Vehicle fleet management and availability'},{icon:'📦',t:'Barang / Products',d:'Service and product catalogue management'}],
+  };
+  const its = items[section] || [{icon:'🔧',t:'Coming Soon',d:'This section is under development'}];
+  c.innerHTML = `
+    <div class="dmc-page-title">${section.charAt(0).toUpperCase()+section.slice(1)}</div>
+    <div class="dmc-page-sub">Manage your ${section} data and configurations</div>
+    <div class="um-settings-grid">${its.map(i=>`
+      <div class="um-settings-card" onclick="showToast('${i.icon}','${i.t}','Coming soon')">
+        <div class="um-settings-card-icon">${i.icon}</div>
+        <div class="um-settings-card-title">${i.t}</div>
+        <div class="um-settings-card-desc">${i.d}</div>
+      </div>`).join('')}</div>`;
+}
+
+// ─────────────────────────────────────────────
+// USER MANAGEMENT
+// ─────────────────────────────────────────────
+const UM_USERS = [
+  {id:1, first:'Narayan', last:'Mallapur',  email:'narayan@namaos.com',  roles:['Admin','Data Export','Data Import'], dept:'Management', lastActive:'Today',    added:'Jan 10, 2025', color:'#c8a96e'},
+  {id:2, first:'Priya',   last:'Sharma',    email:'priya@namaos.com',    roles:['Agent','Data Export','Data Import'], dept:'Sales',       lastActive:'Today',    added:'Jan 12, 2025', color:'#e05a4e'},
+  {id:3, first:'Arjun',   last:'Mehta',     email:'arjun@namaos.com',    roles:['Agent','Data Export','Data Import'], dept:'Sales',       lastActive:'Mar 20',   added:'Feb 1, 2025',  color:'#5b8def'},
+  {id:4, first:'Sunita',  last:'Reddy',     email:'sunita@namaos.com',   roles:['Data Export','Data Import'],         dept:'Operations',  lastActive:'Mar 19',   added:'Feb 5, 2025',  color:'#4a9b7f'},
+  {id:5, first:'Vikram',  last:'Nair',      email:'vikram@namaos.com',   roles:['Data Export','Data Import'],         dept:'Operations',  lastActive:'Mar 18',   added:'Feb 8, 2025',  color:'#e09a3e'},
+  {id:6, first:'Kavya',   last:'Iyer',      email:'kavya@namaos.com',    roles:['Agent','Data Import'],               dept:'Sales',       lastActive:'Mar 21',   added:'Feb 14, 2025', color:'#9b59b6'},
+  {id:7, first:'Rahul',   last:'Singh',     email:'rahul@namaos.com',    roles:['Data Export'],                       dept:'Finance',     lastActive:'Mar 17',   added:'Mar 1, 2025',  color:'#e05a4e'},
+  {id:8, first:'Ananya',  last:'Kapoor',    email:'ananya@namaos.com',   roles:['Viewer'],                            dept:'Finance',     lastActive:'Mar 15',   added:'Mar 5, 2025',  color:'#4a9b7f'},
+];
+
+let umPage = 1;
+const UM_PER_PAGE = 6;
+let umSearch = '';
+let umChecked = new Set();
+let currentUmSection = 'users';
+
+const UM_SECTION_META = {
+  users:          { title:'User management',   desc:'Manage your team members and their account permissions here.' },
+  dashboard:      { title:'Dashboard',         desc:'Overview of system activity and platform health metrics.' },
+  appearance:     { title:'Appearance',        desc:'Customise the look and feel of your NAMA workspace.' },
+  database:       { title:'Database',          desc:'Manage database connections, backups and configurations.' },
+  connections:    { title:'Connections',       desc:'API integrations, webhooks and third-party connections.' },
+  timezones:      { title:'Timezones',         desc:'Configure timezone settings for your workspace.' },
+  notifications:  { title:'Notifications',     desc:'Manage alerts, email digests and in-app notifications.' },
+  security:       { title:'Security & Access', desc:'Manage 2FA, session controls and IP allowlists.' },
+  authentication: { title:'Authentication',    desc:'SSO, OAuth providers and login policies.' },
+  payments:       { title:'Payments',          desc:'Billing, invoices and subscription management.' },
+  import:         { title:'Import Data',       desc:'Bulk import leads, packages and supplier data.' },
+  export:         { title:'Export Data',       desc:'Export leads, bookings and reports as CSV or PDF.' },
+  settings:       { title:'Settings',          desc:'General workspace preferences and configurations.' },
+  docs:           { title:'Documentation',     desc:'Guides, API references and onboarding materials.' },
+};
+
+function umSwitch(section, el) {
+  currentUmSection = section;
+  document.querySelectorAll('.um-nav-item').forEach(i=>i.classList.remove('active'));
+  if (el) el.classList.add('active');
+
+  const meta = UM_SECTION_META[section] || { title: section, desc: '' };
+  const bc = document.getElementById('um-breadcrumb-page');
+  const pt = document.getElementById('um-page-title');
+  const pd = document.getElementById('um-page-desc');
+  if (bc) bc.textContent = meta.title;
+  if (pt) pt.textContent = meta.title;
+  if (pd) pd.textContent = meta.desc;
+
+  renderUmContent(section);
+}
+
+function renderUmContent(section) {
+  const c = document.getElementById('um-content');
+  if (!c) return;
+  c.classList.remove('um-content-anim');
+  void c.offsetWidth; // reflow to restart animation
+  c.classList.add('um-content-anim');
+
+  if (section === 'users') { renderUmUsers(); return; }
+  if (section === 'notifications') { renderUmNotifications(); return; }
+  if (section === 'security') { renderUmSecurity(); return; }
+  if (section === 'appearance') { renderUmAppearance(); return; }
+  if (section === 'connections') { renderUmConnections(); return; }
+  if (section === 'payments') { renderUmPayments(); return; }
+  // Generic settings card layout for all others
+  renderUmGeneric(section);
+}
+
+function renderUmUsers() {
+  const c = document.getElementById('um-content');
+  const filtered = UM_USERS.filter(u =>
+    !umSearch || (u.first+' '+u.last+' '+u.email).toLowerCase().includes(umSearch.toLowerCase())
+  );
+  const total = filtered.length;
+  const start = (umPage-1)*UM_PER_PAGE;
+  const pageData = filtered.slice(start, start+UM_PER_PAGE);
+  const pages = Math.max(1, Math.ceil(total/UM_PER_PAGE));
+
+  c.innerHTML = `
+    <div class="um-toolbar">
+      <div class="um-count-title">All users <span>${total}</span></div>
+      <div class="um-search-box">
+        <span style="color:var(--muted);font-size:13px">🔍</span>
+        <input placeholder="Search" value="${umSearch}" oninput="umSearch=this.value;umPage=1;renderUmUsers()">
+      </div>
+      <button class="lt-btn-sm" onclick="showToast('⚙','Filters','Filter options coming soon')">⚙ Filters</button>
+      <button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="openUmModal()">+ Add user</button>
+    </div>
+
+    <table class="um-table">
+      <thead>
+        <tr>
+          <th style="width:32px"><input type="checkbox" style="accent-color:var(--accent)" onchange="umToggleAll(this)"></th>
+          <th>User name</th>
+          <th>Access</th>
+          <th>Department</th>
+          <th>Last active ↓</th>
+          <th>Date added</th>
+          <th style="width:32px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${pageData.map(u => {
+          const initials = u.first[0]+u.last[0];
+          const rolePills = u.roles.map(r => {
+            const cls = r==='Admin'?'um-role-admin':r==='Data Export'?'um-role-export':r==='Data Import'?'um-role-import':r==='Viewer'?'um-role-viewer':'um-role-agent';
+            return `<span class="um-role-pill ${cls}">${r}</span>`;
+          }).join('');
+          const checked = umChecked.has(u.id);
+          return `<tr class="${checked?'um-selected':''}">
+            <td><input type="checkbox" style="accent-color:var(--accent)" ${checked?'checked':''} onchange="umToggleCheck(${u.id},this)"></td>
+            <td>
+              <div class="um-user-cell">
+                <div class="um-avatar-sm" style="background:${u.color};width:32px;height:32px;font-size:12px">${initials}</div>
+                <div>
+                  <div class="um-user-name">${u.first} ${u.last}</div>
+                  <div class="um-user-email">${u.email}</div>
+                </div>
+              </div>
+            </td>
+            <td>${rolePills}</td>
+            <td><span style="font-size:12px;color:var(--muted)">${u.dept}</span></td>
+            <td class="um-date">${u.lastActive}</td>
+            <td class="um-date">${u.added}</td>
+            <td>
+              <button class="um-action-btn" onclick="umUserMenu(${u.id})" title="More options">⋮</button>
+            </td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+
+    <div class="um-pagination">
+      <div class="um-page-btn" onclick="if(umPage>1){umPage--;renderUmUsers()}">‹</div>
+      ${Array.from({length:pages},(_,i)=>`<div class="um-page-btn ${i+1===umPage?'active-page':''}" onclick="umPage=${i+1};renderUmUsers()">${i+1}</div>`).join('')}
+      <div class="um-page-btn" onclick="if(umPage<${pages}){umPage++;renderUmUsers()}">›</div>
+    </div>
+  `;
+}
+
+function umToggleAll(el) {
+  const filtered = UM_USERS.filter(u=>!umSearch||(u.first+' '+u.last).toLowerCase().includes(umSearch.toLowerCase()));
+  filtered.forEach(u => el.checked ? umChecked.add(u.id) : umChecked.delete(u.id));
+  renderUmUsers();
+}
+
+function umToggleCheck(id, el) {
+  el.checked ? umChecked.add(id) : umChecked.delete(id);
+  const row = el.closest('tr');
+  if (row) row.classList.toggle('um-selected', el.checked);
+}
+
+function umUserMenu(id) {
+  const u = UM_USERS.find(x=>x.id===id);
+  if (!u) return;
+  showToast('👤', u.first+' '+u.last, 'Edit · Change role · Remove user');
+}
+
+function renderUmNotifications() {
+  const c = document.getElementById('um-content');
+  const notifs = [
+    { icon:'🔥', title:'Hot lead alert', desc:'Sharma Family — win probability jumped to 72%', time:'2 min ago', unread:true },
+    { icon:'✅', title:'Booking confirmed', desc:'Kapoor Group — Dubai 5N/6D — ₹8,00,000 received', time:'1 hr ago', unread:true },
+    { icon:'📧', title:'New enquiry', desc:'Unknown lead via website — Maldives honeymoon', time:'3 hr ago', unread:true },
+    { icon:'⚠️', title:'Follow-up due', desc:'Reddy Family — no response in 48 hours', time:'Yesterday', unread:true },
+    { icon:'📊', title:'Weekly report ready', desc:'Pipeline: ₹48.2L · Conversion: 34% · 12 new leads', time:'2 days ago', unread:false },
+  ];
+  c.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-size:14px;font-weight:500">Notifications <span style="color:var(--accent);margin-left:6px">${notifs.filter(n=>n.unread).length} unread</span></div>
+      <button class="btn-ghost" style="font-size:12px" onclick="showToast('✓','All cleared','All notifications marked as read')">Mark all read</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${notifs.map(n=>`
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:10px;background:${n.unread?'rgba(200,169,110,0.06)':'var(--surface2)'};border:1px solid ${n.unread?'rgba(200,169,110,0.18)':'var(--border)'};cursor:pointer;transition:all 0.15s" onclick="showToast('${n.icon}','${n.title}','Notification opened')">
+          <div style="font-size:20px;flex-shrink:0;margin-top:1px">${n.icon}</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:${n.unread?'600':'400'};margin-bottom:2px">${n.title}</div>
+            <div style="font-size:12px;color:var(--muted)">${n.desc}</div>
+          </div>
+          <div style="font-size:10.5px;color:var(--muted);flex-shrink:0;text-align:right">
+            ${n.time}
+            ${n.unread?'<div style="width:7px;height:7px;border-radius:50%;background:var(--accent);margin:4px 0 0 auto"></div>':''}
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function renderUmSecurity() {
+  const c = document.getElementById('um-content');
+  c.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${[
+        {icon:'🔐',title:'Two-Factor Authentication',desc:'Require 2FA for all team members',val:'Enabled',color:'var(--accent2)'},
+        {icon:'🌍',title:'IP Allowlist',desc:'Restrict access to specific IP ranges',val:'Disabled',color:'var(--muted)'},
+        {icon:'⏱',title:'Session Timeout',desc:'Auto-logout after inactivity',val:'30 minutes',color:'var(--accent)'},
+        {icon:'🔑',title:'Password Policy',desc:'Minimum 8 chars, uppercase, number required',val:'Strong',color:'var(--accent2)'},
+        {icon:'📋',title:'Audit Log',desc:'Track all user actions and logins',val:'Active',color:'var(--accent2)'},
+      ].map(s=>`
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);cursor:pointer" onclick="showToast('${s.icon}','${s.title}','Settings panel coming soon')">
+          <div style="font-size:20px;flex-shrink:0">${s.icon}</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500;margin-bottom:2px">${s.title}</div><div style="font-size:12px;color:var(--muted)">${s.desc}</div></div>
+          <div style="font-size:12px;font-weight:600;color:${s.color}">${s.val}</div>
+          <div style="color:var(--muted);font-size:14px">›</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function renderUmAppearance() {
+  const c = document.getElementById('um-content');
+  c.innerHTML = `
+    <div style="margin-bottom:16px;font-size:13.5px;font-weight:500">Theme</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px">
+      ${[
+        {name:'Dark (Current)',bg:'#0a0a08',surface:'#111110',accent:'#c8a96e',active:true},
+        {name:'Light',bg:'#f5f3ef',surface:'#ffffff',accent:'#a0762e',active:false},
+        {name:'Ocean',bg:'#050e1a',surface:'#0a1828',accent:'#4a9b7f',active:false},
+      ].map(t=>`
+        <div onclick="showToast('🎨','Theme','Switched to ${t.name}')" style="border-radius:10px;overflow:hidden;border:2px solid ${t.active?'var(--accent)':'var(--border)'};cursor:pointer;transition:all 0.2s">
+          <div style="height:60px;background:${t.bg};display:flex;gap:6px;padding:8px">
+            <div style="width:30px;background:${t.surface};border-radius:4px;opacity:0.9"></div>
+            <div style="flex:1;background:${t.surface};border-radius:4px;opacity:0.7"></div>
+            <div style="width:12px;height:12px;border-radius:50%;background:${t.accent};margin-top:2px"></div>
+          </div>
+          <div style="padding:8px 10px;background:var(--surface2);font-size:11.5px;font-weight:${t.active?'600':'400'};color:${t.active?'var(--accent)':'var(--muted)'}">${t.name}</div>
+        </div>`).join('')}
+    </div>
+    <div style="font-size:13.5px;font-weight:500;margin-bottom:12px">Density</div>
+    <div style="display:flex;gap:8px">
+      ${['Comfortable','Compact','Spacious'].map((d,i)=>`<button class="lt-btn-sm ${i===0?'active':''}" style="${i===0?'color:var(--text);border-color:rgba(255,255,255,0.2)':''}" onclick="showToast('✓','Density','Set to ${d}')">${d}</button>`).join('')}
+    </div>`;
+}
+
+function renderUmConnections() {
+  const c = document.getElementById('um-content');
+  c.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${[
+        {icon:'✈️',name:'Amadeus GDS',desc:'Flight search & booking API',status:'Connected',color:'var(--accent2)'},
+        {icon:'🏨',name:'Hotelbeds',desc:'Hotel inventory & rates',status:'Connected',color:'var(--accent2)'},
+        {icon:'🎟',name:'Viator',desc:'Tours & activities',status:'Connected',color:'var(--accent2)'},
+        {icon:'📧',name:'SendGrid',desc:'Transactional email delivery',status:'Connected',color:'var(--accent2)'},
+        {icon:'💬',name:'WhatsApp Business API',desc:'Automated messaging',status:'Pending',color:'#e09a3e'},
+        {icon:'💳',name:'Razorpay',desc:'Payment gateway integration',status:'Connected',color:'var(--accent2)'},
+        {icon:'📊',name:'Google Analytics',desc:'Traffic & conversion tracking',status:'Disconnected',color:'var(--muted)'},
+      ].map(conn=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:10px;background:var(--surface2);border:1px solid var(--border)">
+          <div style="font-size:22px;flex-shrink:0">${conn.icon}</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500">${conn.name}</div><div style="font-size:11.5px;color:var(--muted);margin-top:1px">${conn.desc}</div></div>
+          <span style="font-size:11px;font-weight:600;color:${conn.color}">${conn.status}</span>
+          <button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="showToast('🔌','${conn.name}','${conn.status==='Disconnected'?'Connecting...':'Settings opened'}')">${conn.status==='Disconnected'?'Connect':'Manage'}</button>
+        </div>`).join('')}
+    </div>`;
+}
+
+function renderUmPayments() {
+  const c = document.getElementById('um-content');
+  c.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
+      <div class="stat-card"><div class="stat-label">Current Plan</div><div class="stat-value" style="font-size:18px">Professional</div><div class="stat-sub">₹8,000 / month</div></div>
+      <div class="stat-card"><div class="stat-label">Next Billing</div><div class="stat-value" style="font-size:18px">Apr 1, 2025</div><div class="stat-sub">Auto-renews</div></div>
+      <div class="stat-card"><div class="stat-label">Team Seats</div><div class="stat-value" style="font-size:18px">8 / 20</div><div class="stat-sub">12 seats available</div></div>
+    </div>
+    <div style="font-size:13.5px;font-weight:500;margin-bottom:12px">Billing History</div>
+    <table class="um-table">
+      <thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Status</th><th>Invoice</th></tr></thead>
+      <tbody>
+        ${[
+          {date:'Mar 1, 2025',desc:'Professional Plan — March',amount:'₹8,000',status:'Paid'},
+          {date:'Feb 1, 2025',desc:'Professional Plan — February',amount:'₹8,000',status:'Paid'},
+          {date:'Jan 1, 2025',desc:'Professional Plan — January',amount:'₹8,000',status:'Paid'},
+        ].map(b=>`<tr>
+          <td class="um-date">${b.date}</td>
+          <td style="font-size:12.5px">${b.desc}</td>
+          <td style="font-weight:500;color:var(--accent)">${b.amount}</td>
+          <td><span class="mgmt-status-active">${b.status}</span></td>
+          <td><button class="um-action-btn" onclick="showToast('📄','Invoice','Downloading PDF…')" title="Download">⬇</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+function renderUmGeneric(section) {
+  const c = document.getElementById('um-content');
+  const genericItems = {
+    dashboard:  [{icon:'📊',t:'Activity Overview',d:'Real-time platform usage and team activity'},{icon:'📈',t:'Performance Metrics',d:'KPIs, conversion rates and revenue data'},{icon:'🗂',t:'Recent Changes',d:'Audit trail of recent configuration updates'}],
+    database:   [{icon:'🗄',t:'Database Config',d:'Connection strings, credentials and pooling'},{icon:'💾',t:'Backups',d:'Automated daily backups — last backup 2 hr ago'},{icon:'🔄',t:'Migrations',d:'Schema version control and migration history'}],
+    timezones:  [{icon:'🌍',t:'Default Timezone',d:'Asia/Kolkata (IST +5:30)'},{icon:'🕐',t:'Display Format',d:'DD/MM/YYYY · 24-hour clock'},{icon:'🗺',t:'Multi-timezone',d:'Show converted times for international clients'}],
+    import:     [{icon:'📥',t:'Import Leads',d:'Upload CSV with lead data — auto-maps fields'},{icon:'🏨',t:'Import Suppliers',d:'Bulk import hotel & activity supplier data'},{icon:'📦',t:'Import Packages',d:'Upload holiday package catalogue from Excel'}],
+    export:     [{icon:'📤',t:'Export Leads',d:'Download lead pipeline as CSV or Excel'},{icon:'📊',t:'Export Reports',d:'Monthly revenue, conversion and pipeline reports'},{icon:'📄',t:'Export Packages',d:'Full package catalogue with pricing'}],
+    settings:   [{icon:'⚙',t:'General Settings',d:'Workspace name, logo and contact details'},{icon:'📧',t:'Email Settings',d:'SMTP configuration and email templates'},{icon:'🌐',t:'Domain Settings',d:'Custom domain and SSL configuration'}],
+    docs:       [{icon:'📖',t:'Getting Started',d:'Set up NAMA in under 10 minutes'},{icon:'🔌',t:'API Reference',d:'Complete REST API documentation'},{icon:'🎓',t:'Video Tutorials',d:'Step-by-step walkthroughs for every feature'}],
+    authentication: [{icon:'🔑',t:'SSO / SAML',d:'Single sign-on with Google Workspace or Azure AD'},{icon:'🛡',t:'OAuth Providers',d:'Google, Microsoft, Apple sign-in'},{icon:'🔒',t:'Login Policies',d:'Password requirements and session management'}],
+  };
+  const items = genericItems[section] || [{icon:'🔧',t:'Coming Soon',d:'This section is under construction'}];
+  c.innerHTML = `<div class="um-settings-grid">${items.map(i=>`
+    <div class="um-settings-card" onclick="showToast('${i.icon}','${i.t}','Panel coming soon')">
+      <div class="um-settings-card-icon">${i.icon}</div>
+      <div class="um-settings-card-title">${i.t}</div>
+      <div class="um-settings-card-desc">${i.d}</div>
+    </div>`).join('')}</div>`;
+}
+
+function openUmModal() { document.getElementById('um-add-modal').style.display='flex'; }
+function closeUmModal(e) {
+  if (e && e.target !== document.getElementById('um-add-modal')) return;
+  document.getElementById('um-add-modal').style.display='none';
+}
+function saveUmUser() {
+  const first = (document.getElementById('um-fname')||{value:''}).value.trim();
+  const last  = (document.getElementById('um-lname')||{value:''}).value.trim();
+  const email = (document.getElementById('um-email')||{value:''}).value.trim();
+  if (!first||!email) { showToast('⚠️','Missing Fields','Name and email are required'); return; }
+  const role = (document.getElementById('um-role')||{value:'Agent'}).value;
+  const dept = (document.getElementById('um-dept')||{value:'Sales'}).value;
+  const colors = ['#c8a96e','#e05a4e','#4a9b7f','#5b8def','#9b59b6','#e09a3e'];
+  UM_USERS.unshift({
+    id: UM_USERS.length+1, first, last, email,
+    roles:[role,'Data Export','Data Import'], dept,
+    lastActive:'Just now', added:'Mar 21, 2025',
+    color: colors[UM_USERS.length % colors.length]
+  });
+  closeUmModal();
+  renderUmUsers();
+  showToast('✦','User Added!', first+' '+last+' joined the workspace');
+  document.getElementById('um-fname').value='';
+  document.getElementById('um-lname').value='';
+  document.getElementById('um-email').value='';
+}
+
+// Initialise Users panel when switched to
+// ─────────────────────────────────────────────
+// AGENT MODAL
+// ─────────────────────────────────────────────
+function openAgentModal(idx) {
+  currentAgentIdx = idx;
+  const a = AGENTS[idx];
+  const iconWrap = document.getElementById('amd-icon-wrap');
+  if (iconWrap) { iconWrap.textContent = a.icon; iconWrap.style.background = a.bg; }
+  const setEl = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  setEl('amd-name', a.name);
+  setEl('amd-desc', a.desc);
+  setEl('amd-calls', a.calls.toLocaleString());
+  setEl('amd-time', a.time);
+  setEl('amd-success', (97 + idx * 0.4).toFixed(1) + '%');
+
+  const isActive = a.status === 'Active';
+  const toggleBtn = document.getElementById('amd-toggle-btn');
+  if (toggleBtn) {
+    toggleBtn.textContent = isActive ? '● Active' : '○ Inactive';
+    toggleBtn.className = 'agent-toggle-btn ' + (isActive ? 'active' : 'inactive');
+  }
+
+  // Capabilities
+  const caps = AGENT_CAPABILITIES[a.name] || [];
+  const capEl = document.getElementById('amd-capabilities');
+  if (capEl) capEl.innerHTML = caps.map(c => `<span class="tag" style="font-size:11px;padding:3px 10px">${c}</span>`).join('');
+
+  // Activity
+  const acts = AGENT_ACTIVITY[a.name] || [];
+  const actEl = document.getElementById('amd-activity');
+  if (actEl) actEl.innerHTML = acts.map(act => `
+    <div class="agent-log-row">
+      <span style="font-size:14px">${a.icon}</span>
+      <div style="flex:1">
+        <div>${act.a}</div>
+        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">${act.t}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('agent-detail-modal').style.display = 'flex';
+}
+
+function closeAgentModal(e) {
+  if (e && e.target !== document.getElementById('agent-detail-modal')) return;
+  document.getElementById('agent-detail-modal').style.display = 'none';
+}
+
+function toggleAgentStatus() {
+  const a = AGENTS[currentAgentIdx];
+  a.status = a.status === 'Active' ? 'Inactive' : 'Active';
+  const isActive = a.status === 'Active';
+  const toggleBtn = document.getElementById('amd-toggle-btn');
+  if (toggleBtn) {
+    toggleBtn.textContent = isActive ? '● Active' : '○ Inactive';
+    toggleBtn.className = 'agent-toggle-btn ' + (isActive ? 'active' : 'inactive');
+  }
+  renderAgents();
+  showToast(isActive ? '✅' : '⏸', a.name, 'Status changed to ' + a.status);
+}
+
+function runAgentNow() {
+  const a = AGENTS[currentAgentIdx];
+  closeAgentModal();
+  showToast('▶', a.name + ' running…', 'Agent triggered manually — check activity log');
+  setTimeout(() => {
+    a.calls += Math.floor(Math.random() * 5) + 1;
+    renderAgents();
+  }, 1500);
 }
 
 // ─────────────────────────────────────────────
@@ -3808,6 +6146,13 @@ function filterLeads(filter, el) {
   document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
   if(el) el.classList.add('active');
   checkedIds.clear();
+  // Always switch to leads panel when a sidebar item is clicked
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const leadsPanel = document.getElementById('panel-leads');
+  if (leadsPanel) leadsPanel.classList.add('active');
+  const leadsNavLink = document.querySelector('.nav-link[onclick*="leads"]');
+  if (leadsNavLink) leadsNavLink.classList.add('active');
   renderTable();
 }
 
@@ -4314,5 +6659,52 @@ window.aoDismissOverlay = function() {
   _origAoDismiss();
 };
 </script>
-</body>
-</html>
+
+<!-- AGENT DETAIL MODAL -->
+<div id="agent-detail-modal" style="display:none" class="agent-modal-overlay" onclick="closeAgentModal(event)">
+  <div class="agent-modal">
+    <div class="agent-modal-header">
+      <div class="agent-modal-icon" id="amd-icon-wrap">🧳</div>
+      <div>
+        <div style="font-size:16px;font-weight:500" id="amd-name">Planner Agent</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px" id="amd-status-line">
+          <span style="display:inline-flex;align-items:center;gap:5px">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--accent2);display:inline-block;animation:blink 1.5s infinite"></span>
+            <span id="amd-status-text">Active</span>
+          </span>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <button class="agent-toggle-btn active" id="amd-toggle-btn" onclick="toggleAgentStatus()">● Active</button>
+        <div class="form-modal-close" onclick="closeAgentModal()">✕</div>
+      </div>
+    </div>
+    <div class="agent-modal-body">
+      <div style="font-size:13px;color:var(--muted);line-height:1.7" id="amd-desc">Agent description.</div>
+
+      <div class="agent-metric-row">
+        <div class="agent-metric-box">
+          <div class="agent-metric-box-label">API Calls</div>
+          <div class="agent-metric-box-val" id="amd-calls">0</div>
+        </div>
+        <div class="agent-metric-box">
+          <div class="agent-metric-box-label">Avg Response</div>
+          <div class="agent-metric-box-val" id="amd-time">0s</div>
+        </div>
+        <div class="agent-metric-box">
+          <div class="agent-metric-box-label">Success Rate</div>
+          <div class="agent-metric-box-val" style="color:var(--accent2)" id="amd-success">99.2%</div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;font-weight:500">Capabilities</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px" id="amd-capabilities"></div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;font-weight:500">Recent Activity</div>
+        <div id="amd-activity"></div>
+      </div>
+    </div>
+    <div cla
