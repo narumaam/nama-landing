@@ -168,6 +168,39 @@
     animation: blink 2s ease-in-out infinite;
   }
 
+  /* FORM STYLES */
+  .form-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 11px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+  }
+  .form-input:focus { border-color: rgba(200,169,110,0.5); }
+  .form-input::placeholder { color: var(--muted); }
+  select.form-input { cursor: pointer; }
+  #new-lead-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
+    z-index: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+
   .avatar {
     width: 30px; height: 30px;
     border-radius: 50%;
@@ -965,6 +998,61 @@
     50% { opacity: 0.3; }
   }
 
+  .status-dot.junk { background: #7a7870; }
+
+  /* PROPOSAL MODAL */
+  .proposal-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
+    z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+    animation: fadeInOverlay 0.2s ease;
+  }
+  @keyframes fadeInOverlay { from{opacity:0} to{opacity:1} }
+  .proposal-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: min(720px, 94vw);
+    max-height: 88vh;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    animation: slideUpModal 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes slideUpModal { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  .proposal-modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .proposal-modal-title { font-size: 14px; font-weight: 500; }
+  .proposal-modal-close {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .proposal-modal-close:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .proposal-modal-body { overflow-y: auto; padding: 24px; flex: 1; }
+  .proposal-modal-footer {
+    padding: 14px 20px; border-top: 1px solid var(--border);
+    display: flex; gap: 8px; justify-content: flex-end; flex-shrink: 0;
+  }
+
+  /* BACK TO LEADS BUTTON */
+  .back-to-leads {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted); cursor: pointer;
+    padding: 5px 10px; border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent; transition: all 0.15s;
+    margin-bottom: 14px;
+  }
+  .back-to-leads:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
   .agent-stats {
     margin-top: 12px;
     padding-top: 12px;
@@ -980,6 +1068,67 @@
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
+
+  /* NEW LEAD FORM MODAL */
+  .form-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    z-index: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .form-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: min(600px, 95vw);
+    max-height: 90vh;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    animation: slideUpModal 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .form-modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .form-modal-header h3 { font-size: 15px; font-weight: 500; }
+  .form-modal-body { overflow-y: auto; padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .form-modal-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; flex-shrink: 0; }
+  .form-section-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); font-weight: 500; margin-bottom: 4px; margin-top: 8px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .form-field { display: flex; flex-direction: column; gap: 5px; }
+  .form-label { font-size: 11px; color: var(--muted); }
+  .form-input, .form-select, .form-textarea {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 12px; color: var(--text);
+    font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none;
+    transition: border-color 0.15s; width: 100%;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: rgba(200,169,110,0.5);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); opacity: 0.6; }
+  .form-select option { background: var(--surface); }
+  .form-textarea { resize: vertical; min-height: 72px; line-height: 1.6; }
+  .form-modal-close {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .form-modal-close:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+  /* EMAIL SENT / WHATSAPP SENT TOAST VARIANTS */
+  .comms-sent-box {
+    background: var(--surface2); border: 1px solid rgba(74,155,127,0.3);
+    border-radius: 10px; padding: 12px 14px; display: flex; gap: 10px;
+    align-items: flex-start; animation: fadeInOverlay 0.3s ease;
+  }
+  @keyframes fadeInOverlay { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 
   /* NOTIFICATION TOAST */
   .toast {
@@ -1067,9 +1216,732 @@
     background: var(--accent2);
     animation: blink 2s ease-in-out infinite;
   }
+
+  /* FORM STYLES */
+  .form-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 11px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+  }
+  .form-input:focus { border-color: rgba(200,169,110,0.5); }
+  .form-input::placeholder { color: var(--muted); }
+  select.form-input { cursor: pointer; }
+  #new-lead-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
+    z-index: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ══ LEADS TABLE VIEW ══ */
+  .lt-wrap { display:flex; flex-direction:column; flex:1; overflow:hidden; }
+  .lt-header { padding:18px 24px 14px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .lt-title-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .lt-title { font-family:'Instrument Serif',serif; font-size:22px; }
+  .lt-stats-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+  .lt-stat { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px 14px; }
+  .lt-stat-label { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:4px; }
+  .lt-stat-value { font-size:20px; font-family:'Instrument Serif',serif; font-weight:400; }
+  .lt-stat-delta { font-size:11px; margin-top:2px; }
+  .lt-stat-delta.up { color:var(--accent2); }
+  .lt-stat-delta.down { color:var(--danger); }
+  .lt-toolbar { display:flex; align-items:center; gap:8px; }
+  .lt-view-tabs { display:flex; gap:2px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:2px; }
+  .lt-view-tab { padding:5px 12px; border-radius:6px; font-size:12px; cursor:pointer; color:var(--muted); transition:all 0.15s; display:flex; align-items:center; gap:5px; }
+  .lt-view-tab.active { background:var(--surface); color:var(--text); box-shadow:0 1px 3px rgba(0,0,0,0.3); }
+  .lt-search { flex:1; max-width:220px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:6px 12px; font-size:12.5px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.15s; }
+  .lt-search:focus { border-color:rgba(200,169,110,0.4); }
+  .lt-search::placeholder { color:var(--muted); }
+  .lt-btn-sm { padding:5px 12px; border-radius:7px; font-size:12px; background:var(--surface2); border:1px solid var(--border); color:var(--muted); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; display:flex; align-items:center; gap:5px; }
+  .lt-btn-sm:hover { color:var(--text); border-color:rgba(255,255,255,0.15); }
+  .lt-body { flex:1; overflow-y:auto; }
+
+  /* TABLE */
+  .leads-table { width:100%; border-collapse:collapse; }
+  .leads-table th { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); font-weight:500; padding:10px 12px; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap; cursor:pointer; user-select:none; position:sticky; top:0; background:var(--surface); z-index:2; }
+  .leads-table th:hover { color:var(--text); }
+  .leads-table th .sort-icon { opacity:0.3; font-size:9px; margin-left:3px; }
+  .leads-table th.sorted .sort-icon { opacity:1; color:var(--accent); }
+  .leads-table td { padding:11px 12px; border-bottom:1px solid var(--border); font-size:12.5px; vertical-align:middle; }
+  .leads-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .leads-table tr.selected td { background:rgba(200,169,110,0.06); }
+  .leads-table tr.lt-row { cursor:pointer; }
+
+  .lt-check { width:14px; height:14px; accent-color:var(--accent); cursor:pointer; }
+  .lt-lead-name { font-weight:500; color:var(--text); }
+  .lt-lead-email { font-size:11px; color:var(--muted); margin-top:1px; }
+  .lt-source-pill { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:600; background:var(--surface2); border:1px solid var(--border); color:var(--muted); letter-spacing:0.05em; }
+  .lt-status-pill { display:inline-block; padding:3px 10px; border-radius:5px; font-size:11px; font-weight:600; }
+  .lt-status-pill.hot     { background:rgba(224,90,78,0.15);  color:#e05a4e; border:1px solid rgba(224,90,78,0.25); }
+  .lt-status-pill.warm    { background:rgba(224,154,62,0.15); color:#e09a3e; border:1px solid rgba(224,154,62,0.25); }
+  .lt-status-pill.new     { background:rgba(74,155,127,0.15); color:#4a9b7f; border:1px solid rgba(74,155,127,0.25); }
+  .lt-status-pill.junk    { background:rgba(122,120,112,0.15);color:#7a7870; border:1px solid rgba(122,120,112,0.25); }
+  .lt-interest-pill { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:600; }
+  .lt-interest-pill.high  { background:rgba(74,155,127,0.15); color:#4a9b7f; border:1px solid rgba(74,155,127,0.25); }
+  .lt-interest-pill.mid   { background:rgba(200,169,110,0.15);color:var(--accent); border:1px solid rgba(200,169,110,0.25); }
+  .lt-interest-pill.low   { background:rgba(224,90,78,0.12);  color:#e05a4e; border:1px solid rgba(224,90,78,0.2); }
+
+  /* sparkline */
+  .sparkline { width:60px; height:24px; }
+
+  /* last action */
+  .lt-action-wrap { display:flex; align-items:center; gap:6px; }
+  .lt-action-date { font-size:11px; color:var(--muted); }
+  .lt-engage-btn { padding:3px 10px; border-radius:5px; font-size:11px; background:var(--surface2); border:1px solid var(--border); color:var(--text); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; white-space:nowrap; }
+  .lt-engage-btn:hover { border-color:rgba(200,169,110,0.4); color:var(--accent); }
+
+  /* bulk action bar */
+  .lt-bulk-bar { position:sticky; bottom:0; left:0; right:0; background:var(--text); color:var(--bg); padding:10px 20px; display:flex; align-items:center; gap:10px; font-size:12.5px; font-weight:500; z-index:10; border-top:1px solid var(--border); }
+  .lt-bulk-count { background:var(--accent); color:var(--bg); padding:2px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+  .lt-bulk-btn { padding:5px 14px; border-radius:6px; font-size:12px; background:rgba(255,255,255,0.15); border:none; color:var(--bg); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+  .lt-bulk-btn:hover { background:rgba(255,255,255,0.25); }
+  .lt-bulk-btn.danger { background:rgba(224,90,78,0.25); color:#e05a4e; }
+
+  /* board view */
+  .lt-board { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:16px; height:100%; overflow-y:auto; }
+  .lt-board-col { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px; display:flex; flex-direction:column; gap:8px; min-height:200px; }
+  .lt-board-col-header { font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); font-weight:500; margin-bottom:4px; display:flex; justify-content:space-between; }
+  .lt-board-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 12px; cursor:pointer; transition:border-color 0.15s; }
+  .lt-board-card:hover { border-color:rgba(200,169,110,0.35); }
+  .lt-board-card-name { font-size:12.5px; font-weight:500; margin-bottom:2px; }
+  .lt-board-card-dest { font-size:11px; color:var(--muted); margin-bottom:6px; }
+  .lt-board-card-foot { display:flex; justify-content:space-between; align-items:center; }
+
+  /* pipeline view */
+  .lt-pipeline { padding:20px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
+  .lt-pipe-row { display:flex; align-items:center; gap:12px; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px 16px; cursor:pointer; transition:border-color 0.15s; }
+  .lt-pipe-row:hover { border-color:rgba(200,169,110,0.3); }
+  .lt-pipe-stage { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); width:80px; flex-shrink:0; }
+  .lt-pipe-bar-wrap { flex:1; background:var(--surface); border-radius:4px; height:18px; overflow:hidden; }
+  .lt-pipe-bar-fill { height:100%; display:flex; align-items:center; padding:0 8px; font-size:10px; font-weight:600; color:var(--bg); border-radius:4px; transition:width 1s cubic-bezier(0.34,1.56,0.64,1); }
+  .lt-pipe-count { font-size:12px; font-weight:500; width:24px; text-align:right; color:var(--muted); }
+  .lt-pipe-value { font-size:12px; color:var(--accent); width:80px; text-align:right; }
+
+
+  /* ══ SERVICE MANAGEMENT & PACKAGES PANELS ══ */
+  .mgmt-wrap { display:flex; flex-direction:column; width:100%; overflow:hidden; }
+  .mgmt-header { padding:20px 24px 16px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .mgmt-breadcrumb { font-size:11px; color:var(--muted); margin-bottom:6px; }
+  .mgmt-breadcrumb span { color:var(--accent); }
+  .mgmt-title { font-family:'Instrument Serif',serif; font-size:22px; margin-bottom:0; }
+  .mgmt-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); padding:0 24px; }
+  .mgmt-tab { padding:10px 18px; font-size:13px; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.15s; display:flex; align-items:center; gap:6px; }
+  .mgmt-tab:hover { color:var(--text); }
+  .mgmt-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .mgmt-toolbar { display:flex; align-items:center; gap:10px; padding:14px 24px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .mgmt-search-wrap { flex:1; display:flex; gap:8px; }
+  .mgmt-search { flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:8px 14px; color:var(--text); font-size:13px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.15s; }
+  .mgmt-search:focus { border-color:rgba(200,169,110,0.4); }
+  .mgmt-search::placeholder { color:var(--muted); }
+  .mgmt-search-btn { padding:8px 16px; border-radius:8px; background:transparent; border:1px solid var(--border); color:var(--muted); font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+  .mgmt-search-btn:hover { color:var(--text); border-color:rgba(255,255,255,0.2); }
+  .mgmt-sort { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:8px 14px; color:var(--muted); font-size:12.5px; font-family:'DM Sans',sans-serif; cursor:pointer; outline:none; min-width:130px; }
+  .mgmt-create-btn { padding:8px 18px; border-radius:8px; background:var(--accent); color:var(--bg); font-size:12.5px; font-weight:600; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; transition:opacity 0.15s; white-space:nowrap; }
+  .mgmt-create-btn:hover { opacity:0.85; }
+  .mgmt-body { flex:1; overflow-y:auto; padding:0 24px 20px; }
+  .mgmt-showing { font-size:12px; color:var(--muted); padding:12px 0 8px; display:flex; justify-content:space-between; align-items:center; }
+  .mgmt-pagination { display:flex; align-items:center; gap:6px; }
+  .mgmt-page-btn { padding:4px 12px; border-radius:6px; font-size:12px; background:var(--surface2); border:1px solid var(--border); color:var(--muted); cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
+  .mgmt-page-btn:hover { color:var(--text); }
+  .mgmt-page-btn.active-page { background:var(--accent); color:var(--bg); border-color:var(--accent); }
+  .mgmt-per-page { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); }
+  .mgmt-per-page select { background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:3px 8px; color:var(--text); font-size:12px; font-family:'DM Sans',sans-serif; cursor:pointer; outline:none; }
+
+  /* mgmt table */
+  .mgmt-table { width:100%; border-collapse:collapse; margin-top:4px; }
+  .mgmt-table th { font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); font-weight:500; padding:10px 12px; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap; cursor:pointer; user-select:none; position:sticky; top:0; background:var(--surface); z-index:2; }
+  .mgmt-table th:hover { color:var(--text); }
+  .mgmt-table td { padding:12px; border-bottom:1px solid var(--border); font-size:12.5px; vertical-align:middle; }
+  .mgmt-table tr:hover td { background:rgba(255,255,255,0.02); cursor:pointer; }
+  .mgmt-id { font-size:11px; color:var(--muted); font-family:monospace; }
+  .mgmt-name { font-weight:500; color:var(--text); }
+  .mgmt-desc { font-size:11.5px; color:var(--muted); max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mgmt-rating { display:flex; align-items:center; gap:3px; }
+  .mgmt-star { color:#c8a96e; font-size:11px; }
+  .mgmt-status-active   { display:inline-block; padding:2px 10px; border-radius:4px; font-size:11px; font-weight:600; background:rgba(74,155,127,0.15); color:#4a9b7f; border:1px solid rgba(74,155,127,0.3); }
+  .mgmt-status-inactive { display:inline-block; padding:2px 10px; border-radius:4px; font-size:11px; font-weight:600; background:rgba(224,90,78,0.12); color:#e05a4e; border:1px solid rgba(224,90,78,0.2); }
+  .mgmt-action-btns { display:flex; gap:8px; align-items:center; }
+  .mgmt-action-btn { width:28px; height:28px; border-radius:6px; background:var(--surface2); border:1px solid var(--border); color:var(--muted); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s; }
+  .mgmt-action-btn:hover { color:var(--accent); border-color:rgba(200,169,110,0.3); }
+
+  /* create/edit modal */
+  .mgmt-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:700; display:flex; align-items:center; justify-content:center; }
+  .mgmt-modal { background:var(--surface); border:1px solid var(--border); border-radius:16px; width:min(560px,94vw); max-height:88vh; display:flex; flex-direction:column; overflow:hidden; animation:slideUpModal 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+  .mgmt-modal-header { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .mgmt-modal-header h3 { font-size:15px; font-weight:500; }
+  .mgmt-modal-body { overflow-y:auto; padding:20px; flex:1; display:flex; flex-direction:column; gap:12px; }
+  .mgmt-modal-footer { padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:8px; justify-content:flex-end; }
+  .mgmt-field { display:flex; flex-direction:column; gap:5px; }
+  .mgmt-field label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.09em; color:var(--muted); font-weight:500; }
+  .mgmt-input, .mgmt-select, .mgmt-textarea { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:8px 12px; color:var(--text); font-size:13px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.15s; width:100%; }
+  .mgmt-input:focus, .mgmt-select:focus, .mgmt-textarea:focus { border-color:rgba(200,169,110,0.5); }
+  .mgmt-input::placeholder, .mgmt-textarea::placeholder { color:var(--muted); opacity:0.6; }
+  .mgmt-textarea { resize:vertical; min-height:80px; line-height:1.6; }
+  .mgmt-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .mgmt-row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+  .mgmt-section-lbl { font-size:10px; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); font-weight:500; padding-top:6px; border-top:1px solid var(--border); }
+
+  /* detail view modal */
+  .mgmt-detail-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:700; display:flex; align-items:center; justify-content:center; }
+  .mgmt-detail-box { background:var(--surface); border:1px solid var(--border); border-radius:16px; width:min(680px,94vw); max-height:88vh; display:flex; flex-direction:column; overflow:hidden; animation:slideUpModal 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+  .mgmt-detail-header { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .mgmt-detail-body { overflow-y:auto; padding:20px; flex:1; }
+  .mgmt-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+  .mgmt-detail-field { background:var(--surface2); border-radius:8px; padding:10px 14px; }
+  .mgmt-detail-field-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:3px; }
+  .mgmt-detail-field-value { font-size:13px; font-weight:500; }
+
+
+  /* ══════════════════════════════════
+     AUTH OVERLAY — embedded in app
+  ══════════════════════════════════ */
+  #auth-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    background: var(--bg);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #auth-overlay.hiding {
+    opacity: 0;
+    transform: scale(1.02);
+    pointer-events: none;
+  }
+
+  /* Left: form side */
+  .ao-left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 36px 48px;
+    overflow-y: auto;
+    background: var(--bg);
+  }
+  @media (max-width: 800px) {
+    .ao-left { width: 100%; }
+    .ao-right { display: none; }
+  }
+
+  .ao-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    flex-shrink: 0;
+  }
+
+  .ao-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .ao-logo span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-left: 7px;
+    font-weight: 300;
+  }
+
+  .ao-tabs {
+    display: flex;
+    gap: 3px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 3px;
+  }
+  .ao-tab {
+    padding: 7px 16px;
+    border-radius: 7px;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .ao-tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+  .ao-tab:hover:not(.active) { color: var(--text); }
+
+  .ao-form-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 380px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .ao-greeting {
+    font-family: 'Instrument Serif', serif;
+    font-size: 34px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .ao-subheading { font-size: 13.5px; color: var(--muted); margin-bottom: 32px; font-weight: 300; }
+
+  .ao-section { display: none; }
+  .ao-section.active { display: block; animation: aoFadeUp 0.3s ease both; }
+
+  @keyframes aoFadeUp {
+    from { opacity:0; transform:translateY(12px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* Fields */
+  .ao-field { margin-bottom: 16px; }
+  .ao-label {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ao-label a { color: var(--accent); text-decoration: none; font-size: 11px; font-weight: 400; }
+
+  .ao-input-wrap { position: relative; }
+  .ao-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-size: 13.5px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ao-input::placeholder { color: var(--muted); opacity: 0.5; }
+  .ao-input:focus { border-color: rgba(200,169,110,0.5); box-shadow: 0 0 0 3px rgba(200,169,110,0.07); }
+  .ao-input.ao-error { border-color: rgba(224,90,78,0.5); box-shadow: 0 0 0 3px rgba(224,90,78,0.07); }
+  .ao-input option { background: var(--surface); }
+
+  .ao-eye {
+    position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--muted); cursor: pointer;
+    font-size: 15px; padding: 0; transition: color 0.15s; line-height: 1;
+  }
+  .ao-eye:hover { color: var(--text); }
+
+  .ao-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+
+  .ao-err-msg { font-size: 11px; color: #e05a4e; margin-top: 4px; display: none; }
+  .ao-err-msg.show { display: block; }
+
+  /* Password strength */
+  .ao-pw-bars { display: flex; gap: 3px; margin-top: 6px; }
+  .ao-pw-bar { flex:1; height:3px; border-radius:2px; background:var(--surface2); transition:background 0.3s; }
+  .ao-pw-bar.weak { background:#e05a4e; }
+  .ao-pw-bar.medium { background:#e09a3e; }
+  .ao-pw-bar.strong { background:#4a9b7f; }
+  .ao-pw-lbl { font-size:10px; margin-top:3px; }
+
+  /* Buttons */
+  .ao-btn-main {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.02em;
+  }
+  .ao-btn-main:hover { opacity: 0.88; box-shadow: 0 4px 20px rgba(200,169,110,0.28); }
+  .ao-btn-main:active { transform: scale(0.99); }
+
+  .ao-or { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .ao-or-line { flex:1; height:1px; background:var(--border); }
+  .ao-or-text { font-size:11px; color:var(--muted); letter-spacing:0.08em; }
+
+  .ao-social-btns { display:flex; flex-direction:column; gap:8px; }
+  .ao-social-btn {
+    width:100%; padding:11px 14px;
+    border-radius:10px; background:var(--surface2);
+    border:1px solid var(--border); color:var(--text);
+    font-size:13px; font-weight:500;
+    font-family:'DM Sans',sans-serif; cursor:pointer;
+    transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .ao-social-btn:hover { border-color:rgba(255,255,255,0.16); background:rgba(255,255,255,0.04); }
+
+  .ao-footer-note { text-align:center; font-size:11.5px; color:var(--muted); margin-top:18px; }
+  .ao-footer-note a { color:var(--accent); text-decoration:none; }
+
+  .ao-terms { font-size:11px; color:var(--muted); text-align:center; margin-top:14px; line-height:1.7; }
+  .ao-terms a { color:var(--muted); text-decoration:underline; text-underline-offset:2px; }
+
+  /* Success state */
+  .ao-success { display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px 0; }
+  .ao-success.show { display:flex; animation:aoFadeUp 0.4s ease both; }
+  .ao-success-ring {
+    width:60px; height:60px; border-radius:50%;
+    background:rgba(74,155,127,0.15); border:1px solid rgba(74,155,127,0.4);
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; margin-bottom:18px;
+    animation: aoPulse 2s ease-in-out infinite;
+  }
+  @keyframes aoPulse {
+    0%,100%{ box-shadow:0 0 0 0 rgba(74,155,127,0.3); }
+    50%{ box-shadow:0 0 0 12px rgba(74,155,127,0); }
+  }
+
+  /* Right: illustration side */
+  .ao-right {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .ao-right-bg { position:absolute; inset:0; background:#0d1a12; }
+  .ao-right-svg { position:absolute; inset:0; width:100%; height:100%; }
+  .ao-right-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(to bottom, rgba(5,10,8,0.15) 0%, rgba(5,10,8,0.05) 40%, rgba(5,10,8,0.55) 78%, rgba(5,10,8,0.92) 100%);
+  }
+  .ao-live-badge {
+    position:absolute; top:24px; left:24px; z-index:5;
+    display:flex; align-items:center; gap:5px;
+    background:rgba(74,155,127,0.15); border:1px solid rgba(74,155,127,0.3);
+    border-radius:20px; padding:5px 12px;
+    font-size:10px; color:#4a9b7f; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .ao-stats {
+    position:absolute; top:24px; right:24px; z-index:5;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .ao-stat-pill {
+    background:rgba(10,10,8,0.7); backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.1); border-radius:10px;
+    padding:10px 14px; text-align:right;
+  }
+  .ao-stat-val { font-family:'Instrument Serif',serif; font-size:18px; color:var(--accent); line-height:1; }
+  .ao-stat-lbl { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:1px; }
+
+  .ao-testimonial-wrap {
+    position:absolute; bottom:0; left:0; right:0; padding:24px; z-index:5;
+  }
+  .ao-t-dots { display:flex; gap:5px; margin-bottom:12px; }
+  .ao-t-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.2); transition:all 0.3s; cursor:pointer; }
+  .ao-t-dot.active { background:var(--accent); width:16px; border-radius:3px; }
+  .ao-t-card {
+    background:rgba(10,10,8,0.72); backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,0.1); border-radius:14px;
+    padding:20px 22px; position:relative;
+  }
+  .ao-t-card::before {
+    content:'"'; position:absolute; top:10px; left:18px;
+    font-family:'Instrument Serif',serif; font-size:42px;
+    color:var(--accent); opacity:0.35; line-height:1;
+  }
+  .ao-t-text { font-size:13px; line-height:1.7; color:rgba(240,237,232,0.82); margin-bottom:14px; padding-top:6px; font-style:italic; font-weight:300; }
+  .ao-t-footer { display:flex; align-items:center; justify-content:space-between; }
+  .ao-t-author { display:flex; align-items:center; gap:10px; }
+  .ao-t-avatar {
+    width:34px; height:34px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#8b6d3a);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Instrument Serif',serif; font-size:14px; color:var(--bg); flex-shrink:0;
+  }
+  .ao-t-name { font-size:13px; font-weight:600; margin-bottom:1px; }
+  .ao-t-role { font-size:10.5px; color:var(--muted); }
+  .ao-t-nav { display:flex; gap:6px; }
+  .ao-t-arrow {
+    width:30px; height:30px; border-radius:50%;
+    background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:13px; color:var(--muted); transition:all 0.2s;
+  }
+  .ao-t-arrow:hover { background:rgba(200,169,110,0.15); color:var(--accent); border-color:rgba(200,169,110,0.3); }
+
 </style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════════════
+     AUTH OVERLAY
+══════════════════════════════════════════ -->
+<div id="auth-overlay">
+
+  <!-- LEFT: FORM -->
+  <div class="ao-left">
+    <div class="ao-top">
+      <a class="ao-logo" href="https://narumaam.github.io/nama-landing/" target="_blank">NAMA <span>AI TRAVEL OS</span></a>
+      <div class="ao-tabs">
+        <div class="ao-tab active" id="ao-tab-login" onclick="aoSwitchTab('login')">🔐 Login</div>
+        <div class="ao-tab" id="ao-tab-signup" onclick="aoSwitchTab('signup')">✦ Sign Up</div>
+      </div>
+    </div>
+
+    <div class="ao-form-wrap">
+
+      <!-- Success -->
+      <div class="ao-success" id="ao-success">
+        <div class="ao-success-ring">✓</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:24px;margin-bottom:6px">You're in.</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:20px">Welcome to NAMA. Loading your workspace…</div>
+        <div style="display:flex;gap:5px">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1s infinite 0s"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1s infinite 0.2s"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1s infinite 0.4s"></div>
+        </div>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="ao-section active" id="ao-section-login">
+        <div class="ao-greeting">Welcome back.</div>
+        <div class="ao-subheading">Sign in to your NAMA workspace.</div>
+
+        <div class="ao-field">
+          <div class="ao-label">Email address</div>
+          <div class="ao-input-wrap">
+            <input class="ao-input" id="ao-login-email" type="email" placeholder="you@agency.com" autocomplete="email">
+          </div>
+          <div class="ao-err-msg" id="ao-login-email-err">Please enter a valid email.</div>
+        </div>
+
+        <div class="ao-field">
+          <div class="ao-label">
+            Password
+            <a href="#" onclick="aoShowForgot();return false;">Forgot password?</a>
+          </div>
+          <div class="ao-input-wrap">
+            <input class="ao-input" id="ao-login-pw" type="password" placeholder="Enter your password">
+            <button class="ao-eye" onclick="aoTogglePw('ao-login-pw',this)" type="button">👁</button>
+          </div>
+          <div class="ao-err-msg" id="ao-login-pw-err">Password must be at least 6 characters.</div>
+        </div>
+
+        <button class="ao-btn-main" onclick="aoHandleLogin()">Log In →</button>
+
+        <div class="ao-or"><div class="ao-or-line"></div><div class="ao-or-text">OR</div><div class="ao-or-line"></div></div>
+
+        <div class="ao-social-btns">
+          <button class="ao-social-btn" onclick="aoSocialLogin('Google',this)">
+            <svg width="15" height="15" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continue with Google
+          </button>
+          <button class="ao-social-btn" onclick="aoSocialLogin('Microsoft',this)">
+            <svg width="15" height="15" viewBox="0 0 24 24"><path fill="#F25022" d="M1 1h10v10H1z"/><path fill="#00A4EF" d="M13 1h10v10H13z"/><path fill="#7FBA00" d="M1 13h10v10H1z"/><path fill="#FFB900" d="M13 13h10v10H13z"/></svg>
+            Continue with Microsoft
+          </button>
+          <button class="ao-social-btn" onclick="aoSocialLogin('Apple',this)">🍎 Continue with Apple</button>
+        </div>
+
+        <div class="ao-footer-note">No account? <a href="#" onclick="aoSwitchTab('signup');return false;">Create one free</a></div>
+      </div>
+
+      <!-- SIGN UP -->
+      <div class="ao-section" id="ao-section-signup">
+        <div class="ao-greeting">Join NAMA.</div>
+        <div class="ao-subheading">Set up your travel operations workspace.</div>
+
+        <div class="ao-field-row">
+          <div class="ao-field" style="margin-bottom:0">
+            <div class="ao-label">First Name</div>
+            <input class="ao-input" id="ao-su-first" type="text" placeholder="Narayan">
+          </div>
+          <div class="ao-field" style="margin-bottom:0">
+            <div class="ao-label">Last Name</div>
+            <input class="ao-input" id="ao-su-last" type="text" placeholder="Mallapur">
+          </div>
+        </div>
+
+        <div class="ao-field">
+          <div class="ao-label">Work Email *</div>
+          <input class="ao-input" id="ao-su-email" type="email" placeholder="you@agency.com">
+          <div class="ao-err-msg" id="ao-su-email-err">Please enter a valid email.</div>
+        </div>
+
+        <div class="ao-field">
+          <div class="ao-label">Agency / Company</div>
+          <input class="ao-input" id="ao-su-company" type="text" placeholder="NAMA Travel Intelligence">
+        </div>
+
+        <div class="ao-field">
+          <div class="ao-label">Role</div>
+          <select class="ao-input" id="ao-su-role">
+            <option value="" disabled selected>Select your role…</option>
+            <option>Travel Agent</option>
+            <option>DMC Manager</option>
+            <option>Tour Operator</option>
+            <option>Agency Owner</option>
+            <option>Corporate Travel Manager</option>
+            <option>Supplier / Hotel</option>
+          </select>
+        </div>
+
+        <div class="ao-field">
+          <div class="ao-label">Password *</div>
+          <div class="ao-input-wrap">
+            <input class="ao-input" id="ao-su-pw" type="password" placeholder="Create a strong password" oninput="aoCheckPw(this.value)">
+            <button class="ao-eye" onclick="aoTogglePw('ao-su-pw',this)" type="button">👁</button>
+          </div>
+          <div class="ao-pw-bars">
+            <div class="ao-pw-bar" id="ao-bar1"></div>
+            <div class="ao-pw-bar" id="ao-bar2"></div>
+            <div class="ao-pw-bar" id="ao-bar3"></div>
+            <div class="ao-pw-bar" id="ao-bar4"></div>
+          </div>
+          <div class="ao-pw-lbl" id="ao-pw-lbl"></div>
+          <div class="ao-err-msg" id="ao-su-pw-err">Password must be at least 8 characters.</div>
+        </div>
+
+        <button class="ao-btn-main" onclick="aoHandleSignup()">Create Account →</button>
+
+        <div class="ao-or"><div class="ao-or-line"></div><div class="ao-or-text">OR</div><div class="ao-or-line"></div></div>
+        <div class="ao-social-btns">
+          <button class="ao-social-btn" onclick="aoSocialLogin('Google',this)">
+            <svg width="15" height="15" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Sign up with Google
+          </button>
+        </div>
+        <div class="ao-terms">By creating an account you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a></div>
+        <div class="ao-footer-note">Already have an account? <a href="#" onclick="aoSwitchTab('login');return false;">Sign in</a></div>
+      </div>
+
+      <!-- FORGOT PASSWORD -->
+      <div class="ao-section" id="ao-section-forgot">
+        <div style="margin-bottom:16px">
+          <span onclick="aoSwitchTab('login')" style="font-size:12px;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:4px">← Back to Login</span>
+        </div>
+        <div class="ao-greeting">Reset password.</div>
+        <div class="ao-subheading">We'll send a reset link to your email.</div>
+        <div class="ao-field">
+          <div class="ao-label">Email address</div>
+          <input class="ao-input" id="ao-forgot-email" type="email" placeholder="you@agency.com">
+        </div>
+        <button class="ao-btn-main" onclick="aoHandleForgot()">Send Reset Link</button>
+        <div class="ao-footer-note"><a href="#" onclick="aoSwitchTab('login');return false;">Back to Login</a></div>
+      </div>
+
+    </div>
+  </div><!-- /ao-left -->
+
+  <!-- RIGHT: ILLUSTRATION -->
+  <div class="ao-right">
+    <div class="ao-right-bg">
+      <svg class="ao-right-svg" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="aoSkyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1520"/><stop offset="35%" stop-color="#0d2235"/><stop offset="65%" stop-color="#1a3a2a"/><stop offset="100%" stop-color="#0d1f18"/></linearGradient>
+          <linearGradient id="aoWaterG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d2235" stop-opacity="0.8"/><stop offset="100%" stop-color="#061018"/></linearGradient>
+          <linearGradient id="aoVillaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a1f10"/><stop offset="100%" stop-color="#1a1208"/></linearGradient>
+          <radialGradient id="aoMoonGlow" cx="0.7" cy="0.12" r="0.3"><stop offset="0%" stop-color="#c8a96e" stop-opacity="0.25"/><stop offset="100%" stop-color="#c8a96e" stop-opacity="0"/></radialGradient>
+          <filter id="aoBlur4"><feGaussianBlur stdDeviation="4"/></filter>
+          <filter id="aoBlur8"><feGaussianBlur stdDeviation="8"/></filter>
+          <filter id="aoBlur12"><feGaussianBlur stdDeviation="12"/></filter>
+          <filter id="aoGlow"><feGaussianBlur stdDeviation="3" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <rect width="800" height="900" fill="url(#aoSkyG)"/>
+        <ellipse cx="560" cy="110" rx="200" ry="160" fill="url(#aoMoonGlow)" filter="url(#aoBlur12)"/>
+        <circle cx="560" cy="108" r="32" fill="#f5e8c8" opacity="0.9" filter="url(#aoGlow)"/>
+        <circle cx="572" cy="100" r="28" fill="#0d2235"/>
+        <g fill="#f5e8c8"><circle cx="80" cy="50" r="1.2" opacity="0.7"/><circle cx="140" cy="80" r="0.8" opacity="0.5"/><circle cx="200" cy="35" r="1.4" opacity="0.8"/><circle cx="280" cy="65" r="0.9" opacity="0.6"/><circle cx="360" cy="30" r="1.1" opacity="0.7"/><circle cx="490" cy="45" r="1.3" opacity="0.8"/><circle cx="650" cy="55" r="1.0" opacity="0.6"/><circle cx="700" cy="30" r="1.4" opacity="0.9"/><circle cx="760" cy="70" r="0.8" opacity="0.5"/><circle cx="320" cy="110" r="0.9" opacity="0.5"/><circle cx="680" cy="90" r="1.1" opacity="0.7"/></g>
+        <ellipse cx="400" cy="400" rx="300" ry="40" fill="#c8a96e" opacity="0.05" filter="url(#aoBlur8)"/>
+        <rect x="0" y="380" width="800" height="520" fill="url(#aoWaterG)"/>
+        <g stroke="#c8a96e" stroke-width="0.5" opacity="0.07"><line x1="0" y1="420" x2="800" y2="425"/><line x1="0" y1="460" x2="800" y2="463"/><line x1="0" y1="500" x2="800" y2="502"/><line x1="0" y1="545" x2="800" y2="548"/><line x1="0" y1="595" x2="800" y2="592"/></g>
+        <ellipse cx="560" cy="460" rx="8" ry="30" fill="#f5e8c8" opacity="0.09" filter="url(#aoBlur4)"/>
+        <path d="M0 370 Q100 340 200 355 Q300 368 400 352 Q500 336 600 350 Q700 362 800 345 L800 380 L0 380 Z" fill="#0a1a10" opacity="0.7"/>
+        <line x1="120" y1="370" x2="108" y2="240" stroke="#1a2e1a" stroke-width="6" stroke-linecap="round"/>
+        <path d="M108 245 Q60 200 30 210 Q70 225 85 240 Z" fill="#1a3020" opacity="0.9"/>
+        <path d="M108 245 Q140 185 170 200 Q148 220 128 238 Z" fill="#1a3020" opacity="0.8"/>
+        <path d="M108 245 Q80 215 60 230 Q85 235 100 250 Z" fill="#243824" opacity="0.85"/>
+        <path d="M108 245 Q130 205 155 215 Q138 230 120 245 Z" fill="#1d3522" opacity="0.9"/>
+        <line x1="680" y1="375" x2="695" y2="230" stroke="#1a2e1a" stroke-width="5" stroke-linecap="round"/>
+        <path d="M695 235 Q740 185 770 198 Q742 215 725 232 Z" fill="#1a3020" opacity="0.85"/>
+        <path d="M695 235 Q660 190 635 205 Q658 220 680 238 Z" fill="#1d3522" opacity="0.9"/>
+        <path d="M695 235 Q715 198 740 210 Q722 228 705 242 Z" fill="#1a3020" opacity="0.8"/>
+        <rect x="0" y="395" width="380" height="18" rx="2" fill="#1a1408" opacity="0.9"/>
+        <g fill="#1a1408"><rect x="60" y="413" width="6" height="40" rx="2"/><rect x="120" y="413" width="6" height="44" rx="2"/><rect x="180" y="413" width="6" height="42" rx="2"/><rect x="240" y="413" width="6" height="38" rx="2"/><rect x="300" y="413" width="6" height="40" rx="2"/><rect x="360" y="413" width="6" height="36" rx="2"/></g>
+        <rect x="300" y="300" width="280" height="100" rx="4" fill="url(#aoVillaG)"/>
+        <path d="M295 305 L440 250 L590 305 Z" fill="#1f1608"/>
+        <rect x="310" y="305" width="260" height="95" fill="#1a1208"/>
+        <rect x="330" y="318" width="55" height="42" rx="3" fill="#c8a96e" opacity="0.7"/>
+        <line x1="357" y1="318" x2="357" y2="360" stroke="#1a1208" stroke-width="2" opacity="0.4"/>
+        <line x1="330" y1="340" x2="385" y2="340" stroke="#1a1208" stroke-width="2" opacity="0.4"/>
+        <rect x="410" y="318" width="55" height="42" rx="3" fill="#c8a96e" opacity="0.65"/>
+        <line x1="437" y1="318" x2="437" y2="360" stroke="#1a1208" stroke-width="2" opacity="0.4"/>
+        <line x1="410" y1="340" x2="465" y2="340" stroke="#1a1208" stroke-width="2" opacity="0.4"/>
+        <rect x="490" y="318" width="55" height="42" rx="3" fill="#c8a96e" opacity="0.6"/>
+        <line x1="517" y1="318" x2="517" y2="360" stroke="#1a1208" stroke-width="2" opacity="0.4"/>
+        <line x1="490" y1="340" x2="545" y2="340" stroke="#1a1208" stroke-width="2" opacity="0.4"/>
+        <rect x="415" y="358" width="50" height="42" rx="2" fill="#2a1e0a"/>
+        <rect x="295" y="395" width="295" height="15" rx="2" fill="#2a1e0a"/>
+        <rect x="300" y="408" width="280" height="20" rx="2" fill="#1a1208"/>
+        <g fill="#1a1208"><rect x="314" y="428" width="8" height="50" rx="2"/><rect x="360" y="428" width="8" height="55" rx="2"/><rect x="440" y="428" width="8" height="52" rx="2"/><rect x="520" y="428" width="8" height="50" rx="2"/><rect x="566" y="428" width="8" height="48" rx="2"/></g>
+        <ellipse cx="357" cy="370" rx="60" ry="40" fill="#c8a96e" opacity="0.08" filter="url(#aoBlur8)"/>
+        <ellipse cx="437" cy="370" rx="60" ry="40" fill="#c8a96e" opacity="0.07" filter="url(#aoBlur8)"/>
+        <line x1="310" y1="397" x2="310" y2="375" stroke="#3a2a10" stroke-width="2"/>
+        <circle cx="310" cy="373" r="4" fill="#c8a96e" opacity="0.9" filter="url(#aoGlow)"/>
+        <ellipse cx="310" cy="380" rx="15" ry="10" fill="#c8a96e" opacity="0.15" filter="url(#aoBlur4)"/>
+        <line x1="575" y1="397" x2="575" y2="375" stroke="#3a2a10" stroke-width="2"/>
+        <circle cx="575" cy="373" r="4" fill="#c8a96e" opacity="0.9" filter="url(#aoGlow)"/>
+        <rect x="590" y="408" width="90" height="25" rx="3" fill="#0d2030" opacity="0.9"/>
+        <ellipse cx="635" cy="425" rx="45" ry="12" fill="#4a9b7f" opacity="0.12" filter="url(#aoBlur4)"/>
+        <rect x="0" y="600" width="800" height="300" fill="url(#aoSkyG)" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="ao-right-overlay"></div>
+    <div class="ao-live-badge"><div class="live-dot"></div> Platform Live</div>
+    <div class="ao-stats">
+      <div class="ao-stat-pill"><div class="ao-stat-val">80%+</div><div class="ao-stat-lbl">Automated</div></div>
+      <div class="ao-stat-pill"><div class="ao-stat-val">₹30Cr</div><div class="ao-stat-lbl">Series A</div></div>
+    </div>
+    <div class="ao-testimonial-wrap">
+      <div class="ao-t-dots" id="ao-dots">
+        <div class="ao-t-dot active" onclick="aoGoT(0)"></div>
+        <div class="ao-t-dot" onclick="aoGoT(1)"></div>
+        <div class="ao-t-dot" onclick="aoGoT(2)"></div>
+      </div>
+      <div class="ao-t-card">
+        <div class="ao-t-text" id="ao-t-text">NAMA transformed how we handle our Bali portfolio. What took 2 hours now takes minutes — and the itineraries are better than what our senior agents wrote.</div>
+        <div class="ao-t-footer">
+          <div class="ao-t-author">
+            <div class="ao-t-avatar" id="ao-t-avatar">R</div>
+            <div><div class="ao-t-name" id="ao-t-name">Rajesh Khanna</div><div class="ao-t-role" id="ao-t-role">Director · Bali DMC Partner</div></div>
+          </div>
+          <div class="ao-t-nav">
+            <div class="ao-t-arrow" onclick="aoGoT((aoTIdx-1+3)%3)">←</div>
+            <div class="ao-t-arrow" onclick="aoGoT((aoTIdx+1)%3)">→</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /ao-right -->
+
+</div><!-- /auth-overlay -->
 
 <!-- TOP BAR -->
 <div class="topbar">
@@ -1080,6 +1952,8 @@
       <div class="nav-link" onclick="switchPanel('analytics',this)">Analytics</div>
       <div class="nav-link" onclick="switchPanel('agents',this)">AI Agents</div>
       <div class="nav-link" onclick="switchPanel('supply',this)">Supply</div>
+      <div class="nav-link" onclick="switchPanel('services',this)">Services</div>
+      <div class="nav-link" onclick="switchPanel('packages',this)">Packages</div>
       <div class="nav-link" onclick="switchPanel('proposal',this)">Proposal</div>
     </div>
   </div>
@@ -1103,7 +1977,7 @@
   <div class="sidebar">
     <div class="sidebar-section">Pipeline</div>
     <div class="sidebar-item active" onclick="filterLeads('all', this)">
-      <span class="icon">◈</span> All Leads <span class="badge">12</span>
+      <span class="icon">◈</span> All Leads <span class="badge">15</span>
     </div>
     <div class="sidebar-item" onclick="filterLeads('hot', this)">
       <span class="icon">🔥</span> Hot <span class="badge" style="background:#e05a4e">4</span>
@@ -1114,19 +1988,22 @@
     <div class="sidebar-item" onclick="filterLeads('new', this)">
       <span class="icon">✦</span> New <span class="badge" style="background:#4a9b7f">3</span>
     </div>
+    <div class="sidebar-item" onclick="filterLeads('junk', this)">
+      <span class="icon">🗑</span> Junk <span class="badge" style="background:#7a7870">3</span>
+    </div>
 
     <div class="sidebar-section" style="margin-top:8px">Destinations</div>
     <div class="sidebar-item" onclick="filterLeads('bali',this)">
-      <span class="icon">🌴</span> Bali
+      <span class="icon">🌴</span> Bali <span class="badge" style="background:var(--surface2);color:var(--muted)">5</span>
     </div>
     <div class="sidebar-item" onclick="filterLeads('europe',this)">
-      <span class="icon">🏔</span> Europe
+      <span class="icon">🏔</span> Europe <span class="badge" style="background:var(--surface2);color:var(--muted)">3</span>
     </div>
     <div class="sidebar-item" onclick="filterLeads('dubai',this)">
-      <span class="icon">🏙</span> Dubai
+      <span class="icon">🏙</span> Dubai <span class="badge" style="background:var(--surface2);color:var(--muted)">4</span>
     </div>
     <div class="sidebar-item" onclick="filterLeads('maldives',this)">
-      <span class="icon">🌊</span> Maldives
+      <span class="icon">🌊</span> Maldives <span class="badge" style="background:var(--surface2);color:var(--muted)">3</span>
     </div>
 
     <div style="flex:1"></div>
@@ -1146,30 +2023,113 @@
   <div class="content">
 
     <!-- LEADS PANEL -->
-    <div id="panel-leads" class="panel active">
+    <div id="panel-leads" class="panel active" style="flex-direction:column;">
 
-      <!-- LEADS LIST -->
-      <div class="leads-list">
-        <div class="leads-header">
-          <h2>Lead Inbox</h2>
-          <button class="btn-primary" onclick="addNewLead()">+ New</button>
-        </div>
-        <div id="leads-container"></div>
-      </div>
-
-      <!-- LEAD DETAIL -->
-      <div class="lead-detail" id="lead-detail-panel">
-        <div class="detail-header">
-          <div class="detail-title">
-            <h1 id="detail-name">Sharma Family</h1>
-            <div class="detail-meta">
-              <div id="detail-dest" style="font-size:13px;color:var(--muted)">Bali, Indonesia · 7N/8D · 4 Pax</div>
-              <div class="win-prob" id="win-prob">Win Probability: 72%</div>
+      <!-- TABLE VIEW -->
+      <div id="lt-view" class="lt-wrap">
+        <div class="lt-header">
+          <!-- Title row -->
+          <div class="lt-title-row">
+            <div class="lt-title" id="lt-page-title">Leads</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <button class="btn-primary" style="font-size:12px;padding:6px 14px" onclick="openNewLeadForm()">+ New Lead</button>
+              <button class="lt-btn-sm">···</button>
             </div>
           </div>
-          <div class="detail-actions">
-            <button class="btn-ghost" onclick="openProposal()">Share Proposal</button>
-            <button class="btn-primary" onclick="generateItinerary()">✦ Generate Trip</button>
+          <!-- Stats bar -->
+          <div class="lt-stats-bar" id="lt-stats-bar">
+            <div class="lt-stat">
+              <div class="lt-stat-label">New</div>
+              <div class="lt-stat-value" id="lts-new">3</div>
+              <div class="lt-stat-delta up" id="lts-new-d">+12% ↗</div>
+            </div>
+            <div class="lt-stat">
+              <div class="lt-stat-label">Hot Leads</div>
+              <div class="lt-stat-value" id="lts-hot">4</div>
+              <div class="lt-stat-delta up">Ready to close</div>
+            </div>
+            <div class="lt-stat">
+              <div class="lt-stat-label">Junk</div>
+              <div class="lt-stat-value" id="lts-junk">3</div>
+              <div class="lt-stat-delta down">-2% ↘</div>
+            </div>
+            <div class="lt-stat">
+              <div class="lt-stat-label">Pipeline Value</div>
+              <div class="lt-stat-value" id="lts-val">₹68L</div>
+              <div class="lt-stat-delta up">+8% ↗</div>
+            </div>
+          </div>
+          <!-- Toolbar -->
+          <div class="lt-toolbar">
+            <div class="lt-view-tabs">
+              <div class="lt-view-tab active" id="vt-list" onclick="setTableView('list',this)">☰ List</div>
+              <div class="lt-view-tab" id="vt-board" onclick="setTableView('board',this)">⊞ Board</div>
+              <div class="lt-view-tab" id="vt-pipeline" onclick="setTableView('pipeline',this)">↗ Pipeline</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;margin-left:8px">
+              <div class="lt-btn-sm" style="font-size:11px">
+                <span style="width:7px;height:7px;border-radius:50%;background:var(--muted);display:inline-block"></span> Group
+              </div>
+            </div>
+            <input class="lt-search" id="lt-search-input" placeholder="Search leads…" oninput="renderTable()">
+            <div class="lt-btn-sm" onclick="sortTable('name')">⇅ Sort</div>
+          </div>
+        </div>
+
+        <!-- LIST VIEW -->
+        <div id="lt-list-view" class="lt-body">
+          <table class="leads-table" id="leads-table">
+            <thead>
+              <tr>
+                <th style="width:32px"><input type="checkbox" class="lt-check" id="check-all" onchange="toggleAllChecks(this)"></th>
+                <th onclick="sortTable('name')">Lead <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('source')">Source <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('status')">Status <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('pax')">Pax <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('budget')">Budget <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('winProb')">Interest <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('winProb')">Probability <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('dates')">Last Action <span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="lt-tbody"></tbody>
+          </table>
+          <div id="lt-bulk-bar" class="lt-bulk-bar" style="display:none">
+            <span class="lt-bulk-count" id="lt-bulk-count">0</span> selected leads
+            <button class="lt-bulk-btn" onclick="bulkEngage()">Engage</button>
+            <button class="lt-bulk-btn" onclick="bulkGroup()">Create Group</button>
+            <button class="lt-bulk-btn" onclick="bulkCSV()">Download CSV</button>
+            <button class="lt-bulk-btn danger" onclick="bulkDelete()">Delete</button>
+          </div>
+        </div>
+
+        <!-- BOARD VIEW -->
+        <div id="lt-board-view" style="display:none;flex:1;overflow:hidden">
+          <div class="lt-board" id="lt-board-cols"></div>
+        </div>
+
+        <!-- PIPELINE VIEW -->
+        <div id="lt-pipeline-view" style="display:none;flex:1;overflow:hidden">
+          <div class="lt-pipeline" id="lt-pipeline-rows"></div>
+        </div>
+      </div>
+
+      <!-- LEAD DETAIL DRAWER (hidden by default, shown on row click) -->
+      <div class="lead-detail" id="lead-detail-panel" style="display:none;position:absolute;top:0;right:0;bottom:0;width:62%;border-left:1px solid var(--border);background:var(--surface);z-index:10;overflow:hidden;display:none;flex-direction:column">
+        <div class="detail-header" style="padding:12px 18px">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <div class="form-modal-close" onclick="closeDetailDrawer()" title="Back to leads">←</div>
+            <div class="detail-title" style="min-width:0">
+              <h1 id="detail-name" style="font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Sharma Family</h1>
+              <div class="detail-meta" style="flex-wrap:wrap;gap:6px">
+                <div id="detail-dest" style="font-size:12px;color:var(--muted)">Bali, Indonesia · 7N/8D · 4 Pax</div>
+                <div class="win-prob" id="win-prob" style="font-size:11px">Win Probability: 72%</div>
+              </div>
+            </div>
+          </div>
+          <div class="detail-actions" style="flex-shrink:0">
+            <button class="btn-ghost" style="font-size:12px;padding:5px 10px" onclick="openProposalModal()">Share Proposal</button>
+            <button class="btn-primary" style="font-size:12px;padding:5px 12px" onclick="generateItinerary()">✦ Generate Trip</button>
           </div>
         </div>
 
@@ -1224,6 +2184,9 @@
 
         <!-- ITINERARY TAB -->
         <div id="tab-itinerary" class="tab-content">
+          <div style="padding:16px 24px 0">
+            <div class="back-to-leads" onclick="switchPanel('leads', document.querySelector('.nav-link'))">← Back to All Leads</div>
+          </div>
           <div class="itinerary-toolbar">
             <div style="font-size:13px;font-weight:500" id="itinerary-title">Bali Family Getaway · 7N/8D</div>
             <div style="display:flex;gap:8px">
@@ -1266,12 +2229,20 @@
           <div style="display:flex;flex-direction:column;gap:12px">
             <div class="ai-insight" style="margin-bottom:0">
               <div class="ai-insight-label">✦ AI Draft</div>
-              <p style="font-size:12.5px;line-height:1.7">Dear Sharma ji, thank you for reaching out! I've put together an exclusive Bali Family Escape itinerary tailored for your family. The package includes a private pool villa, curated experiences, and worry-free transfers. I'd love to walk you through it — would tomorrow at 11am work for a quick call?</p>
+              <p style="font-size:12.5px;line-height:1.7" id="comms-draft-text">Loading draft...</p>
             </div>
-            <div style="display:flex;gap:8px">
-              <button class="btn-primary" onclick="showToast('📧','Email sent!','Follow-up draft delivered to Sharma Family')">Send via Email</button>
-              <button class="btn-ghost" onclick="showToast('💬','WhatsApp sent!','Message delivered via WhatsApp')">WhatsApp</button>
-              <button class="btn-ghost">Edit Draft</button>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-primary" id="btn-send-email" onclick="sendEmail()">📧 Send via Email</button>
+              <button class="btn-ghost" id="btn-whatsapp" onclick="sendWhatsApp()">💬 WhatsApp</button>
+              <button class="btn-ghost" onclick="editDraft()">✏ Edit Draft</button>
+            </div>
+            <div id="email-compose-box" style="display:none;flex-direction:column;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">Edit Message</div>
+              <textarea id="draft-editor" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:12.5px;font-family:'DM Sans',sans-serif;line-height:1.7;resize:vertical;min-height:120px;outline:none;width:100%"></textarea>
+              <div style="display:flex;gap:8px">
+                <button class="btn-primary" style="font-size:12px;padding:6px 14px" onclick="saveDraft()">Save Draft</button>
+                <button class="btn-ghost" style="font-size:12px;padding:6px 14px" onclick="cancelEdit()">Cancel</button>
+              </div>
             </div>
             <div style="margin-top:8px;font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:0.08em">Activity Log</div>
             <div id="activity-log"></div>
@@ -1381,6 +2352,181 @@
       <div class="supply-grid" id="supply-grid"></div>
     </div>
 
+    <!-- SERVICE MANAGEMENT PANEL -->
+    <div id="panel-services" class="panel" style="flex-direction:column;padding:0;overflow:hidden;">
+      <div class="mgmt-wrap">
+        <div class="mgmt-header">
+          <div class="mgmt-breadcrumb">Dashboard › <span>Service Management</span></div>
+          <div class="mgmt-title">Service Management</div>
+        </div>
+        <div class="mgmt-tabs" id="svc-tabs">
+          <div class="mgmt-tab active" onclick="switchSvcTab('hotel',this)">🏨 Hotel</div>
+          <div class="mgmt-tab" onclick="switchSvcTab('activity',this)">🎭 Activity</div>
+          <div class="mgmt-tab" onclick="switchSvcTab('meal',this)">🍽 Meal</div>
+          <div class="mgmt-tab" onclick="switchSvcTab('transport',this)">🚗 Transportation</div>
+        </div>
+        <div class="mgmt-toolbar">
+          <div class="mgmt-search-wrap">
+            <input class="mgmt-search" id="svc-search" placeholder="Search…" oninput="renderSvcTable()">
+            <button class="mgmt-search-btn" onclick="renderSvcTable()">Search</button>
+          </div>
+          <select class="mgmt-sort" id="svc-sort" onchange="renderSvcTable()">
+            <option value="">Sort By</option>
+            <option value="name">Name A–Z</option>
+            <option value="city">City</option>
+            <option value="status">Status</option>
+            <option value="rating">Rating</option>
+          </select>
+          <button class="mgmt-create-btn" onclick="openSvcCreateModal()">+ Create New</button>
+        </div>
+        <div class="mgmt-body">
+          <div class="mgmt-showing" id="svc-showing">
+            <span id="svc-showing-text">Showing 1 to 10 of 0 entries</span>
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="mgmt-per-page">Show <select onchange="svcPerPage=parseInt(this.value);svcPage=1;renderSvcTable()"><option>10</option><option>25</option><option>50</option></select> entries</div>
+              <div class="mgmt-pagination" id="svc-pagination"></div>
+            </div>
+          </div>
+          <table class="mgmt-table" id="svc-table">
+            <thead id="svc-thead"></thead>
+            <tbody id="svc-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOLIDAY PACKAGE MANAGEMENT PANEL -->
+    <div id="panel-packages" class="panel" style="flex-direction:column;padding:0;overflow:hidden;">
+      <div class="mgmt-wrap">
+        <div class="mgmt-header">
+          <div class="mgmt-breadcrumb">Dashboard › <span>Holiday Package Management</span></div>
+          <div class="mgmt-title">Holiday Package Management</div>
+        </div>
+        <div class="mgmt-toolbar">
+          <div class="mgmt-search-wrap">
+            <input class="mgmt-search" id="pkg-search" placeholder="Search packages…" oninput="renderPkgTable()">
+            <button class="mgmt-search-btn" onclick="renderPkgTable()">Search</button>
+          </div>
+          <select class="mgmt-sort" id="pkg-sort" onchange="renderPkgTable()">
+            <option value="">Sort By</option>
+            <option value="name">Name A–Z</option>
+            <option value="days">Days</option>
+            <option value="rating">Rating</option>
+            <option value="status">Status</option>
+          </select>
+          <button class="mgmt-create-btn" onclick="openPkgCreateModal()">+ Create New Package</button>
+        </div>
+        <div class="mgmt-body">
+          <div class="mgmt-showing">
+            <span id="pkg-showing-text">Showing 1 to 10 of 12 entries</span>
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="mgmt-per-page">Show <select onchange="pkgPerPage=parseInt(this.value);pkgPage=1;renderPkgTable()"><option>10</option><option>25</option><option>50</option></select> entries</div>
+              <div class="mgmt-pagination" id="pkg-pagination"></div>
+            </div>
+          </div>
+          <table class="mgmt-table" id="pkg-table">
+            <thead>
+              <tr>
+                <th onclick="sortPkg('id')">ID ↕</th>
+                <th onclick="sortPkg('name')">Holiday Package ↕</th>
+                <th onclick="sortPkg('days')">Days ↕</th>
+                <th onclick="sortPkg('nights')">Nights ↕</th>
+                <th>Package Description</th>
+                <th onclick="sortPkg('rating')">Rating ↕</th>
+                <th>Hotel Description</th>
+                <th onclick="sortPkg('status')">Status ↕</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="pkg-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SVC CREATE MODAL -->
+    <div id="svc-modal" style="display:none" class="mgmt-modal-overlay" onclick="closeSvcModal(event)">
+      <div class="mgmt-modal">
+        <div class="mgmt-modal-header">
+          <h3 id="svc-modal-title">Create New Hotel</h3>
+          <div class="form-modal-close" onclick="closeSvcModal()">✕</div>
+        </div>
+        <div class="mgmt-modal-body" id="svc-modal-body"></div>
+        <div class="mgmt-modal-footer">
+          <button class="btn-ghost" onclick="closeSvcModal()">Cancel</button>
+          <button class="btn-primary" onclick="saveSvcItem()">✦ Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SVC DETAIL MODAL -->
+    <div id="svc-detail-modal" style="display:none" class="mgmt-detail-overlay" onclick="closeSvcDetail(event)">
+      <div class="mgmt-detail-box">
+        <div class="mgmt-detail-header">
+          <div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:3px" id="svc-detail-type">Hotel</div>
+            <div style="font-size:18px;font-weight:500" id="svc-detail-title">Hotel Name</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn-ghost" style="font-size:12px;padding:5px 12px" onclick="editFromDetail()">✏ Edit</button>
+            <div class="form-modal-close" onclick="closeSvcDetail()">✕</div>
+          </div>
+        </div>
+        <div class="mgmt-detail-body" id="svc-detail-body"></div>
+      </div>
+    </div>
+
+    <!-- PKG CREATE MODAL -->
+    <div id="pkg-modal" style="display:none" class="mgmt-modal-overlay" onclick="closePkgModal(event)">
+      <div class="mgmt-modal">
+        <div class="mgmt-modal-header">
+          <h3>Create New Package</h3>
+          <div class="form-modal-close" onclick="closePkgModal()">✕</div>
+        </div>
+        <div class="mgmt-modal-body">
+          <div class="mgmt-row-2">
+            <div class="mgmt-field"><label>Package Name *</label><input class="mgmt-input" id="pkg-nm" placeholder="e.g. Peaks of Swiss"></div>
+            <div class="mgmt-field"><label>Destination</label><input class="mgmt-input" id="pkg-dest" placeholder="e.g. Switzerland"></div>
+          </div>
+          <div class="mgmt-row-3">
+            <div class="mgmt-field"><label>Days</label><input class="mgmt-input" type="number" id="pkg-days" value="5" min="1"></div>
+            <div class="mgmt-field"><label>Nights</label><input class="mgmt-input" type="number" id="pkg-nights" value="4" min="1"></div>
+            <div class="mgmt-field"><label>Star Rating</label><select class="mgmt-select" id="pkg-rating"><option>3</option><option>4</option><option>5</option></select></div>
+          </div>
+          <div class="mgmt-field"><label>Package Description *</label><textarea class="mgmt-textarea" id="pkg-desc" placeholder="Describe the itinerary highlights…"></textarea></div>
+          <div class="mgmt-row-2">
+            <div class="mgmt-field"><label>Hotel Description</label><input class="mgmt-input" id="pkg-hotel" placeholder="e.g. 4★ Ramada Hotel"></div>
+            <div class="mgmt-field"><label>Price (₹)</label><input class="mgmt-input" id="pkg-price" placeholder="e.g. 85,000"></div>
+          </div>
+          <div class="mgmt-row-2">
+            <div class="mgmt-field"><label>Status</label><select class="mgmt-select" id="pkg-status"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+            <div class="mgmt-field"><label>Category</label><select class="mgmt-select" id="pkg-cat"><option>Leisure</option><option>Adventure</option><option>Honeymoon</option><option>Family</option><option>Group</option></select></div>
+          </div>
+        </div>
+        <div class="mgmt-modal-footer">
+          <button class="btn-ghost" onclick="closePkgModal()">Cancel</button>
+          <button class="btn-primary" onclick="savePkgItem()">✦ Save Package</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PKG DETAIL MODAL -->
+    <div id="pkg-detail-modal" style="display:none" class="mgmt-detail-overlay" onclick="closePkgDetail(event)">
+      <div class="mgmt-detail-box">
+        <div class="mgmt-detail-header">
+          <div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:3px">Holiday Package</div>
+            <div style="font-size:18px;font-weight:500" id="pkg-detail-title">Package Name</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn-ghost" style="font-size:12px;padding:5px 12px" onclick="editPkgFromDetail()">✏ Edit</button>
+            <div class="form-modal-close" onclick="closePkgDetail()">✕</div>
+          </div>
+        </div>
+        <div class="mgmt-detail-body" id="pkg-detail-body"></div>
+      </div>
+    </div>
+
     <!-- PROPOSAL PANEL -->
     <div id="panel-proposal" class="panel">
       <div class="proposal-toolbar">
@@ -1399,6 +2545,332 @@
   </div>
 </div>
 
+<!-- NEW LEAD FORM MODAL -->
+<div id="new-lead-overlay" style="display:none" onclick="closeNewLeadForm(event)">
+  <div class="proposal-modal" id="new-lead-modal-box" style="max-width:560px">
+    <div class="proposal-modal-header">
+      <div class="proposal-modal-title">✦ New Lead</div>
+      <div class="proposal-modal-close" onclick="closeNewLeadForm()">✕</div>
+    </div>
+    <div class="proposal-modal-body" style="padding:20px 24px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" id="new-lead-form">
+
+        <div style="grid-column:1/-1">
+          <div class="form-label">Full Name *</div>
+          <input class="form-input" id="fl-name" placeholder="e.g. Sharma Family" />
+        </div>
+
+        <div>
+          <div class="form-label">Email</div>
+          <input class="form-input" id="fl-email" type="email" placeholder="email@example.com" />
+        </div>
+        <div>
+          <div class="form-label">Phone / WhatsApp *</div>
+          <input class="form-input" id="fl-phone" placeholder="+91 98XXX XXXXX" />
+        </div>
+
+        <div>
+          <div class="form-label">Destination *</div>
+          <select class="form-input" id="fl-dest">
+            <option value="">Select destination</option>
+            <option>Bali, Indonesia</option>
+            <option>Maldives</option>
+            <option>Dubai + Abu Dhabi</option>
+            <option>Switzerland + France</option>
+            <option>Thailand</option>
+            <option>Singapore + Malaysia</option>
+            <option>Europe (Multi-city)</option>
+            <option>Kerala Backwaters</option>
+            <option>Rajasthan</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <div class="form-label">Trip Type</div>
+          <select class="form-input" id="fl-type">
+            <option value="">Select type</option>
+            <option>Honeymoon</option>
+            <option>Family Holiday</option>
+            <option>Friends Group</option>
+            <option>Corporate / MICE</option>
+            <option>Anniversary</option>
+            <option>Adventure</option>
+            <option>Luxury</option>
+            <option>Budget</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="form-label">No. of Adults *</div>
+          <input class="form-input" id="fl-adults" type="number" min="1" placeholder="2" />
+        </div>
+        <div>
+          <div class="form-label">No. of Children</div>
+          <input class="form-input" id="fl-children" type="number" min="0" placeholder="0" />
+        </div>
+
+        <div>
+          <div class="form-label">Approx. Travel Date</div>
+          <input class="form-input" id="fl-date" type="date" />
+        </div>
+        <div>
+          <div class="form-label">Duration (nights)</div>
+          <input class="form-input" id="fl-nights" type="number" min="1" placeholder="7" />
+        </div>
+
+        <div>
+          <div class="form-label">Budget (₹)</div>
+          <select class="form-input" id="fl-budget">
+            <option value="">Select range</option>
+            <option>Under ₹1,00,000</option>
+            <option>₹1,00,000 – ₹2,50,000</option>
+            <option>₹2,50,000 – ₹5,00,000</option>
+            <option>₹5,00,000 – ₹10,00,000</option>
+            <option>Above ₹10,00,000</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+        <div>
+          <div class="form-label">Lead Source</div>
+          <select class="form-input" id="fl-source">
+            <option value="">Select source</option>
+            <option>Website Enquiry</option>
+            <option>WhatsApp</option>
+            <option>Instagram</option>
+            <option>Referral</option>
+            <option>Walk-in</option>
+            <option>Phone Call</option>
+            <option>Email</option>
+            <option>Google Ads</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="form-label">Room Type Preference</div>
+          <select class="form-input" id="fl-room">
+            <option value="">Any</option>
+            <option>Standard Room</option>
+            <option>Deluxe Room</option>
+            <option>Suite</option>
+            <option>Private Villa</option>
+            <option>Overwater Bungalow</option>
+            <option>Beach Cottage</option>
+          </select>
+        </div>
+        <div>
+          <div class="form-label">Star Rating Preference</div>
+          <select class="form-input" id="fl-stars">
+            <option value="">Any</option>
+            <option>3 Star</option>
+            <option>4 Star</option>
+            <option>5 Star</option>
+            <option>Luxury Resort</option>
+          </select>
+        </div>
+
+        <div style="grid-column:1/-1">
+          <div class="form-label">Special Requirements / Notes</div>
+          <textarea class="form-input" id="fl-notes" rows="3" placeholder="Dietary needs, accessibility, special occasions, preferences..." style="resize:vertical;line-height:1.6"></textarea>
+        </div>
+
+        <div>
+          <div class="form-label">Status</div>
+          <select class="form-input" id="fl-status">
+            <option value="new">New</option>
+            <option value="warm">Warm</option>
+            <option value="hot">Hot</option>
+          </select>
+        </div>
+        <div>
+          <div class="form-label">Assigned To</div>
+          <select class="form-input" id="fl-assigned">
+            <option>Narayan Mallapur</option>
+            <option>Sales Team</option>
+            <option>AI Agent</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+    <div class="proposal-modal-footer">
+      <button class="btn-ghost" onclick="closeNewLeadForm()">Cancel</button>
+      <button class="btn-primary" onclick="submitNewLead()">✦ Create Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW LEAD FORM MODAL -->
+<div id="new-lead-overlay" style="display:none" class="form-modal-overlay" onclick="closeNewLeadForm(event)">
+  <div class="form-modal" id="new-lead-modal">
+    <div class="form-modal-header">
+      <h3>✦ New Lead</h3>
+      <div class="form-modal-close" onclick="closeNewLeadForm()">✕</div>
+    </div>
+    <div class="form-modal-body">
+
+      <div class="form-section-label">Contact Details</div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Full Name *</label>
+          <input class="form-input" id="nf-name" placeholder="e.g. Sharma Family" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Phone / WhatsApp *</label>
+          <input class="form-input" id="nf-phone" placeholder="+91 98765 43210" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="nf-email" type="email" placeholder="client@email.com" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Lead Source</label>
+          <select class="form-select" id="nf-source">
+            <option>Website Enquiry</option>
+            <option>WhatsApp</option>
+            <option>Phone Call</option>
+            <option>Referral</option>
+            <option>Instagram / Social</option>
+            <option>Walk-in</option>
+            <option>Email</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section-label">Trip Details</div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Destination *</label>
+          <input class="form-input" id="nf-dest" placeholder="e.g. Bali, Indonesia" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Trip Type</label>
+          <select class="form-select" id="nf-type">
+            <option>Leisure / Holiday</option>
+            <option>Honeymoon</option>
+            <option>Family Vacation</option>
+            <option>Corporate / MICE</option>
+            <option>Adventure</option>
+            <option>Group Tour</option>
+            <option>Anniversary</option>
+            <option>Pilgrimage</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-field">
+          <label class="form-label">Travel Date</label>
+          <input class="form-input" id="nf-date" type="date" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Duration</label>
+          <select class="form-select" id="nf-duration">
+            <option>3N/4D</option>
+            <option>4N/5D</option>
+            <option>5N/6D</option>
+            <option>6N/7D</option>
+            <option>7N/8D</option>
+            <option>8N/9D</option>
+            <option>10N/11D</option>
+            <option>12N/13D</option>
+            <option>Custom</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Budget (₹)</label>
+          <input class="form-input" id="nf-budget" placeholder="e.g. 3,50,000" />
+        </div>
+      </div>
+
+      <div class="form-section-label">Traveller Details</div>
+      <div class="form-row-3">
+        <div class="form-field">
+          <label class="form-label">Adults</label>
+          <input class="form-input" id="nf-adults" type="number" min="1" value="2" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Children</label>
+          <input class="form-input" id="nf-children" type="number" min="0" value="0" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Infants</label>
+          <input class="form-input" id="nf-infants" type="number" min="0" value="0" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Hotel Category</label>
+          <select class="form-select" id="nf-hotel">
+            <option>3★ Budget</option>
+            <option>4★ Comfort</option>
+            <option>5★ Luxury</option>
+            <option>Private Villa</option>
+            <option>Boutique / Heritage</option>
+            <option>Overwater Villa</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Flight Preference</label>
+          <select class="form-select" id="nf-flight">
+            <option>Economy</option>
+            <option>Premium Economy</option>
+            <option>Business Class</option>
+            <option>No Flight (land only)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section-label">Additional Info</div>
+      <div class="form-field">
+        <label class="form-label">Special Requests / Notes</label>
+        <textarea class="form-textarea" id="nf-notes" placeholder="Honeymoon package, vegetarian meals, wheelchair access, anniversary surprise, etc."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Lead Status</label>
+          <select class="form-select" id="nf-status">
+            <option value="new">New</option>
+            <option value="warm">Warm</option>
+            <option value="hot">Hot</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Assigned To</label>
+          <select class="form-select" id="nf-assigned">
+            <option>Narayan Mallapur</option>
+            <option>Sales Agent 1</option>
+            <option>Sales Agent 2</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+    <div class="form-modal-footer">
+      <button class="btn-ghost" onclick="closeNewLeadForm()">Cancel</button>
+      <button class="btn-primary" onclick="submitNewLead()">✦ Create Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROPOSAL MODAL -->
+<div id="proposal-modal-overlay" style="display:none" onclick="closeProposalModal(event)">
+  <div class="proposal-modal" id="proposal-modal-box">
+    <div class="proposal-modal-header">
+      <div class="proposal-modal-title">Client Proposal — <span id="modal-client-name">Sharma Family</span></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="showToast('🔗','Link Copied!','Shareable link ready to send')">Share Link</button>
+        <button class="btn-ghost" style="font-size:11px;padding:4px 10px" onclick="showToast('📄','PDF Ready!','Proposal exported as PDF')">Export PDF</button>
+        <button class="btn-primary" style="font-size:11px;padding:4px 10px" onclick="showToast('✅','Booking Confirmed!','Revenue booked successfully');closeProposalModal()">Confirm Booking</button>
+        <div class="proposal-modal-close" onclick="closeProposalModal()">✕</div>
+      </div>
+    </div>
+    <div class="proposal-modal-body">
+      <div id="modal-proposal-doc"></div>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast">
   <div class="toast-icon" id="toast-icon">✦</div>
@@ -1413,12 +2885,21 @@
 // DATA
 // ─────────────────────────────────────────────
 const LEADS = [
-  { id:1, name:'Sharma Family', dest:'Bali, Indonesia', duration:'7N/8D', pax:4, budget:'₹3,20,000', status:'hot', tags:['Villa','Family'], winProb:72, insight:'High conversion probability. Luxury villa preference, budget aligned. Responded 3x in 24hr. Recommend immediate proposal.', dates:'12 Apr – 19 Apr 2025', paxDetail:'2 Adults, 2 Children', statBudget:'₹3,20,000', statDuration:'7N / 8D' },
-  { id:2, name:'Mehta Couple', dest:'Switzerland + France', duration:'10N/11D', pax:2, budget:'₹6,50,000', status:'hot', tags:['Luxury','Honeymoon'], winProb:68, insight:'Luxury honeymoon package. 5★ requirements. Premium experience seekers — upsell opportunities high.', dates:'20 May – 30 May 2025', paxDetail:'2 Adults', statBudget:'₹6,50,000', statDuration:'10N / 11D' },
-  { id:3, name:'Kapoor Group', dest:'Dubai + Abu Dhabi', duration:'5N/6D', pax:8, budget:'₹8,00,000', status:'hot', tags:['Group','Corporate'], winProb:61, insight:'Corporate group travel. Decision pending CFO approval. Follow up with group pricing.', dates:'3 Jun – 8 Jun 2025', paxDetail:'8 Adults', statBudget:'₹8,00,000', statDuration:'5N / 6D' },
-  { id:4, name:'Reddy Family', dest:'Maldives', duration:'4N/5D', pax:4, budget:'₹5,50,000', status:'warm', tags:['Overwater Villa','Snorkeling'], winProb:55, insight:'Premium overwater villa request. Comparing 2 operators. Competitive pricing essential.', dates:'15 Apr – 19 Apr 2025', paxDetail:'2 Adults, 2 Children', statBudget:'₹5,50,000', statDuration:'4N / 5D' },
-  { id:5, name:'Gupta Family', dest:'Kerala Backwaters', duration:'5N/6D', pax:6, budget:'₹1,80,000', status:'warm', tags:['Houseboat','Heritage'], winProb:48, insight:'Value-conscious family. First-time domestic luxury travellers. Strong brand story needed.', dates:'2 May – 7 May 2025', paxDetail:'4 Adults, 2 Children', statBudget:'₹1,80,000', statDuration:'5N / 6D' },
-  { id:6, name:'Singh Corporate', dest:'Thailand', duration:'3N/4D', pax:12, budget:'₹4,20,000', status:'new', tags:['MICE','Team Outing'], winProb:40, insight:'New corporate inquiry via website. MICE segment — high revenue potential if converted.', dates:'10 Jun – 13 Jun 2025', paxDetail:'12 Adults', statBudget:'₹4,20,000', statDuration:'3N / 4D' },
+  { id:1,  name:'Sharma Family',    dest:'Bali, Indonesia',      duration:'7N/8D',   pax:4,  budget:'₹3,20,000', status:'hot',  tags:['Villa','Family'],          winProb:72, insight:'High conversion probability. Luxury villa preference, budget aligned. Responded 3x in 24hr. Recommend immediate proposal.', dates:'12 Apr – 19 Apr 2025', paxDetail:'2 Adults, 2 Children', statBudget:'₹3,20,000', statDuration:'7N / 8D' },
+  { id:2,  name:'Mehta Couple',     dest:'Switzerland + France', duration:'10N/11D', pax:2,  budget:'₹6,50,000', status:'hot',  tags:['Luxury','Honeymoon'],      winProb:68, insight:'Luxury honeymoon package. 5 star requirements. Premium experience seekers — upsell opportunities high.', dates:'20 May – 30 May 2025', paxDetail:'2 Adults', statBudget:'₹6,50,000', statDuration:'10N / 11D' },
+  { id:3,  name:'Kapoor Group',     dest:'Dubai + Abu Dhabi',    duration:'5N/6D',   pax:8,  budget:'₹8,00,000', status:'hot',  tags:['Group','Corporate'],       winProb:61, insight:'Corporate group travel. Decision pending CFO approval. Follow up with group pricing.', dates:'3 Jun – 8 Jun 2025', paxDetail:'8 Adults', statBudget:'₹8,00,000', statDuration:'5N / 6D' },
+  { id:4,  name:'Verma Couple',     dest:'Bali, Indonesia',      duration:'6N/7D',   pax:2,  budget:'₹2,80,000', status:'hot',  tags:['Honeymoon','Beach'],        winProb:74, insight:'Newly engaged couple. Bali honeymoon is a priority booking. Budget confirmed, dates flexible.', dates:'5 May – 11 May 2025', paxDetail:'2 Adults', statBudget:'₹2,80,000', statDuration:'6N / 7D' },
+  { id:5,  name:'Reddy Family',     dest:'Maldives',             duration:'4N/5D',   pax:4,  budget:'₹5,50,000', status:'warm', tags:['Overwater Villa','Snorkel'], winProb:55, insight:'Premium overwater villa request. Comparing 2 operators. Competitive pricing essential.', dates:'15 Apr – 19 Apr 2025', paxDetail:'2 Adults, 2 Children', statBudget:'₹5,50,000', statDuration:'4N / 5D' },
+  { id:6,  name:'Gupta Family',     dest:'Maldives',             duration:'5N/6D',   pax:6,  budget:'₹7,20,000', status:'warm', tags:['Luxury','Island'],          winProb:48, insight:'Luxury Maldives request, 6 pax. Looking for private island resort. Budget is flexible.', dates:'2 May – 7 May 2025', paxDetail:'4 Adults, 2 Children', statBudget:'₹7,20,000', statDuration:'5N / 6D' },
+  { id:7,  name:'Nair Family',      dest:'Dubai + Abu Dhabi',    duration:'6N/7D',   pax:5,  budget:'₹4,80,000', status:'warm', tags:['Family','Theme Parks'],     winProb:52, insight:'Family with kids wanting Dubai theme parks and desert safari. Strong lead, awaiting dates.', dates:'18 Jun – 24 Jun 2025', paxDetail:'3 Adults, 2 Children', statBudget:'₹4,80,000', statDuration:'6N / 7D' },
+  { id:8,  name:'Iyer Corporate',   dest:'Bali, Indonesia',      duration:'4N/5D',   pax:15, budget:'₹9,00,000', status:'warm', tags:['MICE','Offsite'],           winProb:44, insight:'Corporate offsite for tech team. Bali preferred. Needs AV setup and team activities.', dates:'22 Jul – 26 Jul 2025', paxDetail:'15 Adults', statBudget:'₹9,00,000', statDuration:'4N / 5D' },
+  { id:9,  name:'Patel Family',     dest:'Switzerland + France', duration:'8N/9D',   pax:4,  budget:'₹5,20,000', status:'warm', tags:['Europe','Alps'],            winProb:41, insight:'First Europe trip. Excited but budget-sensitive. Needs detailed cost breakdown before deciding.', dates:'1 Jul – 9 Jul 2025', paxDetail:'2 Adults, 2 Children', statBudget:'₹5,20,000', statDuration:'8N / 9D' },
+  { id:10, name:'Singh Corporate',  dest:'Dubai + Abu Dhabi',    duration:'3N/4D',   pax:12, budget:'₹4,20,000', status:'new',  tags:['MICE','Team Outing'],       winProb:40, insight:'New corporate inquiry via website. MICE segment — high revenue potential if converted.', dates:'10 Jun – 13 Jun 2025', paxDetail:'12 Adults', statBudget:'₹4,20,000', statDuration:'3N / 4D' },
+  { id:11, name:'Joshi Couple',     dest:'Maldives',             duration:'5N/6D',   pax:2,  budget:'₹3,90,000', status:'new',  tags:['Anniversary','Beach'],      winProb:35, insight:'25th anniversary celebration. Looking for a special overwater villa experience.', dates:'14 Aug – 19 Aug 2025', paxDetail:'2 Adults', statBudget:'₹3,90,000', statDuration:'5N / 6D' },
+  { id:12, name:'Khanna Group',     dest:'Bali, Indonesia',      duration:'7N/8D',   pax:9,  budget:'₹6,30,000', status:'new',  tags:['Friends','Adventure'],      winProb:30, insight:'Group of friends celebrating a birthday. Adventure activities and nightlife preferred.', dates:'5 Sep – 12 Sep 2025', paxDetail:'9 Adults', statBudget:'₹6,30,000', statDuration:'7N / 8D' },
+  { id:13, name:'Agarwal Inquiry',  dest:'Switzerland + France', duration:'12N/13D', pax:3,  budget:'₹9,80,000', status:'junk', tags:['Enquiry Only'],             winProb:5,  insight:'Replied once, no follow-up in 3 weeks. Budget too high, likely research-only stage.', dates:'TBD', paxDetail:'3 Adults', statBudget:'₹9,80,000', statDuration:'12N / 13D' },
+  { id:14, name:'Unknown Web Lead', dest:'Dubai + Abu Dhabi',    duration:'2N/3D',   pax:1,  budget:'₹60,000',   status:'junk', tags:['Low Intent'],               winProb:3,  insight:'Filled form with placeholder details. No phone response. Likely test or spam lead.', dates:'TBD', paxDetail:'1 Adult', statBudget:'₹60,000', statDuration:'2N / 3D' },
+  { id:15, name:'Random Click',     dest:'Bali, Indonesia',      duration:'3N/4D',   pax:2,  budget:'₹80,000',   status:'junk', tags:['No Response'],              winProb:2,  insight:'No response after 4 attempts. Budget unrealistic for requested itinerary. Archive recommended.', dates:'TBD', paxDetail:'2 Adults', statBudget:'₹80,000', statDuration:'3N / 4D' },
 ];
 
 const ITINERARIES = {
@@ -1495,11 +2976,22 @@ let quoteMode = 'cost';
 
 function renderLeads(filter='all') {
   const c = document.getElementById('leads-container');
+  const destKeywords = { bali:'bali', europe:'switzerland', dubai:'dubai', maldives:'maldives' };
   const filtered = filter === 'all' ? LEADS : LEADS.filter(l => {
-    if (['hot','warm','new'].includes(filter)) return l.status === filter;
-    const destMap = { bali:'Bali', europe:'Switzerland', dubai:'Dubai', maldives:'Maldives' };
-    return l.dest.toLowerCase().includes((destMap[filter]||filter).toLowerCase());
+    if (['hot','warm','new','junk'].includes(filter)) return l.status === filter;
+    if (destKeywords[filter]) return l.dest.toLowerCase().includes(destKeywords[filter]);
+    return true;
   });
+  // Update header count
+  const header = document.getElementById('leads-header-title');
+  if (header) {
+    const labels = {all:'Lead Inbox',hot:'🔥 Hot Leads',warm:'Warm Leads',new:'New Leads',junk:'🗑 Junk',bali:'🌴 Bali',europe:'🏔 Europe',dubai:'🏙 Dubai',maldives:'🌊 Maldives'};
+    header.textContent = (labels[filter]||'Leads') + ' (' + filtered.length + ')';
+  }
+  if (filtered.length === 0) {
+    c.innerHTML = '<div style="padding:24px;text-align:center;color:var(--muted);font-size:13px;">No leads found</div>';
+    return;
+  }
   c.innerHTML = filtered.map(l => `
     <div class="lead-card ${l.id===currentLead.id?'active':''}" onclick="selectLead(${l.id})">
       <div class="lead-card-top">
@@ -1517,9 +3009,7 @@ function renderLeads(filter='all') {
 }
 
 function selectLead(id) {
-  currentLead = LEADS.find(l=>l.id===id);
-  renderLeads();
-  populateDetail();
+  openDetailDrawer(id);
 }
 
 function populateDetail() {
@@ -1536,6 +3026,12 @@ function populateDetail() {
   renderQuotes(currentLead.id);
   renderActivityLog();
   renderProposal();
+  // update comms draft
+  const draftEl = document.getElementById('comms-draft-text');
+  if (draftEl) draftEl.textContent = getDraftText ? getDraftText() : '';
+  // hide edit box if open
+  const editBox = document.getElementById('email-compose-box');
+  if (editBox) editBox.style.display = 'none';
 }
 
 function renderItinerary(id) {
@@ -1868,8 +3364,163 @@ function openProposal() {
   renderProposal();
 }
 
+function openProposalModal() {
+  const overlay = document.getElementById('proposal-modal-overlay');
+  overlay.style.display = 'flex';
+  overlay.className = 'proposal-modal-overlay';
+  document.getElementById('modal-client-name').textContent = currentLead.name;
+  // Render proposal content into modal
+  const days = ITINERARIES[currentLead.id] || generateFallbackItinerary();
+  const q = QUOTES[currentLead.id];
+  const baseCost = q ? q.items.reduce((s,i)=>s+i.cost,0) : 252400;
+  const clientPrice = Math.round(baseCost * 1.20 * 1.05);
+  document.getElementById('modal-proposal-doc').innerHTML = `
+    <div style="padding:28px 0 16px">
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent);margin-bottom:8px;font-weight:500">Exclusive Proposal</div>
+      <div style="font-family:'Instrument Serif',serif;font-size:26px;margin-bottom:6px">${currentLead.dest}</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:18px">${currentLead.duration} · ${currentLead.pax} Travellers · ${currentLead.dates||'Flexible Dates'}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px">
+        ${['✈️ Return Flights','🏨 Premium Stay','🚗 All Transfers','🌟 Experiences','🛡 Insurance'].map(c=>`<span style="font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);color:var(--muted)">${c}</span>`).join('')}
+      </div>
+      <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:14px;font-weight:500">Day by Day</div>
+      ${days.map((d,i)=>`
+        <div style="display:flex;gap:14px;margin-bottom:14px">
+          <div style="font-family:'Instrument Serif',serif;font-size:22px;color:var(--border);width:32px;flex-shrink:0;line-height:1">${String(i+1).padStart(2,'0')}</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;margin-bottom:2px">${d.title}</div>
+            <div style="font-size:11.5px;color:var(--muted)">${d.activities.map(a=>a.text).join(' · ')}</div>
+          </div>
+        </div>
+      `).join('')}
+      <div style="margin-top:20px;padding:18px 20px;background:rgba(200,169,110,0.08);border:1px solid rgba(200,169,110,0.25);border-radius:12px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Total Package (incl. GST)</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:28px;color:var(--accent)">${formatINR(clientPrice)}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Per Person</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:20px">${formatINR(Math.round(clientPrice/currentLead.pax))}</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:12px;color:var(--muted);line-height:1.7">This proposal is curated exclusively for ${currentLead.name} by NAMA Travel Intelligence. Prices valid for 72 hours. <span style="color:var(--accent)">Book now to secure availability.</span></div>
+    </div>
+  `;
+}
+
+function closeProposalModal(e) {
+  if (e && e.target !== document.getElementById('proposal-modal-overlay')) return;
+  document.getElementById('proposal-modal-overlay').style.display = 'none';
+}
+
 function addNewLead() {
-  showToast('✚', 'New Lead', 'Lead form ready — connect to your CRM to capture');
+  openNewLeadForm();
+}
+
+// ── NEW LEAD FORM ──
+function openNewLeadForm() {
+  document.getElementById('new-lead-overlay').style.display = 'flex';
+  // reset form
+  ['fl-name','fl-email','fl-phone','fl-dest','fl-type','fl-adults','fl-children',
+   'fl-date','fl-nights','fl-budget','fl-source','fl-room','fl-stars','fl-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+
+function closeNewLeadForm(e) {
+  if (e && e.target !== document.getElementById('new-lead-overlay')) return;
+  document.getElementById('new-lead-overlay').style.display = 'none';
+}
+
+function submitNewLead() {
+  const name = document.getElementById('fl-name').value.trim();
+  const phone = document.getElementById('fl-phone').value.trim();
+  const dest = document.getElementById('fl-dest').value.trim();
+  if (!name || !phone || !dest) {
+    showToast('⚠️', 'Missing Fields', 'Please fill Name, Phone and Destination');
+    return;
+  }
+  const adults = parseInt(document.getElementById('fl-adults').value) || 2;
+  const children = parseInt(document.getElementById('fl-children').value) || 0;
+  const pax = adults + children;
+  const nights = parseInt(document.getElementById('fl-nights').value) || 5;
+  const budget = document.getElementById('fl-budget').value || '₹2,00,000 – ₹5,00,000';
+  const type = document.getElementById('fl-type').value || 'Holiday';
+  const status = document.getElementById('fl-status').value || 'new';
+  const notes = document.getElementById('fl-notes').value.trim();
+
+  const newLead = {
+    id: LEADS.length + 1,
+    name,
+    dest,
+    duration: nights + 'N/' + (nights+1) + 'D',
+    pax,
+    budget,
+    status,
+    tags: [type, adults + ' Adults' + (children ? ', ' + children + ' Children' : '')],
+    winProb: status === 'hot' ? 65 : status === 'warm' ? 45 : 30,
+    insight: notes || 'New lead created via CRM form. Follow up within 24 hours.',
+    dates: 'TBD',
+    paxDetail: adults + ' Adult' + (adults>1?'s':'') + (children ? ', ' + children + ' Child' + (children>1?'ren':'') : ''),
+    statBudget: budget,
+    statDuration: nights + 'N / ' + (nights+1) + 'D',
+  };
+
+  LEADS.unshift(newLead);
+  currentLead = newLead;
+  document.getElementById('new-lead-overlay').style.display = 'none';
+  renderLeads('all');
+  // reset sidebar to all
+  document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item')[0].classList.add('active');
+  populateDetail();
+  switchTab('overview', document.querySelectorAll('.tab')[0]);
+  showToast('✦', 'Lead Created!', name + ' added to your pipeline');
+}
+
+// ── COMMUNICATION TAB FUNCTIONS ──
+function getDraftText() {
+  const firstName = currentLead.name.split(' ')[0];
+  return `Dear ${firstName}, thank you for reaching out to us! I've put together a curated ${currentLead.dest} experience tailored for your group of ${currentLead.pax}. The package covers premium accommodation, all transfers, and handpicked experiences within your budget. I'd love to walk you through it — would tomorrow at 11am work for a quick call?`;
+}
+
+function sendEmail() {
+  const draft = document.getElementById('comms-draft-text').textContent;
+  const subject = encodeURIComponent('Your ' + currentLead.dest + ' Travel Proposal — NAMA');
+  const body = encodeURIComponent(draft);
+  const email = 'client@example.com';
+  window.open('mailto:' + email + '?subject=' + subject + '&body=' + body, '_blank');
+  showToast('📧', 'Email Draft Opened!', 'Your mail client has opened with the draft ready');
+  ACTIVITY_LOG.unshift({ time: 'Just now', text: 'Email draft opened for ' + currentLead.name, icon: '📧' });
+  renderActivityLog();
+}
+
+function sendWhatsApp() {
+  const draft = document.getElementById('comms-draft-text').textContent;
+  const msg = encodeURIComponent(draft);
+  window.open('https://wa.me/?text=' + msg, '_blank');
+  showToast('💬', 'WhatsApp Opened!', 'Message ready to send via WhatsApp');
+  ACTIVITY_LOG.unshift({ time: 'Just now', text: 'WhatsApp message prepared for ' + currentLead.name, icon: '💬' });
+  renderActivityLog();
+}
+
+function editDraft() {
+  const box = document.getElementById('email-compose-box');
+  const editor = document.getElementById('draft-editor');
+  editor.value = document.getElementById('comms-draft-text').textContent;
+  box.style.display = 'flex';
+  editor.focus();
+}
+
+function saveDraft() {
+  const newText = document.getElementById('draft-editor').value.trim();
+  if (newText) document.getElementById('comms-draft-text').textContent = newText;
+  document.getElementById('email-compose-box').style.display = 'none';
+  showToast('💾', 'Draft Saved!', 'Your edited message has been saved');
+}
+
+function cancelEdit() {
+  document.getElementById('email-compose-box').style.display = 'none';
 }
 
 function showToast(icon, title, msg) {
@@ -1899,6 +3550,610 @@ function toggleTheme() {
 }
 
 // ─────────────────────────────────────────────
+// TABLE VIEW
+// ─────────────────────────────────────────────
+let currentView = 'list';
+let sortCol = 'name';
+let sortDir = 1;
+let checkedIds = new Set();
+let currentFilter = 'all';
+
+const SOURCES = ['Website','WhatsApp','Referral','Instagram','Phone','Walk-in','Email'];
+const SOURCE_MAP = {
+  1:'Website', 2:'Referral', 3:'Instagram', 4:'WhatsApp',
+  5:'Phone', 6:'Website', 7:'Referral', 8:'Instagram',
+  9:'Website', 10:'Phone', 11:'WhatsApp', 12:'Referral',
+  13:'Website', 14:'Instagram', 15:'WhatsApp'
+};
+const LAST_ACTIONS = [
+  'Mar 21','Mar 20','Mar 19','Mar 18','Mar 17','Mar 16',
+  'Mar 15','Mar 14','Mar 13','Mar 12','Mar 21','Mar 19',
+  'Mar 10','Mar 8','Mar 5'
+];
+
+function getFilteredLeads() {
+  const search = (document.getElementById('lt-search-input')||{value:''}).value.toLowerCase();
+  const destKeywords = { bali:'bali', europe:'switzerland', dubai:'dubai', maldives:'maldives' };
+  return LEADS.filter(l => {
+    if (['hot','warm','new','junk'].includes(currentFilter) && l.status !== currentFilter) return false;
+    if (destKeywords[currentFilter] && !l.dest.toLowerCase().includes(destKeywords[currentFilter])) return false;
+    if (search && !l.name.toLowerCase().includes(search) && !l.dest.toLowerCase().includes(search)) return false;
+    return true;
+  });
+}
+
+function renderTable() {
+  const leads = getFilteredLeads();
+  updateStatsBar(leads);
+
+  if (currentView === 'list') renderListView(leads);
+  else if (currentView === 'board') renderBoardView(leads);
+  else renderPipelineView(leads);
+}
+
+function updateStatsBar(leads) {
+  const newC = leads.filter(l=>l.status==='new').length;
+  const hotC = leads.filter(l=>l.status==='hot').length;
+  const junkC = leads.filter(l=>l.status==='junk').length;
+  const totalVal = leads.reduce((s,l)=>{
+    const n = parseInt((l.budget||'0').replace(/[₹,]/g,''))||0;
+    return s+n;
+  },0);
+  const el = id => document.getElementById(id);
+  if(el('lts-new')) el('lts-new').textContent = newC;
+  if(el('lts-hot')) el('lts-hot').textContent = hotC;
+  if(el('lts-junk')) el('lts-junk').textContent = junkC;
+  if(el('lts-val')) el('lts-val').textContent = '₹' + Math.round(totalVal/100000) + 'L';
+  const titleEl = document.getElementById('lt-page-title');
+  if (titleEl) {
+    const labels = {all:'Leads',hot:'Hot Leads',warm:'Warm Leads',new:'New Leads',junk:'Junk',bali:'Bali Leads',europe:'Europe Leads',dubai:'Dubai Leads',maldives:'Maldives Leads'};
+    titleEl.textContent = (labels[currentFilter]||'Leads') + ' (' + leads.length + ')';
+  }
+}
+
+function sparklineSVG(trend) {
+  const pts = trend === 'up'
+    ? [2,18,8,14,14,10,20,12,26,7,32,5,38,8,44,4,50,6,56,3,62,4]
+    : trend === 'down'
+    ? [2,4,8,6,14,10,20,8,26,12,32,14,38,11,44,16,50,18,56,14,62,20]
+    : [2,12,8,10,14,13,20,9,26,11,32,10,38,12,44,9,50,11,56,10,62,11];
+  const pairs = [];
+  for(let i=0;i<pts.length;i+=2) pairs.push(pts[i]+','+pts[i+1]);
+  const color = trend==='up'?'#4a9b7f':trend==='down'?'#e05a4e':'#c8a96e';
+  return `<svg class="sparkline" viewBox="0 0 64 24"><polyline points="${pairs.join(' ')}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+function interestLevel(prob) {
+  return prob >= 60 ? 'high' : prob >= 40 ? 'mid' : 'low';
+}
+
+function renderListView(leads) {
+  const sorted = [...leads].sort((a,b)=>{
+    let av = a[sortCol], bv = b[sortCol];
+    if (typeof av === 'string') av = av.toLowerCase();
+    if (typeof bv === 'string') bv = bv.toLowerCase();
+    return av < bv ? -sortDir : av > bv ? sortDir : 0;
+  });
+
+  const tbody = document.getElementById('lt-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = sorted.map((l,i) => {
+    const src = SOURCE_MAP[l.id] || 'Website';
+    const int = interestLevel(l.winProb);
+    const trend = l.status==='hot'?'up':l.status==='junk'?'down':'neutral';
+    const checked = checkedIds.has(l.id);
+    const lastAction = LAST_ACTIONS[i % LAST_ACTIONS.length];
+    return `<tr class="lt-row${checked?' selected':''}" id="ltrow-${l.id}">
+      <td onclick="event.stopPropagation()">
+        <input type="checkbox" class="lt-check" ${checked?'checked':''} onchange="toggleCheck(${l.id},this)" onclick="event.stopPropagation()">
+      </td>
+      <td onclick="openDetailDrawer(${l.id})">
+        <div class="lt-lead-name">${l.name}</div>
+        <div class="lt-lead-email">${l.name.toLowerCase().replace(/ /g,'.')}@gmail.com</div>
+      </td>
+      <td onclick="openDetailDrawer(${l.id})">
+        <span class="lt-source-pill">${src}</span>
+      </td>
+      <td onclick="openDetailDrawer(${l.id})">
+        <span class="lt-status-pill ${l.status}">${l.status.toUpperCase()}</span>
+      </td>
+      <td onclick="openDetailDrawer(${l.id})" style="color:var(--muted)">${l.pax}</td>
+      <td onclick="openDetailDrawer(${l.id})" style="font-weight:500">${l.budget}</td>
+      <td onclick="openDetailDrawer(${l.id})">${sparklineSVG(trend)} <span class="lt-interest-pill ${int}" style="margin-left:4px">${int.toUpperCase()}</span></td>
+      <td onclick="openDetailDrawer(${l.id})">
+        <div style="background:var(--surface2);border-radius:4px;height:6px;width:80px;overflow:hidden">
+          <div style="height:100%;width:${l.winProb}%;background:${l.winProb>=60?'#4a9b7f':l.winProb>=40?'#c8a96e':'#e05a4e'};border-radius:4px"></div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">${l.winProb}%</div>
+      </td>
+      <td>
+        <div class="lt-action-wrap">
+          ${i%3===1 ? `<button class="lt-engage-btn" onclick="event.stopPropagation();engageLead(${l.id})">Engage ···</button>` : `<span class="lt-action-date">${lastAction}</span>`}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  updateBulkBar();
+}
+
+function renderBoardView(leads) {
+  const cols = {hot:{label:'Hot 🔥',color:'#e05a4e'},warm:{label:'Warm ◑',color:'#e09a3e'},new:{label:'New ✦',color:'#4a9b7f'},junk:{label:'Junk 🗑',color:'#7a7870'}};
+  const board = document.getElementById('lt-board-cols');
+  if (!board) return;
+  board.innerHTML = Object.entries(cols).map(([status,{label,color}]) => {
+    const colLeads = leads.filter(l=>l.status===status);
+    return `<div class="lt-board-col">
+      <div class="lt-board-col-header">
+        <span style="color:${color}">${label}</span>
+        <span>${colLeads.length}</span>
+      </div>
+      ${colLeads.map(l=>`
+        <div class="lt-board-card" onclick="openDetailDrawer(${l.id})">
+          <div class="lt-board-card-name">${l.name}</div>
+          <div class="lt-board-card-dest">${l.dest} · ${l.duration}</div>
+          <div class="lt-board-card-foot">
+            <span style="font-size:11px;color:var(--accent)">${l.budget}</span>
+            <span class="lt-status-pill ${l.status}" style="font-size:10px">${l.winProb}%</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+  }).join('');
+}
+
+function renderPipelineView(leads) {
+  const stages = [
+    {label:'New Inquiry', filter:l=>l.status==='new',   color:'#4a9b7f'},
+    {label:'Contacted',   filter:l=>l.winProb>=30,       color:'#5b8def'},
+    {label:'Quoted',      filter:l=>l.winProb>=45,       color:'#c8a96e'},
+    {label:'Negotiating', filter:l=>l.winProb>=60,       color:'#e09a3e'},
+    {label:'Hot — Close', filter:l=>l.status==='hot',    color:'#e05a4e'},
+  ];
+  const total = leads.length || 1;
+  const container = document.getElementById('lt-pipeline-rows');
+  if (!container) return;
+  container.innerHTML = `<div style="font-size:12px;color:var(--muted);margin-bottom:14px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em">Conversion Funnel</div>` +
+  stages.map(s => {
+    const cnt = leads.filter(s.filter).length;
+    const pct = Math.round(cnt/total*100);
+    const val = leads.filter(s.filter).reduce((sum,l)=>sum+parseInt((l.budget||'0').replace(/[₹,]/g,''))||0,0);
+    return `<div class="lt-pipe-row" onclick="filterByStage('${s.label}')">
+      <div class="lt-pipe-stage">${s.label}</div>
+      <div class="lt-pipe-bar-wrap">
+        <div class="lt-pipe-bar-fill" style="width:${pct}%;background:${s.color}">${cnt} leads</div>
+      </div>
+      <div class="lt-pipe-count">${cnt}</div>
+      <div class="lt-pipe-value">₹${Math.round(val/100000)||0}L</div>
+    </div>`;
+  }).join('');
+}
+
+function setTableView(view, el) {
+  currentView = view;
+  document.querySelectorAll('.lt-view-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('lt-list-view').style.display = view==='list' ? 'block' : 'none';
+  document.getElementById('lt-board-view').style.display = view==='board' ? 'flex' : 'none';
+  document.getElementById('lt-pipeline-view').style.display = view==='pipeline' ? 'flex' : 'none';
+  renderTable();
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  document.querySelectorAll('.leads-table th').forEach(th => th.classList.remove('sorted'));
+  renderTable();
+}
+
+function toggleCheck(id, el) {
+  if (el.checked) checkedIds.add(id);
+  else checkedIds.delete(id);
+  const row = document.getElementById('ltrow-'+id);
+  if (row) row.classList.toggle('selected', el.checked);
+  updateBulkBar();
+}
+
+function toggleAllChecks(el) {
+  const leads = getFilteredLeads();
+  leads.forEach(l => {
+    if (el.checked) checkedIds.add(l.id);
+    else checkedIds.delete(l.id);
+    const row = document.getElementById('ltrow-'+l.id);
+    if (row) row.classList.toggle('selected', el.checked);
+  });
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('lt-bulk-bar');
+  const cnt = document.getElementById('lt-bulk-count');
+  if (!bar) return;
+  bar.style.display = checkedIds.size > 0 ? 'flex' : 'none';
+  if (cnt) cnt.textContent = checkedIds.size;
+}
+
+function bulkEngage() { showToast('📧','Engaging '+checkedIds.size+' leads','AI drafts being prepared…'); checkedIds.clear(); updateBulkBar(); renderTable(); }
+function bulkGroup()  { showToast('👥','Group created',''+checkedIds.size+' leads added to group'); }
+function bulkCSV()    { showToast('📥','CSV Downloaded',''+checkedIds.size+' leads exported'); }
+function bulkDelete() { checkedIds.forEach(id=>{ const i=LEADS.findIndex(l=>l.id===id); if(i>-1) LEADS.splice(i,1); }); checkedIds.clear(); renderTable(); showToast('🗑','Leads deleted','Removed from pipeline'); }
+
+function engageLead(id) {
+  openDetailDrawer(id);
+  setTimeout(()=>switchTab('comms', document.querySelectorAll('.tab')[3]), 100);
+}
+
+function filterByStage(stage) { showToast('🔍','Filter: '+stage,'Showing matching leads'); }
+
+function openDetailDrawer(id) {
+  currentLead = LEADS.find(l=>l.id===id) || currentLead;
+  const drawer = document.getElementById('lead-detail-panel');
+  if (drawer) { drawer.style.display = 'flex'; }
+  populateDetail();
+  // switch first tab
+  switchTab('overview', document.querySelector('.tab'));
+}
+
+function closeDetailDrawer() {
+  const drawer = document.getElementById('lead-detail-panel');
+  if (drawer) drawer.style.display = 'none';
+}
+
+// Override filterLeads to use new table renderer
+function filterLeads(filter, el) {
+  currentFilter = filter;
+  document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  if(el) el.classList.add('active');
+  checkedIds.clear();
+  renderTable();
+}
+
+// ─────────────────────────────────────────────
+// SERVICE MANAGEMENT DATA & LOGIC
+// ─────────────────────────────────────────────
+const SVC_DATA = {
+  hotel: [
+    {id:1001,name:'The Layar Private Villas',city:'Seminyak',country:'Indonesia',category:'Private Villa',rating:5,status:'active',phone:'+62 361 730 800',email:'reservations@thelayar.com',rooms:30,price:'₹28,000/night'},
+    {id:1002,name:'COMO Uma Ubud',city:'Ubud',country:'Indonesia',category:'Boutique Resort',rating:5,status:'active',phone:'+62 361 972 448',email:'uma.ubud@como.com',rooms:46,price:'₹22,400/night'},
+    {id:1003,name:'Alila Seminyak',city:'Seminyak',country:'Indonesia',category:'Luxury Hotel',rating:5,status:'active',phone:'+62 361 302 1888',email:'seminyak@alilahotels.com',rooms:240,price:'₹19,800/night'},
+    {id:1004,name:'Four Seasons Jimbaran',city:'Jimbaran',country:'Indonesia',category:'Luxury Resort',rating:5,status:'active',phone:'+62 361 701010',email:'bali@fourseasons.com',rooms:147,price:'₹42,000/night'},
+    {id:1005,name:'Marriott JBR',city:'Dubai',country:'UAE',category:'5★ Hotel',rating:5,status:'active',phone:'+971 4 414 0000',email:'marriott.dubai@marriott.com',rooms:608,price:'₹18,500/night'},
+    {id:1006,name:'Atlantis The Palm',city:'Dubai',country:'UAE',category:'Beach Resort',rating:5,status:'active',phone:'+971 4 426 0000',email:'info@atlantis.com',rooms:1548,price:'₹32,000/night'},
+    {id:1007,name:'Soneva Fushi',city:'Baa Atoll',country:'Maldives',category:'Overwater Villa',rating:5,status:'active',phone:'+960 660 0304',email:'reservations@soneva.com',rooms:65,price:'₹85,000/night'},
+    {id:1008,name:'Anantara Kihavah',city:'Baa Atoll',country:'Maldives',category:'Overwater Villa',rating:5,status:'active',phone:'+960 666 0500',email:'kihavah@anantara.com',rooms:80,price:'₹72,000/night'},
+    {id:1009,name:'NH Hotels Zurich',city:'Zurich',country:'Switzerland',category:'Business Hotel',rating:4,status:'active',phone:'+41 44 206 3000',email:'nh.zurich@nh-hotels.com',rooms:220,price:'₹12,000/night'},
+    {id:1010,name:'Interlaken Victoria Jungfrau',city:'Interlaken',country:'Switzerland',category:'Grand Hotel',rating:5,status:'inactive',phone:'+41 33 828 2828',email:'reservation@victoria-jungfrau.ch',rooms:224,price:'₹38,000/night'},
+    {id:1011,name:'Le Méridien Bangkok',city:'Bangkok',country:'Thailand',category:'City Hotel',rating:4,status:'active',phone:'+66 2 232 8888',email:'lm.bangkok@lemeridien.com',rooms:282,price:'₹8,400/night'},
+    {id:1012,name:'Taj Kovalam',city:'Kovalam',country:'India',category:'Beach Resort',rating:5,status:'inactive',phone:'+91 471 661 3000',email:'tajkovalam@tajhotels.com',rooms:65,price:'₹14,000/night'},
+  ],
+  activity: [
+    {id:2001,name:'Mt. Batur Sunrise Trek',city:'Kintamani',country:'Indonesia',category:'Adventure',rating:5,status:'active',duration:'8 hours',price:'₹800/pax',groupSize:'Max 12'},
+    {id:2002,name:'Kecak Fire Dance',city:'Uluwatu',country:'Indonesia',category:'Cultural',rating:4,status:'active',duration:'2 hours',price:'₹600/pax',groupSize:'Open'},
+    {id:2003,name:'Nusa Penida Day Tour',city:'Nusa Penida',country:'Indonesia',category:'Sightseeing',rating:5,status:'active',duration:'Full day',price:'₹1,200/pax',groupSize:'Max 8'},
+    {id:2004,name:'Desert Safari Dubai',city:'Dubai',country:'UAE',category:'Adventure',rating:5,status:'active',duration:'6 hours',price:'₹2,800/pax',groupSize:'Max 20'},
+    {id:2005,name:'Burj Khalifa Visit',city:'Dubai',country:'UAE',category:'Attraction',rating:4,status:'active',duration:'2 hours',price:'₹1,400/pax',groupSize:'Open'},
+    {id:2006,name:'Snorkeling Blue Lagoon',city:'Amed',country:'Indonesia',category:'Water Sport',rating:4,status:'active',duration:'4 hours',price:'₹1,800/pax',groupSize:'Max 10'},
+    {id:2007,name:'Jungfraujoch Day Trip',city:'Interlaken',country:'Switzerland',category:'Sightseeing',rating:5,status:'active',duration:'Full day',price:'₹6,200/pax',groupSize:'Open'},
+    {id:2008,name:'Phi Phi Island Tour',city:'Phuket',country:'Thailand',category:'Island Tour',rating:5,status:'inactive',duration:'Full day',price:'₹2,200/pax',groupSize:'Max 15'},
+  ],
+  meal: [
+    {id:3001,name:'Locavore Fine Dining',city:'Ubud',country:'Indonesia',category:'Fine Dining',rating:5,status:'active',cuisine:'Indonesian Fusion',price:'₹3,500/pax',mealType:'Dinner'},
+    {id:3002,name:'Ku De Ta Sunset Dinner',city:'Seminyak',country:'Indonesia',category:'Beachfront',rating:4,status:'active',cuisine:'International',price:'₹2,800/pax',mealType:'Dinner'},
+    {id:3003,name:'Balinese Cooking Class',city:'Ubud',country:'Indonesia',category:'Experience',rating:5,status:'active',cuisine:'Balinese',price:'₹1,800/pax',mealType:'Lunch'},
+    {id:3004,name:'Pierchic Dubai',city:'Dubai',country:'UAE',category:'Fine Dining',rating:5,status:'active',cuisine:'Seafood',price:'₹5,200/pax',mealType:'Dinner'},
+    {id:3005,name:'At.mosphere Burj Khalifa',city:'Dubai',country:'UAE',category:'Fine Dining',rating:5,status:'active',cuisine:'International',price:'₹6,800/pax',mealType:'Dinner'},
+    {id:3006,name:'Chalet Swiss Mountain Brunch',city:'Grindelwald',country:'Switzerland',category:'Traditional',rating:4,status:'inactive',cuisine:'Swiss',price:'₹2,200/pax',mealType:'Brunch'},
+  ],
+  transport: [
+    {id:4001,name:'Dubai Transfers Co.',city:'Dubai',country:'UAE',category:'Private Transfer',rating:5,status:'active',vehicle:'Mercedes V-Class',price:'₹2,400/transfer',capacity:'7 pax'},
+    {id:4002,name:'Bali Private Driver',city:'Seminyak',country:'Indonesia',category:'Day Driver',rating:4,status:'active',vehicle:'Toyota Innova',price:'₹1,200/day',capacity:'7 pax'},
+    {id:4003,name:'Switzerland Rail Pass',city:'Zurich',country:'Switzerland',category:'Rail',rating:5,status:'active',vehicle:'Swiss Federal Rail',price:'₹4,800/pax',capacity:'Unlimited'},
+    {id:4004,name:'Bangkok Limo Service',city:'Bangkok',country:'Thailand',category:'Private Transfer',rating:4,status:'active',vehicle:'BMW 7 Series',price:'₹3,200/transfer',capacity:'4 pax'},
+    {id:4005,name:'Maldives Speedboat',city:'Male',country:'Maldives',category:'Boat Transfer',rating:5,status:'active',vehicle:'Speedboat',price:'₹8,000/transfer',capacity:'12 pax'},
+    {id:4006,name:'Helicopter Dubai',city:'Dubai',country:'UAE',category:'Helicopter',rating:5,status:'inactive',vehicle:'Bell 206',price:'₹28,000/flight',capacity:'4 pax'},
+  ]
+};
+
+const PKG_DATA = [
+  {id:138,name:'Hello Kazakhstan',dest:'Kazakhstan',days:5,nights:4,desc:'Tour of the Central State Museum of the Republic of Kazakhstan and city highlights.',rating:4,hotel:'Ramada',price:'₹65,000',status:'inactive',category:'Sightseeing'},
+  {id:119,name:'Simply Singapore',dest:'Singapore',days:6,nights:5,desc:'Singapore City Full tour — Gardens by the Bay, Marina Bay Sands, Sentosa.',rating:3,hotel:'3 Star Hotel',price:'₹72,000',status:'inactive',category:'Leisure'},
+  {id:115,name:'Peaks of Swiss',dest:'Switzerland',days:5,nights:4,desc:'ZRH Apt - Interlaken - Jungfraujoch - Lucerne - Mt. Titlis circuit.',rating:3,hotel:'3 Star',price:'₹1,10,000',status:'active',category:'Adventure'},
+  {id:113,name:'Peaks of Switzerland',dest:'Switzerland',days:5,nights:4,desc:'ZRH Apt - Interlaken - Jungfraujoch - Lucerne - Mt. Titlis with glacier walk.',rating:3,hotel:'3 Star',price:'₹1,05,000',status:'inactive',category:'Adventure'},
+  {id:103,name:'Wonderful Turkey Tour',dest:'Turkey',days:8,nights:7,desc:'If you are looking for something special and extraordinary — Istanbul, Cappadocia, Pamukkale.',rating:4,hotel:'Istanbul - 4 Star Ramada Hotel & Suites Golden Horn',price:'₹88,000',status:'inactive',category:'Cultural'},
+  {id:101,name:'Eyes of Turkey Tour',dest:'Turkey',days:8,nights:7,desc:'If you are looking for something special and extraordinary — complete Turkish experience.',rating:4,hotel:'Istanbul - Ramada Hotel & Suites Golden Horn Antal',price:'₹82,000',status:'inactive',category:'Cultural'},
+  {id:100,name:'5 Days/4 Nights Interlaken-Lucerne-Zurich',dest:'Switzerland',days:5,nights:4,desc:'Interlaken is a traditional resort town in the mountains. Scenic rail and lake cruises.',rating:4,hotel:'Not Given By DMC',price:'₹95,000',status:'active',category:'Leisure'},
+  {id:99,name:'Classic Jungfraujoch 02 Nights Zurich',dest:'Switzerland',days:3,nights:2,desc:'Icy air streams across your face, snow crunches under your feet — top of Europe.',rating:4,hotel:'Not Given By DMC',price:'₹58,000',status:'active',category:'Adventure'},
+  {id:98,name:'2N 3D City Delight Zurich',dest:'Switzerland',days:3,nights:2,desc:'Zurich, a global center for banking and finance with beautiful old town and lake.',rating:4,hotel:'Not Given By DMC',price:'₹42,000',status:'active',category:'City Break'},
+  {id:95,name:'Bali Family Escape 7N',dest:'Bali',days:8,nights:7,desc:'Private villa, Ubud cultural tour, Mt. Batur trek, Tanah Lot, water activities.',rating:5,hotel:'The Layar Private Villas',price:'₹3,20,000',status:'active',category:'Family'},
+  {id:92,name:'Maldives Honeymoon Bliss',dest:'Maldives',days:5,nights:4,desc:'Overwater villa, sunset cruise, snorkeling, couples spa. Pure paradise.',rating:5,hotel:'Soneva Fushi / Anantara Kihavah',price:'₹4,80,000',status:'active',category:'Honeymoon'},
+  {id:88,name:'Dubai Grand Experience',dest:'Dubai',days:6,nights:5,desc:'Burj Khalifa, desert safari, Dubai Mall, yacht dinner, Palm Jumeirah tour.',rating:5,hotel:'Marriott JBR / Atlantis',price:'₹2,45,000',status:'active',category:'Luxury'},
+];
+
+let currentSvcTab = 'hotel';
+let svcPage = 1, svcPerPage = 10, svcSortCol = 'id', svcSortDir = 1;
+let pkgPage = 1, pkgPerPage = 10, pkgSortCol = 'id', pkgSortDir = -1;
+let currentSvcDetailItem = null, currentPkgDetailItem = null;
+
+const SVC_COLS = {
+  hotel:     ['ID','Name','City','Country','Category','Rating','Status','Action'],
+  activity:  ['ID','Name','City','Country','Category','Duration','Price','Status','Action'],
+  meal:      ['ID','Name','City','Country','Category','Cuisine','Meal Type','Status','Action'],
+  transport: ['ID','Name','City','Country','Category','Vehicle','Capacity','Status','Action'],
+};
+
+function switchSvcTab(tab, el) {
+  currentSvcTab = tab;
+  svcPage = 1;
+  document.querySelectorAll('#svc-tabs .mgmt-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderSvcTable();
+}
+
+function getSvcData() {
+  const q = (document.getElementById('svc-search')||{value:''}).value.toLowerCase();
+  const sort = (document.getElementById('svc-sort')||{value:''}).value;
+  let data = [...(SVC_DATA[currentSvcTab]||[])];
+  if (q) data = data.filter(d=>d.name.toLowerCase().includes(q)||d.city.toLowerCase().includes(q)||d.country.toLowerCase().includes(q));
+  if (sort === 'name') data.sort((a,b)=>a.name.localeCompare(b.name));
+  else if (sort === 'city') data.sort((a,b)=>a.city.localeCompare(b.city));
+  else if (sort === 'rating') data.sort((a,b)=>b.rating-a.rating);
+  else if (sort === 'status') data.sort((a,b)=>a.status.localeCompare(b.status));
+  else data.sort((a,b)=>svcSortDir*(a[svcSortCol]>b[svcSortCol]?1:-1));
+  return data;
+}
+
+function renderSvcTable() {
+  const data = getSvcData();
+  const total = data.length;
+  const start = (svcPage-1)*svcPerPage;
+  const pageData = data.slice(start, start+svcPerPage);
+  const showEl = document.getElementById('svc-showing-text');
+  if (showEl) showEl.textContent = total===0 ? 'No data available in table' : `Showing ${start+1} to ${Math.min(start+svcPerPage,total)} of ${total} entries`;
+
+  // Render thead
+  const thead = document.getElementById('svc-thead');
+  if (thead) thead.innerHTML = '<tr>' + SVC_COLS[currentSvcTab].map(c=>`<th>${c}</th>`).join('') + '</tr>';
+
+  // Render tbody
+  const tbody = document.getElementById('svc-tbody');
+  if (!tbody) return;
+  if (total === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:32px">No data available in table</td></tr>`;
+    return;
+  }
+  const tab = currentSvcTab;
+  tbody.innerHTML = pageData.map(d => {
+    const stars = '★'.repeat(d.rating||0) + '☆'.repeat(5-(d.rating||0));
+    const statusEl = d.status==='active' ? `<span class="mgmt-status-active">Active</span>` : `<span class="mgmt-status-inactive">Inactive</span>`;
+    let cells = `<td class="mgmt-id">${d.id}</td><td><div class="mgmt-name">${d.name}</div></td><td>${d.city}</td><td>${d.country}</td>`;
+    if (tab==='hotel')     cells += `<td>${d.category}</td><td><span style="color:var(--accent)">${stars}</span></td>`;
+    if (tab==='activity')  cells += `<td>${d.category}</td><td style="color:var(--muted)">${d.duration}</td><td style="color:var(--accent)">${d.price}</td>`;
+    if (tab==='meal')      cells += `<td>${d.category}</td><td style="color:var(--muted)">${d.cuisine}</td><td>${d.mealType}</td>`;
+    if (tab==='transport') cells += `<td>${d.category}</td><td style="color:var(--muted)">${d.vehicle}</td><td style="color:var(--muted)">${d.capacity}</td>`;
+    cells += `<td>${statusEl}</td>`;
+    cells += `<td><div class="mgmt-action-btns">
+      <div class="mgmt-action-btn" onclick="viewSvcItem(${d.id})" title="View">👁</div>
+      <div class="mgmt-action-btn" onclick="editSvcItem(${d.id})" title="Edit">✏</div>
+      <div class="mgmt-action-btn" onclick="toggleSvcStatus(${d.id})" title="Toggle Status">⟳</div>
+    </div></td>`;
+    return `<tr onclick="viewSvcItem(${d.id})">${cells}</tr>`;
+  }).join('');
+
+  renderSvcPagination(total);
+}
+
+function renderSvcPagination(total) {
+  const pages = Math.ceil(total/svcPerPage);
+  const el = document.getElementById('svc-pagination');
+  if (!el) return;
+  let btns = `<button class="mgmt-page-btn" onclick="svcPage=Math.max(1,svcPage-1);renderSvcTable()">Previous</button>`;
+  for (let i=1;i<=pages;i++) btns += `<button class="mgmt-page-btn ${i===svcPage?'active-page':''}" onclick="svcPage=${i};renderSvcTable()">${i}</button>`;
+  btns += `<button class="mgmt-page-btn" onclick="svcPage=Math.min(${pages},svcPage+1);renderSvcTable()">Next</button>`;
+  el.innerHTML = btns;
+}
+
+function getAllSvcItems() { return SVC_DATA[currentSvcTab]||[]; }
+
+function viewSvcItem(id) {
+  const item = getAllSvcItems().find(d=>d.id===id);
+  if (!item) return;
+  currentSvcDetailItem = item;
+  document.getElementById('svc-detail-type').textContent = currentSvcTab.charAt(0).toUpperCase()+currentSvcTab.slice(1);
+  document.getElementById('svc-detail-title').textContent = item.name;
+  const fields = Object.entries(item).filter(([k])=>k!=='id').map(([k,v])=>`
+    <div class="mgmt-detail-field">
+      <div class="mgmt-detail-field-label">${k.charAt(0).toUpperCase()+k.replace(/([A-Z])/g,' $1').slice(1)}</div>
+      <div class="mgmt-detail-field-value">${v}</div>
+    </div>`).join('');
+  document.getElementById('svc-detail-body').innerHTML = `<div class="mgmt-detail-grid">${fields}</div>`;
+  document.getElementById('svc-detail-modal').style.display = 'flex';
+}
+
+function editSvcItem(id) {
+  event.stopPropagation();
+  const item = getAllSvcItems().find(d=>d.id===id);
+  if (!item) return;
+  openSvcCreateModal(item);
+}
+
+function editFromDetail() {
+  closeSvcDetail();
+  if (currentSvcDetailItem) openSvcCreateModal(currentSvcDetailItem);
+}
+
+function toggleSvcStatus(id) {
+  event.stopPropagation();
+  const item = getAllSvcItems().find(d=>d.id===id);
+  if (item) { item.status = item.status==='active'?'inactive':'active'; renderSvcTable(); showToast('⟳','Status Updated',item.name+' is now '+item.status); }
+}
+
+function openSvcCreateModal(item) {
+  const tab = currentSvcTab;
+  const label = tab.charAt(0).toUpperCase()+tab.slice(1);
+  document.getElementById('svc-modal-title').textContent = (item ? 'Edit' : 'Create New') + ' ' + label;
+  const v = item || {};
+  const commonFields = `
+    <div class="mgmt-row-2">
+      <div class="mgmt-field"><label>Name *</label><input class="mgmt-input" id="sm-name" value="${v.name||''}" placeholder="${label} name"></div>
+      <div class="mgmt-field"><label>Category</label><input class="mgmt-input" id="sm-cat" value="${v.category||''}" placeholder="e.g. Luxury Resort"></div>
+    </div>
+    <div class="mgmt-row-2">
+      <div class="mgmt-field"><label>City *</label><input class="mgmt-input" id="sm-city" value="${v.city||''}" placeholder="City"></div>
+      <div class="mgmt-field"><label>Country *</label><input class="mgmt-input" id="sm-country" value="${v.country||''}" placeholder="Country"></div>
+    </div>`;
+  let extraFields = '';
+  if (tab==='hotel')     extraFields = `<div class="mgmt-row-2"><div class="mgmt-field"><label>Rooms</label><input class="mgmt-input" id="sm-rooms" value="${v.rooms||''}" placeholder="No. of rooms"></div><div class="mgmt-field"><label>Price / Night</label><input class="mgmt-input" id="sm-price" value="${v.price||''}" placeholder="e.g. ₹18,000"></div></div><div class="mgmt-row-2"><div class="mgmt-field"><label>Phone</label><input class="mgmt-input" id="sm-phone" value="${v.phone||''}"></div><div class="mgmt-field"><label>Email</label><input class="mgmt-input" id="sm-email" value="${v.email||''}" type="email"></div></div>`;
+  if (tab==='activity')  extraFields = `<div class="mgmt-row-2"><div class="mgmt-field"><label>Duration</label><input class="mgmt-input" id="sm-dur" value="${v.duration||''}" placeholder="e.g. 4 hours"></div><div class="mgmt-field"><label>Price / Pax</label><input class="mgmt-input" id="sm-price" value="${v.price||''}"></div></div><div class="mgmt-field"><label>Group Size</label><input class="mgmt-input" id="sm-grp" value="${v.groupSize||''}" placeholder="e.g. Max 12"></div>`;
+  if (tab==='meal')      extraFields = `<div class="mgmt-row-2"><div class="mgmt-field"><label>Cuisine</label><input class="mgmt-input" id="sm-cuisine" value="${v.cuisine||''}"></div><div class="mgmt-field"><label>Meal Type</label><select class="mgmt-select" id="sm-mealtype"><option ${v.mealType==='Breakfast'?'selected':''}>Breakfast</option><option ${v.mealType==='Lunch'?'selected':''}>Lunch</option><option ${v.mealType==='Dinner'?'selected':''}>Dinner</option><option ${v.mealType==='Brunch'?'selected':''}>Brunch</option></select></div></div><div class="mgmt-field"><label>Price / Pax</label><input class="mgmt-input" id="sm-price" value="${v.price||''}"></div>`;
+  if (tab==='transport') extraFields = `<div class="mgmt-row-2"><div class="mgmt-field"><label>Vehicle</label><input class="mgmt-input" id="sm-vehicle" value="${v.vehicle||''}"></div><div class="mgmt-field"><label>Capacity</label><input class="mgmt-input" id="sm-cap" value="${v.capacity||''}"></div></div><div class="mgmt-field"><label>Price</label><input class="mgmt-input" id="sm-price" value="${v.price||''}"></div>`;
+  const statusField = `<div class="mgmt-row-2"><div class="mgmt-field"><label>Rating</label><select class="mgmt-select" id="sm-rating"><option ${v.rating===3?'selected':''}>3</option><option ${v.rating===4?'selected':''}>4</option><option ${v.rating===5?'selected':''}>5</option></select></div><div class="mgmt-field"><label>Status</label><select class="mgmt-select" id="sm-status"><option value="active" ${v.status==='active'?'selected':''}>Active</option><option value="inactive" ${v.status!=='active'?'selected':''}>Inactive</option></select></div></div>`;
+  document.getElementById('svc-modal-body').innerHTML = commonFields + extraFields + statusField;
+  document.getElementById('svc-modal').style.display = 'flex';
+}
+
+function saveSvcItem() {
+  const name = (document.getElementById('sm-name')||{value:''}).value.trim();
+  if (!name) { showToast('⚠️','Missing Fields','Name is required'); return; }
+  closeSvcModal();
+  renderSvcTable();
+  showToast('✦','Saved!',name+' has been saved');
+}
+
+function closeSvcModal(e) {
+  if (e && e.target !== document.getElementById('svc-modal')) return;
+  document.getElementById('svc-modal').style.display = 'none';
+}
+function closeSvcDetail(e) {
+  if (e && e.target !== document.getElementById('svc-detail-modal')) return;
+  document.getElementById('svc-detail-modal').style.display = 'none';
+}
+
+// ─────────────────────────────────────────────
+// HOLIDAY PACKAGE MANAGEMENT
+// ─────────────────────────────────────────────
+function getPkgData() {
+  const q = (document.getElementById('pkg-search')||{value:''}).value.toLowerCase();
+  const sort = (document.getElementById('pkg-sort')||{value:''}).value;
+  let data = [...PKG_DATA];
+  if (q) data = data.filter(d=>d.name.toLowerCase().includes(q)||d.dest.toLowerCase().includes(q)||d.desc.toLowerCase().includes(q));
+  if (sort==='name')   data.sort((a,b)=>a.name.localeCompare(b.name));
+  else if (sort==='days')   data.sort((a,b)=>a.days-b.days);
+  else if (sort==='rating') data.sort((a,b)=>b.rating-a.rating);
+  else if (sort==='status') data.sort((a,b)=>a.status.localeCompare(b.status));
+  else data.sort((a,b)=>pkgSortDir*(b.id-a.id));
+  return data;
+}
+
+function renderPkgTable() {
+  const data = getPkgData();
+  const total = data.length;
+  const start = (pkgPage-1)*pkgPerPage;
+  const pageData = data.slice(start, start+pkgPerPage);
+  const showEl = document.getElementById('pkg-showing-text');
+  if (showEl) showEl.textContent = `Showing ${start+1} to ${Math.min(start+pkgPerPage,total)} of ${total} entries`;
+  const tbody = document.getElementById('pkg-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = pageData.map(d=>{
+    const stars = '★'.repeat(d.rating)+'☆'.repeat(5-d.rating);
+    const statusEl = d.status==='active' ? `<span class="mgmt-status-active">Active</span>` : `<span class="mgmt-status-inactive">Inactive</span>`;
+    const shortDesc = d.desc.length>60 ? d.desc.slice(0,60)+'…' : d.desc;
+    return `<tr onclick="viewPkgItem(${d.id})">
+      <td class="mgmt-id">${d.id}</td>
+      <td><div class="mgmt-name">${d.name}</div><div style="font-size:10.5px;color:var(--muted)">${d.dest}</div></td>
+      <td style="text-align:center;font-weight:500">${d.days}</td>
+      <td style="text-align:center;font-weight:500">${d.nights}</td>
+      <td><div class="mgmt-desc" title="${d.desc}">${shortDesc}</div></td>
+      <td><span style="color:var(--accent)">${stars}</span></td>
+      <td style="color:var(--muted);font-size:12px">${d.hotel}</td>
+      <td>${statusEl}</td>
+      <td><div class="mgmt-action-btns">
+        <div class="mgmt-action-btn" onclick="event.stopPropagation();viewPkgItem(${d.id})" title="View">👁</div>
+        <div class="mgmt-action-btn" onclick="event.stopPropagation();editPkgItem(${d.id})" title="Edit">✏</div>
+        <div class="mgmt-action-btn" onclick="event.stopPropagation();togglePkgStatus(${d.id})" title="Toggle">⟳</div>
+      </div></td>
+    </tr>`;
+  }).join('');
+  renderPkgPagination(total);
+}
+
+function renderPkgPagination(total) {
+  const pages = Math.ceil(total/pkgPerPage);
+  const el = document.getElementById('pkg-pagination');
+  if (!el) return;
+  let btns = `<button class="mgmt-page-btn" onclick="pkgPage=Math.max(1,pkgPage-1);renderPkgTable()">Previous</button>`;
+  for (let i=1;i<=pages;i++) btns += `<button class="mgmt-page-btn ${i===pkgPage?'active-page':''}" onclick="pkgPage=${i};renderPkgTable()">${i}</button>`;
+  btns += `<button class="mgmt-page-btn" onclick="pkgPage=Math.min(${pages},pkgPage+1);renderPkgTable()">Next</button>`;
+  el.innerHTML = btns;
+}
+
+function sortPkg(col) {
+  if (pkgSortCol===col) pkgSortDir*=-1; else { pkgSortCol=col; pkgSortDir=1; }
+  renderPkgTable();
+}
+
+function viewPkgItem(id) {
+  const item = PKG_DATA.find(d=>d.id===id);
+  if (!item) return;
+  currentPkgDetailItem = item;
+  document.getElementById('pkg-detail-title').textContent = item.name;
+  const stars = '★'.repeat(item.rating)+'☆'.repeat(5-item.rating);
+  document.getElementById('pkg-detail-body').innerHTML = `
+    <div class="mgmt-detail-grid">
+      <div class="mgmt-detail-field"><div class="mgmt-detail-field-label">Destination</div><div class="mgmt-detail-field-value">${item.dest}</div></div>
+      <div class="mgmt-detail-field"><div class="mgmt-detail-field-label">Duration</div><div class="mgmt-detail-field-value">${item.days} Days / ${item.nights} Nights</div></div>
+      <div class="mgmt-detail-field"><div class="mgmt-detail-field-label">Category</div><div class="mgmt-detail-field-value">${item.category}</div></div>
+      <div class="mgmt-detail-field"><div class="mgmt-detail-field-label">Price</div><div class="mgmt-detail-field-value" style="color:var(--accent)">${item.price}</div></div>
+      <div class="mgmt-detail-field"><div class="mgmt-detail-field-label">Rating</div><div class="mgmt-detail-field-value" style="color:var(--accent)">${stars}</div></div>
+      <div class="mgmt-detail-field"><div class="mgmt-detail-field-label">Status</div><div class="mgmt-detail-field-value">${item.status==='active'?'<span class=\'mgmt-status-active\'>Active</span>':'<span class=\'mgmt-status-inactive\'>Inactive</span>'}</div></div>
+    </div>
+    <div class="mgmt-detail-field" style="background:var(--surface2);border-radius:8px;padding:12px 14px;margin-bottom:12px">
+      <div class="mgmt-detail-field-label">Description</div>
+      <div style="font-size:13px;line-height:1.7;margin-top:4px;color:var(--muted)">${item.desc}</div>
+    </div>
+    <div class="mgmt-detail-field" style="background:var(--surface2);border-radius:8px;padding:12px 14px">
+      <div class="mgmt-detail-field-label">Hotel</div>
+      <div style="font-size:13px;margin-top:4px">${item.hotel}</div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn-primary" style="font-size:12px;padding:7px 16px" onclick="showToast('✦','Package Added','${item.name} added to itinerary')">Add to Itinerary</button>
+      <button class="btn-ghost" style="font-size:12px;padding:7px 16px" onclick="showToast('📄','PDF Ready','Package brochure downloaded')">Download Brochure</button>
+    </div>`;
+  document.getElementById('pkg-detail-modal').style.display = 'flex';
+}
+
+function editPkgItem(id) {
+  const item = PKG_DATA.find(d=>d.id===id);
+  if (item) { document.getElementById('pkg-nm').value=item.name; document.getElementById('pkg-dest').value=item.dest; document.getElementById('pkg-days').value=item.days; document.getElementById('pkg-nights').value=item.nights; document.getElementById('pkg-desc').value=item.desc; document.getElementById('pkg-hotel').value=item.hotel; document.getElementById('pkg-price').value=item.price.replace('₹',''); openPkgCreateModal(); }
+}
+
+function editPkgFromDetail() { closePkgDetail(); if(currentPkgDetailItem) editPkgItem(currentPkgDetailItem.id); }
+
+function togglePkgStatus(id) {
+  const item = PKG_DATA.find(d=>d.id===id);
+  if (item) { item.status=item.status==='active'?'inactive':'active'; renderPkgTable(); showToast('⟳','Status Updated',item.name+' is now '+item.status); }
+}
+
+function openPkgCreateModal() { document.getElementById('pkg-modal').style.display='flex'; }
+function closePkgModal(e) { if(e&&e.target!==document.getElementById('pkg-modal'))return; document.getElementById('pkg-modal').style.display='none'; }
+function closePkgDetail(e) { if(e&&e.target!==document.getElementById('pkg-detail-modal'))return; document.getElementById('pkg-detail-modal').style.display='none'; }
+
+function savePkgItem() {
+  const name=(document.getElementById('pkg-nm')||{value:''}).value.trim();
+  if(!name){showToast('⚠️','Missing Fields','Package name required');return;}
+  closePkgModal();
+  renderPkgTable();
+  showToast('✦','Package Saved!',name+' saved successfully');
+}
+
+// Hook switchPanel to init tables
+const _origSwitchPanel = switchPanel;
+function switchPanel(name, el) {
+  _origSwitchPanel(name, el);
+  if (name==='services') { renderSvcTable(); }
+  if (name==='packages') { renderPkgTable(); }
+}
+
+// ─────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────
 // Restore saved theme
@@ -1915,8 +4170,152 @@ function toggleTheme() {
   }
 })();
 
-renderLeads();
-populateDetail();
+renderTable();
+
+// ════════════════════════════════════
+// AUTH OVERLAY LOGIC
+// ════════════════════════════════════
+const AO_TESTIMONIALS = [
+  { text: 'NAMA transformed how we handle our Bali portfolio. What took 2 hours now takes minutes — and the itineraries are better than what our senior agents wrote.', name:'Rajesh Khanna', role:'Director · Bali DMC Partner', avatar:'R' },
+  { text: 'The AI pricing engine paid for itself in week one. We are capturing 40% more margin on every Switzerland booking without losing a single client on price.', name:'Priya Mehta', role:'Founder · Alpine Travel Co., Mumbai', avatar:'P' },
+  { text: 'We onboarded 200+ suppliers in one month. Availability, pricing and reliability scores all in one place. This is the future of travel operations.', name:'Arjun Nair', role:'CEO · Southeast Asia DMC Network', avatar:'A' },
+];
+let aoTIdx = 0;
+
+function aoGoT(i) {
+  aoTIdx = i;
+  const t = AO_TESTIMONIALS[i];
+  const setText = id => { const el=document.getElementById(id); if(el) el.textContent=t[id.replace('ao-t-','')]; };
+  ['ao-t-text','ao-t-name','ao-t-role','ao-t-avatar'].forEach(id=>{
+    const key = id.replace('ao-t-','');
+    const el = document.getElementById(id);
+    if(el) el.textContent = t[key];
+  });
+  document.querySelectorAll('.ao-t-dot').forEach((d,j)=>d.classList.toggle('active',j===i));
+}
+setInterval(()=>aoGoT((aoTIdx+1)%3), 5000);
+
+function aoSwitchTab(tab) {
+  ['login','signup','forgot'].forEach(t=>{
+    const s=document.getElementById('ao-section-'+t);
+    if(s) s.classList.toggle('active',t===tab);
+  });
+  const tl=document.getElementById('ao-tab-login');
+  const ts=document.getElementById('ao-tab-signup');
+  if(tl) tl.classList.toggle('active',tab==='login');
+  if(ts) ts.classList.toggle('active',tab==='signup');
+}
+
+function aoShowForgot() { aoSwitchTab('forgot'); }
+
+function aoTogglePw(id, btn) {
+  const el=document.getElementById(id);
+  if(!el) return;
+  const isText=el.type==='text';
+  el.type=isText?'password':'text';
+  btn.textContent=isText?'👁':'🙈';
+}
+
+function aoCheckPw(val) {
+  const bars=['ao-bar1','ao-bar2','ao-bar3','ao-bar4'];
+  bars.forEach(b=>{const el=document.getElementById(b);if(el)el.className='ao-pw-bar';});
+  const lbl=document.getElementById('ao-pw-lbl');
+  if(!val){if(lbl)lbl.textContent='';return;}
+  let score=0;
+  if(val.length>=8)score++;
+  if(/[A-Z]/.test(val))score++;
+  if(/[0-9]/.test(val))score++;
+  if(/[^A-Za-z0-9]/.test(val))score++;
+  const cls=score<=1?'weak':score===2?'medium':'strong';
+  const labels={weak:'Weak',medium:'Good',strong:'Strong'};
+  const colors={weak:'#e05a4e',medium:'#e09a3e',strong:'#4a9b7f'};
+  const fill=score<=1?1:score<=2?2:score<=3?3:4;
+  for(let i=0;i<fill;i++){const el=document.getElementById(bars[i]);if(el)el.classList.add(cls);}
+  if(lbl){lbl.textContent=labels[cls]||'';lbl.style.color=colors[cls]||'';}
+}
+
+function aoIsEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
+
+function aoSetErr(inputId, errId, show) {
+  const inp=document.getElementById(inputId);
+  const err=document.getElementById(errId);
+  if(inp) inp.classList.toggle('ao-error',show);
+  if(err) err.classList.toggle('show',show);
+}
+
+function aoHandleLogin() {
+  const email=(document.getElementById('ao-login-email')||{value:''}).value.trim();
+  const pw=(document.getElementById('ao-login-pw')||{value:''}).value;
+  let ok=true;
+  if(!aoIsEmail(email)){aoSetErr('ao-login-email','ao-login-email-err',true);ok=false;}else aoSetErr('ao-login-email','ao-login-email-err',false);
+  if(pw.length<1){aoSetErr('ao-login-pw','ao-login-pw-err',true);ok=false;}else aoSetErr('ao-login-pw','ao-login-pw-err',false);
+  if(!ok)return;
+  aoShowSuccess();
+}
+
+function aoHandleSignup() {
+  const email=(document.getElementById('ao-su-email')||{value:''}).value.trim();
+  const pw=(document.getElementById('ao-su-pw')||{value:''}).value;
+  let ok=true;
+  if(!aoIsEmail(email)){aoSetErr('ao-su-email','ao-su-email-err',true);ok=false;}else aoSetErr('ao-su-email','ao-su-email-err',false);
+  if(pw.length<8){aoSetErr('ao-su-pw','ao-su-pw-err',true);ok=false;}else aoSetErr('ao-su-pw','ao-su-pw-err',false);
+  if(!ok)return;
+  aoShowSuccess();
+}
+
+function aoHandleForgot() {
+  const email=(document.getElementById('ao-forgot-email')||{value:''}).value.trim();
+  if(!aoIsEmail(email)){const el=document.getElementById('ao-forgot-email');if(el)el.classList.add('ao-error');return;}
+  const sec=document.getElementById('ao-section-forgot');
+  if(sec) sec.innerHTML=`<div style="text-align:center;padding:40px 0"><div style="font-size:36px;margin-bottom:16px">📬</div><div style="font-family:'Instrument Serif',serif;font-size:24px;margin-bottom:8px">Check your inbox.</div><div style="font-size:13px;color:var(--muted);margin-bottom:24px">We sent a reset link to <strong style="color:var(--text)">${email}</strong></div><button class="ao-btn-main" style="width:auto;padding:10px 28px" onclick="aoSwitchTab('login')">Back to Login</button></div>`;
+}
+
+function aoSocialLogin(provider, btn) {
+  const orig=btn.innerHTML;
+  btn.innerHTML=`<span>⟳</span> Connecting to ${provider}…`;
+  btn.disabled=true;
+  setTimeout(()=>{btn.innerHTML=orig;btn.disabled=false;aoShowSuccess();},1800);
+}
+
+function aoShowSuccess() {
+  document.querySelectorAll('.ao-section').forEach(s=>s.classList.remove('active'));
+  const s=document.getElementById('ao-success');
+  if(s) s.classList.add('show');
+  setTimeout(aoDismissOverlay, 2200);
+}
+
+function aoDismissOverlay() {
+  const o=document.getElementById('auth-overlay');
+  if(o){
+    o.style.transition='opacity 0.55s ease, transform 0.55s ease';
+    o.style.opacity='0';
+    o.style.transform='scale(1.02)';
+    setTimeout(()=>{o.style.display='none';},600);
+  }
+}
+
+// Enter key support for auth forms
+document.addEventListener('keydown', e=>{
+  if(e.key!=='Enter') return;
+  const overlay=document.getElementById('auth-overlay');
+  if(!overlay||overlay.style.display==='none') return;
+  if(document.getElementById('ao-section-login').classList.contains('active')) aoHandleLogin();
+  else if(document.getElementById('ao-section-signup').classList.contains('active')) aoHandleSignup();
+  else if(document.getElementById('ao-section-forgot').classList.contains('active')) aoHandleForgot();
+});
+
+// Check if already authenticated this session
+if(localStorage.getItem('ao-authed')==='1') {
+  const o=document.getElementById('auth-overlay');
+  if(o) o.style.display='none';
+}
+
+// Store auth state on success
+const _origAoDismiss = aoDismissOverlay;
+window.aoDismissOverlay = function() {
+  localStorage.setItem('ao-authed','1');
+  _origAoDismiss();
+};
 </script>
 </body>
 </html>
