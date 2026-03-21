@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAMA — AI Operating System for Travel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a08;
+    --surface: #111110;
+    --surface2: #191917;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0ede8;
+    --muted: #7a7870;
+    --accent: #c8a96e;
+    --accent2: #4a9b7f;
+    --danger: #e05a4e;
+    --blue: #5b8def;
+    --gold: #c8a96e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP NAV */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 52px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    flex-shrink: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+
+  .logo span { color: var(--muted); font-size: 11px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.08em; margin-left: 8px; font-weight: 300; }
+
+  .nav-links {
+    display: flex;
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  .nav-link.active { color: var(--accent); }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .back-home {
+    font-size: 11.5px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-home:hover { color: var(--accent); border-color: rgba(200,169,110,0.4); background: rgba(200,169,110,0.06); }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    padding: 4px 10px;
+    border: 1px solid rgba(74,155,127,0.3);
+    border-radius: 20px;
+    background: rgba(74,155,127,0.08);
+  }
+
+  .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  .avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #8b6d3a);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500; color: var(--bg);
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    padding: 16px 12px;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-section {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    padding: 10px 8px 6px;
+    font-weight: 500;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+
+  .sidebar-item:hover { background: var(--surface2); color: var(--text); }
+  .sidebar-item.active { background: rgba(200,169,110,0.12); color: var(--accent); }
+
+  .sidebar-item .icon { width: 16px; text-align: center; font-size: 14px; }
+  .badge { margin-left: auto; font-size: 10px; background: var(--accent); color: var(--bg); padding: 1px 6px; border-radius: 10px; font-weight: 600; }
+
+  /* CONTENT AREA */
+  .content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* PANEL */
+  .panel { display: none; width: 100%; }
+  .panel.active { display: flex; }
+
+  /* LEADS PANEL */
+  #panel-leads {
+    flex-direction: row;
+  }
+
+  .leads-list {
+    width: 340px;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .leads-header {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .leads-header h2 { font-size: 15px; font-weight: 500; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+  .lead-card {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+
+  .lead-card:hover { background: var(--surface2); }
+  .lead-card.active { background: rgba(200,169,110,0.08); border-left: 2px solid var(--accent); }
+
+  .lead-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  .lead-name { font-size: 13.5px; font-weight: 500; }
+
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    margin-top: 4px;
+  }
+
+  .status-dot.hot { background: #e05a4e; box-shadow: 0 0 6px #e05a4e80; }
+  .status-dot.warm { background: #e09a3e; box-shadow: 0 0 6px #e09a3e60; }
+  .status-dot.new { background: var(--accent2); box-shadow: 0 0 6px #4a9b7f60; }
+
+  .lead-dest { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+
+  .lead-tags {
+    display: flex; gap: 5px; flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--surface2);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .tag.budget { color: var(--accent2); border-color: rgba(74,155,127,0.3); background: rgba(74,155,127,0.08); }
+  .tag.pax { color: var(--blue); border-color: rgba(91,141,239,0.3); background: rgba(91,141,239,0.08); }
+
+  /* LEAD DETAIL */
+  .lead-detail {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .detail-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .detail-title h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .detail-meta { display: flex; gap: 12px; align-items: center; }
+
+  .win-prob {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(200,169,110,0.4);
+    color: var(--accent);
+    background: rgba(200,169,110,0.1);
+  }
+
+  .detail-actions { display: flex; gap: 8px; }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--border);
+    gap: 0;
+  }
+
+  .tab {
+    padding: 10px 16px;
+    font-size: 12.5px;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* TAB CONTENT */
+  .tab-content { display: none; padding: 22px 24px; flex: 1; }
+  .tab-content.active { display: block; }
+
+  /* OVERVIEW TAB */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .stat-value { font-size: 20px; font-family: 'Instrument Serif', serif; }
+  .stat-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .ai-insight {
+    background: rgba(200,169,110,0.06);
+    border: 1px solid rgba(200,169,110,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+
+  .ai-insight-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .ai-insight p { font-size: 12.5px; color: var(--text); line-height: 1.6; }
+
+  /* ITINERARY TAB */
+  .itinerary-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .day-block {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+
+  .day-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 36px;
+    flex-shrink: 0;
+  }
+
+  .day-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .day-num.active-day {
+    background: rgba(200,169,110,0.15);
+    border-color: rgba(200,169,110,0.4);
+    color: var(--accent);
+  }
+
+  .connector {
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    min-height: 16px;
+    margin: 3px 0;
+  }
+
+  .day-card {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    transition: border-color 0.15s;
+  }
+
+  .day-card:hover { border-color: rgba(255,255,255,0.12); }
+
+  .day-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .day-title { font-size: 13px; font-weight: 500; }
+  .day-loc { font-size: 11px; color: var(--muted); }
+
+  .activity-list { display: flex; flex-direction: column; gap: 4px; }
+
+  .activity-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    padding: 3px 0;
+  }
+
+  .activity-icon { font-size: 12px; }
+  .activity-text { flex: 1; }
+  .activity-cost { font-size: 11px; color: var(--accent); }
+
+  /* AI generating animation */
+  .ai-generating {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .ai-generating.visible { display: flex; }
+
+  .pulse-ring {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+    animation: pulse-outer 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-outer {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(200,169,110,0.3); }
+    50% { box-shadow: 0 0 0 16px rgba(200,169,110,0); }
+  }
+
+  .pulse-inner {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(200,169,110,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    animation: spin-slow 3s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .ai-gen-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .ai-gen-sub { font-size: 12px; color: var(--muted); }
+
+  .ai-steps {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    width: 260px;
+  }
+
+  .ai-step {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--muted);
+    opacity: 0;
+    animation: fadeInStep 0.4s forwards;
+  }
+
+  .ai-step.done { color: var(--accent2); }
+  .ai-step.loading { color: var(--text); }
+
+  @keyframes fadeInStep {
+    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(6px); }
+  }
+
+  /* QUOTES TAB */
+  .quote-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 16px;
+  }
+
+  .quote-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .quote-item {
+    display: flex;
+    align-items: center;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    gap: 12px;
+  }
+
+  .quote-item-icon { font-size: 16px; width: 24px; text-align: center; }
+  .quote-item-name { flex: 1; font-size: 13px; }
+  .quote-item-detail { font-size: 11px; color: var(--muted); }
+  .quote-item-cost { font-size: 13px; font-weight: 500; text-align: right; }
+  .quote-item-cost .per { font-size: 10px; color: var(--muted); }
+
+  .quote-summary {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .quote-summary h3 {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .summary-row:last-of-type { border-bottom: none; }
+  .summary-row.total { font-size: 16px; color: var(--text); font-family: 'Instrument Serif', serif; padding-top: 12px; }
+  .summary-row.margin { color: var(--accent2); }
+
+  .toggle-row {
+    display: flex; gap: 4px; margin-bottom: 16px;
+  }
+
+  .toggle-btn {
+    flex: 1; padding: 6px; border-radius: 5px;
+    font-size: 11.5px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted);
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .toggle-btn.active {
+    background: var(--surface);
+    color: var(--text);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  /* PROPOSAL PANEL */
+  #panel-proposal {
+    flex-direction: column;
+    background: var(--bg);
+  }
+
+  .proposal-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .proposal-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .proposal-doc {
+    max-width: 680px;
+    width: 100%;
+    background: #13120f;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .proposal-hero {
+    padding: 48px 48px 36px;
+    background: linear-gradient(135deg, #1a1710 0%, #0f1a14 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proposal-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,110,0.12) 0%, transparent 70%);
+  }
+
+  .proposal-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .proposal-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 36px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  .proposal-subtitle { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+
+  .proposal-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .proposal-chip {
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--muted);
+  }
+
+  .proposal-section {
+    padding: 28px 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .proposal-section:last-child { border-bottom: none; }
+
+  .proposal-section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .prop-day {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .prop-day-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    color: rgba(255,255,255,0.08);
+    width: 36px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .prop-day-content { flex: 1; }
+  .prop-day-title { font-size: 13.5px; font-weight: 500; margin-bottom: 4px; }
+  .prop-day-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .price-highlight {
+    background: rgba(200,169,110,0.08);
+    border: 1px solid rgba(200,169,110,0.25);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .price-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .price-amount { font-family: 'Instrument Serif', serif; font-size: 32px; color: var(--accent); }
+  .price-per { font-size: 11px; color: var(--muted); }
+
+  /* ANALYTICS PANEL */
+  #panel-analytics {
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+    gap: 16px;
+  }
+
+  .analytics-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .analytics-header h2 { font-size: 18px; font-family: 'Instrument Serif', serif; }
+
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .metric-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .metric-value { font-family: 'Instrument Serif', serif; font-size: 28px; margin-bottom: 4px; }
+  .metric-delta { font-size: 11.5px; }
+  .metric-delta.up { color: var(--accent2); }
+  .metric-delta.down { color: var(--danger); }
+
+  .chart-placeholder {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+
+  .chart-title { font-size: 13px; font-weight: 500; margin-bottom: 16px; }
+
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 120px;
+  }
+
+  .bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    background: rgba(200,169,110,0.3);
+    transition: height 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 30%;
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px 4px 0 0;
+  }
+
+  .bar.highlight { background: rgba(200,169,110,0.7); }
+
+  .bar-label { font-size: 10px; color: var(--muted); white-space: nowrap; }
+
+  .charts-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 12px;
+  }
+
+  /* Pipeline */
+  .pipeline {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+
+  .pipeline-title { font-size: 13px; font-weight: 500; margin-bottom: 14px; }
+
+  .pipe-stage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .pipe-label { font-size: 12px; width: 90px; color: var(--muted); flex-shrink: 0; }
+
+  .pipe-bar-track {
+    flex: 1;
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 20px;
+    overflow: hidden;
+  }
+
+  .pipe-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 10px;
+    font-weight: 500;
+    transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* AI AGENTS PANEL */
+  #panel-agents {
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+    gap: 16px;
+  }
+
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .agent-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .agent-card:hover { border-color: rgba(200,169,110,0.3); }
+
+  .agent-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  .agent-name { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .agent-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+
+  .agent-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .status-indicator {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .agent-stats {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 14px;
+  }
+
+  .agent-stat-val { font-size: 16px; font-weight: 500; display: block; }
+  .agent-stat-lab { font-size: 10px; color: var(--muted); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
+
+  /* NOTIFICATION TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--surface2);
+    border: 1px solid rgba(200,169,110,0.3);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 999;
+    max-width: 280px;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast-icon { font-size: 16px; }
+  .toast-text { flex: 1; }
+  .toast-text strong { display: block; color: var(--accent); }
+
+  /* Supply panel */
+  #panel-supply {
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+    gap: 16px;
+  }
+
+  .supply-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .supply-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .supply-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .supply-category { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .supply-count { font-size: 11px; color: var(--accent); }
+
+  .supply-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+
+  .supply-item:last-child { border-bottom: none; }
+  .supply-item-name { color: var(--text); }
+  .supply-item-price { color: var(--accent); font-size: 11px; }
+  .supply-item-avail { font-size: 10px; color: var(--accent2); }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    padding: 4px 10px;
+    border: 1px solid rgba(74,155,127,0.3);
+    border-radius: 20px;
+    background: rgba(74,155,127,0.08);
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: blink 2s ease-in-out infinite;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:20px">
+    <div class="logo">NAMA <span>AI TRAVEL OS</span></div>
+    <div class="nav-links">
+      <div class="nav-link active" onclick="switchPanel('leads',this)">Leads</div>
+      <div class="nav-link" onclick="switchPanel('analytics',this)">Analytics</div>
+      <div class="nav-link" onclick="switchPanel('agents',this)">AI Agents</div>
+      <div class="nav-link" onclick="switchPanel('supply',this)">Supply</div>
+      <div class="nav-link" onclick="switchPanel('proposal',this)">Proposal</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="live-badge"><div class="live-dot"></div> Live Demo</div>
+    <a class="back-home" href="https://narumaam.github.io/nama-landing/" target="_blank">&#8599; Investor Deck</a>
+    <div class="avatar">N</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">Pipeline</div>
+    <div class="sidebar-item active" onclick="filterLeads('all', this)">
+      <span class="icon">◈</span> All Leads <span class="badge">12</span>
+    </div>
+    <div class="sidebar-item" onclick="filterLeads('hot', this)">
+      <span class="icon">🔥</span> Hot <span class="badge" style="background:#e05a4e">4</span>
+    </div>
+    <div class="sidebar-item" onclick="filterLeads('warm', this)">
+      <span class="icon">◑</span> Warm <span class="badge" style="background:#e09a3e">5</span>
+    </div>
+    <div class="sidebar-item" onclick="filterLeads('new', this)">
+      <span class="icon">✦</span> New <span class="badge" style="background:#4a9b7f">3</span>
+    </div>
+
+    <div class="sidebar-section" style="margin-top:8px">Destinations</div>
+    <div class="sidebar-item" onclick="filterLeads('bali',this)">
+      <span class="icon">🌴</span> Bali
+    </div>
+    <div class="sidebar-item" onclick="filterLeads('europe',this)">
+      <span class="icon">🏔</span> Europe
+    </div>
+    <div class="sidebar-item" onclick="filterLeads('dubai',this)">
+      <span class="icon">🏙</span> Dubai
+    </div>
+    <div class="sidebar-item" onclick="filterLeads('maldives',this)">
+      <span class="icon">🌊</span> Maldives
+    </div>
+
+    <div style="flex:1"></div>
+
+    <a href="https://narumaam.github.io/nama-landing/" target="_blank" style="text-decoration:none;display:block">
+      <div class="sidebar-item" style="background:rgba(200,169,110,0.06);border:1px solid rgba(200,169,110,0.18);border-radius:8px;margin-bottom:6px">
+        <span class="icon">↗</span>
+        <span style="color:var(--accent);font-size:12px">Investor Deck</span>
+      </div>
+    </a>
+    <div class="sidebar-item">
+      <span class="icon">⚙</span> Settings
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- LEADS PANEL -->
+    <div id="panel-leads" class="panel active">
+
+      <!-- LEADS LIST -->
+      <div class="leads-list">
+        <div class="leads-header">
+          <h2>Lead Inbox</h2>
+          <button class="btn-primary" onclick="addNewLead()">+ New</button>
+        </div>
+        <div id="leads-container"></div>
+      </div>
+
+      <!-- LEAD DETAIL -->
+      <div class="lead-detail" id="lead-detail-panel">
+        <div class="detail-header">
+          <div class="detail-title">
+            <h1 id="detail-name">Sharma Family</h1>
+            <div class="detail-meta">
+              <div id="detail-dest" style="font-size:13px;color:var(--muted)">Bali, Indonesia · 7N/8D · 4 Pax</div>
+              <div class="win-prob" id="win-prob">Win Probability: 72%</div>
+            </div>
+          </div>
+          <div class="detail-actions">
+            <button class="btn-ghost" onclick="openProposal()">Share Proposal</button>
+            <button class="btn-primary" onclick="generateItinerary()">✦ Generate Trip</button>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab('overview',this)">Overview</div>
+          <div class="tab" onclick="switchTab('itinerary',this)">Itinerary</div>
+          <div class="tab" onclick="switchTab('quotes',this)">Quote</div>
+          <div class="tab" onclick="switchTab('comms',this)">Communication</div>
+        </div>
+
+        <!-- OVERVIEW TAB -->
+        <div id="tab-overview" class="tab-content active">
+          <div class="overview-grid">
+            <div class="stat-card">
+              <div class="stat-label">Budget</div>
+              <div class="stat-value" id="stat-budget">₹3,20,000</div>
+              <div class="stat-sub">Total for group</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Duration</div>
+              <div class="stat-value" id="stat-duration">7N / 8D</div>
+              <div class="stat-sub" id="stat-dates">12 Apr – 19 Apr 2025</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Pax</div>
+              <div class="stat-value" id="stat-pax">4</div>
+              <div class="stat-sub" id="stat-pax-detail">2 Adults, 2 Children</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Lead Score</div>
+              <div class="stat-value" style="color:var(--accent)">Hot</div>
+              <div class="stat-sub">Responded 3x in 24hr</div>
+            </div>
+          </div>
+
+          <div class="ai-insight">
+            <div class="ai-insight-label">✦ AI Insight</div>
+            <p id="ai-insight-text">This lead has a high conversion probability (72%). They've inquired about luxury resorts and private villas. Budget aligns with 4★ properties. Recommend generating a proposal within the next 2 hours — similar leads converted 3× faster with prompt follow-up.</p>
+          </div>
+
+          <div style="font-size:12px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em;font-weight:500">Requirements</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px" id="lead-tags">
+            <span class="tag">🏨 Private Villa</span>
+            <span class="tag">🚗 Airport Transfer</span>
+            <span class="tag">🤿 Water Activities</span>
+            <span class="tag">🍽 Breakfast Included</span>
+            <span class="tag">👨‍👩‍👧‍👦 Family Friendly</span>
+            <span class="tag budget">Budget Sensitive</span>
+            <span class="tag pax">Repeating Client</span>
+          </div>
+        </div>
+
+        <!-- ITINERARY TAB -->
+        <div id="tab-itinerary" class="tab-content">
+          <div class="itinerary-toolbar">
+            <div style="font-size:13px;font-weight:500" id="itinerary-title">Bali Family Getaway · 7N/8D</div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-ghost" onclick="generateItinerary()">↺ Regenerate</button>
+              <button class="btn-primary" onclick="saveItinerary()">Save</button>
+            </div>
+          </div>
+
+          <div id="ai-generating" class="ai-generating">
+            <div class="pulse-ring">
+              <div class="pulse-inner">✦</div>
+            </div>
+            <div class="ai-gen-title">NAMA Planner Agent</div>
+            <div class="ai-gen-sub">Crafting your perfect itinerary</div>
+            <div class="ai-steps" id="ai-steps"></div>
+          </div>
+
+          <div id="itinerary-content">
+            <div id="days-container"></div>
+          </div>
+        </div>
+
+        <!-- QUOTES TAB -->
+        <div id="tab-quotes" class="tab-content">
+          <div class="toggle-row">
+            <button class="toggle-btn active" onclick="toggleQuoteView('cost',this)">Cost View</button>
+            <button class="toggle-btn" onclick="toggleQuoteView('client',this)">Client View</button>
+          </div>
+          <div class="quote-layout">
+            <div class="quote-items" id="quote-items"></div>
+            <div class="quote-summary">
+              <h3>Summary</h3>
+              <div id="summary-rows"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMS TAB -->
+        <div id="tab-comms" class="tab-content">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="ai-insight" style="margin-bottom:0">
+              <div class="ai-insight-label">✦ AI Draft</div>
+              <p style="font-size:12.5px;line-height:1.7">Dear Sharma ji, thank you for reaching out! I've put together an exclusive Bali Family Escape itinerary tailored for your family. The package includes a private pool villa, curated experiences, and worry-free transfers. I'd love to walk you through it — would tomorrow at 11am work for a quick call?</p>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-primary" onclick="showToast('📧','Email sent!','Follow-up draft delivered to Sharma Family')">Send via Email</button>
+              <button class="btn-ghost" onclick="showToast('💬','WhatsApp sent!','Message delivered via WhatsApp')">WhatsApp</button>
+              <button class="btn-ghost">Edit Draft</button>
+            </div>
+            <div style="margin-top:8px;font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:0.08em">Activity Log</div>
+            <div id="activity-log"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS PANEL -->
+    <div id="panel-analytics" class="panel">
+      <div class="analytics-header">
+        <h2>Business Intelligence</h2>
+        <div style="display:flex;gap:8px">
+          <button class="btn-ghost">This Month</button>
+          <button class="btn-ghost">Export</button>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-label">Revenue Pipeline</div>
+          <div class="metric-value">₹48.2L</div>
+          <div class="metric-delta up">↑ 23% vs last month</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Conversion Rate</div>
+          <div class="metric-value">34%</div>
+          <div class="metric-delta up">↑ 8pts with AI assist</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Avg Quote Value</div>
+          <div class="metric-value">₹2.8L</div>
+          <div class="metric-delta up">↑ 15% margin improvement</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Time to Quote</div>
+          <div class="metric-value">4 min</div>
+          <div class="metric-delta up">↓ 94% faster with AI</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-placeholder">
+          <div class="chart-title">Monthly Revenue (₹ Lakhs)</div>
+          <div class="bar-chart" id="revenue-chart"></div>
+        </div>
+        <div class="pipeline">
+          <div class="pipeline-title">Lead Pipeline</div>
+          <div id="pipeline-bars"></div>
+        </div>
+      </div>
+
+      <div class="chart-placeholder">
+        <div class="chart-title">Top Destinations by Volume</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px" id="dest-chart"></div>
+      </div>
+    </div>
+
+    <!-- AI AGENTS PANEL -->
+    <div id="panel-agents" class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Instrument Serif',serif;font-size:22px;margin-bottom:4px">AI Agent Suite</div>
+          <div style="font-size:12px;color:var(--muted)">Intelligent automation powering your travel business</div>
+        </div>
+        <div style="font-size:11px;color:var(--accent2);display:flex;align-items:center;gap:6px">
+          <div class="status-indicator"></div> All agents operational
+        </div>
+      </div>
+
+      <div class="agents-grid" id="agents-grid"></div>
+
+      <div class="chart-placeholder">
+        <div class="chart-title">Agent Activity — Last 7 days</div>
+        <div id="agent-activity-log" style="margin-top:12px;display:flex;flex-direction:column;gap:6px"></div>
+      </div>
+    </div>
+
+    <!-- SUPPLY PANEL -->
+    <div id="panel-supply" class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Instrument Serif',serif;font-size:22px;margin-bottom:4px">Supply Network</div>
+          <div style="font-size:12px;color:var(--muted)">Live availability from connected suppliers</div>
+        </div>
+        <button class="btn-primary" onclick="showToast('🔌','Syncing...','Fetching latest availability from all suppliers')">↺ Sync All</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div class="stat-card">
+          <div class="stat-label">Hotels Connected</div>
+          <div class="stat-value">1,240</div>
+          <div class="stat-sub">via Hotelbeds + Booking.com</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Flight Routes</div>
+          <div class="stat-value">8,400</div>
+          <div class="stat-sub">via Amadeus GDS</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Activities</div>
+          <div class="stat-value">3,600</div>
+          <div class="stat-sub">via Viator + GetYourGuide</div>
+        </div>
+      </div>
+
+      <div class="supply-grid" id="supply-grid"></div>
+    </div>
+
+    <!-- PROPOSAL PANEL -->
+    <div id="panel-proposal" class="panel">
+      <div class="proposal-toolbar">
+        <div style="font-size:13px;font-weight:500">Client Proposal — <span style="color:var(--muted)" id="proposal-client-name">Sharma Family</span></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-ghost" onclick="showToast('🔗','Link Copied!','Shareable proposal link ready to send')">Share Link</button>
+          <button class="btn-ghost" onclick="showToast('📄','PDF Ready!','Proposal exported as PDF')">Export PDF</button>
+          <button class="btn-primary" onclick="showToast('✅','Booking Confirmed!','Lead converted to booking — Revenue: ₹2,86,000')">Confirm Booking</button>
+        </div>
+      </div>
+      <div class="proposal-body">
+        <div class="proposal-doc" id="proposal-doc"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-icon" id="toast-icon">✦</div>
+  <div class="toast-text">
+    <strong id="toast-title">Saved!</strong>
+    <span id="toast-msg">Changes saved successfully</span>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const LEADS = [
+  { id:1, name:'Sharma Family', dest:'Bali, Indonesia', duration:'7N/8D', pax:4, budget:'₹3,20,000', status:'hot', tags:['Villa','Family'], winProb:72, insight:'High conversion probability. Luxury villa preference, budget aligned. Responded 3x in 24hr. Recommend immediate proposal.', dates:'12 Apr – 19 Apr 2025', paxDetail:'2 Adults, 2 Children', statBudget:'₹3,20,000', statDuration:'7N / 8D' },
+  { id:2, name:'Mehta Couple', dest:'Switzerland + France', duration:'10N/11D', pax:2, budget:'₹6,50,000', status:'hot', tags:['Luxury','Honeymoon'], winProb:68, insight:'Luxury honeymoon package. 5★ requirements. Premium experience seekers — upsell opportunities high.', dates:'20 May – 30 May 2025', paxDetail:'2 Adults', statBudget:'₹6,50,000', statDuration:'10N / 11D' },
+  { id:3, name:'Kapoor Group', dest:'Dubai + Abu Dhabi', duration:'5N/6D', pax:8, budget:'₹8,00,000', status:'hot', tags:['Group','Corporate'], winProb:61, insight:'Corporate group travel. Decision pending CFO approval. Follow up with group pricing.', dates:'3 Jun – 8 Jun 2025', paxDetail:'8 Adults', statBudget:'₹8,00,000', statDuration:'5N / 6D' },
+  { id:4, name:'Reddy Family', dest:'Maldives', duration:'4N/5D', pax:4, budget:'₹5,50,000', status:'warm', tags:['Overwater Villa','Snorkeling'], winProb:55, insight:'Premium overwater villa request. Comparing 2 operators. Competitive pricing essential.', dates:'15 Apr – 19 Apr 2025', paxDetail:'2 Adults, 2 Children', statBudget:'₹5,50,000', statDuration:'4N / 5D' },
+  { id:5, name:'Gupta Family', dest:'Kerala Backwaters', duration:'5N/6D', pax:6, budget:'₹1,80,000', status:'warm', tags:['Houseboat','Heritage'], winProb:48, insight:'Value-conscious family. First-time domestic luxury travellers. Strong brand story needed.', dates:'2 May – 7 May 2025', paxDetail:'4 Adults, 2 Children', statBudget:'₹1,80,000', statDuration:'5N / 6D' },
+  { id:6, name:'Singh Corporate', dest:'Thailand', duration:'3N/4D', pax:12, budget:'₹4,20,000', status:'new', tags:['MICE','Team Outing'], winProb:40, insight:'New corporate inquiry via website. MICE segment — high revenue potential if converted.', dates:'10 Jun – 13 Jun 2025', paxDetail:'12 Adults', statBudget:'₹4,20,000', statDuration:'3N / 4D' },
+];
+
+const ITINERARIES = {
+  1: [
+    { title:'Arrival & Welcome', loc:'Ngurah Rai Airport → Seminyak', activities:[{icon:'✈️',text:'Arrival & private villa check-in',cost:'₹4,200'},{icon:'🌅',text:'Welcome dinner at Ku De Ta',cost:'₹3,800'},{icon:'🏊',text:'Private pool evening',cost:'Incl.'}] },
+    { title:'Ubud Discovery', loc:'Ubud — Cultural Heart of Bali', activities:[{icon:'🌿',text:'Tegalalang Rice Terrace trek',cost:'₹600'},{icon:'🐒',text:'Sacred Monkey Forest',cost:'₹400'},{icon:'🎭',text:'Kecak Fire Dance at sunset',cost:'₹800'},{icon:'🍽',text:'Locavore fine dining dinner',cost:'₹5,200'}] },
+    { title:'Temple & Coast', loc:'Tanah Lot & Seminyak Beach', activities:[{icon:'🛕',text:'Tanah Lot Temple sunrise visit',cost:'₹500'},{icon:'🏄',text:'Surf lesson at Kuta Beach',cost:'₹2,400'},{icon:'🛁',text:'Alaya Spa — family package',cost:'₹6,800'}] },
+    { title:'Water Adventures', loc:'Nusa Dua Marine Park', activities:[{icon:'🤿',text:'Snorkeling at Blue Lagoon',cost:'₹2,200'},{icon:'🚤',text:'Dolphin watching cruise',cost:'₹3,600'},{icon:'🌊',text:'Glass-bottom boat tour',cost:'₹1,800'}] },
+    { title:'Village & Crafts', loc:'Batubulan & Celuk Village', activities:[{icon:'🎨',text:'Silver jewellery workshop',cost:'₹1,200'},{icon:'👘',text:'Batik fabric experience',cost:'₹900'},{icon:'🍳',text:'Balinese cooking class',cost:'₹2,800'}] },
+    { title:'Mt. Batur Sunrise', loc:'Kintamani, North Bali', activities:[{icon:'🏔',text:'Mt. Batur sunrise trek (4am)',cost:'₹3,200'},{icon:'♨️',text:'Natural hot springs soak',cost:'₹1,400'},{icon:'☕',text:'Luwak coffee plantation tour',cost:'₹800'}] },
+    { title:'Leisure & Farewell', loc:'Seminyak & Airport', activities:[{icon:'🛍',text:'Seminyak Square shopping',cost:'Free'},{icon:'💆',text:'Farewell spa treatment',cost:'₹4,200'},{icon:'✈️',text:'Airport transfer & departure',cost:'₹3,800'}] },
+  ]
+};
+
+const QUOTES = {
+  1: {
+    items: [
+      { icon:'🏨', name:'Private Pool Villa — 7 nights', detail:'Seminyak, Bali · 4★★', cost: 112000 },
+      { icon:'✈️', name:'Return Flights · 4 pax', detail:'BLR–DPS–BLR · Economy', cost: 68000 },
+      { icon:'🚗', name:'Private Transfers', detail:'Airport + All excursions', cost: 18000 },
+      { icon:'🌊', name:'Water Activities Package', detail:'Snorkeling, Dolphin, Glass boat', cost: 12000 },
+      { icon:'🍽', name:'Meals & Dining', detail:'Daily breakfast + 3 dinners', cost: 22000 },
+      { icon:'🎭', name:'Experiences & Tours', detail:'Temples, Ubud, Mt. Batur trek', cost: 14000 },
+      { icon:'🛡', name:'Travel Insurance · 4 pax', detail:'Comprehensive cover', cost: 6400 },
+    ],
+    margin: 0.20,
+    leadScore: 'high',
+  }
+};
+
+const AGENTS = [
+  { icon:'🧳', bg:'rgba(200,169,110,0.12)', name:'Planner Agent', desc:'Generates complete day-by-day itineraries with local expertise, pacing logic, and preference matching.', calls:1284, time:'2.3s avg', status:'Active' },
+  { icon:'💰', bg:'rgba(74,155,127,0.12)', name:'Pricing Agent', desc:'Dynamic pricing engine that calculates margins, detects demand peaks, and maximises revenue per booking.', calls:986, time:'0.8s avg', status:'Active' },
+  { icon:'🎯', bg:'rgba(91,141,239,0.12)', name:'Conversion Agent', desc:'Scores lead intent, predicts win probability, and triggers smart follow-up recommendations in real time.', calls:2140, time:'1.1s avg', status:'Active' },
+  { icon:'📧', bg:'rgba(224,90,78,0.12)', name:'Comms Agent', desc:'Drafts personalised client emails and WhatsApp messages tailored to each lead\'s profile and stage.', calls:742, time:'1.9s avg', status:'Active' },
+  { icon:'🌍', bg:'rgba(160,100,200,0.12)', name:'Supply Agent', desc:'Queries hotel, flight and activity APIs in parallel — fetches live pricing, availability and alternatives.', calls:3612, time:'4.1s avg', status:'Active' },
+  { icon:'📊', bg:'rgba(200,169,110,0.08)', name:'Intelligence Agent', desc:'Analyses booking patterns, supplier performance and market trends to surface actionable business insights.', calls:488, time:'6.2s avg', status:'Active' },
+];
+
+const SUPPLY_DATA = [
+  { category:'Hotels — Bali', count:'142 available', items:[
+    { name:'The Layar Private Villas', price:'₹28,000/n', avail:'Available' },
+    { name:'COMO Uma Ubud', price:'₹22,400/n', avail:'Last 2' },
+    { name:'Alila Seminyak', price:'₹19,800/n', avail:'Available' },
+    { name:'Four Seasons Jimbaran', price:'₹42,000/n', avail:'Limited' },
+  ]},
+  { category:'Flights — BLR to DPS', count:'18 routes', items:[
+    { name:'IndiGo + Batik Air', price:'₹17,200/pax', avail:'Seats available' },
+    { name:'Singapore Airlines', price:'₹22,400/pax', avail:'Business class' },
+    { name:'Air Asia', price:'₹13,800/pax', avail:'Budget option' },
+    { name:'Garuda Indonesia', price:'₹19,600/pax', avail:'Direct flight' },
+  ]},
+  { category:'Activities — Bali', count:'240 options', items:[
+    { name:'Mt. Batur Sunrise Trek', price:'₹800/pax', avail:'Daily' },
+    { name:'Alaya Spa Package', price:'₹1,700/pax', avail:'Book 24hr ahead' },
+    { name:'Nusa Penida Day Tour', price:'₹1,200/pax', avail:'Available' },
+    { name:'Balinese Cooking Class', price:'₹700/pax', avail:'Morning slots' },
+  ]},
+];
+
+const ACTIVITY_LOG = [
+  { time:'2 min ago', text:'AI draft generated for WhatsApp follow-up', icon:'✦' },
+  { time:'18 min ago', text:'Itinerary saved — 7N Bali Family Getaway', icon:'💾' },
+  { time:'1 hr ago', text:'Lead opened proposal link (3 times)', icon:'👁' },
+  { time:'3 hr ago', text:'Quotation shared via email', icon:'📧' },
+  { time:'Yesterday', text:'Lead created from website enquiry form', icon:'✚' },
+];
+
+// ─────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────
+let currentLead = LEADS[0];
+let quoteMode = 'cost';
+
+function renderLeads(filter='all') {
+  const c = document.getElementById('leads-container');
+  const filtered = filter === 'all' ? LEADS : LEADS.filter(l => {
+    if (['hot','warm','new'].includes(filter)) return l.status === filter;
+    const destMap = { bali:'Bali', europe:'Switzerland', dubai:'Dubai', maldives:'Maldives' };
+    return l.dest.toLowerCase().includes((destMap[filter]||filter).toLowerCase());
+  });
+  c.innerHTML = filtered.map(l => `
+    <div class="lead-card ${l.id===currentLead.id?'active':''}" onclick="selectLead(${l.id})">
+      <div class="lead-card-top">
+        <div class="lead-name">${l.name}</div>
+        <div class="status-dot ${l.status}"></div>
+      </div>
+      <div class="lead-dest">${l.dest} · ${l.duration}</div>
+      <div class="lead-tags">
+        <span class="tag budget">${l.budget}</span>
+        <span class="tag pax">${l.pax} Pax</span>
+        ${l.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectLead(id) {
+  currentLead = LEADS.find(l=>l.id===id);
+  renderLeads();
+  populateDetail();
+}
+
+function populateDetail() {
+  document.getElementById('detail-name').textContent = currentLead.name;
+  document.getElementById('detail-dest').textContent = `${currentLead.dest} · ${currentLead.duration} · ${currentLead.pax} Pax`;
+  document.getElementById('win-prob').textContent = `Win Probability: ${currentLead.winProb}%`;
+  document.getElementById('stat-budget').textContent = currentLead.statBudget;
+  document.getElementById('stat-duration').textContent = currentLead.statDuration;
+  document.getElementById('stat-dates').textContent = currentLead.dates;
+  document.getElementById('stat-pax').textContent = currentLead.pax;
+  document.getElementById('stat-pax-detail').textContent = currentLead.paxDetail;
+  document.getElementById('ai-insight-text').textContent = currentLead.insight;
+  renderItinerary(currentLead.id);
+  renderQuotes(currentLead.id);
+  renderActivityLog();
+  renderProposal();
+}
+
+function renderItinerary(id) {
+  const days = ITINERARIES[id] || generateFallbackItinerary();
+  const c = document.getElementById('days-container');
+  c.innerHTML = days.map((d,i) => `
+    <div class="day-block">
+      <div class="day-line">
+        <div class="day-num ${i===0?'active-day':''}">D${i+1}</div>
+        ${i < days.length-1 ? '<div class="connector"></div>' : ''}
+      </div>
+      <div class="day-card">
+        <div class="day-card-header">
+          <div>
+            <div class="day-title">${d.title}</div>
+            <div class="day-loc">📍 ${d.loc}</div>
+          </div>
+        </div>
+        <div class="activity-list">
+          ${d.activities.map(a=>`
+            <div class="activity-item">
+              <span class="activity-icon">${a.icon}</span>
+              <span class="activity-text">${a.text}</span>
+              <span class="activity-cost">${a.cost}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function generateFallbackItinerary() {
+  return [
+    { title:'Arrival & Welcome', loc:'Airport → Hotel', activities:[{icon:'✈️',text:'Arrival & check-in',cost:'Incl.'},{icon:'🍽',text:'Welcome dinner',cost:'₹3,000'}] },
+    { title:'City Exploration', loc:'City Centre', activities:[{icon:'🏛',text:'Historical tour',cost:'₹1,200'},{icon:'🛍',text:'Shopping district',cost:'Free'}] },
+    { title:'Nature & Culture', loc:'Surrounding Region', activities:[{icon:'🌿',text:'Nature walk',cost:'₹800'},{icon:'🎭',text:'Cultural show',cost:'₹1,500'}] },
+    { title:'Leisure & Departure', loc:'Hotel → Airport', activities:[{icon:'💆',text:'Spa morning',cost:'₹3,500'},{icon:'✈️',text:'Departure transfer',cost:'Incl.'}] },
+  ];
+}
+
+function renderQuotes(id) {
+  const q = QUOTES[id] || { items:[], margin:0.15, leadScore:'medium' };
+  const baseCost = q.items.reduce((s,i)=>s+i.cost,0);
+  const margin = q.leadScore==='high' ? 0.20 : 0.15;
+  const clientPrice = Math.round(baseCost * (1 + margin));
+  const marginAmt = clientPrice - baseCost;
+
+  document.getElementById('quote-items').innerHTML = q.items.map(item => `
+    <div class="quote-item">
+      <div class="quote-item-icon">${item.icon}</div>
+      <div style="flex:1">
+        <div class="quote-item-name">${item.name}</div>
+        <div class="quote-item-detail">${item.detail}</div>
+      </div>
+      <div class="quote-item-cost">
+        ${quoteMode==='cost' ? formatINR(item.cost) : formatINR(Math.round(item.cost * (1+margin)))}
+        <div class="per">total</div>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('summary-rows').innerHTML = `
+    <div class="summary-row"><span>Base Cost</span><span>${formatINR(baseCost)}</span></div>
+    ${quoteMode==='cost' ? `<div class="summary-row margin"><span>Margin (${(margin*100).toFixed(0)}%)</span><span>+${formatINR(marginAmt)}</span></div>` : ''}
+    <div class="summary-row" style="color:var(--accent2)"><span>GST (5%)</span><span>+${formatINR(Math.round(clientPrice*0.05))}</span></div>
+    <div class="summary-row total"><span>${quoteMode==='client'?'Your Price':'Client Price'}</span><span>${formatINR(Math.round(clientPrice*1.05))}</span></div>
+    <div style="margin-top:12px">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Per Person</div>
+      <div style="font-size:18px;font-family:'Instrument Serif',serif;color:var(--accent)">${formatINR(Math.round(clientPrice*1.05/4))}</div>
+    </div>
+  `;
+}
+
+function renderActivityLog() {
+  document.getElementById('activity-log').innerHTML = ACTIVITY_LOG.map(a => `
+    <div style="display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:13px">${a.icon}</span>
+      <div style="flex:1">
+        <div style="font-size:12.5px">${a.text}</div>
+        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">${a.time}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProposal() {
+  const days = ITINERARIES[currentLead.id] || generateFallbackItinerary();
+  const q = QUOTES[currentLead.id];
+  const baseCost = q ? q.items.reduce((s,i)=>s+i.cost,0) : 252400;
+  const clientPrice = Math.round(baseCost * 1.20 * 1.05);
+
+  document.getElementById('proposal-client-name').textContent = currentLead.name;
+  document.getElementById('proposal-doc').innerHTML = `
+    <div class="proposal-hero">
+      <div class="proposal-eyebrow">Exclusive Proposal · ${new Date().toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</div>
+      <div class="proposal-title">${currentLead.dest}<br><em style="font-style:italic;color:var(--muted);font-size:0.75em">A curated journey for ${currentLead.name}</em></div>
+      <div class="proposal-subtitle">${currentLead.duration} · ${currentLead.pax} Travellers · ${currentLead.dates||'Flexible Dates'}</div>
+      <div class="proposal-chips">
+        <span class="proposal-chip">✈️ Return Flights</span>
+        <span class="proposal-chip">🏨 Premium Stay</span>
+        <span class="proposal-chip">🚗 All Transfers</span>
+        <span class="proposal-chip">🌟 Curated Experiences</span>
+        <span class="proposal-chip">🛡 Travel Insurance</span>
+      </div>
+    </div>
+    <div class="proposal-section">
+      <div class="proposal-section-title">Day by Day</div>
+      ${days.map((d,i) => `
+        <div class="prop-day">
+          <div class="prop-day-num">${String(i+1).padStart(2,'0')}</div>
+          <div class="prop-day-content">
+            <div class="prop-day-title">${d.title}</div>
+            <div class="prop-day-desc">${d.activities.map(a=>a.text).join(' · ')}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="proposal-section">
+      <div class="proposal-section-title">Investment</div>
+      <div class="price-highlight">
+        <div>
+          <div class="price-label">Total Package (incl. GST)</div>
+          <div class="price-amount">${formatINR(clientPrice)}</div>
+          <div class="price-per">for ${currentLead.pax} travellers · ${currentLead.duration}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="price-label">Per Person</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:22px;color:var(--text)">${formatINR(Math.round(clientPrice/currentLead.pax))}</div>
+          <div class="price-per">all-inclusive</div>
+        </div>
+      </div>
+    </div>
+    <div class="proposal-section" style="background:rgba(200,169,110,0.04)">
+      <div style="font-size:12px;color:var(--muted);line-height:1.7">This proposal is curated exclusively for ${currentLead.name} by NAMA Travel Intelligence. Prices are valid for 72 hours. <span style="color:var(--accent)">Book now to secure availability.</span></div>
+    </div>
+  `;
+}
+
+function renderAnalytics() {
+  // Bar chart
+  const months = ['Oct','Nov','Dec','Jan','Feb','Mar'];
+  const vals = [28,32,38,35,42,48];
+  const max = Math.max(...vals);
+  document.getElementById('revenue-chart').innerHTML = months.map((m,i) => `
+    <div class="bar-col">
+      <div class="bar ${i===5?'highlight':''}" style="height:${Math.round(vals[i]/max*100)}%"></div>
+      <div class="bar-label">${m}</div>
+    </div>
+  `).join('');
+
+  // Pipeline
+  const stages = [
+    { label:'New Leads', val:100, color:'var(--blue)' },
+    { label:'Contacted', val:78, color:'var(--accent)' },
+    { label:'Quoted', val:52, color:'var(--accent2)' },
+    { label:'Negotiating', val:34, color:'#e09a3e' },
+    { label:'Booked', val:22, color:'var(--accent2)' },
+  ];
+  document.getElementById('pipeline-bars').innerHTML = stages.map(s => `
+    <div class="pipe-stage">
+      <div class="pipe-label">${s.label}</div>
+      <div class="pipe-bar-track">
+        <div class="pipe-bar-fill" style="width:${s.val}%;background:${s.color};color:var(--bg)">${s.val}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Destinations
+  const dests = [
+    { name:'Bali', pct:38, color:'var(--accent)' },
+    { name:'Europe', pct:28, color:'var(--blue)' },
+    { name:'Dubai', pct:18, color:'var(--accent2)' },
+    { name:'Maldives', pct:10, color:'#e09a3e' },
+    { name:'Others', pct:6, color:'var(--muted)' },
+  ];
+  document.getElementById('dest-chart').innerHTML = dests.map(d => `
+    <div style="text-align:center">
+      <div style="height:80px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:6px">
+        <div style="width:40px;background:${d.color};border-radius:4px 4px 0 0;height:${d.pct*2}px;opacity:0.7"></div>
+      </div>
+      <div style="font-size:14px;font-weight:500">${d.pct}%</div>
+      <div style="font-size:11px;color:var(--muted)">${d.name}</div>
+    </div>
+  `).join('');
+}
+
+function renderAgents() {
+  document.getElementById('agents-grid').innerHTML = AGENTS.map(a => `
+    <div class="agent-card">
+      <div class="agent-icon" style="background:${a.bg}">${a.icon}</div>
+      <div class="agent-name">${a.name}</div>
+      <div class="agent-desc">${a.desc}</div>
+      <div class="agent-status">
+        <div class="status-indicator"></div>
+        <span style="color:var(--accent2)">${a.status}</span>
+      </div>
+      <div class="agent-stats">
+        <div>
+          <span class="agent-stat-val">${a.calls.toLocaleString()}</span>
+          <span class="agent-stat-lab">API Calls</span>
+        </div>
+        <div>
+          <span class="agent-stat-val">${a.time}</span>
+          <span class="agent-stat-lab">Response</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  const logs = [
+    { time:'Just now', agent:'Planner Agent', action:'Generated 7N Bali itinerary for Sharma Family', icon:'🧳' },
+    { time:'3 min ago', agent:'Pricing Agent', action:'Calculated quote at 20% margin — Win probability boosted', icon:'💰' },
+    { time:'8 min ago', agent:'Conversion Agent', action:'Flagged Sharma Family as Hot lead — probability 72%', icon:'🎯' },
+    { time:'12 min ago', agent:'Supply Agent', action:'Fetched 142 hotel options for Bali — best match identified', icon:'🌍' },
+    { time:'25 min ago', agent:'Comms Agent', action:'WhatsApp follow-up drafted for Mehta Couple', icon:'📧' },
+    { time:'1 hr ago', agent:'Intelligence Agent', action:'Bali demand spike detected — pricing adjustment recommended', icon:'📊' },
+  ];
+  document.getElementById('agent-activity-log').innerHTML = logs.map(l => `
+    <div style="display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:13px">${l.icon}</span>
+      <div style="flex:1">
+        <div style="font-size:12px;color:var(--accent);margin-bottom:2px">${l.agent}</div>
+        <div style="font-size:12px">${l.action}</div>
+      </div>
+      <div style="font-size:10.5px;color:var(--muted);flex-shrink:0">${l.time}</div>
+    </div>
+  `).join('');
+}
+
+function renderSupply() {
+  document.getElementById('supply-grid').innerHTML = SUPPLY_DATA.map(s => `
+    <div class="supply-card">
+      <div class="supply-header">
+        <div class="supply-category">${s.category}</div>
+        <div class="supply-count">${s.count}</div>
+      </div>
+      ${s.items.map(i => `
+        <div class="supply-item">
+          <div>
+            <div class="supply-item-name">${i.name}</div>
+            <div class="supply-item-avail">${i.avail}</div>
+          </div>
+          <div class="supply-item-price">${i.price}</div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+// ─────────────────────────────────────────────
+// INTERACTIONS
+// ─────────────────────────────────────────────
+function switchPanel(name, el) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+
+  if (name==='analytics') renderAnalytics();
+  if (name==='agents') renderAgents();
+  if (name==='supply') renderSupply();
+}
+
+function switchTab(name, el) {
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+}
+
+function filterLeads(filter, el) {
+  document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderLeads(filter);
+}
+
+function generateItinerary() {
+  const gen = document.getElementById('ai-generating');
+  const content = document.getElementById('itinerary-content');
+  gen.classList.add('visible');
+  content.style.display = 'none';
+  switchTab('itinerary', document.querySelectorAll('.tab')[1]);
+
+  const steps = [
+    { text:'Analysing lead preferences & budget...', delay:0 },
+    { text:'Querying hotel availability via API...', delay:600 },
+    { text:'Fetching flight options from Amadeus...', delay:1100 },
+    { text:'Curating day-by-day experiences...', delay:1700 },
+    { text:'Optimising itinerary flow & pacing...', delay:2200 },
+    { text:'Generating pricing with margin logic...', delay:2700 },
+  ];
+
+  const stepsEl = document.getElementById('ai-steps');
+  stepsEl.innerHTML = '';
+  steps.forEach((s,i) => {
+    setTimeout(()=>{
+      const el = document.createElement('div');
+      el.className = 'ai-step loading';
+      el.style.animationDelay = '0ms';
+      el.innerHTML = `<span>⟳</span> ${s.text}`;
+      stepsEl.appendChild(el);
+      setTimeout(()=>{ el.className='ai-step done'; el.innerHTML=`<span>✓</span> ${s.text}`; }, 400);
+    }, s.delay);
+  });
+
+  setTimeout(()=>{
+    gen.classList.remove('visible');
+    content.style.display = 'block';
+    renderItinerary(currentLead.id);
+    showToast('✦', 'Itinerary Ready!', `7-day ${currentLead.dest} plan generated by NAMA Planner`);
+  }, 3400);
+}
+
+function saveItinerary() {
+  showToast('💾', 'Saved!', 'Itinerary saved to lead profile');
+}
+
+function toggleQuoteView(mode, el) {
+  quoteMode = mode;
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderQuotes(currentLead.id);
+}
+
+function openProposal() {
+  switchPanel('proposal', null);
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  document.querySelectorAll('.nav-link')[4].classList.add('active');
+  renderProposal();
+}
+
+function addNewLead() {
+  showToast('✚', 'New Lead', 'Lead form ready — connect to your CRM to capture');
+}
+
+function showToast(icon, title, msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-title').textContent = title;
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3500);
+}
+
+function formatINR(n) {
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+renderLeads();
+populateDetail();
+</script>
+</body>
+</html>
