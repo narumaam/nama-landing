@@ -3288,12 +3288,15 @@ function renderSupply() {
 function switchPanel(name, el) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
+  const panel = document.getElementById('panel-'+name);
+  if (panel) panel.classList.add('active');
   if(el) el.classList.add('active');
 
   if (name==='analytics') renderAnalytics();
   if (name==='agents') renderAgents();
   if (name==='supply') renderSupply();
+  if (name==='services') { setTimeout(renderSvcTable, 0); }
+  if (name==='packages') { setTimeout(renderPkgTable, 0); }
 }
 
 function switchTab(name, el) {
@@ -4145,13 +4148,7 @@ function savePkgItem() {
   showToast('✦','Package Saved!',name+' saved successfully');
 }
 
-// Hook switchPanel to init tables
-const _origSwitchPanel = switchPanel;
-function switchPanel(name, el) {
-  _origSwitchPanel(name, el);
-  if (name==='services') { renderSvcTable(); }
-  if (name==='packages') { renderPkgTable(); }
-}
+// switchPanel already handles services/packages
 
 // ─────────────────────────────────────────────
 // INIT
