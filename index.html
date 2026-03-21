@@ -581,6 +581,68 @@
       font-size: 11px;
       margin-top: 0.5rem;
     }
+    /* LIGHT MODE */
+    body.light { background: #f0f4f8 !important; color: #0a1628 !important; }
+    body.light nav { background: rgba(240,244,248,0.95) !important; border-bottom-color: rgba(0,0,0,0.08) !important; }
+    body.light .nav-links a { color: rgba(0,0,0,0.5) !important; }
+    body.light .nav-logo-text { color: #0a1628 !important; }
+    body.light #hero { background: #e8edf5 !important; }
+    body.light .hero-title, body.light .hero-subtitle strong { color: #0a1628 !important; }
+    body.light .hero-subtitle { color: rgba(10,22,40,0.75) !important; }
+    body.light .hero-desc { color: rgba(10,22,40,0.5) !important; }
+    body.light .card { background: #ffffff !important; border-color: rgba(0,0,0,0.08) !important; }
+    body.light section { background: #f0f4f8 !important; }
+    body.light #solution, body.light #product, body.light #market, body.light #traction, body.light #economics { background: #e8edf5 !important; }
+    body.light #why-we-win, body.light #roadmap, body.light #invest, body.light #final-cta { background: #dde4ef !important; }
+    body.light #contact { background: #d5dce9 !important; }
+    body.light footer { background: #ccd4e4 !important; color: rgba(0,0,0,0.35) !important; }
+    body.light .section-title { color: #0a1628 !important; }
+    body.light .section-desc { color: rgba(10,22,40,0.5) !important; }
+    body.light h1,body.light h2,body.light h3,body.light h4 { color: #0a1628 !important; }
+    body.light p { color: rgba(10,22,40,0.55) !important; }
+    body.light .os-card { background: #e8edf5 !important; }
+    body.light .stats-bar, body.light .workflow-bottom-bar { background: #ffffff !important; border-color: rgba(0,0,0,0.08) !important; }
+    body.light .insight-card { background: #ffffff !important; }
+    body.light blockquote { color: rgba(10,22,40,0.65) !important; }
+    body.light .pillar-card { background: rgba(0,0,0,0.03) !important; border-color: rgba(0,0,0,0.08) !important; }
+    body.light .roadmap-desc { color: rgba(10,22,40,0.5) !important; }
+    body.light .pw-card { background: #ffffff !important; }
+    body.light .pw-input { background: #f0f4f8 !important; color: #0a1628 !important; }
+    body.light .pw-title { color: #0a1628 !important; }
+    body.light .dashboard { background: #f0f4f8 !important; }
+    body.light .sidebar { background: #e0e8f2 !important; }
+    body.light .sidebar-item { color: rgba(10,22,40,0.5) !important; }
+    body.light .sidebar-item.active { background: rgba(0,102,255,0.12) !important; color: #0047FF !important; }
+    body.light .fake-card { background: #ffffff !important; border-color: rgba(0,0,0,0.07) !important; }
+    body.light .fake-card strong { color: #0a1628 !important; }
+    body.light .transcript-box, body.light .inbox-box { background: #ffffff !important; }
+    body.light .inbox-bar { background: rgba(0,0,0,0.03) !important; }
+    body.light .email-subj { color: #0a1628 !important; }
+    body.light .tag { background: rgba(0,0,0,0.05) !important; color: rgba(10,22,40,0.5) !important; }
+    .nama-theme-btn {
+      position: fixed; bottom: 28px; right: 28px; z-index: 99998;
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 14px 8px 10px; border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(10,22,40,0.88); backdrop-filter: blur(12px);
+      cursor: pointer; transition: all 0.2s; user-select: none;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    body.light .nama-theme-btn { background: rgba(255,255,255,0.9); border-color: rgba(0,0,0,0.12); box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+    .nama-theme-btn:hover { border-color: rgba(0,102,255,0.5); box-shadow: 0 4px 28px rgba(0,102,255,0.2); }
+    .nama-toggle-track { width:32px; height:17px; border-radius:9px; background:rgba(0,102,255,0.3); border:1px solid rgba(0,102,255,0.4); position:relative; flex-shrink:0; }
+    .nama-toggle-knob { position:absolute; top:1.5px; left:1.5px; width:12px; height:12px; border-radius:50%; background:#4D9FFF; transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1); font-size:7px; display:flex; align-items:center; justify-content:center; }
+    body.light .nama-toggle-knob { transform: translateX(15px); background: #0047FF; }
+    .nama-toggle-label { font-size:12px; color:rgba(255,255,255,0.55); font-weight:500; min-width:28px; }
+    body.light .nama-toggle-label { color: rgba(10,22,40,0.5); }
+```
+
+---
+
+### Paste 2 — Toggle button HTML
+Search for:
+```
+</div><!-- /page-content -->
   </style>
 </head>
 <body>
@@ -1873,6 +1935,10 @@ const appTabs={
 };
 function appTab(tab,el){document.querySelectorAll('.app-nav').forEach(n=>n.classList.remove('active'));el.classList.add('active');const c=document.getElementById('appContent');c.innerHTML=appTabs[tab].html;setTimeout(()=>typeAppAI(appTabs[tab].ai),80);}
 </script>
+  <div class="nama-theme-btn" onclick="namaToggleTheme()" title="Toggle light / dark">
+  <div class="nama-toggle-track"><div class="nama-toggle-knob" id="namaKnob">🌙</div></div>
+  <span class="nama-toggle-label" id="namaLabel">Dark</span>
+</div>
 </div><!-- /page-content -->
 
 <script>
@@ -1955,6 +2021,24 @@ window.addEventListener('load', () => {
   const f = document.getElementById('pw-field');
   if (f && !sessionStorage.getItem('nama_unlocked')) f.focus();
 });
+  function namaToggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  document.getElementById('namaKnob').textContent = isLight ? '☀️' : '🌙';
+  document.getElementById('namaLabel').textContent = isLight ? 'Light' : 'Dark';
+  localStorage.setItem('nama-theme', isLight ? 'light' : 'dark');
+}
+(function() {
+  const saved = localStorage.getItem('nama-theme');
+  if (saved === 'light') {
+    document.body.classList.add('light');
+    window.addEventListener('DOMContentLoaded', function() {
+      const k = document.getElementById('namaKnob');
+      const l = document.getElementById('namaLabel');
+      if(k) k.textContent = '☀️';
+      if(l) l.textContent = 'Light';
+    });
+  }
+})();
 </script>
 
 </body>
