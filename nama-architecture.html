@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAMA — System Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:#050A14;color:#e8eaf0;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+/* ── VARIABLES ── */
+:root{
+  --blue:#0066FF;--blue-light:#4D9FFF;--blue-dim:rgba(0,102,255,0.12);
+  --teal:#00C4B4;--teal-light:#5EEEE4;--teal-dim:rgba(0,196,180,0.12);
+  --amber:#F59E0B;--amber-dim:rgba(245,158,11,0.12);
+  --ink:#050A14;--ink-2:#0A1628;--ink-3:#0E1E35;
+  --border:rgba(255,255,255,0.07);--border-strong:rgba(255,255,255,0.14);
+  --text:rgba(255,255,255,0.85);--text-muted:rgba(255,255,255,0.45);--text-dim:rgba(255,255,255,0.25);
+  --mono:'DM Mono',monospace;
+}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh;}
+.sidebar{width:260px;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;background:rgba(5,10,20,0.96);border-right:1px solid var(--border);overflow-y:auto;z-index:50;display:flex;flex-direction:column;}
+.main{margin-left:260px;flex:1;min-width:0;}
+@media(max-width:900px){.sidebar{display:none;}.main{margin-left:0;}}
+
+/* ── SIDEBAR ── */
+.sb-logo{padding:24px 20px 20px;border-bottom:1px solid var(--border);}
+.sb-logo a{text-decoration:none;display:flex;align-items:center;gap:10px;}
+.sb-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:900;font-size:13px;color:white;flex-shrink:0;}
+.sb-brand{font-family:'Syne',sans-serif;font-weight:900;font-size:15px;color:white;letter-spacing:0.1em;}
+.sb-tag{font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;}
+
+.sb-nav{flex:1;padding:16px 0;}
+.sb-section-label{font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;padding:10px 20px 4px;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:8px 20px;font-size:12.5px;color:var(--text-muted);text-decoration:none;transition:all 0.15s;cursor:pointer;border-left:2px solid transparent;}
+.sb-item:hover{color:white;background:rgba(255,255,255,0.04);}
+.sb-item.active{color:var(--teal);border-left-color:var(--teal);background:var(--teal-dim);}
+.sb-item .sb-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.sb-divider{height:1px;background:var(--border);margin:12px 0;}
+
+.sb-links{padding:16px 20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;}
+.sb-ext{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);text-decoration:none;font-size:12px;color:var(--text-muted);transition:all 0.15s;}
+.sb-ext:hover{border-color:var(--border-strong);color:white;background:rgba(255,255,255,0.04);}
+.sb-ext-icon{width:22px;height:22px;border-radius:5px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+
+/* ── TOP NAV BAR ── */
+.topbar{background:rgba(5,10,20,0.95);border-bottom:1px solid var(--border);padding:0 32px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;backdrop-filter:blur(12px);}
+.topbar-left{font-size:12px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;}
+.topbar-links{display:flex;gap:8px;}
+.topbar-link{font-size:11.5px;font-weight:600;color:var(--text-muted);text-decoration:none;padding:5px 12px;border:1px solid var(--border);border-radius:6px;transition:all 0.15s;}
+.topbar-link:hover{color:white;border-color:var(--border-strong);}
+.topbar-link.primary{background:var(--blue);color:white;border-color:var(--blue);}
+.topbar-link.primary:hover{background:#0052CC;}
+
+/* ── CONTENT SECTIONS ── */
+.content{padding:0;}
+section{padding:72px 48px;border-bottom:1px solid var(--border);}
+section:last-child{border-bottom:none;}
+@media(max-width:640px){section{padding:48px 24px;}}
+
+.section-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.3em;display:block;margin-bottom:12px;}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,52px);font-weight:900;color:white;line-height:1.0;letter-spacing:-0.02em;margin-bottom:12px;}
+.section-desc{color:var(--text-muted);font-size:15px;line-height:1.8;max-width:620px;margin-bottom:40px;}
+.text-teal{color:var(--teal);}
+.text-blue{color:var(--blue-light);}
+
+/* ── HERO ── */
+#hero{padding:80px 48px 72px;background:radial-gradient(ellipse at 20% 50%,rgba(0,102,255,0.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(0,196,180,0.06) 0%,transparent 50%);}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;padding:6px 14px;border-radius:100px;border:1px solid rgba(0,196,180,0.3);background:rgba(0,196,180,0.08);}
+.hero-eyebrow span{font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.2em;}
+.hero-pulse{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(42px,6vw,80px);font-weight:900;color:white;line-height:0.95;letter-spacing:-0.03em;margin-bottom:20px;}
+.hero-subtitle{font-size:18px;color:var(--text-muted);line-height:1.7;max-width:560px;margin-bottom:48px;}
+.hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:700px;}
+.stat-cell{background:var(--ink-2);padding:20px 24px;}
+.stat-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:900;margin-bottom:4px;}
+.stat-lbl{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;}
+
+/* ── CARDS ── */
+.card{background:var(--ink-2);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.card:hover{border-color:var(--border-strong);}
+.card-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-head-title{font-size:13px;font-weight:700;color:white;}
+.card-body{padding:20px;}
+
+/* ── GRID LAYOUTS ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:800px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+/* ── MODULE CHIPS ── */
+.layer-block{margin-bottom:28px;}
+.layer-label{font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.layer-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.modules-row{display:flex;flex-wrap:wrap;gap:10px;}
+.mod-chip{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--ink-3);min-width:200px;flex:1;}
+.mod-chip:hover{border-color:var(--border-strong);}
+.mod-icon{font-size:18px;flex-shrink:0;}
+.mod-name{font-size:13px;font-weight:600;color:white;}
+.mod-desc{font-size:11px;color:var(--text-dim);margin-top:1px;}
+
+/* ── HIERARCHY ── */
+.hier-level{display:flex;align-items:flex-start;gap:16px;margin-bottom:8px;}
+.hier-connector{display:flex;flex-direction:column;align-items:center;padding-top:14px;}
+.hier-line{width:1px;flex:1;background:var(--border);min-height:8px;}
+.hier-node{flex:1;border-radius:10px;border:1px solid var(--border);padding:14px 18px;}
+.hier-node.l1{border-color:rgba(124,58,237,0.4);background:rgba(124,58,237,0.08);}
+.hier-node.l2{border-color:rgba(0,102,255,0.3);background:var(--blue-dim);}
+.hier-node.l3{border-color:rgba(0,196,180,0.3);background:var(--teal-dim);}
+.hier-node.l4{border-color:var(--border);background:var(--ink-3);}
+.hier-node.l5{border-color:rgba(245,158,11,0.3);background:var(--amber-dim);}
+.hier-node-title{font-size:13px;font-weight:700;color:white;margin-bottom:3px;}
+.hier-node-sub{font-size:11.5px;color:var(--text-muted);}
+.hier-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:0.5px;margin-left:8px;}
+.badge-purple{background:rgba(124,58,237,0.2);color:#a78bfa;}
+.badge-blue{background:var(--blue-dim);color:var(--blue-light);}
+.badge-teal{background:var(--teal-dim);color:var(--teal);}
+.badge-gray{background:rgba(255,255,255,0.06);color:var(--text-muted);}
+.badge-amber{background:var(--amber-dim);color:var(--amber);}
+.l4-row{display:flex;flex-wrap:wrap;gap:10px;flex:1;}
+.l4-chip{flex:1;min-width:120px;border-radius:10px;border:1px solid var(--border);background:var(--ink-3);padding:10px 14px;}
+.l4-chip-title{font-size:12px;font-weight:600;color:white;}
+.l4-chip-sub{font-size:10.5px;color:var(--text-dim);}
+
+/* ── AI FLOW ── */
+.ai-flow{display:grid;grid-template-columns:1fr 56px 220px 56px 1fr;gap:0;align-items:center;}
+@media(max-width:800px){.ai-flow{grid-template-columns:1fr;gap:8px;}.ai-arrow{display:none;}}
+.ai-col-title{font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.ai-channel,.ai-output{display:flex;flex-direction:column;gap:8px;}
+.ai-chip{padding:9px 14px;border-radius:8px;border:1px solid var(--border);background:var(--ink-3);font-size:12px;font-weight:600;color:var(--text-muted);display:flex;align-items:center;gap:8px;}
+.ai-chip .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.ai-chip.ch{border-color:rgba(0,196,180,0.25);background:var(--teal-dim);color:var(--teal-light);}
+.ai-chip.out{border-color:rgba(0,102,255,0.25);background:var(--blue-dim);color:var(--blue-light);}
+.ai-core{background:linear-gradient(160deg,rgba(124,58,237,0.15),rgba(0,102,255,0.1));border:1px solid rgba(124,58,237,0.35);border-radius:14px;padding:20px;text-align:center;}
+.ai-core-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:900;color:white;margin-bottom:4px;}
+.ai-core-sub{font-size:11px;color:rgba(167,139,250,0.8);margin-bottom:14px;}
+.ai-cap{font-size:11px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);text-align:left;}
+.ai-cap:last-child{border-bottom:none;}
+.ai-arrow{display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:20px;}
+
+/* ── LIFECYCLE ── */
+.lifecycle{display:flex;flex-direction:column;gap:1px;}
+.lc-row{display:flex;gap:1px;}
+.lc-cell{flex:1;padding:14px 16px;background:var(--ink-3);border:1px solid var(--border);position:relative;}
+.lc-cell:hover{background:var(--ink-2);border-color:var(--border-strong);}
+.lc-num{font-size:9px;font-weight:700;color:var(--text-dim);letter-spacing:0.1em;margin-bottom:4px;}
+.lc-name{font-size:12.5px;font-weight:700;color:white;margin-bottom:2px;}
+.lc-sub{font-size:11px;color:var(--text-dim);}
+.lc-teal .lc-num{color:var(--teal);}
+.lc-teal{border-top:2px solid var(--teal) !important;}
+.lc-blue .lc-num{color:var(--blue-light);}
+.lc-blue{border-top:2px solid var(--blue) !important;}
+.lc-amber .lc-num{color:var(--amber);}
+.lc-amber{border-top:2px solid var(--amber) !important;}
+.lc-green .lc-num{color:#4ade80;}
+.lc-green{border-top:2px solid #22c55e !important;}
+
+/* ── SERVICE CATALOGUE ── */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:800px){.svc-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.svc-grid{grid-template-columns:1fr;}}
+.svc-card{border-radius:12px;border:1px solid var(--border);background:var(--ink-2);overflow:hidden;}
+.svc-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.svc-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.svc-title{font-size:13px;font-weight:700;color:white;}
+.svc-count{font-size:10px;color:var(--text-dim);}
+.svc-body{padding:14px 18px;}
+.svc-item{font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:8px;}
+.svc-item:last-child{border-bottom:none;}
+.svc-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--text-dim);flex-shrink:0;}
+.svc-item strong{color:rgba(255,255,255,0.75);}
+
+/* ── PRICING ENGINE ── */
+.pricing-row{display:flex;align-items:center;gap:24px;margin-bottom:16px;flex-wrap:wrap;}
+.price-input-col{flex:1;min-width:200px;}
+.price-arrow{font-size:24px;color:var(--text-dim);}
+.price-engine{width:240px;flex-shrink:0;background:linear-gradient(160deg,rgba(124,58,237,0.12),var(--blue-dim));border:1px solid rgba(124,58,237,0.3);border-radius:12px;padding:20px;}
+.price-tiers{flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px;}
+.tier-card{padding:16px;border-radius:10px;border:1px solid var(--border);}
+.tier-card.budget{border-color:rgba(255,255,255,0.12);}
+.tier-card.standard{border-color:rgba(0,102,255,0.4);background:var(--blue-dim);}
+.tier-card.luxury{border-color:rgba(245,158,11,0.35);background:var(--amber-dim);}
+.tier-name{font-size:12px;font-weight:700;color:white;margin-bottom:4px;}
+.tier-markup{font-size:11px;color:var(--text-dim);}
+.tier-detail{font-size:11px;color:var(--text-muted);margin-top:4px;}
+
+/* ── SUPPLIER FLOW ── */
+.sup-steps{display:flex;gap:0;margin-bottom:32px;}
+.sup-step{flex:1;padding:16px 18px;background:var(--ink-3);border:1px solid var(--border);position:relative;}
+.sup-step:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:18px;z-index:1;}
+.sup-step-num{font-size:9px;font-weight:700;color:var(--teal);letter-spacing:0.1em;margin-bottom:6px;}
+.sup-step-name{font-size:13px;font-weight:700;color:white;margin-bottom:3px;}
+.sup-step-sub{font-size:11px;color:var(--text-dim);}
+@media(max-width:700px){.sup-steps{flex-direction:column;}.sup-step::after{content:'↓';right:auto;left:50%;top:auto;bottom:-14px;transform:translateX(-50%);}}
+
+.extract-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+@media(max-width:700px){.extract-grid{grid-template-columns:1fr 1fr;}}
+.extract-chip{padding:10px 14px;border-radius:8px;border:1px solid rgba(0,102,255,0.2);background:var(--blue-dim);}
+.extract-chip-name{font-size:12px;font-weight:700;color:var(--blue-light);}
+.extract-chip-sub{font-size:10.5px;color:var(--text-dim);margin-top:2px;}
+
+/* ── REVENUE MODEL ── */
+.plan-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+@media(max-width:700px){.plan-row{grid-template-columns:1fr 1fr;}}
+.plan-card{border-radius:12px;border:1px solid var(--border);padding:20px;background:var(--ink-2);}
+.plan-card.highlight{border-color:rgba(0,196,180,0.4);background:rgba(0,196,180,0.06);}
+.plan-tier-name{font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;}
+.plan-price{font-family:var(--mono);font-size:22px;color:white;margin-bottom:4px;}
+.plan-users{font-size:11px;color:var(--text-dim);margin-bottom:12px;}
+.plan-feat{font-size:11.5px;color:var(--text-muted);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:flex-start;gap:6px;}
+.plan-feat:last-child{border-bottom:none;}
+.plan-feat::before{content:'✓';color:var(--teal);font-size:10px;flex-shrink:0;margin-top:1px;}
+
+.addon-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:32px;}
+@media(max-width:700px){.addon-row{grid-template-columns:1fr 1fr;}}
+.addon-chip{padding:14px 16px;border-radius:10px;border:1px solid rgba(0,196,180,0.2);background:var(--teal-dim);}
+.addon-name{font-size:12px;font-weight:700;color:var(--teal-light);margin-bottom:4px;}
+.addon-price{font-family:var(--mono);font-size:14px;color:white;}
+.addon-note{font-size:10.5px;color:var(--text-dim);margin-top:3px;}
+
+.econ-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:700px){.econ-row{grid-template-columns:1fr 1fr;}}
+.econ-card{padding:20px;border-radius:10px;border:1px solid var(--border);background:var(--ink-3);text-align:center;}
+.econ-val{font-family:'Syne',sans-serif;font-size:26px;font-weight:900;margin-bottom:4px;}
+.econ-lbl{font-size:10.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;}
+
+/* ── INTEGRATIONS ── */
+.integ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+@media(max-width:700px){.integ-grid{grid-template-columns:1fr 1fr;}}
+.integ-col-title{font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.integ-chip{padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--ink-3);font-size:12px;color:var(--text-muted);margin-bottom:6px;}
+.integ-chip strong{display:block;font-size:12.5px;color:white;margin-bottom:2px;}
+.integ-col.supply .integ-chip{border-color:rgba(255,255,255,0.1);}
+.integ-col.comms .integ-chip{border-color:rgba(0,196,180,0.2);background:var(--teal-dim);}
+.integ-col.payments .integ-chip{border-color:rgba(245,158,11,0.2);background:var(--amber-dim);}
+.integ-col.ai .integ-chip{border-color:rgba(124,58,237,0.2);background:rgba(124,58,237,0.08);}
+
+/* ── RBAC TABLE ── */
+.rbac-table{width:100%;border-collapse:collapse;}
+.rbac-table th{font-size:10.5px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;padding:10px 14px;border-bottom:1px solid var(--border);text-align:left;background:rgba(255,255,255,0.02);}
+.rbac-table td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12.5px;color:var(--text-muted);}
+.rbac-table td:first-child{font-weight:700;color:white;}
+.rbac-table tr:hover td{background:rgba(255,255,255,0.02);}
+.tick{color:var(--teal);}
+.cross{color:rgba(255,255,255,0.15);}
+
+/* ── INFO BOX ── */
+.info-box{background:var(--blue-dim);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:14px 18px;font-size:13px;color:rgba(77,159,255,0.9);margin:16px 0;line-height:1.6;}
+.warn-box{background:var(--teal-dim);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:14px 18px;font-size:13px;color:var(--teal-light);margin:16px 0;line-height:1.6;}
+
+/* ── MISC ── */
+.divider{height:1px;background:var(--border);margin:32px 0;}
+.tag{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:0.5px;}
+.tag-teal{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(0,196,180,0.3);}
+.tag-blue{background:var(--blue-dim);color:var(--blue-light);border:1px solid rgba(0,102,255,0.3);}
+.tag-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,0.3);}
+.tag-purple{background:rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.3);}
+.mono-val{font-family:var(--mono);font-size:13px;}
+
+/* ── SCROLL SPY ── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <a href="index.html">
+      <div class="sb-icon">N</div>
+      <div><div class="sb-brand">NAMA</div><div class="sb-tag">System Architecture</div></div>
+    </a>
+  </div>
+
+  <nav class="sb-nav">
+    <div class="sb-section-label">Architecture</div>
+    <a class="sb-item active" href="#overview" onclick="setActive(this)"><div class="sb-dot"></div>Overview</a>
+    <a class="sb-item" href="#hierarchy" onclick="setActive(this)"><div class="sb-dot"></div>Platform hierarchy</a>
+    <a class="sb-item" href="#modules" onclick="setActive(this)"><div class="sb-dot"></div>13 modules</a>
+    <a class="sb-item" href="#ai" onclick="setActive(this)"><div class="sb-dot"></div>AI agent layer</a>
+    <a class="sb-item" href="#lifecycle" onclick="setActive(this)"><div class="sb-dot"></div>Booking lifecycle</a>
+    <a class="sb-item" href="#services" onclick="setActive(this)"><div class="sb-dot"></div>Service catalogue</a>
+    <a class="sb-item" href="#pricing" onclick="setActive(this)"><div class="sb-dot"></div>Pricing engine</a>
+    <a class="sb-item" href="#suppliers" onclick="setActive(this)"><div class="sb-dot"></div>Supplier onboarding</a>
+    <a class="sb-item" href="#revenue" onclick="setActive(this)"><div class="sb-dot"></div>Revenue model</a>
+    <a class="sb-item" href="#integrations" onclick="setActive(this)"><div class="sb-dot"></div>Integrations</a>
+
+    <div class="sb-divider"></div>
+    <div class="sb-section-label">Platform</div>
+    <a class="sb-item" href="index.html"><div class="sb-dot"></div>Investor deck</a>
+    <a class="sb-item" href="nama-app.html"><div class="sb-dot"></div>CRM &amp; Settings</a>
+    <a class="sb-item" href="nama-os.html"><div class="sb-dot"></div>OS View</a>
+  </nav>
+
+  <div class="sb-links">
+    <a class="sb-ext" href="nama-app.html">
+      <div class="sb-ext-icon">⚙</div>
+      Open CRM Platform →
+    </a>
+    <a class="sb-ext" href="nama-os.html">
+      <div class="sb-ext-icon">✦</div>
+      Open OS View →
+    </a>
+    <a class="sb-ext" href="index.html">
+      <div class="sb-ext-icon">↗</div>
+      Investor Deck →
+    </a>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <span class="topbar-left">NAMA · System Architecture · 2026</span>
+    <div class="topbar-links">
+      <a href="nama-os.html" class="topbar-link">✦ OS View</a>
+      <a href="nama-app.html" class="topbar-link">⚙ CRM</a>
+      <a href="index.html" class="topbar-link primary">↗ Investor Deck</a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ════════════════ HERO ════════════════ -->
+    <section id="overview">
+      <div class="hero-eyebrow"><div class="hero-pulse"></div><span>Full System Architecture</span></div>
+      <h1 class="hero-title">NAMA Travel<br><span class="text-teal">Operating System</span></h1>
+      <p class="hero-subtitle">An end-to-end AI-native platform that unifies every travel business operation — from the first WhatsApp enquiry to the final supplier payment — into a single connected system.</p>
+
+      <div class="hero-stats">
+        <div class="stat-cell"><div class="stat-val" style="color:var(--teal);">13</div><div class="stat-lbl">Integrated modules</div></div>
+        <div class="stat-cell"><div class="stat-val" style="color:var(--blue-light);">5</div><div class="stat-lbl">Platform levels</div></div>
+        <div class="stat-cell"><div class="stat-val" style="color:var(--amber);">80%+</div><div class="stat-lbl">Tasks automated</div></div>
+        <div class="stat-cell"><div class="stat-val" style="color:#4ade80;">45s</div><div class="stat-lbl">SLA response</div></div>
+        <div class="stat-cell"><div class="stat-val" style="color:var(--teal);">60s</div><div class="stat-lbl">Quote generation</div></div>
+        <div class="stat-cell"><div class="stat-val" style="color:var(--blue-light);">100+</div><div class="stat-lbl">DMC collaborators</div></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="info-box">This document covers the full technical and product architecture of NAMA. Each section maps a layer of the platform — from access control through to revenue mechanics. Use the sidebar to navigate sections.</div>
+
+      <!-- System overview table -->
+      <div class="card" style="margin-top:24px;">
+        <div class="card-head"><span class="card-head-title">System at a glance</span><span class="tag tag-teal">Series A · 2026</span></div>
+        <div class="card-body">
+          <table style="width:100%;border-collapse:collapse;">
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);width:200px;">Product type</td><td style="padding:10px 0;font-size:13px;color:white;">SaaS · AI-native travel operating system</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);">Primary users</td><td style="padding:10px 0;font-size:13px;color:white;">DMCs, travel agencies, OTAs, tour operators</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);">AI backbone</td><td style="padding:10px 0;font-size:13px;color:white;">Claude Sonnet (Anthropic) · Whisper (OpenAI) · ElevenLabs voice</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);">Core database</td><td style="padding:10px 0;font-size:13px;color:white;">PostgreSQL with row-level security (RLS) per organisation</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);">Compliance</td><td style="padding:10px 0;font-size:13px;color:white;">DPDP Act 2023 · GSTIN invoicing · PCI DSS payments · AES-256 at rest</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);">Deployment</td><td style="padding:10px 0;font-size:13px;color:white;">Multi-tenant cloud · Private cloud option (Enterprise)</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);">Target market</td><td style="padding:10px 0;font-size:13px;color:white;">100K+ travel agencies globally · $11.3B market 2025 · 5.75% CAGR</td></tr>
+              <tr><td style="padding:10px 0;font-size:12px;font-weight:700;color:var(--text-muted);">Series A ask</td><td style="padding:10px 0;font-size:13px;color:white;">₹30 Crore · Q2 2026 launch · Global scale</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ HIERARCHY ════════════════ -->
+    <section id="hierarchy" class="reveal">
+      <span class="section-label">Access Control</span>
+      <h2 class="section-title">Platform <span class="text-teal">hierarchy</span></h2>
+      <p class="section-desc">Five levels of access from NAMA platform owner down to sub-agent. Permissions never escalate upward. Row-level security enforced at the database layer — not application layer.</p>
+
+      <!-- Hierarchy nodes -->
+      <div style="max-width:760px;">
+
+        <div class="hier-level">
+          <div class="hier-node l1" style="flex:none;width:100%;">
+            <div class="hier-node-title">L1 — NAMA platform owner <span class="hier-badge badge-purple">Full system</span></div>
+            <div class="hier-node-sub">Global platform administration · infrastructure access · all organisations visible</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;padding:4px 0;"><div style="width:1px;height:16px;background:var(--border);"></div></div>
+
+        <div class="hier-level">
+          <div class="hier-node l2" style="flex:none;width:100%;">
+            <div class="hier-node-title">L2 — Super admin <span class="hier-badge badge-blue">All orgs</span></div>
+            <div class="hier-node-sub">NAMA staff · manages all L3 organisations · every impersonation session timestamped with IP and logged in audit trail</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;padding:4px 0;"><div style="width:1px;height:16px;background:var(--border);"></div></div>
+
+        <div class="hier-level">
+          <div class="hier-node l3" style="flex:none;width:100%;">
+            <div class="hier-node-title">L3 — Org admin <span class="hier-badge badge-teal">Own org only</span></div>
+            <div class="hier-node-sub">Travel company owner / DMC operator / OTA · full control over team, billing, modules, white-label, and AI configuration · cannot see any other organisation's data (PostgreSQL RLS)</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;padding:4px 0;"><div style="width:1px;height:16px;background:var(--border);"></div></div>
+
+        <div class="hier-level" style="align-items:stretch;">
+          <div class="l4-row">
+            <div class="l4-chip"><div class="l4-chip-title">Manager (R3)</div><div class="l4-chip-sub">Sees entire team · assigns leads · approvals</div></div>
+            <div class="l4-chip"><div class="l4-chip-title">Sales agent (R4)</div><div class="l4-chip-sub">Own leads only · quotes · itineraries</div></div>
+            <div class="l4-chip"><div class="l4-chip-title">Ops exec (R5)</div><div class="l4-chip-sub">Bookings · vouchers · documents</div></div>
+            <div class="l4-chip"><div class="l4-chip-title">Finance (R6)</div><div class="l4-chip-sub">Payments · remittance · P&L</div></div>
+            <div class="l4-chip"><div class="l4-chip-title">Content mgr</div><div class="l4-chip-sub">Content studio · AI voice</div></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;padding:4px 0;"><div style="width:1px;height:16px;background:var(--border);"></div></div>
+
+        <div class="hier-level">
+          <div class="hier-node l5" style="flex:none;width:100%;">
+            <div class="hier-node-title">L5 — Sub-agents / partners <span class="hier-badge badge-amber">Portal only</span></div>
+            <div class="hier-node-sub">White-label customer portal access only · zero NAMA workspace visibility · commission tracked · can book packages, cannot edit rates or see other clients</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- RBAC table -->
+      <h3 style="font-size:15px;font-weight:700;color:white;margin-bottom:16px;">Permission matrix</h3>
+      <div class="card">
+        <div style="overflow-x:auto;">
+          <table class="rbac-table">
+            <thead>
+              <tr>
+                <th>Permission</th>
+                <th>L3 Admin</th>
+                <th>Manager</th>
+                <th>Sales</th>
+                <th>Ops</th>
+                <th>Finance</th>
+                <th>Sub-agent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>View all org leads</td><td class="tick">✓</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+              <tr><td>View own leads only</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+              <tr><td>Generate AI quotes</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+              <tr><td>Manage bookings</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td></tr>
+              <tr><td>Approve remittance</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="tick">✓</td><td class="cross">—</td></tr>
+              <tr><td>View P&L per booking</td><td class="tick">✓</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="tick">✓</td><td class="cross">—</td></tr>
+              <tr><td>Manage team &amp; roles</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+              <tr><td>Configure AI &amp; modules</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+              <tr><td>White-label portal</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td style="color:var(--teal);font-size:11px;">View only</td></tr>
+              <tr><td>Content Studio</td><td class="tick">✓</td><td class="tick">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="warn-box" style="margin-top:16px;">Security note: PostgreSQL row-level security enforces isolation at the database layer. Even if application logic were bypassed, L3 org admins cannot query any other organisation's rows. All super admin impersonation is immutably logged with timestamp, IP, and session duration.</div>
+    </section>
+
+    <!-- ════════════════ MODULES ════════════════ -->
+    <section id="modules" class="reveal">
+      <span class="section-label">Product</span>
+      <h2 class="section-title">13 integrated <span class="text-teal">modules</span></h2>
+      <p class="section-desc">Every module shares one database. Data created in one module is immediately available to all others — no exports, no re-entry, no integration headaches.</p>
+
+      <div class="layer-block">
+        <div class="layer-label"><span class="tag tag-teal">Layer 1 — Capture</span></div>
+        <div class="modules-row">
+          <div class="mod-chip"><div class="mod-icon">📥</div><div><div class="mod-name">M1 — Query inbox</div><div class="mod-desc">WhatsApp · email · web form · social DMs · unified with AI extraction</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">🎯</div><div><div class="mod-name">M2 — Lead pipeline</div><div class="mod-desc">AI-scored CRM · kanban / list / pipeline views · agent isolation</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">📁</div><div><div class="mod-name">M4 — Document management</div><div class="mod-desc">Passport OCR · visa checklist auto-generation · expiry alerts</div></div></div>
+        </div>
+      </div>
+
+      <div class="layer-block">
+        <div class="layer-label"><span class="tag tag-blue">Layer 2 — Convert</span></div>
+        <div class="modules-row">
+          <div class="mod-chip"><div class="mod-icon">📝</div><div><div class="mod-name">M3 — Quotation AI</div><div class="mod-desc">Budget / Standard / Luxury tiers assembled in 60 seconds from live supplier rates</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">🗺️</div><div><div class="mod-name">M8 — Itinerary builder</div><div class="mod-desc">Day-by-day canvas · AI narrative per tier · markup slider · live profit calc</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">💬</div><div><div class="mod-name">M5 — Communications</div><div class="mod-desc">AI-drafted WhatsApp · email · SMS with full personalisation and lead context</div></div></div>
+        </div>
+      </div>
+
+      <div class="layer-block">
+        <div class="layer-label"><span class="tag tag-purple">Layer 3 — Operate</span></div>
+        <div class="modules-row">
+          <div class="mod-chip"><div class="mod-icon">🏨</div><div><div class="mod-name">M6 — Supplier registry</div><div class="mod-desc">Onboarding · AI grading (A+ → C) · KYC verification · rate sheet parsing</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">✅</div><div><div class="mod-name">M7 — Booking management</div><div class="mod-desc">Confirmations · hotel/transfer vouchers · booking lifecycle tracking</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">🏢</div><div><div class="mod-name">M13 — Corporate + Fixed departures</div><div class="mod-desc">PO workflows · MICE · seat inventory · approval chains · GSTIN invoices</div></div></div>
+        </div>
+      </div>
+
+      <div class="layer-block">
+        <div class="layer-label"><span class="tag tag-amber">Layer 4 — Finance</span></div>
+        <div class="modules-row">
+          <div class="mod-chip"><div class="mod-icon">📊</div><div><div class="mod-name">M11 — Finance dashboard</div><div class="mod-desc">P&L per booking · cash flow forecast · receivables / payables · 7-year audit trail</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">🌐</div><div><div class="mod-name">M14 — Remittance</div><div class="mod-desc">Wise (international) · FlyRemit (India outbound) · Razorpay (domestic INR) · FX lock</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">📈</div><div><div class="mod-name">M9 — Analytics</div><div class="mod-desc">Real-time KPIs · agent leaderboard · AI score (0–100) · forecasting</div></div></div>
+        </div>
+      </div>
+
+      <div class="layer-block">
+        <div class="layer-label"><span class="tag tag-teal" style="background:rgba(245,158,11,0.1);color:var(--amber);border-color:rgba(245,158,11,0.3);">Layer 5 — Publish</span></div>
+        <div class="modules-row">
+          <div class="mod-chip"><div class="mod-icon">🌐</div><div><div class="mod-name">M10 — White-label portal</div><div class="mod-desc">Branded customer portal · custom domain · sub-agent management · schema colours</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">🎬</div><div><div class="mod-name">M12 — Content Studio</div><div class="mod-desc">AI video reels · destination audio guides · customer self-service on branded portal</div></div></div>
+          <div class="mod-chip"><div class="mod-icon">🔊</div><div><div class="mod-name">AI Voice</div><div class="mod-desc">Multi-voice · multi-dialect narration · itinerary voiceovers · WhatsApp audio</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ AI LAYER ════════════════ -->
+    <section id="ai" class="reveal">
+      <span class="section-label">Intelligence</span>
+      <h2 class="section-title">AI agent <span class="text-teal">layer</span></h2>
+      <p class="section-desc">A single Claude Sonnet core processes every incoming channel simultaneously. 24/7, zero human intervention required for routine operations. The 45-second SLA acknowledgement timer starts the moment a query arrives.</p>
+
+      <div class="ai-flow">
+        <!-- INPUT CHANNELS -->
+        <div>
+          <div class="ai-col-title">Input channels</div>
+          <div class="ai-channel">
+            <div class="ai-chip ch"><div class="dot" style="background:var(--teal);"></div>WhatsApp Business</div>
+            <div class="ai-chip ch"><div class="dot" style="background:var(--teal);"></div>Email (any)</div>
+            <div class="ai-chip ch"><div class="dot" style="background:var(--teal);"></div>Web enquiry form</div>
+            <div class="ai-chip ch"><div class="dot" style="background:var(--teal);"></div>Voice / phone call</div>
+            <div class="ai-chip ch"><div class="dot" style="background:var(--teal);"></div>Instagram DM</div>
+            <div class="ai-chip ch"><div class="dot" style="background:var(--teal);"></div>Document upload</div>
+          </div>
+        </div>
+
+        <!-- ARROW -->
+        <div class="ai-arrow">→</div>
+
+        <!-- AI CORE -->
+        <div class="ai-core">
+          <div class="ai-core-name">NAMA AI core</div>
+          <div class="ai-core-sub">Claude Sonnet · Whisper · ElevenLabs</div>
+          <div class="ai-cap">Intent extraction</div>
+          <div class="ai-cap">Lead scoring (0–100)</div>
+          <div class="ai-cap">Document OCR + field mapping</div>
+          <div class="ai-cap">3-tier quote assembly</div>
+          <div class="ai-cap">Itinerary narrative generation</div>
+          <div class="ai-cap">Call transcription → CRM</div>
+          <div class="ai-cap">FX conversion + GST calc</div>
+          <div class="ai-cap">Voucher + invoice generation</div>
+        </div>
+
+        <!-- ARROW -->
+        <div class="ai-arrow">→</div>
+
+        <!-- OUTPUTS -->
+        <div>
+          <div class="ai-col-title">Automated outputs</div>
+          <div class="ai-output">
+            <div class="ai-chip out"><div class="dot" style="background:var(--blue-light);"></div>Lead created in CRM</div>
+            <div class="ai-chip out"><div class="dot" style="background:var(--blue-light);"></div>Acknowledgement sent (45s)</div>
+            <div class="ai-chip out"><div class="dot" style="background:var(--blue-light);"></div>3-tier quote generated</div>
+            <div class="ai-chip out"><div class="dot" style="background:var(--blue-light);"></div>Itinerary + narrative</div>
+            <div class="ai-chip out"><div class="dot" style="background:var(--blue-light);"></div>Vouchers + invoices</div>
+            <div class="ai-chip out"><div class="dot" style="background:var(--blue-light);"></div>Supplier remittance queued</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 style="font-size:15px;font-weight:700;color:white;margin-bottom:16px;">AI capabilities by module</h3>
+      <div class="grid-3" style="gap:12px;">
+        <div class="card"><div class="card-head"><span class="card-head-title">🗣 Natural language queries</span></div><div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">Any user can type questions in plain English or Hindi to retrieve live data — leads, quotes, payments, suppliers — without navigating menus.</div></div>
+        <div class="card"><div class="card-head"><span class="card-head-title">📄 Document scan → DB</span></div><div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">Upload any passport, supplier contract, or rate sheet. AI extracts all structured fields and maps them to the correct database columns automatically.</div></div>
+        <div class="card"><div class="card-head"><span class="card-head-title">📞 Voice → CRM</span></div><div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">Record or upload calls. Whisper AI transcribes. Claude summarises key details and logs as a lead activity — destination, dates, budget, preferences.</div></div>
+        <div class="card"><div class="card-head"><span class="card-head-title">💰 Pricing intelligence</span></div><div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">Rate benchmarking against platform catalogue. Negotiation briefs prepared before supplier calls. Over-budget flags with substitution suggestions.</div></div>
+        <div class="card"><div class="card-head"><span class="card-head-title">🧾 Auto invoicing</span></div><div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">GSTIN-compliant invoices, credit notes, hotel vouchers, and transfer slips generated automatically on booking confirmation. Zero manual drafting.</div></div>
+        <div class="card"><div class="card-head"><span class="card-head-title">🔊 AI Voice narration</span></div><div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">Itinerary days narrated in the traveller's preferred language and dialect. Content Studio uses same voices for destination reels and audio guides.</div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════ LIFECYCLE ════════════════ -->
+    <section id="lifecycle" class="reveal">
+      <span class="section-label">Operations</span>
+      <h2 class="section-title">Booking <span class="text-teal">lifecycle</span></h2>
+      <p class="section-desc">Every booking follows the same 12-step journey from first contact to revenue recognition. Each step is automated by the AI agent layer — the agent only intervenes at decision points.</p>
+
+      <div class="lifecycle">
+        <div class="lc-row">
+          <div class="lc-cell lc-teal" style="border-radius:12px 0 0 0;"><div class="lc-num">01</div><div class="lc-name">Query arrives</div><div class="lc-sub">Any channel · 24/7</div></div>
+          <div class="lc-cell lc-teal"><div class="lc-num">02</div><div class="lc-name">AI extracts</div><div class="lc-sub">Dest · dates · pax · budget</div></div>
+          <div class="lc-cell lc-teal"><div class="lc-num">03</div><div class="lc-name">Lead scored</div><div class="lc-sub">0–100 AI score</div></div>
+          <div class="lc-cell lc-teal" style="border-radius:0 12px 0 0;"><div class="lc-num">04</div><div class="lc-name">Ack sent</div><div class="lc-sub">45-second SLA</div></div>
+        </div>
+        <div class="lc-row">
+          <div class="lc-cell lc-blue"><div class="lc-num">05</div><div class="lc-name">CRM lead created</div><div class="lc-sub">Pipeline stage assigned</div></div>
+          <div class="lc-cell lc-blue"><div class="lc-num">06</div><div class="lc-name">3-tier quote built</div><div class="lc-sub">Budget · Standard · Luxury</div></div>
+          <div class="lc-cell lc-blue"><div class="lc-num">07</div><div class="lc-name">Itinerary AI</div><div class="lc-sub">Day-by-day narrative</div></div>
+          <div class="lc-cell lc-blue"><div class="lc-num">08</div><div class="lc-name">Client approves</div><div class="lc-sub">Deposit payment link</div></div>
+        </div>
+        <div class="lc-row">
+          <div class="lc-cell lc-amber" style="border-radius:0 0 0 12px;"><div class="lc-num">09</div><div class="lc-name">Booking confirmed</div><div class="lc-sub">Vouchers auto-generated</div></div>
+          <div class="lc-cell lc-amber"><div class="lc-num">10</div><div class="lc-name">Supplier notified</div><div class="lc-sub">Confirmation auto-sent</div></div>
+          <div class="lc-cell lc-amber"><div class="lc-num">11</div><div class="lc-name">Remittance queued</div><div class="lc-sub">FX locked · approval chain</div></div>
+          <div class="lc-cell lc-green" style="border-radius:0 0 12px 0;"><div class="lc-num">12</div><div class="lc-name">Revenue recognised</div><div class="lc-sub">P&L · GST invoice</div></div>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top:16px;">Steps 1–4 and 5 are fully automated — zero human time. Steps 6–7 require agent review before sending (typically 4 minutes with AI-drafted content). Steps 8–12 are triggered by client action and automated thereafter.</div>
+    </section>
+
+    <!-- ════════════════ SERVICES ════════════════ -->
+    <section id="services" class="reveal">
+      <span class="section-label">Supply</span>
+      <h2 class="section-title">Service <span class="text-teal">catalogue</span></h2>
+      <p class="section-desc">Seven categories of travel service, each with distinct sub-types, sourcing channels, and rate structures. All are queryable by the AI quote engine in real time.</p>
+
+      <div class="svc-grid">
+
+        <div class="svc-card">
+          <div class="svc-header"><div class="svc-icon" style="background:var(--blue-dim);">🏨</div><div><div class="svc-title">Hotels &amp; stays</div><div class="svc-count">1,240 properties connected</div></div></div>
+          <div class="svc-body">
+            <div class="svc-item"><strong>Budget / 2–3 star</strong> — Hotelbeds, Booking.com</div>
+            <div class="svc-item"><strong>4 star standard</strong> — platform + direct contracts</div>
+            <div class="svc-item"><strong>Luxury / 5 star</strong> — Anantara, direct contracts</div>
+            <div class="svc-item"><strong>Private villas</strong> — DMC partner contracts</div>
+            <div class="svc-item"><strong>Resort / all-inclusive</strong> — rate sheet AI-parsed</div>
+            <div class="svc-item"><strong>Boutique / heritage</strong> — direct supplier registry</div>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-header"><div class="svc-icon" style="background:var(--teal-dim);">✈️</div><div><div class="svc-title">Flights &amp; air</div><div class="svc-count">8,400 routes via Amadeus GDS</div></div></div>
+          <div class="svc-body">
+            <div class="svc-item"><strong>International flights</strong> — Amadeus GDS</div>
+            <div class="svc-item"><strong>Domestic flights</strong> — LCC integrations</div>
+            <div class="svc-item"><strong>Business / first class</strong> — GDS premium fares</div>
+            <div class="svc-item"><strong>Charter flights</strong> — DMC direct contracts</div>
+            <div class="svc-item"><strong>Airport transfers</strong> — private SUV, shared, meet &amp; greet</div>
+            <div class="svc-item"><strong>Intercity transport</strong> — train, bus, ferry</div>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-header"><div class="svc-icon" style="background:rgba(124,58,237,0.12);">🚢</div><div><div class="svc-title">Cruises</div><div class="svc-count">Ocean · river · charter</div></div></div>
+          <div class="svc-body">
+            <div class="svc-item"><strong>Ocean cruises</strong> — MSC, Royal Caribbean, Costa</div>
+            <div class="svc-item"><strong>River cruises</strong> — Nile, Kerala backwaters</div>
+            <div class="svc-item"><strong>Luxury yacht charters</strong> — direct DMC</div>
+            <div class="svc-item"><strong>Cabin type selection</strong> — interior/ocean view/suite</div>
+            <div class="svc-item"><strong>Shore excursions</strong> — bundled into package quote</div>
+            <div class="svc-item"><strong>Duration</strong> — 3-night to world cruise</div>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-header"><div class="svc-icon" style="background:rgba(220,80,50,0.12);">🎭</div><div><div class="svc-title">Activities &amp; experiences</div><div class="svc-count">3,600+ via Viator + GetYourGuide</div></div></div>
+          <div class="svc-body">
+            <div class="svc-item"><strong>Guided tours &amp; sightseeing</strong> — Viator, GetYourGuide</div>
+            <div class="svc-item"><strong>Adventure sports</strong> — diving, trekking, rafting</div>
+            <div class="svc-item"><strong>Wellness &amp; spa</strong> — luxury spa packages</div>
+            <div class="svc-item"><strong>Cultural experiences</strong> — cooking class, temple tours</div>
+            <div class="svc-item"><strong>Family activities</strong> — theme parks, safaris, waterparks</div>
+            <div class="svc-item"><strong>Private experiences</strong> — sunset dinners, yacht trips</div>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-header"><div class="svc-icon" style="background:var(--amber-dim);">🍽️</div><div><div class="svc-title">Meals &amp; dining</div><div class="svc-count">Board basis · restaurant bookings</div></div></div>
+          <div class="svc-body">
+            <div class="svc-item"><strong>Room only (RO)</strong> — no meals included</div>
+            <div class="svc-item"><strong>Bed &amp; breakfast (BB)</strong> — default standard tier</div>
+            <div class="svc-item"><strong>Half board (HB)</strong> — breakfast + dinner</div>
+            <div class="svc-item"><strong>Full board (FB)</strong> — all meals included</div>
+            <div class="svc-item"><strong>All-inclusive (AI)</strong> — meals + beverages</div>
+            <div class="svc-item"><strong>Dietary flags</strong> — auto-noted from lead profile</div>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-header"><div class="svc-icon" style="background:rgba(0,180,100,0.1);">📋</div><div><div class="svc-title">Visas &amp; documentation</div><div class="svc-count">Auto-checklist per destination</div></div></div>
+          <div class="svc-body">
+            <div class="svc-item"><strong>Visa assistance</strong> — checklist auto-generated</div>
+            <div class="svc-item"><strong>Passport OCR</strong> — expiry alerts, data pre-fill</div>
+            <div class="svc-item"><strong>On-arrival visa</strong> — flagged per destination</div>
+            <div class="svc-item"><strong>E-visa processing</strong> — application tracking</div>
+            <div class="svc-item"><strong>Travel insurance</strong> — medical, cancellation, baggage</div>
+            <div class="svc-item"><strong>Health requirements</strong> — vaccination alerts</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 style="font-size:15px;font-weight:700;color:white;margin-bottom:16px;">Package types that consume these services</h3>
+      <div class="grid-4" style="gap:10px;">
+        <div style="padding:14px;border-radius:10px;border:1px solid rgba(220,80,50,0.25);background:rgba(220,80,50,0.07);">
+          <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">FIT</div>
+          <div style="font-size:11.5px;color:var(--text-muted);">Fully independent travel · customised per client · all service types mixed freely</div>
+        </div>
+        <div style="padding:14px;border-radius:10px;border:1px solid rgba(0,102,255,0.25);background:var(--blue-dim);">
+          <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">GIT</div>
+          <div style="font-size:11.5px;color:var(--text-muted);">Group inclusive tour · fixed itinerary · cost per pax drops at group thresholds</div>
+        </div>
+        <div style="padding:14px;border-radius:10px;border:1px solid rgba(0,196,180,0.25);background:var(--teal-dim);">
+          <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">Fixed departures</div>
+          <div style="font-size:11.5px;color:var(--text-muted);">Seat inventory managed · min pax thresholds · waitlist auto-notifications</div>
+        </div>
+        <div style="padding:14px;border-radius:10px;border:1px solid rgba(124,58,237,0.25);background:rgba(124,58,237,0.08);">
+          <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">Corporate MICE</div>
+          <div style="font-size:11.5px;color:var(--text-muted);">PO reference · approval chain · cost centre · GSTIN invoice · per-head costing</div>
+        </div>
+        <div style="padding:14px;border-radius:10px;border:1px solid rgba(245,158,11,0.25);background:var(--amber-dim);">
+          <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">Honeymoon / themed</div>
+          <div style="font-size:11.5px;color:var(--text-muted);">Context flags drive AI suggestions · romantic dinners, special experiences auto-prioritised</div>
+        </div>
+        <div style="padding:14px;border-radius:10px;border:1px solid var(--border);background:var(--ink-3);">
+          <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">Educational / school</div>
+          <div style="font-size:11.5px;color:var(--text-muted);">Group pricing · chaperone ratios · activity safety flags · guardian consent docs</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ PRICING ENGINE ════════════════ -->
+    <section id="pricing" class="reveal">
+      <span class="section-label">Quotation AI</span>
+      <h2 class="section-title">Pricing <span class="text-teal">engine</span></h2>
+      <p class="section-desc">Net supplier rates flow into the AI engine, which sums all service costs, applies tier-specific markup, flags over-budget items, converts FX live, and calculates GST — outputting three complete, ready-to-send tiers simultaneously in 60 seconds.</p>
+
+      <!-- Inputs -->
+      <h3 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Supplier net rate inputs</h3>
+      <div class="grid-4" style="gap:8px;margin-bottom:24px;">
+        <div class="extract-chip"><div class="extract-chip-name">Hotel net rate</div><div class="extract-chip-sub">Per night · room type</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Flight net fare</div><div class="extract-chip-sub">Per pax · cabin class</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Transfer rate</div><div class="extract-chip-sub">Per vehicle · one-way</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Activity cost</div><div class="extract-chip-sub">Per person · duration</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Meal cost</div><div class="extract-chip-sub">Board basis · pax</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Cruise cabin rate</div><div class="extract-chip-sub">Per cabin · per night</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Visa / insurance</div><div class="extract-chip-sub">Per person flat fee</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Misc surcharges</div><div class="extract-chip-sub">Port fees · city taxes</div></div>
+      </div>
+
+      <!-- Engine operations -->
+      <h3 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Engine operations</h3>
+      <div class="grid-3" style="gap:10px;margin-bottom:24px;">
+        <div style="padding:14px;border-radius:10px;border:1px solid rgba(124,58,237,0.25);background:rgba(124,58,237,0.07);">
+          <div style="font-size:12px;font-weight:700;color:#a78bfa;margin-bottom:6px;">Sum &amp; package</div>
+          <div style="font-size:11.5px;color:var(--text-muted);line-height:1.6;">All net costs aggregated per pax per night. Duration multipliers applied. Group discounts applied at threshold pax counts.</div>
+        </div>
+        <div style="padding:14px;border-radius:10px;border:1px solid rgba(0,102,255,0.25);background:var(--blue-dim);">
+          <div style="font-size:12px;font-weight:700;color:var(--blue-light);margin-bottom:6px;">Markup &amp; tier</div>
+          <div style="font-size:11.5px;color:var(--text-muted);line-height:1.6;">Budget +20%, Standard +28%, Luxury +34% applied to net total. Agent can override per line item before sending. Margin shown to agent in real time.</div>
+        </div>
+        <div style="padding:14px;border-radius:10px;border:1px solid rgba(0,196,180,0.25);background:var(--teal-dim);">
+          <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:6px;">FX + GST</div>
+          <div style="font-size:11.5px;color:var(--text-muted);line-height:1.6;">Live exchange rates applied. GST @18% calculated. FX gain/loss tracked per payment. Agent sees cost in INR; client quote in preferred currency.</div>
+        </div>
+      </div>
+
+      <!-- 3 tiers -->
+      <h3 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Output — three tiers assembled simultaneously</h3>
+      <div class="grid-3" style="gap:14px;margin-bottom:24px;">
+        <div class="tier-card budget">
+          <div class="tier-name">Budget tier</div>
+          <div class="tier-markup">Net cost + <span class="mono-val" style="color:white;">20%</span> markup · Margin ~17%</div>
+          <div class="tier-detail" style="color:var(--text-muted);margin-top:8px;">3-star hotels · shared AC transfers · 4 activities · breakfast only · standard rooms</div>
+        </div>
+        <div class="tier-card standard">
+          <div class="tier-name">Standard tier <span class="tag tag-teal" style="font-size:9px;margin-left:4px;">Recommended</span></div>
+          <div class="tier-markup">Net cost + <span class="mono-val" style="color:white;">28%</span> markup · Margin ~22%</div>
+          <div class="tier-detail" style="color:rgba(77,159,255,0.7);margin-top:8px;">5-star hotels · private AC transfers · 7 activities + guide · B&B + 2 dinners</div>
+        </div>
+        <div class="tier-card luxury">
+          <div class="tier-name">Luxury tier</div>
+          <div class="tier-markup">Net cost + <span class="mono-val" style="color:white;">34%</span> markup · Margin ~25%</div>
+          <div class="tier-detail" style="color:rgba(245,158,11,0.8);margin-top:8px;">Private villa · dedicated driver + SUV · butler · 10 activities · full board + sunset dinner</div>
+        </div>
+      </div>
+
+      <div class="warn-box">AI flags when the Standard or Luxury tier exceeds the client's stated budget by more than 15% — and automatically suggests a service substitution (e.g. replace a villa with a 5-star hotel) to bring it within range. Agent can accept or override the suggestion.</div>
+    </section>
+
+    <!-- ════════════════ SUPPLIERS ════════════════ -->
+    <section id="suppliers" class="reveal">
+      <span class="section-label">Supply chain</span>
+      <h2 class="section-title">Supplier onboarding <span class="text-teal">&amp; rates</span></h2>
+      <p class="section-desc">Every hotel, DMC, airline, activity provider, and cruise line goes through a structured onboarding process. Once live, their rates are queryable by the AI engine in real time.</p>
+
+      <!-- Steps -->
+      <div class="sup-steps" style="margin-bottom:32px;">
+        <div class="sup-step" style="border-radius:12px 0 0 12px;">
+          <div class="sup-step-num">STEP 01</div>
+          <div class="sup-step-name">Supplier applies</div>
+          <div class="sup-step-sub">Hotel · DMC · airline · activity · cruise</div>
+        </div>
+        <div class="sup-step">
+          <div class="sup-step-num">STEP 02</div>
+          <div class="sup-step-name">KYC &amp; grading</div>
+          <div class="sup-step-sub">AI grades A+ → C · verified badge</div>
+        </div>
+        <div class="sup-step">
+          <div class="sup-step-num">STEP 03</div>
+          <div class="sup-step-name">Rate sheet upload</div>
+          <div class="sup-step-sub">PDF · Excel · contract · AI parses all</div>
+        </div>
+        <div class="sup-step" style="border-radius:0 12px 12px 0;">
+          <div class="sup-step-num">STEP 04</div>
+          <div class="sup-step-name">Live in catalogue</div>
+          <div class="sup-step-sub">Queryable by quote engine instantly</div>
+        </div>
+      </div>
+
+      <!-- What AI extracts -->
+      <h3 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">What AI extracts from every rate sheet</h3>
+      <div class="extract-grid" style="margin-bottom:24px;">
+        <div class="extract-chip"><div class="extract-chip-name">Room / cabin types</div><div class="extract-chip-sub">Category · view · capacity</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Seasonal pricing</div><div class="extract-chip-sub">Peak · shoulder · low season</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Inclusions</div><div class="extract-chip-sub">Meals · transfers · taxes · WiFi</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Blackout dates</div><div class="extract-chip-sub">Unavailability windows</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Min pax / nights</div><div class="extract-chip-sub">Group thresholds</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Child policy</div><div class="extract-chip-sub">Age bands · free nights</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Cancellation policy</div><div class="extract-chip-sub">Free cancellation window</div></div>
+        <div class="extract-chip"><div class="extract-chip-name">Commission %</div><div class="extract-chip-sub">Net vs gross rate structure</div></div>
+      </div>
+
+      <!-- Supplier grading -->
+      <h3 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">AI supplier grading criteria</h3>
+      <div class="grid-4" style="gap:10px;">
+        <div style="padding:12px 14px;border-radius:8px;border:1px solid rgba(0,196,180,0.3);background:var(--teal-dim);text-align:center;"><div style="font-family:var(--mono);font-size:20px;color:var(--teal);font-weight:700;">A+</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Verified · fast response · complete rate sheet · 50+ bookings history</div></div>
+        <div style="padding:12px 14px;border-radius:8px;border:1px solid rgba(0,102,255,0.3);background:var(--blue-dim);text-align:center;"><div style="font-family:var(--mono);font-size:20px;color:var(--blue-light);font-weight:700;">A</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Verified · good response · rate sheet complete · 10–50 bookings</div></div>
+        <div style="padding:12px 14px;border-radius:8px;border:1px solid rgba(245,158,11,0.3);background:var(--amber-dim);text-align:center;"><div style="font-family:var(--mono);font-size:20px;color:var(--amber);font-weight:700;">B+</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Partially verified · rate sheet gaps · under review · &lt;10 bookings</div></div>
+        <div style="padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--ink-3);text-align:center;"><div style="font-family:var(--mono);font-size:20px;color:var(--text-muted);font-weight:700;">C</div><div style="font-size:11px;color:var(--text-dim);margin-top:4px;">Unverified · incomplete docs · restricted availability in quotes</div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════ REVENUE ════════════════ -->
+    <section id="revenue" class="reveal">
+      <span class="section-label">Business model</span>
+      <h2 class="section-title">Revenue <span class="text-teal">model</span></h2>
+      <p class="section-desc">Three revenue streams: SaaS subscriptions (predictable), usage-based AI add-ons (scales with volume), and content studio margins (earn on client self-service).</p>
+
+      <h3 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;">SaaS subscription tiers</h3>
+      <div class="plan-row">
+        <div class="plan-card">
+          <div class="plan-tier-name">Starter</div>
+          <div class="plan-price">₹4,999<span style="font-size:13px;color:var(--text-dim);font-family:'DM Sans',sans-serif;">/mo</span></div>
+          <div class="plan-users">Up to 5 users</div>
+          <div class="plan-feat">M1–M6 + M8 modules</div>
+          <div class="plan-feat">500 AI queries / month</div>
+          <div class="plan-feat">100 AI quotes / month</div>
+          <div class="plan-feat">1 white-label portal</div>
+          <div class="plan-feat">Basic branding</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-tier-name">Growth</div>
+          <div class="plan-price">₹14,999<span style="font-size:13px;color:var(--text-dim);font-family:'DM Sans',sans-serif;">/mo</span></div>
+          <div class="plan-users">Up to 15 users</div>
+          <div class="plan-feat">All M1–M11 modules</div>
+          <div class="plan-feat">2,000 AI queries / month</div>
+          <div class="plan-feat">500 AI quotes / month</div>
+          <div class="plan-feat">3 white-label portals</div>
+          <div class="plan-feat">Finance dashboard</div>
+        </div>
+        <div class="plan-card highlight">
+          <div class="plan-tier-name" style="color:var(--teal);">Professional ⭐</div>
+          <div class="plan-price">₹39,999<span style="font-size:13px;color:var(--text-dim);font-family:'DM Sans',sans-serif;">/mo</span></div>
+          <div class="plan-users">Up to 30 users</div>
+          <div class="plan-feat">All 13 modules</div>
+          <div class="plan-feat">10,000 AI queries / month</div>
+          <div class="plan-feat">2,000 AI quotes / month</div>
+          <div class="plan-feat">10 portals + sub-agents</div>
+          <div class="plan-feat">Corporate + Content Studio</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-tier-name">Enterprise</div>
+          <div class="plan-price" style="font-size:18px;">Custom</div>
+          <div class="plan-users">Unlimited users · SLA</div>
+          <div class="plan-feat">Everything in Pro</div>
+          <div class="plan-feat">Unlimited all quotas</div>
+          <div class="plan-feat">Dedicated CSM + 99.9% SLA</div>
+          <div class="plan-feat">Multi-entity / multi-brand</div>
+          <div class="plan-feat">Private cloud option</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;">Usage-based add-ons</h3>
+      <div class="addon-row" style="margin-bottom:32px;">
+        <div class="addon-chip"><div class="addon-name">AI Voice pack</div><div class="addon-price">₹4,999/mo</div><div class="addon-note">Extra voice + dialect pack</div></div>
+        <div class="addon-chip"><div class="addon-name">Content Studio</div><div class="addon-price">₹280–₹420/reel</div><div class="addon-note">Per video generated</div></div>
+        <div class="addon-chip"><div class="addon-name">Extra seats</div><div class="addon-price">₹999/user/mo</div><div class="addon-note">Beyond plan limit</div></div>
+        <div class="addon-chip"><div class="addon-name">API + Webhooks</div><div class="addon-price">₹14,999/mo</div><div class="addon-note">Full REST + webhooks</div></div>
+      </div>
+
+      <h3 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;">Unit economics targets</h3>
+      <div class="econ-row">
+        <div class="econ-card"><div class="econ-val" style="color:var(--teal);">85%+</div><div class="econ-lbl">Gross margin target</div></div>
+        <div class="econ-card"><div class="econ-val" style="color:var(--blue-light);">4.2 mo</div><div class="econ-lbl">Payback period</div></div>
+        <div class="econ-card"><div class="econ-val" style="color:#4ade80;">8.4×</div><div class="econ-lbl">LTV / CAC — Year 3</div></div>
+        <div class="econ-card"><div class="econ-val" style="color:var(--amber);">₹30 Cr</div><div class="econ-lbl">Series A ask</div></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid-2" style="gap:16px;">
+        <div class="card"><div class="card-head"><span class="card-head-title">Content Studio margin mechanics</span></div><div class="card-body"><div style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">Clients self-serve video creation from the branded white-label portal. NAMA charges the agency cost price (₹280/reel). The agency sets their own selling price (recommended ₹800–₹2,500/reel). Agency earns ~77% gross margin on every reel their clients create — passively.</div></div></div>
+        <div class="card"><div class="card-head"><span class="card-head-title">Annual billing discount</span></div><div class="card-body"><div style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">Agencies switching to annual billing receive 17% discount. Effective rates: Starter ₹4,166/mo · Growth ₹12,499/mo · Professional ₹33,333/mo. Annual commitment improves LTV predictability. Multi-currency: INR via Razorpay · USD / AED / EUR via Stripe.</div></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════ INTEGRATIONS ════════════════ -->
+    <section id="integrations" class="reveal">
+      <span class="section-label">Ecosystem</span>
+      <h2 class="section-title">External <span class="text-teal">integrations</span></h2>
+      <p class="section-desc">Four integration categories connect NAMA to the global travel supply chain, communication networks, payment rails, and AI providers. All connections are managed from Settings → Integrations.</p>
+
+      <div class="integ-grid">
+        <div class="integ-col supply">
+          <div class="integ-col-title">Supply chain</div>
+          <div class="integ-chip"><strong>Hotelbeds</strong>1,240+ hotel properties globally</div>
+          <div class="integ-chip"><strong>Booking.com</strong>Budget and mid-range inventory</div>
+          <div class="integ-chip"><strong>Amadeus GDS</strong>8,400 flight routes · all cabins</div>
+          <div class="integ-chip"><strong>Viator</strong>2,000+ activities and tours</div>
+          <div class="integ-chip"><strong>GetYourGuide</strong>1,600+ experiences worldwide</div>
+          <div class="integ-chip"><strong>Direct DMC contracts</strong>100+ verified DMC partners</div>
+        </div>
+        <div class="integ-col comms">
+          <div class="integ-col-title">Communications</div>
+          <div class="integ-chip"><strong>WhatsApp Business API</strong>Inbound queries · outbound messages · audio notes</div>
+          <div class="integ-chip"><strong>Twilio SMS</strong>Booking confirmations · payment reminders</div>
+          <div class="integ-chip"><strong>SendGrid</strong>Transactional email · quotes · itineraries</div>
+          <div class="integ-chip"><strong>Instagram DM</strong>Social query capture into inbox</div>
+          <div class="integ-chip"><strong>Twilio Voice</strong>Call recording · Whisper transcription</div>
+        </div>
+        <div class="integ-col payments">
+          <div class="integ-col-title">Payments</div>
+          <div class="integ-chip"><strong>Razorpay</strong>INR collections · payment links · payouts · GSTIN invoices</div>
+          <div class="integ-chip"><strong>Stripe</strong>USD · AED · EUR card collections · PCI DSS</div>
+          <div class="integ-chip"><strong>Wise Business</strong>International supplier payments · FX rate lock · 30-min window</div>
+          <div class="integ-chip"><strong>FlyRemit</strong>India-outbound forex remittance · LRS compliance</div>
+          <div class="integ-chip"><strong>Razorpay Payouts</strong>Domestic INR NEFT/IMPS to suppliers</div>
+        </div>
+        <div class="integ-col ai">
+          <div class="integ-col-title">AI providers</div>
+          <div class="integ-chip"><strong>Claude Sonnet (Anthropic)</strong>Core intelligence · intent · quotes · documents · natural language</div>
+          <div class="integ-chip"><strong>Whisper (OpenAI)</strong>Call transcription · voice-to-CRM pipeline</div>
+          <div class="integ-chip"><strong>ElevenLabs</strong>AI voice narration · multi-dialect · WhatsApp audio</div>
+          <div class="integ-chip"><strong>Google Authenticator / Authy</strong>TOTP MFA mandatory for all admin roles</div>
+          <div class="integ-chip"><strong>Custom AI fine-tuning</strong>Enterprise plan · organisation-specific training</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Founder / contact -->
+      <div style="display:flex;align-items:center;gap:32px;padding:28px;border-radius:14px;border:1px solid var(--border);background:var(--ink-2);flex-wrap:wrap;">
+        <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:24px;font-weight:900;color:white;flex-shrink:0;">N</div>
+        <div style="flex:1;min-width:180px;">
+          <div style="font-family:'Syne',sans-serif;font-weight:900;font-size:18px;color:white;margin-bottom:4px;">Narayan Mallapur</div>
+          <div style="font-size:13px;color:var(--text-muted);">Founder · NAMA Travel System · Bengaluru, India</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">30+ years in travel operations · Built &amp; scaled Innowayt · 100+ DMC collaborators</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+          <a href="tel:+919158932320" style="padding:10px 20px;border-radius:8px;background:var(--blue);color:white;text-decoration:none;font-size:13px;font-weight:600;text-align:center;">📞 +91 91589 32320</a>
+          <a href="https://wa.me/919158932320" target="_blank" style="padding:10px 20px;border-radius:8px;border:1px solid var(--border);color:var(--text-muted);text-decoration:none;font-size:13px;font-weight:600;text-align:center;">💬 WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- Cross-links -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px;">
+        <a href="index.html" style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-radius:12px;border:1px solid var(--border);background:var(--ink-2);text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,71,255,0.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">↗</div>
+          <div><div style="font-size:13px;font-weight:700;color:white;">Investor Deck</div><div style="font-size:11px;color:var(--text-dim);">Series A · 2026</div></div>
+        </a>
+        <a href="nama-app.html" style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-radius:12px;border:1px solid var(--border);background:var(--ink-2);text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="width:36px;height:36px;border-radius:8px;background:var(--teal-dim);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">⚙</div>
+          <div><div style="font-size:13px;font-weight:700;color:white;">CRM Platform</div><div style="font-size:11px;color:var(--text-dim);">Settings &amp; team management</div></div>
+        </a>
+        <a href="nama-os.html" style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-radius:12px;border:1px solid var(--border);background:var(--ink-2);text-decoration:none;transition:all 0.15s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(124,58,237,0.12);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">✦</div>
+          <div><div style="font-size:13px;font-weight:700;color:white;">OS View</div><div style="font-size:11px;color:var(--text-dim);">Full operating system demo</div></div>
+        </a>
+      </div>
+
+    </section>
+
+  </div><!-- /content -->
+</main>
+</div><!-- /layout -->
+
+<script>
+// Sidebar active state
+function setActive(el) {
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Scroll spy for sidebar
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sb-item[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
