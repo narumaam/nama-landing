@@ -3,1122 +3,1268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NAMA OS — Travel Operating System</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>NAMA — AI-Native Travel Operating System v3</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,300;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#0a0a08; --surface:#111110; --surface2:#191917; --surface3:#212120;
-  --border:rgba(255,255,255,0.07); --text:#f0ede8; --muted:#7a7870;
-  --accent:#c8a96e; --accent2:#4a9b7f; --danger:#e05a4e; --blue:#5b8def;
-  --warn:#e09a3e;
+  --indigo: #1B2A6B;
+  --indigo-dark: #121E4F;
+  --indigo-light: #2E3D7A;
+  --teal: #00C4CC;
+  --teal-light: #E0FAFB;
+  --orange: #F07C00;
+  --orange-light: #FFF3E0;
+  --green: #1A7A4A;
+  --green-light: #E6F4ED;
+  --red: #B91C1C;
+  --red-light: #FEE2E2;
+  --purple: #6B21A8;
+  --purple-light: #F3E8FF;
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --sidebar-w: 240px;
+  --content-bg: #F1F3FA;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
 
-/* ── SHELL ── */
-.shell{display:flex;flex-direction:column;height:100vh;}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'DM Sans', sans-serif; background: var(--content-bg); color: var(--gray-900); display: flex; height: 100vh; overflow: hidden; }
 
-/* TOP NAV */
-.topnav{height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:16px;flex-shrink:0;z-index:100;}
-.tn-logo{font-family:'Instrument Serif',serif;font-size:18px;letter-spacing:0.12em;color:var(--accent);margin-right:8px;}
-.tn-logo span{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:0.08em;margin-left:6px;}
-.tn-search{flex:1;max-width:320px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;display:flex;align-items:center;gap:8px;}
-.tn-search input{background:none;border:none;color:var(--text);font-size:12.5px;font-family:'DM Sans',sans-serif;outline:none;width:100%;}
-.tn-search input::placeholder{color:var(--muted);}
-.tn-btn{padding:6px 14px;border-radius:8px;background:var(--accent);color:var(--bg);font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.15s;white-space:nowrap;}
-.tn-btn:hover{opacity:0.85;}
-.tn-icon{width:32px;height:32px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all 0.15s;position:relative;}
-.tn-icon:hover{border-color:rgba(255,255,255,0.15);}
-.tn-notif-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--danger);border:2px solid var(--surface);}
-.tn-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#8b6d3a);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--bg);cursor:pointer;}
-.tn-back{font-size:12px;color:var(--muted);text-decoration:none;padding:5px 10px;border-radius:6px;border:1px solid var(--border);transition:all 0.15s;}
-.tn-back:hover{color:var(--accent);border-color:rgba(200,169,110,0.4);}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:bdot 1.8s infinite;}
-@keyframes bdot{0%,100%{opacity:1}50%{opacity:0.2}}
-.live-pill{display:flex;align-items:center;gap:5px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent2);padding:4px 10px;border:1px solid rgba(74,155,127,0.3);border-radius:20px;background:rgba(74,155,127,0.08);}
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w); background: var(--indigo-dark); display: flex; flex-direction: column;
+  flex-shrink: 0; overflow-y: auto; position: relative; z-index: 10;
+}
+.sidebar-logo { padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.sidebar-logo .brand { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: white; letter-spacing: -0.5px; }
+.sidebar-logo .tagline { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
+.live-pill { display: inline-flex; align-items: center; gap: 4px; background: rgba(0,196,204,0.15); border: 1px solid rgba(0,196,204,0.3); border-radius: 100px; padding: 2px 8px; margin-top: 8px; }
+.live-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; animation: pulse 2s infinite; }
+.live-pill span { font-size: 9px; color: var(--teal); font-weight: 600; letter-spacing: 0.5px; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
 
-/* BODY */
-.body-wrap{display:flex;flex:1;overflow:hidden;}
+.sidebar-section { padding: 16px 12px 8px; }
+.sidebar-section-label { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; padding: 0 8px; margin-bottom: 4px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500; transition: all 0.15s; position: relative; }
+.nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+.nav-item.active { background: rgba(0,196,204,0.15); color: white; }
+.nav-item.active::before { content:''; position: absolute; left:0; top:50%; transform:translateY(-50%); width:3px; height:60%; background:var(--teal); border-radius:0 3px 3px 0; }
+.nav-icon { font-size: 15px; width: 20px; text-align: center; }
+.nav-badge { margin-left: auto; background: var(--orange); color: white; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 100px; }
+.nav-badge.teal { background: var(--teal); color: var(--indigo-dark); }
+.nav-badge.new { background: var(--purple); color: white; }
 
-/* SIDEBAR */
-.sidebar{width:200px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:12px 8px;overflow-y:auto;}
-.sb-section{font-size:9.5px;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);font-weight:600;padding:10px 10px 5px;}
-.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:12.5px;color:var(--muted);transition:all 0.15s;border-left:2px solid transparent;}
-.sb-item:hover{background:var(--surface2);color:var(--text);}
-.sb-item.active{background:rgba(200,169,110,0.08);color:var(--accent);border-left-color:var(--accent);}
-.sb-icon{font-size:14px;width:16px;text-align:center;}
-.sb-badge{margin-left:auto;font-size:10px;font-weight:600;background:var(--danger);color:white;padding:1px 6px;border-radius:10px;}
-.sb-badge.green{background:var(--accent2);}
-.sb-badge.gold{background:var(--accent);color:var(--bg);}
+.sidebar-footer { margin-top: auto; padding: 12px; border-top: 1px solid rgba(255,255,255,0.08); }
+.user-card { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 8px; cursor: pointer; }
+.user-card:hover { background: rgba(255,255,255,0.06); }
+.user-avatar { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal), var(--purple)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; }
+.user-name { font-size: 12px; color: white; font-weight: 600; }
+.user-role { font-size: 10px; color: rgba(255,255,255,0.4); }
 
-/* CONTENT */
-.content{flex:1;overflow:hidden;display:flex;flex-direction:column;}
-.panel{display:none;flex:1;overflow:hidden;flex-direction:column;}
-.panel.active{display:flex;}
-.panel-scroll{flex:1;overflow-y:auto;padding:22px 24px;}
-.panel-anim{animation:pAnim 0.28s cubic-bezier(0.34,1.56,0.64,1) both;}
-@keyframes pAnim{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* ── MAIN ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: white; border-bottom: 1px solid var(--gray-200); padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.topbar-title { font-size: 16px; font-weight: 700; color: var(--gray-900); }
+.topbar-subtitle { font-size: 12px; color: var(--gray-400); margin-left: 4px; }
+.topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+.btn-primary { background: var(--indigo); color: white; }
+.btn-primary:hover { background: var(--indigo-light); transform: translateY(-1px); }
+.btn-teal { background: var(--teal); color: var(--indigo-dark); }
+.btn-teal:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-outline { background: white; color: var(--gray-700); border: 1px solid var(--gray-200); }
+.btn-outline:hover { border-color: var(--gray-400); }
+.btn-ghost { background: transparent; color: var(--gray-500); }
+.btn-ghost:hover { background: var(--gray-100); }
 
-/* COMMON */
-.page-title{font-family:'Instrument Serif',serif;font-size:26px;margin-bottom:3px;}
-.page-sub{font-size:12.5px;color:var(--muted);margin-bottom:20px;}
-.section-label{font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:500;margin-bottom:8px;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:border-color 0.2s,transform 0.2s;}
-.card:hover{border-color:rgba(255,255,255,0.12);transform:translateY(-1px);}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;}
-.flex-row{display:flex;gap:12px;align-items:flex-start;}
-.stat-val{font-family:'Instrument Serif',serif;font-size:28px;line-height:1;}
-.stat-lbl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
-.stat-delta{font-size:11px;margin-top:4px;}
-.stat-delta.up{color:var(--accent2);}
-.stat-delta.dn{color:var(--danger);}
-.btn-primary{padding:8px 16px;border-radius:8px;background:var(--accent);color:var(--bg);font-size:12.5px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.15s;}
-.btn-primary:hover{opacity:0.85;}
-.btn-ghost{padding:7px 14px;border-radius:8px;background:transparent;color:var(--muted);border:1px solid var(--border);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
-.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,0.15);}
-.tag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10.5px;font-weight:500;background:var(--surface2);border:1px solid var(--border);color:var(--muted);}
-.tag.hot{background:rgba(224,90,78,0.12);color:var(--danger);border-color:rgba(224,90,78,0.2);}
-.tag.warm{background:rgba(224,154,62,0.12);color:var(--warn);border-color:rgba(224,154,62,0.2);}
-.tag.new{background:rgba(74,155,127,0.12);color:var(--accent2);border-color:rgba(74,155,127,0.2);}
-.tag.won{background:rgba(74,155,127,0.15);color:var(--accent2);border-color:rgba(74,155,127,0.3);}
-.tag.blue{background:rgba(91,141,239,0.12);color:var(--blue);border-color:rgba(91,141,239,0.2);}
-.avatar-sm{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--bg);flex-shrink:0;}
+.content { flex: 1; overflow-y: auto; padding: 24px; }
 
-/* ── SCREEN 1: DASHBOARD ── */
-.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;cursor:pointer;transition:all 0.2s;}
-.kpi-card:hover{border-color:rgba(200,169,110,0.3);transform:translateY(-2px);}
-.kpi-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px;}
-.activity-item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);}
-.activity-item:last-child{border-bottom:none;}
-.activity-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.kanban-bar{display:flex;align-items:center;gap:10px;padding:5px 0;}
-.kanban-bar-track{flex:1;background:var(--surface2);border-radius:4px;height:16px;overflow:hidden;}
-.kanban-bar-fill{height:100%;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:600;color:var(--bg);border-radius:4px;transition:width 1.5s cubic-bezier(0.34,1.56,0.64,1);}
-.task-item{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer;}
-.task-item:hover{background:rgba(255,255,255,0.01);}
-.task-check{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;cursor:pointer;transition:all 0.15s;}
-.task-check.done{background:var(--accent2);border-color:var(--accent2);}
+/* ── SCREENS ── */
+.screen { display: none; animation: fadeUp 0.3s ease; }
+.screen.active { display: block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
 
-/* ── SCREEN 2: INBOX ── */
-.inbox-wrap{display:flex;flex:1;overflow:hidden;}
-.inbox-list{width:300px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;}
-.inbox-list-hdr{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.inbox-conv{padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s;}
-.inbox-conv:hover{background:var(--surface2);}
-.inbox-conv.active{background:rgba(200,169,110,0.07);border-left:2px solid var(--accent);}
-.inbox-conv-name{font-size:13px;font-weight:500;margin-bottom:2px;}
-.inbox-conv-prev{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.inbox-conv-dest{font-size:10.5px;color:var(--accent2);margin-bottom:3px;}
-.inbox-right{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-.inbox-ai-banner{padding:10px 16px;background:rgba(200,169,110,0.07);border-bottom:1px solid rgba(200,169,110,0.15);display:flex;align-items:center;gap:10px;}
-.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;}
-.bubble{max-width:72%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;}
-.bubble.out{background:var(--accent);color:var(--bg);align-self:flex-end;border-radius:12px 12px 3px 12px;}
-.bubble.in{background:var(--surface2);color:var(--text);align-self:flex-start;border-radius:12px 12px 12px 3px;}
-.bubble.ai{background:rgba(74,155,127,0.12);border:1px solid rgba(74,155,127,0.2);color:var(--text);align-self:flex-start;border-radius:12px 12px 12px 3px;}
-.bubble-time{font-size:10px;color:var(--muted);margin-top:3px;}
-.chat-input-bar{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;}
-.chat-input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:9px 14px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;}
-.chat-input::placeholder{color:var(--muted);}
+/* ── CARDS ── */
+.card { background: white; border-radius: 12px; border: 1px solid var(--gray-200); }
+.card-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; justify-content: space-between; }
+.card-title { font-size: 13px; font-weight: 700; color: var(--gray-900); }
+.card-body { padding: 20px; }
 
-/* ── SCREEN 3: LEAD DETAIL ── */
-.lead-detail-wrap{display:flex;flex:1;overflow:hidden;}
-.lead-info-panel{width:340px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;padding:16px;}
-.lead-itin-panel{flex:1;overflow-y:auto;padding:16px;}
-.info-field{margin-bottom:14px;}
-.info-field-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;}
-.info-field-value{font-size:13.5px;}
-.pref-tag{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);margin:2px;}
+/* ── KPI CARDS ── */
+.kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+.kpi-card { background: white; border-radius: 12px; border: 1px solid var(--gray-200); padding: 16px 18px; }
+.kpi-label { font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.8px; }
+.kpi-value { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; color: var(--gray-900); margin: 4px 0; }
+.kpi-trend { font-size: 11px; display: flex; align-items: center; gap: 4px; }
+.kpi-trend.up { color: var(--green); }
+.kpi-trend.down { color: var(--red); }
 
-/* ── SCREEN 4: ITINERARY BUILDER ── */
-.builder-wrap{display:flex;flex:1;overflow:hidden;}
-.builder-sidebar{width:240px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
-.builder-side-tabs{display:flex;border-bottom:1px solid var(--border);}
-.builder-side-tab{flex:1;padding:9px;font-size:11.5px;text-align:center;cursor:pointer;color:var(--muted);transition:all 0.15s;border-bottom:2px solid transparent;}
-.builder-side-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-.builder-canvas{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
-.day-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s;}
-.day-card:hover{border-color:rgba(255,255,255,0.12);}
-.day-header{padding:11px 14px;background:var(--surface2);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-.day-title{font-size:13px;font-weight:500;}
-.service-card{display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background 0.1s;}
-.service-card:hover{background:rgba(255,255,255,0.02);}
-.service-img{width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.service-title{font-size:12.5px;font-weight:500;margin-bottom:2px;}
-.service-meta{font-size:11px;color:var(--muted);}
-.service-price{font-size:13px;font-weight:500;color:var(--accent);margin-left:auto;flex-shrink:0;}
-.add-service-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;color:var(--muted);font-size:12px;cursor:pointer;border-top:1px dashed rgba(255,255,255,0.05);transition:color 0.15s;}
-.add-service-btn:hover{color:var(--accent);}
-.builder-pricing{width:220px;flex-shrink:0;border-left:1px solid var(--border);padding:16px;display:flex;flex-direction:column;gap:14px;}
-.price-row{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--border);}
-.price-row:last-of-type{border-bottom:none;}
-.price-row.total{font-family:'Instrument Serif',serif;font-size:18px;color:var(--accent);}
-.markup-slider{width:100%;accent-color:var(--accent);}
-.sticky-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;gap:16px;align-items:center;flex-shrink:0;}
-.sticky-chip{font-size:12px;color:var(--muted);}
-.sticky-chip span{color:var(--text);font-weight:500;}
+/* ── BADGES ── */
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 100px; font-size: 10px; font-weight: 700; }
+.badge-teal { background: var(--teal-light); color: #007A7F; }
+.badge-green { background: var(--green-light); color: var(--green); }
+.badge-orange { background: var(--orange-light); color: var(--orange); }
+.badge-red { background: var(--red-light); color: var(--red); }
+.badge-purple { background: var(--purple-light); color: var(--purple); }
+.badge-gray { background: var(--gray-100); color: var(--gray-500); }
+.badge-indigo { background: rgba(27,42,107,0.1); color: var(--indigo); }
 
-/* ── SCREEN 5: PROPOSAL ── */
-.proposal-wrap{overflow-y:auto;padding:0;background:var(--bg);}
-.proposal-hero{min-height:220px;background:linear-gradient(135deg,#1a1710,#0f1a14);display:flex;flex-direction:column;justify-content:flex-end;padding:28px 32px;position:relative;overflow:hidden;}
-.proposal-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.1),rgba(0,0,0,0.5));}
-.proposal-hero-content{position:relative;z-index:1;}
-.proposal-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent);margin-bottom:6px;}
-.proposal-title{font-family:'Instrument Serif',serif;font-size:32px;margin-bottom:6px;}
-.proposal-subtitle{font-size:13px;color:rgba(240,237,232,0.6);margin-bottom:14px;}
-.proposal-chips{display:flex;gap:6px;flex-wrap:wrap;}
-.proposal-chip{font-size:10.5px;padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,0.15);color:rgba(240,237,232,0.6);}
-.proposal-body{max-width:720px;margin:0 auto;padding:24px 32px;}
-.proposal-day{display:flex;gap:16px;margin-bottom:20px;}
-.proposal-day-num{font-family:'Instrument Serif',serif;font-size:36px;color:var(--border);width:40px;flex-shrink:0;line-height:1;}
-.proposal-day-content .day-title-p{font-size:14px;font-weight:500;margin-bottom:4px;}
-.proposal-day-content .day-desc-p{font-size:12.5px;color:var(--muted);line-height:1.65;}
-.price-block{background:rgba(200,169,110,0.07);border:1px solid rgba(200,169,110,0.22);border-radius:12px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.approve-bar{display:flex;gap:10px;justify-content:center;padding:16px 0;}
-.approve-btn{padding:12px 28px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+/* ── AI CARD ── */
+.ai-card { background: linear-gradient(135deg, rgba(0,196,204,0.08), rgba(107,33,168,0.06)); border: 1px solid rgba(0,196,204,0.25); border-radius: 10px; padding: 12px 14px; }
+.ai-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.ai-icon { width: 24px; height: 24px; background: linear-gradient(135deg, var(--teal), var(--purple)); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.ai-label { font-size: 10px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 0.8px; }
 
-/* ── SCREEN 6: PIPELINE ── */
-.pipeline-wrap{flex:1;overflow-x:auto;display:flex;gap:0;padding:16px;align-items:flex-start;}
-.kanban-col{width:220px;flex-shrink:0;margin-right:12px;}
-.kanban-col-hdr{font-size:11.5px;font-weight:600;padding:8px 12px;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-.kanban-col-count{font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;background:rgba(255,255,255,0.1);}
-.kanban-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all 0.2s;}
-.kanban-card:hover{border-color:rgba(255,255,255,0.15);transform:translateY(-1px);}
-.kk-name{font-size:13px;font-weight:500;margin-bottom:3px;}
-.kk-dest{font-size:11px;color:var(--muted);margin-bottom:6px;}
-.kk-value{font-size:13px;font-weight:500;color:var(--accent);}
-.kk-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
-.kk-last{font-size:10px;color:var(--muted);}
+/* ── TABLES ── */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { text-align: left; font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.8px; padding: 10px 16px; border-bottom: 1px solid var(--gray-100); background: var(--gray-50); }
+.data-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--gray-50); vertical-align: middle; }
+.data-table tr:hover td { background: var(--gray-50); }
 
-/* ── SCREEN 7: CONTRACT AI ── */
-.contract-wrap{display:flex;flex:1;overflow:hidden;}
-.contract-left{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;}
-.contract-right{width:340px;flex-shrink:0;border-left:1px solid var(--border);padding:20px;overflow-y:auto;}
-.upload-zone{border:2px dashed var(--border);border-radius:16px;padding:48px 32px;text-align:center;transition:all 0.2s;cursor:pointer;max-width:420px;width:100%;}
-.upload-zone:hover{border-color:rgba(200,169,110,0.4);background:rgba(200,169,110,0.04);}
-.upload-zone.drag-over{border-color:var(--accent);background:rgba(200,169,110,0.06);}
-.upload-icon{font-size:48px;margin-bottom:16px;}
-.upload-title{font-size:16px;font-weight:500;margin-bottom:6px;}
-.upload-sub{font-size:12.5px;color:var(--muted);}
-.scan-anim{display:none;flex-direction:column;align-items:center;gap:14px;text-align:center;}
-.scan-anim.visible{display:flex;}
-.scan-ring{width:64px;height:64px;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;animation:scanPulse 1.5s ease-in-out infinite;}
-@keyframes scanPulse{0%,100%{box-shadow:0 0 0 0 rgba(200,169,110,0.3)}50%{box-shadow:0 0 0 14px rgba(200,169,110,0)}}
-.extract-row{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;}
-.extract-row:last-child{border-bottom:none;}
-.extract-key{color:var(--muted);width:90px;flex-shrink:0;}
-.extract-val{color:var(--text);flex:1;}
+/* ── GRID LAYOUTS ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 
-/* ── SCREEN 8: BOOKINGS ── */
-.booking-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0;flex-shrink:0;}
-.booking-tab{padding:10px 18px;font-size:12.5px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;}
-.booking-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-.booking-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:all 0.2s;margin-bottom:10px;}
-.booking-card:hover{border-color:rgba(255,255,255,0.12);transform:translateY(-1px);}
-.booking-dest-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
-.booking-name{font-size:13.5px;font-weight:500;margin-bottom:2px;}
-.booking-meta{font-size:11.5px;color:var(--muted);}
-.booking-status{margin-left:auto;text-align:right;}
-.payment-pill{font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:5px;display:inline-block;}
-.payment-pill.paid{background:rgba(74,155,127,0.15);color:var(--accent2);border:1px solid rgba(74,155,127,0.25);}
-.payment-pill.partial{background:rgba(224,154,62,0.15);color:var(--warn);border:1px solid rgba(224,154,62,0.25);}
-.payment-pill.pending{background:rgba(224,90,78,0.12);color:var(--danger);border:1px solid rgba(224,90,78,0.2);}
+/* ── INBOX LAYOUT ── */
+.inbox-layout { display: grid; grid-template-columns: 240px 1fr 380px; gap: 0; height: calc(100vh - 52px - 48px); background: white; border-radius: 12px; border: 1px solid var(--gray-200); overflow: hidden; }
+.inbox-col { border-right: 1px solid var(--gray-100); overflow-y: auto; }
+.inbox-col:last-child { border-right: none; }
+.inbox-col-header { padding: 12px 14px; border-bottom: 1px solid var(--gray-100); font-size: 11px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.8px; background: var(--gray-50); }
+.channel-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; border-bottom: 1px solid var(--gray-50); }
+.channel-item:hover { background: var(--gray-50); }
+.channel-item.active { background: rgba(27,42,107,0.05); }
+.channel-dot { width: 8px; height: 8px; border-radius: 50%; }
+.msg-item { padding: 12px 14px; border-bottom: 1px solid var(--gray-50); cursor: pointer; }
+.msg-item:hover { background: var(--gray-50); }
+.msg-item.active { background: rgba(0,196,204,0.06); border-left: 3px solid var(--teal); }
+.msg-item.unread .msg-name { font-weight: 700; }
+.msg-name { font-size: 13px; font-weight: 500; color: var(--gray-900); }
+.msg-preview { font-size: 11px; color: var(--gray-400); margin-top: 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.msg-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.msg-time { font-size: 10px; color: var(--gray-400); font-family: 'DM Mono', monospace; }
+.msg-unread-dot { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; }
 
-/* ── SCREEN 9: FINANCE ── */
-.finance-wrap{display:flex;flex:1;overflow:hidden;}
-.invoice-list{width:320px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;}
-.invoice-item{padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s;}
-.invoice-item:hover{background:var(--surface2);}
-.invoice-item.active{background:rgba(200,169,110,0.07);border-left:2px solid var(--accent);}
-.invoice-right{flex:1;overflow-y:auto;padding:20px;}
-.timeline-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.timeline-row{display:flex;gap:12px;align-items:flex-start;padding:8px 0;}
+/* ── KANBAN ── */
+.kanban-board { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; }
+.kanban-col { flex-shrink: 0; width: 220px; }
+.kanban-col-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 8px 8px 0 0; background: var(--gray-100); font-size: 11px; font-weight: 700; color: var(--gray-600); border-bottom: 2px solid var(--gray-200); }
+.kanban-cards { background: var(--gray-50); border-radius: 0 0 8px 8px; padding: 8px; min-height: 200px; }
+.kanban-card { background: white; border-radius: 8px; border: 1px solid var(--gray-200); padding: 10px 12px; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; }
+.kanban-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); border-color: var(--gray-300); }
+.kanban-card.hot { border-left: 3px solid var(--orange); }
+.kanban-card.premium { border-left: 3px solid var(--purple); }
+.kanban-card.confirmed { border-left: 3px solid var(--green); }
+.kc-name { font-size: 12px; font-weight: 700; color: var(--gray-900); }
+.kc-dest { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+.kc-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.kc-score { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--teal); }
+.kc-value { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gray-500); }
 
-/* ── SCREEN 10: ANALYTICS ── */
-.chart-bar-wrap{display:flex;align-items:flex-end;gap:6px;height:100px;padding:8px 0;}
-.chart-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.chart-bar{width:100%;border-radius:4px 4px 0 0;transition:height 1s cubic-bezier(0.34,1.56,0.64,1);}
-.chart-bar-lbl{font-size:9.5px;color:var(--muted);}
-.donut-wrap{position:relative;width:100px;height:100px;}
+/* ── SLIDE PANEL ── */
+.slide-panel { position: fixed; right: -460px; top: 0; bottom: 0; width: 440px; background: white; border-left: 1px solid var(--gray-200); z-index: 100; transition: right 0.3s ease; overflow-y: auto; box-shadow: -8px 0 32px rgba(0,0,0,0.12); }
+.slide-panel.open { right: 0; }
+.panel-header { padding: 20px; border-bottom: 1px solid var(--gray-100); position: sticky; top: 0; background: white; z-index: 1; }
+.panel-close { position: absolute; right: 16px; top: 16px; background: var(--gray-100); border: none; border-radius: 6px; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+.panel-body { padding: 20px; }
 
-/* Toast */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--surface2);border:1px solid rgba(200,169,110,0.3);border-radius:10px;padding:10px 14px;font-size:12.5px;display:flex;align-items:center;gap:8px;transform:translateY(70px);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);z-index:9999;}
-.toast.show{transform:translateY(0);opacity:1;}
+/* ── SUBSCRIPTION SCREENS ── */
+.plan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.plan-card { background: white; border: 1px solid var(--gray-200); border-radius: 16px; padding: 24px; position: relative; transition: all 0.2s; }
+.plan-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.plan-card.featured { border-color: var(--teal); border-width: 2px; }
+.plan-card.featured::before { content:'MOST POPULAR'; position: absolute; top:-10px; left:50%; transform:translateX(-50%); background:var(--teal); color:var(--indigo-dark); font-size:9px; font-weight:700; padding:3px 10px; border-radius:100px; white-space:nowrap; }
+.plan-name { font-size: 16px; font-weight: 700; color: var(--gray-900); }
+.plan-target { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+.plan-price { margin: 16px 0; }
+.plan-amount { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500; color: var(--gray-900); }
+.plan-period { font-size: 12px; color: var(--gray-400); }
+.plan-annual { font-size: 11px; color: var(--green); font-weight: 600; margin-top: 4px; }
+.plan-divider { height: 1px; background: var(--gray-100); margin: 16px 0; }
+.plan-feature { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--gray-700); margin-bottom: 8px; }
+.plan-feature::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
+.currency-tabs { display: flex; gap: 4px; background: var(--gray-100); border-radius: 8px; padding: 3px; margin-bottom: 24px; width: fit-content; }
+.currency-tab { padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--gray-500); transition: all 0.15s; }
+.currency-tab.active { background: white; color: var(--gray-900); box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
 
-/* Scrollbar */
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:2px;}
+/* ── REMITTANCE ── */
+.remittance-flow { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; margin: 16px 0; }
+.flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--gray-300); font-size: 20px; }
+.payment-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--gray-200); background: white; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; }
+.payment-row:hover { border-color: var(--indigo); background: rgba(27,42,107,0.02); }
+.payment-status { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* ── ONBOARDING ── */
+.onboarding-overlay { background: rgba(17,24,39,0.85); border-radius: 12px; padding: 32px; text-align: center; }
+.tour-step { background: white; border-radius: 12px; padding: 20px; max-width: 360px; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.tour-progress { display: flex; gap: 4px; justify-content: center; margin-bottom: 16px; }
+.tour-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-200); }
+.tour-dot.done { background: var(--teal); }
+.tour-dot.current { background: var(--indigo); width: 18px; border-radius: 4px; }
+
+/* ── FIXED DEPARTURES ── */
+.departure-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.departure-card { background: white; border-radius: 12px; border: 1px solid var(--gray-200); overflow: hidden; cursor: pointer; transition: all 0.2s; }
+.departure-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.departure-card-img { height: 100px; display: flex; align-items: center; justify-content: center; font-size: 32px; }
+.departure-card-body { padding: 12px; }
+.departure-seats { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.seat-bar { flex: 1; height: 4px; background: var(--gray-100); border-radius: 2px; overflow: hidden; }
+.seat-fill { height: 100%; background: var(--green); border-radius: 2px; }
+.seat-fill.warning { background: var(--orange); }
+.seat-fill.critical { background: var(--red); }
+
+/* ── HIERARCHY CHART ── */
+.hierarchy-node { background: white; border-radius: 8px; border: 1px solid var(--gray-200); padding: 10px 16px; text-align: center; font-size: 11px; font-weight: 600; cursor: default; }
+.hierarchy-level { display: flex; justify-content: center; margin-bottom: 8px; }
+.hierarchy-connector { text-align: center; color: var(--gray-300); font-size: 16px; margin-bottom: 0; line-height: 1.2; }
+
+/* ── PROGRESS BAR ── */
+.progress-bar { height: 4px; background: var(--gray-100); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+
+/* ── TABS ── */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--gray-200); margin-bottom: 20px; }
+.tab { padding: 10px 16px; font-size: 13px; font-weight: 500; color: var(--gray-500); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
+.tab:hover { color: var(--gray-900); }
+.tab.active { color: var(--indigo); border-bottom-color: var(--indigo); font-weight: 700; }
+
+/* ── CORPORATE ── */
+.approval-timeline { position: relative; padding-left: 24px; }
+.approval-step { position: relative; padding-bottom: 20px; }
+.approval-step::before { content:''; position:absolute; left:-16px; top:8px; bottom:0; width:1px; background:var(--gray-200); }
+.approval-step:last-child::before { display:none; }
+.approval-dot { position:absolute; left:-20px; top:4px; width:8px; height:8px; border-radius:50%; background:var(--gray-200); border:2px solid white; }
+.approval-dot.done { background:var(--green); }
+.approval-dot.current { background:var(--orange); }
+
+/* ── DEMO ENV BANNER ── */
+.demo-banner { background: linear-gradient(135deg, var(--orange), #FF9A3C); color: white; padding: 8px 24px; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+
+/* ── OVERLAY ── */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; display: none; }
+.overlay.open { display: block; }
 </style>
 </head>
-<body>
-<div class="shell">
-
-<!-- TOP NAV -->
-<div class="topnav">
-  <div class="tn-logo">NAMA <span>OS</span></div>
-  <div class="tn-search">
-    <span style="color:var(--muted);font-size:13px">🔍</span>
-    <input placeholder="Search leads, trips, suppliers…">
+<body><div style="position:fixed;top:0;left:0;right:0;height:36px;background:rgba(10,13,26,0.95);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:9999;backdrop-filter:blur(12px);">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <div style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#0066FF,#00C6FF);display:flex;align-items:center;justify-content:center;font-family:serif;font-weight:900;font-size:10px;color:white;">N</div>
+    <span style="font-family:serif;font-size:13px;color:rgba(255,255,255,0.8);letter-spacing:0.1em;">NAMA</span>
+    <span style="font-size:10px;color:rgba(255,255,255,0.3);margin-left:4px;">← Home</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span style="font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.1em;text-transform:uppercase;">Operating System View</span>
+    <a href="nama-app.html" style="font-size:11px;color:#c8a96e;text-decoration:none;padding:3px 10px;border:1px solid rgba(200,169,110,0.3);border-radius:6px;background:rgba(200,169,110,0.08);">← Back to CRM</a>
   </div>
-  <button class="tn-btn" onclick="osSwitch('inbox');showToast('✦','New Lead','Lead form opening…')">+ New</button>
-  <div style="flex:1"></div>
-  <div class="live-pill"><div class="live-dot"></div>Live</div>
-  <div class="tn-icon" onclick="showToast('🔔','Notifications','4 unread alerts')">🔔<div class="tn-notif-dot"></div></div>
-  <div class="tn-avatar">N</div>
-  <a class="tn-back" href="nama-app.html">← CRM</a>
+</div>
+<div style="height:36px;"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">NAMA</div>
+    <div class="tagline">Travel Operating System</div>
+    <div class="live-pill"><span class="live-dot"></span><span>LIVE</span></div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Operations</div>
+    <div class="nav-item active" onclick="showScreen('inbox')">
+      <span class="nav-icon">📨</span> Query Inbox
+      <span class="nav-badge">7</span>
+    </div>
+    <div class="nav-item" onclick="showScreen('crm')">
+      <span class="nav-icon">🎯</span> Lead Pipeline
+    </div>
+    <div class="nav-item" onclick="showScreen('quotes')">
+      <span class="nav-icon">📋</span> Quotation
+    </div>
+    <div class="nav-item" onclick="showScreen('itinerary')">
+      <span class="nav-icon">🗺️</span> Itinerary Builder
+    </div>
+    <div class="nav-item" onclick="showScreen('documents')">
+      <span class="nav-icon">📁</span> Documents
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Supply Chain</div>
+    <div class="nav-item" onclick="showScreen('suppliers')">
+      <span class="nav-icon">🏨</span> Suppliers
+    </div>
+    <div class="nav-item" onclick="showScreen('rates')">
+      <span class="nav-icon">💱</span> Rates & Contracts
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Finance</div>
+    <div class="nav-item" onclick="showScreen('finance')">
+      <span class="nav-icon">📊</span> Finance Dashboard
+    </div>
+    <div class="nav-item" onclick="showScreen('remittance')">
+      <span class="nav-icon">🌐</span> Remittance
+      <span class="nav-badge new">NEW</span>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Products</div>
+    <div class="nav-item" onclick="showScreen('corporate')">
+      <span class="nav-icon">🏢</span> Corporate Travel
+      <span class="nav-badge new">NEW</span>
+    </div>
+    <div class="nav-item" onclick="showScreen('departures')">
+      <span class="nav-icon">✈️</span> Fixed Departures
+      <span class="nav-badge new">NEW</span>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Platform</div>
+    <div class="nav-item" onclick="showScreen('whitelabel')">
+      <span class="nav-icon">🎨</span> White-Label
+    </div>
+    <div class="nav-item" onclick="showScreen('hierarchy')">
+      <span class="nav-icon">🏗️</span> Platform Hierarchy
+      <span class="nav-badge new">NEW</span>
+    </div>
+    <div class="nav-item" onclick="showScreen('subscription')">
+      <span class="nav-icon">💳</span> Subscription
+      <span class="nav-badge new">NEW</span>
+    </div>
+    <div class="nav-item" onclick="showScreen('onboarding')">
+      <span class="nav-icon">🚀</span> Onboarding Tour
+      <span class="nav-badge new">NEW</span>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar">R</div>
+      <div>
+        <div class="user-name">Rajan Mehta</div>
+        <div class="user-role">Org Admin · Rajan Travel Co.</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    <span>🎯 DEMO ENVIRONMENT — demo.nama.app · Resets daily at 02:00 UTC · No real emails/payments</span>
+    <span style="opacity:0.7">Rajan Travel Co. · 25 leads pre-loaded</span>
+  </div>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div>
+      <span class="topbar-title" id="screen-title">Query Inbox</span>
+      <span class="topbar-subtitle" id="screen-sub">— All Channels</span>
+    </div>
+    <div class="topbar-actions" id="topbar-actions">
+      <button class="btn btn-outline">⌘K Search</button>
+      <button class="btn btn-teal" onclick="showScreen('quotes')">+ New Quote</button>
+    </div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div class="content" id="screen-content">
+
+    <!-- ──────────────── M1: INBOX ──────────────── -->
+    <div class="screen active" id="screen-inbox">
+      <div class="inbox-layout" style="height: calc(100vh - 52px - 34px - 48px - 24px);">
+        <!-- Col 1: Channels -->
+        <div class="inbox-col">
+          <div class="inbox-col-header">Channels</div>
+          <div class="channel-item active">
+            <span class="channel-dot" style="background:#25D366"></span>
+            <span style="font-size:13px;font-weight:600;color:var(--gray-900)">All Channels</span>
+            <span class="nav-badge teal" style="margin-left:auto">7</span>
+          </div>
+          <div class="channel-item">
+            <span class="channel-dot" style="background:#25D366"></span>
+            <span style="font-size:13px;color:var(--gray-700)">WhatsApp</span>
+            <span class="nav-badge" style="margin-left:auto;background:var(--green)">4</span>
+          </div>
+          <div class="channel-item">
+            <span class="channel-dot" style="background:#4285F4"></span>
+            <span style="font-size:13px;color:var(--gray-700)">Email</span>
+            <span class="nav-badge" style="margin-left:auto">2</span>
+          </div>
+          <div class="channel-item">
+            <span class="channel-dot" style="background:#E1306C"></span>
+            <span style="font-size:13px;color:var(--gray-700)">Instagram</span>
+            <span class="nav-badge" style="margin-left:auto;background:var(--purple)">1</span>
+          </div>
+          <div class="channel-item">
+            <span class="channel-dot" style="background:var(--teal)"></span>
+            <span style="font-size:13px;color:var(--gray-700)">Web Form</span>
+            <span class="nav-badge" style="margin-left:auto;background:var(--gray-400)">0</span>
+          </div>
+          <div style="padding:12px 14px; margin-top:8px;">
+            <div class="inbox-col-header" style="margin-bottom:8px;padding:0">SLA Status</div>
+            <div style="font-size:11px;color:var(--gray-500);margin-bottom:4px;">⚡ 3 need response &lt;30min</div>
+            <div style="font-size:11px;color:var(--orange);margin-bottom:4px;">⏰ 1 SLA at risk</div>
+            <div style="font-size:11px;color:var(--green);">✓ 3 acknowledged</div>
+          </div>
+        </div>
+
+        <!-- Col 2: Message List -->
+        <div class="inbox-col">
+          <div class="inbox-col-header">Recent Queries</div>
+          <div class="msg-item unread active" onclick="showDetail('sharma')">
+            <div class="msg-meta">
+              <span class="msg-name">Sharma Family</span>
+              <span class="msg-time">9:42am</span>
+            </div>
+            <div style="display:flex;gap:4px;margin-bottom:4px;"><span class="badge badge-teal">WhatsApp</span><span class="badge badge-orange">⚡ Urgent</span></div>
+            <div class="msg-preview">Bali family trip for 4 pax, June 8–15, budget 3L...</div>
+          </div>
+          <div class="msg-item unread" onclick="showDetail('patel')">
+            <div class="msg-meta">
+              <span class="msg-name">Patel & Co Corporate</span>
+              <span class="msg-time">8:15am</span>
+            </div>
+            <div style="display:flex;gap:4px;margin-bottom:4px;"><span class="badge badge-indigo">Email</span><span class="badge badge-purple">Corporate</span></div>
+            <div class="msg-preview">Team offsite Coorg, 22 pax, Q3 planning, need group rate...</div>
+          </div>
+          <div class="msg-item" onclick="showDetail('kumar')">
+            <div class="msg-meta">
+              <span class="msg-name">Priya Kumar</span>
+              <span class="msg-time">Yesterday</span>
+            </div>
+            <div style="display:flex;gap:4px;margin-bottom:4px;"><span class="badge badge-green">Web Form</span></div>
+            <div class="msg-preview">Honeymoon to Maldives, late October, budget open...</div>
+          </div>
+          <div class="msg-item">
+            <div class="msg-meta">
+              <span class="msg-name">Alex Fernandes</span>
+              <span class="msg-time">Yesterday</span>
+            </div>
+            <div style="display:flex;gap:4px;margin-bottom:4px;"><span class="badge" style="background:#fce4ec;color:#c2185b">Instagram</span></div>
+            <div class="msg-preview">Saw your post! Ladakh trip possible in August?</div>
+          </div>
+        </div>
+
+        <!-- Col 3: Detail Pane -->
+        <div class="inbox-col" id="detail-pane">
+          <div id="detail-sharma">
+            <div class="inbox-col-header">Sharma Family · WhatsApp</div>
+            <div style="padding:16px;">
+              <!-- AI Extraction Card -->
+              <div class="ai-card" style="margin-bottom:14px;">
+                <div class="ai-card-header">
+                  <div class="ai-icon">🤖</div>
+                  <span class="ai-label">AI Extraction — 94% Confidence</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  <div><div style="font-size:9px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Destination</div><div style="font-size:13px;font-weight:600">Bali, Indonesia</div><div style="display:flex;gap:2px;margin-top:2px;">●●●●○</div></div>
+                  <div><div style="font-size:9px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Dates</div><div style="font-size:13px;font-weight:600">Jun 8–15, 2026</div><div style="display:flex;gap:2px;margin-top:2px;">●●●●●</div></div>
+                  <div><div style="font-size:9px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Pax</div><div style="font-size:13px;font-weight:600">2A + 2C</div><div style="display:flex;gap:2px;margin-top:2px;">●●●●●</div></div>
+                  <div><div style="font-size:9px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Budget</div><div style="font-size:13px;font-weight:600">₹3,00,000</div><div style="display:flex;gap:2px;margin-top:2px;">●●●○○</div></div>
+                </div>
+              </div>
+
+              <!-- AI Score -->
+              <div style="display:flex;align-items:center;justify-content:space-between;background:var(--gray-50);border-radius:8px;padding:10px 12px;margin-bottom:12px;">
+                <div style="font-size:12px;font-weight:600;color:var(--gray-700)">Lead Quality Score</div>
+                <div style="font-family:'DM Mono',monospace;font-size:24px;font-weight:500;color:var(--teal)">87</div>
+              </div>
+
+              <!-- Countdown -->
+              <div style="background:var(--orange-light);border:1px solid var(--orange);border-radius:8px;padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+                <div style="font-size:20px;">⏱️</div>
+                <div>
+                  <div style="font-size:11px;font-weight:700;color:var(--orange)">AUTO-ACK IN</div>
+                  <div style="font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--gray-900)" id="countdown">0:38</div>
+                </div>
+              </div>
+
+              <!-- Pre-written reply -->
+              <div style="border:1px solid var(--gray-200);border-radius:8px;padding:12px;margin-bottom:12px;background:white;">
+                <div style="font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">AI DRAFT REPLY</div>
+                <div style="font-size:12px;color:var(--gray-700);line-height:1.6;">Hi! Thank you for reaching out about your Bali family trip 🌴 We'd love to help plan the perfect getaway for Jun 8–15. I'll prepare a personalised itinerary for 4 and share it within 2 hours. Can you share your hotel preference — beach resort or villa?</div>
+              </div>
+
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-teal" style="flex:1" onclick="showScreen('quotes')">Generate Quote</button>
+                <button class="btn btn-outline">✏️ Edit</button>
+                <button class="btn btn-ghost">✓ Send</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="detail-patel" style="display:none;">
+            <div class="inbox-col-header">Patel & Co Corporate · Email</div>
+            <div style="padding:16px;">
+              <div class="ai-card" style="margin-bottom:14px;">
+                <div class="ai-card-header">
+                  <div class="ai-icon">🏢</div>
+                  <span class="ai-label">Corporate Query Detected</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  <div><div style="font-size:9px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Type</div><div style="font-size:12px;font-weight:600">Corporate Offsite</div></div>
+                  <div><div style="font-size:9px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Pax</div><div style="font-size:12px;font-weight:600">22 employees</div></div>
+                  <div><div style="font-size:9px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Destination</div><div style="font-size:12px;font-weight:600">Coorg, Karnataka</div></div>
+                  <div><div style="font-size:9px;color:var(--gray-400);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">GSTIN Required</div><div style="font-size:12px;font-weight:600;color:var(--orange)">Yes</div></div>
+                </div>
+              </div>
+              <div style="background:var(--purple-light);border-radius:8px;padding:10px 12px;margin-bottom:12px;">
+                <div style="font-size:11px;font-weight:700;color:var(--purple)">→ Routed to Corporate Travel Module</div>
+                <div style="font-size:11px;color:var(--gray-600);margin-top:4px;">Approval workflow will be required before confirmation. Corporate invoice with PO ref will be generated.</div>
+              </div>
+              <button class="btn btn-primary" style="width:100%" onclick="showScreen('corporate')">Open in Corporate Module</button>
+            </div>
+          </div>
+
+          <div id="detail-kumar" style="display:none;">
+            <div class="inbox-col-header">Priya Kumar · Web Form</div>
+            <div style="padding:16px;">
+              <div class="ai-card" style="margin-bottom:14px;">
+                <div class="ai-card-header"><div class="ai-icon">💕</div><span class="ai-label">Anniversary Context Detected</span></div>
+                <div style="font-size:12px;color:var(--gray-700)">Honeymoon trip — romantic dinner and special experiences should be prioritised in itinerary generation.</div>
+              </div>
+              <button class="btn btn-teal" style="width:100%">Generate Honeymoon Itinerary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── M2: CRM ──────────────── -->
+    <div class="screen" id="screen-crm">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Active Leads</div><div class="kpi-value">47</div><div class="kpi-trend up">↑ 8 this week</div></div>
+        <div class="kpi-card"><div class="kpi-label">Quoted This Month</div><div class="kpi-value">23</div><div class="kpi-trend up">↑ 12% vs last month</div></div>
+        <div class="kpi-card"><div class="kpi-label">Conversion Rate</div><div class="kpi-value">34%</div><div class="kpi-trend up">↑ 4pts</div></div>
+        <div class="kpi-card"><div class="kpi-label">Pipeline Value</div><div class="kpi-value">₹42L</div><div class="kpi-trend up">↑ 18%</div></div>
+        <div class="kpi-card"><div class="kpi-label">Avg Response Time</div><div class="kpi-value">4m</div><div class="kpi-trend up">↓ from 6hrs</div></div>
+      </div>
+      <div class="kanban-board" id="kanban-board">
+        <div class="kanban-col">
+          <div class="kanban-col-header">New <span class="nav-badge teal">8</span></div>
+          <div class="kanban-cards">
+            <div class="kanban-card hot" onclick="openPanel('sharma-lead')"><div class="kc-name">Sharma Family</div><div class="kc-dest">Bali · Jun 8–15</div><div class="kc-meta"><span class="kc-score">87</span><span class="kc-value">₹3L</span></div></div>
+            <div class="kanban-card" onclick="openPanel('priya-lead')"><div class="kc-name">Priya Kumar</div><div class="kc-dest">Maldives · Oct</div><div class="kc-meta"><span class="kc-score">72</span><span class="kc-value">Open</span></div></div>
+          </div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-col-header">Qualified <span class="nav-badge teal">6</span></div>
+          <div class="kanban-cards">
+            <div class="kanban-card premium" onclick="openPanel('patel-lead')"><div class="kc-name">Patel & Co</div><div class="kc-dest">Coorg · Corporate</div><div class="kc-meta"><span class="kc-score">91</span><span class="kc-value">₹8.5L</span></div></div>
+            <div class="kanban-card" onclick="openPanel('iyer-lead')"><div class="kc-name">Iyer Group</div><div class="kc-dest">Rajasthan · 12 pax</div><div class="kc-meta"><span class="kc-score">78</span><span class="kc-value">₹5.2L</span></div></div>
+          </div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-col-header">Quoted <span class="nav-badge teal">9</span></div>
+          <div class="kanban-cards">
+            <div class="kanban-card hot"><div class="kc-name">Mehta Anniversary</div><div class="kc-dest">Switzerland · 2 pax</div><div class="kc-meta"><span class="kc-score">83</span><span class="kc-value">₹4.1L</span></div></div>
+          </div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-col-header">Negotiating <span class="nav-badge teal">4</span></div>
+          <div class="kanban-cards">
+            <div class="kanban-card"><div class="kc-name">Reliance Travels</div><div class="kc-dest">Singapore · Group</div><div class="kc-meta"><span class="kc-score">76</span><span class="kc-value">₹12L</span></div></div>
+          </div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-col-header">Confirmed <span class="nav-badge" style="background:var(--green)">7</span></div>
+          <div class="kanban-cards">
+            <div class="kanban-card confirmed"><div class="kc-name">Gupta Wedding</div><div class="kc-dest">Thailand · 45 pax</div><div class="kc-meta"><span class="kc-score">95</span><span class="kc-value">₹22L</span></div></div>
+            <div class="kanban-card confirmed"><div class="kc-name">Tech Conf Goa</div><div class="kc-dest">Goa · 80 pax</div><div class="kc-meta"><span class="kc-score">99</span><span class="kc-value">₹35L</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── M3: QUOTES ──────────────── -->
+    <div class="screen" id="screen-quotes">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <div class="tabs" style="margin-bottom:0;flex:1;">
+          <div class="tab active" id="tab-agent" onclick="switchQuoteView('agent')">Agent View</div>
+          <div class="tab" id="tab-client" onclick="switchQuoteView('client')">Client View</div>
+        </div>
+        <span class="badge badge-teal" style="font-size:11px;padding:6px 12px;">⏱ 1m 42s generation time</span>
+      </div>
+
+      <!-- AI Assembly Banner -->
+      <div class="ai-card" style="margin-bottom:16px;">
+        <div class="ai-card-header"><div class="ai-icon">🤖</div><span class="ai-label">AI Assembly Notes — Bali Family · Jun 8–15</span></div>
+        <div style="font-size:12px;color:var(--gray-700)">Selected Anantara Seminyak for Standard (best family value), Villa Canggu for Luxury (+₹42,000 over budget — flagged). Replaced Nusa Penida ferry (cancelled Jun 9) with Lembongan boat transfer. Adjusted Ubud timing to avoid temple closure on Jun 12.</div>
+      </div>
+
+      <!-- 3-Tier Quote -->
+      <div id="quote-agent-view">
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Budget</span>
+              <span class="badge badge-gray">₹2,18,000</span>
+            </div>
+            <div class="card-body">
+              <div style="font-size:12px;color:var(--gray-500);margin-bottom:12px;">Net: ₹1,76,000 · Markup: 24% · Margin: ₹42,000</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🏨 Kuta Beach Hotel (3★)</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🚗 Shared AC Transfers</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🎭 4 activities included</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:16px;">🍽 Breakfast only</div>
+              <div class="progress-bar"><div class="progress-fill" style="width:73%;background:var(--gray-400)"></div></div>
+              <div style="font-size:10px;color:var(--gray-400);margin-top:4px;">Within budget</div>
+            </div>
+          </div>
+          <div class="card" style="border:2px solid var(--teal);box-shadow:0 4px 20px rgba(0,196,204,0.15);">
+            <div class="card-header" style="background:linear-gradient(135deg,rgba(0,196,204,0.1),transparent);">
+              <span class="card-title">Standard ⭐</span>
+              <span class="badge badge-teal">₹2,87,000</span>
+            </div>
+            <div class="card-body">
+              <div style="font-size:12px;color:var(--gray-500);margin-bottom:12px;">Net: ₹2,24,000 · Markup: 28% · Margin: ₹63,000</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🏨 Anantara Seminyak (5★)</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🚗 Private AC Transfers</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🎭 7 activities + guide</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:16px;">🍽 Breakfast + 2 dinners</div>
+              <div class="progress-bar"><div class="progress-fill" style="width:95%;background:var(--teal)"></div></div>
+              <div style="font-size:10px;color:var(--teal);margin-top:4px;">4% over budget — recommended</div>
+            </div>
+          </div>
+          <div class="card" style="border:1px solid var(--red-light);">
+            <div class="card-header">
+              <span class="card-title">Luxury</span>
+              <span class="badge badge-red">₹4,12,000</span>
+            </div>
+            <div class="card-body">
+              <div style="font-size:12px;color:var(--gray-500);margin-bottom:12px;">Net: ₹3,08,000 · Markup: 34% · Margin: ₹1,04,000</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🏨 Villa Canggu (Private Pool)</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🚗 Dedicated Driver + SUV</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:8px;">🎭 10 activities + butler</div>
+              <div style="font-size:12px;color:var(--gray-700);margin-bottom:16px;">🍽 Full board + sunset dinner</div>
+              <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--red)"></div></div>
+              <div style="font-size:10px;color:var(--red);margin-top:4px;">₹1,12,000 over budget</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="quote-client-view" style="display:none;">
+        <div class="card" style="max-width:720px;margin:0 auto;">
+          <div style="background:linear-gradient(135deg,var(--indigo),#2E3D8A);padding:32px;border-radius:12px 12px 0 0;text-align:center;">
+            <div style="font-family:'Fraunces',serif;font-size:28px;color:white;font-weight:700;">Bali Family Dream</div>
+            <div style="color:rgba(255,255,255,0.7);font-size:14px;margin-top:4px;">Curated exclusively for the Sharma Family</div>
+            <div style="color:rgba(255,255,255,0.5);font-size:12px;margin-top:8px;">8 Days · 7 Nights · Jun 8–15, 2026</div>
+          </div>
+          <div class="card-body" style="padding:32px;">
+            <div style="font-size:14px;color:var(--gray-700);line-height:1.8;margin-bottom:24px;">Dear Sharma Family, we've crafted three experiences tailored to your Bali adventure. Each option promises unforgettable memories for all four of you — from temple sunrises to family cooking classes and beachfront evenings.</div>
+            <div class="grid-3" style="margin-bottom:24px;">
+              <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;"><div style="font-size:11px;color:var(--gray-400);font-weight:700">BUDGET</div><div style="font-size:22px;font-weight:700;color:var(--gray-900)">₹2,18,000</div></div>
+              <div style="text-align:center;padding:16px;background:var(--teal-light);border-radius:8px;border:2px solid var(--teal);"><div style="font-size:11px;color:var(--teal);font-weight:700">RECOMMENDED ⭐</div><div style="font-size:22px;font-weight:700;color:var(--gray-900)">₹2,87,000</div></div>
+              <div style="text-align:center;padding:16px;background:var(--gray-50);border-radius:8px;"><div style="font-size:11px;color:var(--gray-400);font-weight:700">LUXURY</div><div style="font-size:22px;font-weight:700;color:var(--gray-900)">₹4,12,000</div></div>
+            </div>
+            <div style="text-align:center;margin-top:8px;">
+              <button class="btn btn-teal" style="padding:12px 32px;font-size:14px;">✓ Confirm Standard — Pay 30% Deposit</button>
+              <div style="font-size:11px;color:var(--gray-400);margin-top:8px;">Quote valid until Jun 1, 2026 · ₹86,100 deposit secures booking</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── M8: ITINERARY ──────────────── -->
+    <div class="screen" id="screen-itinerary">
+      <div style="display:grid;grid-template-columns:240px 1fr;gap:16px;height:calc(100vh - 52px - 34px - 48px - 64px);">
+        <div class="card" style="overflow-y:auto;">
+          <div class="card-header"><span class="card-title">Days</span><span class="badge badge-teal">8 Days</span></div>
+          <div id="day-list">
+            <div class="msg-item active" onclick="showDay(1)" style="border-left:3px solid var(--teal)"><div style="font-size:12px;font-weight:700">Day 1 — Jun 8</div><div style="font-size:11px;color:var(--gray-400)">Arrival · Seminyak</div></div>
+            <div class="msg-item" onclick="showDay(2)"><div style="font-size:12px;font-weight:700">Day 2 — Jun 9</div><div style="font-size:11px;color:var(--gray-400)">Ubud · Temples</div></div>
+            <div class="msg-item" onclick="showDay(3)"><div style="font-size:12px;font-weight:700">Day 3 — Jun 10</div><div style="font-size:11px;color:var(--gray-400)">Rice Terraces · Cooking</div></div>
+            <div class="msg-item" onclick="showDay(4)" style="border-left:3px solid var(--orange)"><div style="font-size:12px;font-weight:700;color:var(--orange)">Day 4 — Jun 11 🎂</div><div style="font-size:11px;color:var(--orange)">Special · Anniversary</div></div>
+            <div class="msg-item" onclick="showDay(5)"><div style="font-size:12px;font-weight:700">Day 5 — Jun 12</div><div style="font-size:11px;color:var(--gray-400)">Lembongan Island</div></div>
+            <div class="msg-item" onclick="showDay(6)"><div style="font-size:12px;font-weight:700">Day 6 — Jun 13</div><div style="font-size:11px;color:var(--gray-400)">Kuta Beach · Shopping</div></div>
+            <div class="msg-item" onclick="showDay(7)"><div style="font-size:12px;font-weight:700">Day 7 — Jun 14</div><div style="font-size:11px;color:var(--gray-400)">GWK · Spa Day</div></div>
+            <div class="msg-item" onclick="showDay(8)"><div style="font-size:12px;font-weight:700">Day 8 — Jun 15</div><div style="font-size:11px;color:var(--gray-400)">Departure</div></div>
+          </div>
+        </div>
+        <div class="card" id="day-content" style="overflow-y:auto;">
+          <div class="card-header">
+            <span class="card-title" id="day-title">Day 1 — Arrival in Paradise</span>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-outline" style="font-size:11px;">🔄 Regenerate</button>
+              <button class="btn btn-teal" style="font-size:11px;">✏️ Edit</button>
+            </div>
+          </div>
+          <div class="card-body" id="day-body">
+            <div class="ai-card" style="margin-bottom:16px;">
+              <div class="ai-card-header"><div class="ai-icon">✍️</div><span class="ai-label">AI Narrative — Tone: Friendly & Warm</span></div>
+              <div style="font-size:13px;color:var(--gray-700);line-height:1.8;">Your Bali adventure begins the moment you step off the plane at Ngurah Rai International Airport. A private air-conditioned vehicle awaits to whisk you and the family to your beachfront retreat in Seminyak. Settle in, let the kids splash in the pool, and as the sun dips below the Indian Ocean, head to Ku De Ta for your welcome dinner — the colours will take your breath away. This evening is yours: no agenda, no rush. Just the sound of the waves and the first magical evening in Bali. 🌅</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+              <div style="background:var(--gray-50);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;margin-bottom:4px;">🚗</div><div style="font-size:11px;font-weight:700">Airport Transfer</div><div style="font-size:10px;color:var(--gray-400)">Private SUV · 45 min</div><div style="font-size:11px;color:var(--green);margin-top:4px;">Confirmed</div></div>
+              <div style="background:var(--gray-50);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;margin-bottom:4px;">🏨</div><div style="font-size:11px;font-weight:700">Anantara Seminyak</div><div style="font-size:10px;color:var(--gray-400)">Check-in 14:00</div><div style="font-size:11px;color:var(--green);margin-top:4px;">₹18,000/night</div></div>
+              <div style="background:var(--gray-50);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;margin-bottom:4px;">🍽️</div><div style="font-size:11px;font-weight:700">Ku De Ta Dinner</div><div style="font-size:10px;color:var(--gray-400)">Sunset Beachfront</div><div style="font-size:11px;color:var(--teal);margin-top:4px;">₹4,800/pax</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── FINANCE ──────────────── -->
+    <div class="screen" id="screen-finance">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Collected MTD</div><div class="kpi-value">₹24L</div><div class="kpi-trend up">↑ 22%</div></div>
+        <div class="kpi-card"><div class="kpi-label">Receivables</div><div class="kpi-value">₹11L</div><div class="kpi-trend down">3 overdue</div></div>
+        <div class="kpi-card"><div class="kpi-label">Payables</div><div class="kpi-value">₹8.4L</div><div class="kpi-trend down">2 due this week</div></div>
+        <div class="kpi-card"><div class="kpi-label">Cash Position</div><div class="kpi-value">₹15.6L</div><div class="kpi-trend up">Healthy</div></div>
+        <div class="kpi-card"><div class="kpi-label">Avg Margin</div><div class="kpi-value">28%</div><div class="kpi-trend up">↑ 3pts</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Receivables</span><button class="btn btn-outline" style="font-size:11px;">Export CSV</button></div>
+          <table class="data-table">
+            <thead><tr><th>Client</th><th>Amount</th><th>Due</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Patel & Co</strong></td><td style="font-family:'DM Mono',monospace;">₹3,20,000</td><td style="color:var(--red);font-size:11px;">3 days overdue</td><td><span class="badge badge-red">Overdue</span></td><td><button class="btn btn-outline" style="font-size:10px;padding:4px 8px;">Remind</button></td></tr>
+              <tr><td><strong>Sharma Family</strong></td><td style="font-family:'DM Mono',monospace;">₹86,100</td><td style="font-size:11px;color:var(--gray-500)">Jun 1, 2026</td><td><span class="badge badge-orange">Due Soon</span></td><td><button class="btn btn-teal" style="font-size:10px;padding:4px 8px;">Send Link</button></td></tr>
+              <tr><td><strong>Iyer Group</strong></td><td style="font-family:'DM Mono',monospace;">₹1,56,000</td><td style="font-size:11px;color:var(--gray-500)">Jun 15, 2026</td><td><span class="badge badge-green">On Track</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">7-Day Cash Flow Forecast</span></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:flex-end;gap:6px;height:120px;margin-bottom:12px;">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="background:var(--green);width:100%;height:60px;border-radius:4px 4px 0 0;"></div><div style="background:var(--red-light);border:1px solid var(--red);width:100%;height:30px;border-radius:4px 4px 0 0;"></div><div style="font-size:9px;color:var(--gray-400)">Mon</div></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="background:var(--green);width:100%;height:40px;border-radius:4px 4px 0 0;"></div><div style="background:var(--red-light);border:1px solid var(--red);width:100%;height:80px;border-radius:4px 4px 0 0;"></div><div style="font-size:9px;color:var(--gray-400)">Tue</div></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="background:var(--green);width:100%;height:90px;border-radius:4px 4px 0 0;"></div><div style="background:var(--red-light);border:1px solid var(--red);width:100%;height:20px;border-radius:4px 4px 0 0;"></div><div style="font-size:9px;color:var(--gray-400)">Wed</div></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="background:var(--green);width:100%;height:50px;border-radius:4px 4px 0 0;"></div><div style="background:var(--red-light);border:1px solid var(--red);width:100%;height:40px;border-radius:4px 4px 0 0;"></div><div style="font-size:9px;color:var(--gray-400)">Thu</div></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="background:var(--green);width:100%;height:70px;border-radius:4px 4px 0 0;"></div><div style="background:var(--red-light);border:1px solid var(--red);width:100%;height:25px;border-radius:4px 4px 0 0;"></div><div style="font-size:9px;color:var(--gray-400)">Fri</div></div>
+            </div>
+            <div style="display:flex;gap:16px;"><div style="display:flex;align-items:center;gap:4px;font-size:11px;"><div style="width:10px;height:10px;background:var(--green);border-radius:2px;"></div>Inflows</div><div style="display:flex;align-items:center;gap:4px;font-size:11px;"><div style="width:10px;height:10px;background:var(--red-light);border:1px solid var(--red);border-radius:2px;"></div>Outflows</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── REMITTANCE ──────────────── -->
+    <div class="screen" id="screen-remittance">
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="kpi-card"><div class="kpi-label">Total Remitted MTD</div><div class="kpi-value">$42k</div><div class="kpi-trend up">18 payments</div></div>
+        <div class="kpi-card"><div class="kpi-label">Pending Approval</div><div class="kpi-value">4</div><div class="kpi-trend down">₹8.2L queued</div></div>
+        <div class="kpi-card"><div class="kpi-label">Avg FX Buffer</div><div class="kpi-value">1.5%</div><div class="kpi-trend up">Saved ₹12,000</div></div>
+        <div class="kpi-card"><div class="kpi-label">Failed Payments</div><div class="kpi-value">0</div><div class="kpi-trend up">30-day clean</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Payment Queue</span>
+            <button class="btn btn-teal" style="font-size:11px;">+ New Remittance</button>
+          </div>
+          <div class="card-body" style="padding:12px;">
+            <div class="payment-row">
+              <div style="width:36px;height:36px;background:var(--purple-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏨</div>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:600">Anantara Seminyak Resort</div>
+                <div style="font-size:11px;color:var(--gray-400)">Sharma booking · Jun 8–15 · Wise Business</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;">$3,200</div>
+                <div style="font-size:10px;color:var(--gray-400)">₹2,66,560 @ 83.30</div>
+              </div>
+              <span class="badge badge-orange" style="margin-left:8px;">Pending</span>
+            </div>
+            <div class="payment-row">
+              <div style="width:36px;height:36px;background:var(--teal-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🚗</div>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:600">Bali DMC Transfers Co.</div>
+                <div style="font-size:11px;color:var(--gray-400)">Multiple bookings · IDR via FlyRemit</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;">IDR 8.2M</div>
+                <div style="font-size:10px;color:var(--gray-400)">₹41,000 equivalent</div>
+              </div>
+              <span class="badge badge-orange" style="margin-left:8px;">Pending</span>
+            </div>
+            <div class="payment-row">
+              <div style="width:36px;height:36px;background:var(--green-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🎭</div>
+              <div style="flex:1;">
+                <div style="font-size:13px;font-weight:600">Ubud Experience Tours</div>
+                <div style="font-size:11px;color:var(--gray-400)">Activity package · Razorpay Payout (NEFT)</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:500;">₹28,000</div>
+                <div style="font-size:10px;color:var(--green)">Domestic INR</div>
+              </div>
+              <span class="badge badge-green" style="margin-left:8px;">Completed</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">FX Dashboard</span></div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+              <div style="background:var(--gray-50);border-radius:8px;padding:12px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700;text-transform:uppercase">USD/INR</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;">83.30</div><div style="font-size:11px;color:var(--green)">↑ 0.12 today</div></div>
+              <div style="background:var(--gray-50);border-radius:8px;padding:12px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700;text-transform:uppercase">AED/INR</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;">22.68</div><div style="font-size:11px;color:var(--red)">↓ 0.03 today</div></div>
+              <div style="background:var(--gray-50);border-radius:8px;padding:12px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700;text-transform:uppercase">IDR/INR</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;">0.0050</div><div style="font-size:11px;color:var(--gray-400)">Stable</div></div>
+              <div style="background:var(--gray-50);border-radius:8px;padding:12px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700;text-transform:uppercase">EUR/INR</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;">89.42</div><div style="font-size:11px;color:var(--green)">↑ 0.31 today</div></div>
+            </div>
+            <div class="ai-card">
+              <div class="ai-card-header"><div class="ai-icon">⚠️</div><span class="ai-label">FX Risk Alert</span></div>
+              <div style="font-size:12px;color:var(--gray-700)">USD exposure of $12,400 in upcoming payables. Lock rate now? Wise forward rate available at 83.45 (valid 48hrs).</div>
+              <button class="btn btn-teal" style="margin-top:8px;font-size:11px;">Lock Forward Rate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── CORPORATE ──────────────── -->
+    <div class="screen" id="screen-corporate">
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="kpi-card"><div class="kpi-label">Active Corporate Accounts</div><div class="kpi-value">8</div><div class="kpi-trend up">3 new Q2</div></div>
+        <div class="kpi-card"><div class="kpi-label">YTD Corporate GMV</div><div class="kpi-value">₹1.8Cr</div><div class="kpi-trend up">↑ 34%</div></div>
+        <div class="kpi-card"><div class="kpi-label">Pending Approvals</div><div class="kpi-value">3</div><div class="kpi-trend down">2 urgent</div></div>
+        <div class="kpi-card"><div class="kpi-label">Avg Deal Size</div><div class="kpi-value">₹22L</div><div class="kpi-trend up">↑ 12%</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Patel & Co — Coorg Offsite</span><span class="badge badge-purple">Corporate</span></div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+              <div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">PAX</div><div style="font-size:18px;font-weight:700">22</div></div>
+              <div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">COST CENTRE</div><div style="font-size:13px;font-weight:600">HR-ENGAGE</div></div>
+              <div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">PO NUMBER</div><div style="font-size:13px;font-weight:600">PO-2026-0142</div></div>
+            </div>
+            <div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:10px;">Approval Chain</div>
+            <div class="approval-timeline">
+              <div class="approval-step"><div class="approval-dot done"></div><div style="font-size:12px;font-weight:600">Sales Agent — Rohan</div><div style="font-size:11px;color:var(--green)">✓ Approved · May 14</div></div>
+              <div class="approval-step"><div class="approval-dot done"></div><div style="font-size:12px;font-weight:600">Manager — Rajan</div><div style="font-size:11px;color:var(--green)">✓ Approved · May 14</div></div>
+              <div class="approval-step"><div class="approval-dot current"></div><div style="font-size:12px;font-weight:600">Finance — Ananya</div><div style="font-size:11px;color:var(--orange)">⏳ Awaiting approval</div></div>
+              <div class="approval-step"><div class="approval-dot"></div><div style="font-size:12px;font-weight:600">Client Approver — Patel CFO</div><div style="font-size:11px;color:var(--gray-400)">Pending chain completion</div></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:16px;">
+              <button class="btn btn-teal" style="flex:1">✓ Approve as Finance</button>
+              <button class="btn btn-outline">Generate Corporate Invoice</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Corporate Invoice Preview</span><span class="badge badge-gray">DRAFT</span></div>
+          <div class="card-body">
+            <div style="border:1px solid var(--gray-200);border-radius:8px;padding:16px;font-size:12px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:12px;"><div><div style="font-weight:700;font-size:14px">RAJAN TRAVEL CO.</div><div style="color:var(--gray-400)">GST: 29AXXXX1234X1Z5</div></div><div style="text-align:right"><div style="font-weight:700">TAX INVOICE</div><div style="color:var(--gray-400)">INV-2026-0198</div></div></div>
+              <div style="background:var(--gray-50);padding:10px;border-radius:6px;margin-bottom:10px;"><div><strong>Bill To:</strong> Patel & Co Pvt Ltd</div><div>GSTIN: 27BXXXX5678Y1Z3</div><div>PO Ref: PO-2026-0142</div><div>Cost Centre: HR-ENGAGE</div></div>
+              <table style="width:100%;border-collapse:collapse;font-size:11px;"><tr style="background:var(--indigo);color:white;"><th style="padding:6px 8px;text-align:left">Service</th><th style="padding:6px 8px;text-align:right">Amount</th></tr><tr><td style="padding:6px 8px;border-bottom:1px solid var(--gray-100)">Coorg Offsite Package · 22 pax</td><td style="padding:6px 8px;border-bottom:1px solid var(--gray-100);text-align:right;font-family:'DM Mono',monospace">₹7,26,000</td></tr><tr><td style="padding:6px 8px;border-bottom:1px solid var(--gray-100)">GST @18%</td><td style="padding:6px 8px;border-bottom:1px solid var(--gray-100);text-align:right;font-family:'DM Mono',monospace">₹1,30,680</td></tr><tr style="font-weight:700;"><td style="padding:6px 8px">Total</td><td style="padding:6px 8px;text-align:right;font-family:'DM Mono',monospace;color:var(--indigo)">₹8,56,680</td></tr></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── FIXED DEPARTURES ──────────────── -->
+    <div class="screen" id="screen-departures">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <div>
+          <div class="tabs" style="margin-bottom:0">
+            <div class="tab active">Upcoming Departures</div>
+            <div class="tab">Calendar View</div>
+            <div class="tab">Seat Inventory</div>
+          </div>
+        </div>
+        <button class="btn btn-teal">+ Create Departure</button>
+      </div>
+      <div class="departure-grid">
+        <div class="departure-card">
+          <div class="departure-card-img" style="background:linear-gradient(135deg,#1B6CA8,#1CB5E0)">🏯</div>
+          <div class="departure-card-body">
+            <div style="font-size:14px;font-weight:700">Japan Cherry Blossom</div>
+            <div style="font-size:11px;color:var(--gray-400)">Apr 3–14, 2027 · 12 Days</div>
+            <div class="departure-seats">
+              <div style="font-size:11px;color:var(--gray-500);white-space:nowrap">32/40 seats</div>
+              <div class="seat-bar"><div class="seat-fill" style="width:80%"></div></div>
+              <span class="badge badge-orange" style="white-space:nowrap">8 left</span>
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--gray-900);margin-top:8px;">₹1,85,000 <span style="font-size:10px;color:var(--gray-400);font-weight:400">per seat</span></div>
+          </div>
+        </div>
+        <div class="departure-card" style="border-color:var(--red);">
+          <div class="departure-card-img" style="background:linear-gradient(135deg,#FF6B35,#FFB347)">🕌</div>
+          <div class="departure-card-body">
+            <div style="font-size:14px;font-weight:700">Egypt Wonders Tour</div>
+            <div style="font-size:11px;color:var(--gray-400)">Mar 15–24, 2027 · 10 Days</div>
+            <div class="departure-seats">
+              <div style="font-size:11px;color:var(--red);font-weight:600;white-space:nowrap">37/40 seats</div>
+              <div class="seat-bar"><div class="seat-fill critical" style="width:93%"></div></div>
+              <span class="badge badge-red" style="white-space:nowrap">3 left!</span>
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--gray-900);margin-top:8px;">₹2,10,000 <span style="font-size:10px;color:var(--gray-400);font-weight:400">per seat</span></div>
+          </div>
+        </div>
+        <div class="departure-card">
+          <div class="departure-card-img" style="background:linear-gradient(135deg,#11998e,#38ef7d)">🌿</div>
+          <div class="departure-card-body">
+            <div style="font-size:14px;font-weight:700">Bhutan Tranquil Escape</div>
+            <div style="font-size:11px;color:var(--gray-400)">Oct 5–12, 2026 · 8 Days</div>
+            <div class="departure-seats">
+              <div style="font-size:11px;color:var(--orange);font-weight:600;white-space:nowrap">14/24 seats</div>
+              <div class="seat-bar"><div class="seat-fill warning" style="width:58%"></div></div>
+              <span class="badge badge-green" style="white-space:nowrap">10 left</span>
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--gray-900);margin-top:8px;">₹98,000 <span style="font-size:10px;color:var(--gray-400);font-weight:400">per seat</span></div>
+          </div>
+        </div>
+        <div class="departure-card" style="border-style:dashed;border-color:var(--gray-300);cursor:pointer;display:flex;align-items:center;justify-content:center;min-height:160px;">
+          <div style="text-align:center;color:var(--gray-400);">
+            <div style="font-size:32px;margin-bottom:8px">+</div>
+            <div style="font-size:13px;font-weight:600">New Departure</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header"><span class="card-title">Minimum Pax Threshold Alerts</span></div>
+        <div class="card-body" style="padding:12px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--orange-light);border:1px solid var(--orange);border-radius:8px;margin-bottom:8px;">
+            <span style="font-size:20px;">⚠️</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">Bhutan Tranquil Escape — Oct 5</div><div style="font-size:11px;color:var(--gray-600)">14/24 seats confirmed. Minimum pax threshold: 20. Cutoff in 18 days. Need 6 more.</div></div>
+            <button class="btn btn-orange" style="background:var(--orange);color:white;font-size:11px;">Notify Waitlist</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── HIERARCHY ──────────────── -->
+    <div class="screen" id="screen-hierarchy">
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header"><span class="card-title">5-Level Platform Hierarchy</span><span class="badge badge-teal">New in v2.0</span></div>
+        <div class="card-body">
+          <div style="max-width:800px;margin:0 auto;">
+            <div class="hierarchy-level"><div class="hierarchy-node" style="background:var(--indigo);color:white;padding:12px 40px;">🌐 NAMA Platform Owner<div style="font-size:10px;font-weight:400;opacity:0.7;margin-top:2px;">Full system access · L1</div></div></div>
+            <div class="hierarchy-connector">│</div>
+            <div class="hierarchy-level"><div class="hierarchy-node" style="background:var(--purple-light);border-color:var(--purple);padding:10px 40px;">👑 Super Admin<div style="font-size:10px;font-weight:400;color:var(--gray-400);margin-top:2px;">NAMA staff · manage all orgs · L2</div></div></div>
+            <div class="hierarchy-connector">│</div>
+            <div class="hierarchy-level" style="gap:40px;display:flex;justify-content:center;">
+              <div style="text-align:center;"><div class="hierarchy-connector">│</div><div class="hierarchy-node" style="background:var(--teal-light);border-color:var(--teal);padding:10px 24px;">🏢 Travel Co. Admin<div style="font-size:10px;font-weight:400;color:var(--gray-400);margin-top:2px;">Rajan Travel Co. · L3</div></div></div>
+              <div style="text-align:center;"><div class="hierarchy-connector">│</div><div class="hierarchy-node" style="background:var(--teal-light);border-color:var(--teal);padding:10px 24px;">🏢 Travel Co. Admin<div style="font-size:10px;font-weight:400;color:var(--gray-400);margin-top:2px;">Patel & Co Travel · L3</div></div></div>
+              <div style="text-align:center;"><div class="hierarchy-connector">│</div><div class="hierarchy-node" style="background:var(--teal-light);border-color:var(--teal);padding:10px 24px;">🏢 Travel Co. Admin<div style="font-size:10px;font-weight:400;color:var(--gray-400);margin-top:2px;">Bali DMC Ltd · L3</div></div></div>
+            </div>
+            <div class="hierarchy-connector">│</div>
+            <div class="hierarchy-level" style="gap:20px;display:flex;justify-content:center;flex-wrap:wrap;">
+              <div class="hierarchy-node" style="padding:8px 20px;font-size:11px;">👤 Manager<div style="font-size:9px;font-weight:400;color:var(--gray-400)">L4 · All team data</div></div>
+              <div class="hierarchy-node" style="padding:8px 20px;font-size:11px;">🎯 Sales Agent<div style="font-size:9px;font-weight:400;color:var(--gray-400)">L4 · Own leads only</div></div>
+              <div class="hierarchy-node" style="padding:8px 20px;font-size:11px;">⚙️ Ops Exec<div style="font-size:9px;font-weight:400;color:var(--gray-400)">L4 · Bookings & docs</div></div>
+              <div class="hierarchy-node" style="padding:8px 20px;font-size:11px;">💰 Finance<div style="font-size:9px;font-weight:400;color:var(--gray-400)">L4 · Payments only</div></div>
+            </div>
+            <div class="hierarchy-connector">│</div>
+            <div class="hierarchy-level"><div class="hierarchy-node" style="background:var(--orange-light);border-color:var(--orange);padding:10px 60px;">🔗 Sub-Agents / Partners<div style="font-size:10px;font-weight:400;color:var(--gray-500);margin-top:2px;">L5 · White-label portal only · Zero NAMA workspace access</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Data Isolation Rules</span></div>
+        <div class="card-body">
+          <div class="grid-3">
+            <div class="ai-card" style="border-color:rgba(27,42,107,0.2);background:var(--gray-50);">
+              <div style="font-size:12px;font-weight:700;color:var(--indigo);margin-bottom:6px;">Row-Level Security</div>
+              <div style="font-size:11px;color:var(--gray-600)">PostgreSQL RLS ensures L3 orgs cannot see each other's data even with identical module access. Enforced at DB layer — not application layer.</div>
+            </div>
+            <div class="ai-card" style="border-color:rgba(0,196,204,0.2);background:var(--teal-light);">
+              <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:6px;">Permission Ceiling</div>
+              <div style="font-size:11px;color:var(--gray-600)">Sub Users cannot have more permissions than their L3 Admin granted. Permissions never escalate upward through the hierarchy.</div>
+            </div>
+            <div class="ai-card" style="border-color:rgba(107,33,168,0.2);background:var(--purple-light);">
+              <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:6px;">Super Admin Audit</div>
+              <div style="font-size:11px;color:var(--gray-600)">Every impersonation session by Super Admin is timestamped, logged with IP, and visible in the audit trail. No silent access.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── SUBSCRIPTION ──────────────── -->
+    <div class="screen" id="screen-subscription">
+      <div style="margin-bottom:20px;">
+        <div style="font-size:22px;font-weight:700;font-family:'Fraunces',serif;color:var(--gray-900);margin-bottom:4px;">Choose Your Plan</div>
+        <div style="font-size:13px;color:var(--gray-400)">All plans include a 14-day free trial. No credit card required.</div>
+      </div>
+
+      <div class="currency-tabs">
+        <div class="currency-tab active" onclick="switchCurrency('inr')">🇮🇳 INR</div>
+        <div class="currency-tab" onclick="switchCurrency('usd')">🇺🇸 USD</div>
+        <div class="currency-tab" onclick="switchCurrency('aed')">🇦🇪 AED</div>
+        <div class="currency-tab" onclick="switchCurrency('eur')">🇪🇺 EUR</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+        <span style="font-size:13px;color:var(--gray-500)">Monthly</span>
+        <div onclick="toggleBilling()" style="width:44px;height:24px;background:var(--teal);border-radius:100px;position:relative;cursor:pointer;" id="billing-toggle"><div style="width:18px;height:18px;background:white;border-radius:50%;position:absolute;right:3px;top:3px;transition:all 0.2s;" id="toggle-knob"></div></div>
+        <span style="font-size:13px;font-weight:600;color:var(--gray-900)">Annual <span style="color:var(--green)">Save 17%</span></span>
+      </div>
+
+      <div class="plan-grid">
+        <div class="plan-card">
+          <div class="plan-name">Starter</div>
+          <div class="plan-target">Solo agent · 1–3 users</div>
+          <div class="plan-price">
+            <div class="plan-amount" id="price-starter">₹4,999</div>
+            <div class="plan-period">/month · up to 3 users</div>
+            <div class="plan-annual" id="annual-starter">Annual: ₹49,990/yr (₹4,166/mo)</div>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-feature">Query Inbox (M1)</div>
+          <div class="plan-feature">Lead CRM (M2)</div>
+          <div class="plan-feature">Quotation Generator (M3)</div>
+          <div class="plan-feature">Document Mgmt (M4)</div>
+          <div class="plan-feature">Itinerary Builder (M8 + M9)</div>
+          <div style="margin-top:16px;"><button class="btn btn-outline" style="width:100%">Start Free Trial</button></div>
+        </div>
+
+        <div class="plan-card featured">
+          <div class="plan-name">Growth</div>
+          <div class="plan-target">Small DMC · 4–15 users</div>
+          <div class="plan-price">
+            <div class="plan-amount" id="price-growth">₹14,999</div>
+            <div class="plan-period">/month · up to 15 users</div>
+            <div class="plan-annual" id="annual-growth">Annual: ₹1,49,990/yr (₹12,499/mo)</div>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-feature">All Starter modules</div>
+          <div class="plan-feature">Supplier Registry (M7)</div>
+          <div class="plan-feature">Rates & Contracts (M6)</div>
+          <div class="plan-feature">Finance Dashboard (M11)</div>
+          <div class="plan-feature">Invoice & Vouchers (M10)</div>
+          <div class="plan-feature">Remittance Module (M14)</div>
+          <div style="margin-top:16px;"><button class="btn btn-teal" style="width:100%">Start Free Trial</button></div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-name">Professional</div>
+          <div class="plan-target">Mid DMC · 15–50 users</div>
+          <div class="plan-price">
+            <div class="plan-amount" id="price-pro">₹39,999</div>
+            <div class="plan-period">/month · up to 50 users</div>
+            <div class="plan-annual" id="annual-pro">Annual: ₹3,99,990/yr (₹33,333/mo)</div>
+          </div>
+          <div class="plan-divider"></div>
+          <div class="plan-feature">All Growth modules</div>
+          <div class="plan-feature">White-Label Portal (1 portal)</div>
+          <div class="plan-feature">Corporate Travel (M13)</div>
+          <div class="plan-feature">Fixed Departures (M13)</div>
+          <div class="plan-feature">Priority AI access</div>
+          <div style="margin-top:16px;"><button class="btn btn-outline" style="width:100%">Start Free Trial</button></div>
+        </div>
+
+        <div class="plan-card" style="background:var(--indigo-dark);border-color:var(--indigo);">
+          <div class="plan-name" style="color:white">Enterprise</div>
+          <div class="plan-target" style="color:rgba(255,255,255,0.5)">Large DMC · OTA · 50+ users</div>
+          <div class="plan-price">
+            <div class="plan-amount" style="color:white">Custom</div>
+            <div class="plan-period" style="color:rgba(255,255,255,0.4)">Unlimited users · SLA</div>
+            <div class="plan-annual" style="color:var(--teal)">Negotiated annual contract</div>
+          </div>
+          <div class="plan-divider" style="background:rgba(255,255,255,0.1)"></div>
+          <div class="plan-feature" style="color:rgba(255,255,255,0.8)">Everything in Professional</div>
+          <div class="plan-feature" style="color:rgba(255,255,255,0.8)">Unlimited White-Label portals</div>
+          <div class="plan-feature" style="color:rgba(255,255,255,0.8)">99.9% SLA guarantee</div>
+          <div class="plan-feature" style="color:rgba(255,255,255,0.8)">Dedicated customer success</div>
+          <div class="plan-feature" style="color:rgba(255,255,255,0.8)">Custom integrations</div>
+          <div style="margin-top:16px;"><button class="btn btn-teal" style="width:100%">Contact Sales</button></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:24px;">
+        <div class="card-header"><span class="card-title">Current Subscription — Rajan Travel Co.</span><span class="badge badge-teal">Growth · Active</span></div>
+        <div class="card-body">
+          <div class="grid-3">
+            <div><div style="font-size:11px;color:var(--gray-400);font-weight:700;text-transform:uppercase">Plan</div><div style="font-size:14px;font-weight:700">Growth</div></div>
+            <div><div style="font-size:11px;color:var(--gray-400);font-weight:700;text-transform:uppercase">Billing</div><div style="font-size:14px;font-weight:700">Annual · ₹1,49,990/yr</div></div>
+            <div><div style="font-size:11px;color:var(--gray-400);font-weight:700;text-transform:uppercase">Next Invoice</div><div style="font-size:14px;font-weight:700">Jan 15, 2027</div></div>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:8px;"><button class="btn btn-outline">Upgrade to Professional</button><button class="btn btn-ghost">Download Invoices</button><button class="btn btn-ghost" style="color:var(--red)">Cancel Plan</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ──────────────── ONBOARDING ──────────────── -->
+    <div class="screen" id="screen-onboarding">
+      <div style="background:var(--indigo-dark);border-radius:16px;padding:40px;text-align:center;margin-bottom:20px;">
+        <div style="font-family:'Fraunces',serif;font-size:28px;color:white;margin-bottom:8px;">Welcome to NAMA 👋</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:32px;">Let's get you set up in 7 quick steps. Takes about 6 minutes.</div>
+        <div class="tour-step">
+          <div class="tour-progress">
+            <div class="tour-dot done"></div>
+            <div class="tour-dot done"></div>
+            <div class="tour-dot current"></div>
+            <div class="tour-dot"></div>
+            <div class="tour-dot"></div>
+            <div class="tour-dot"></div>
+            <div class="tour-dot"></div>
+          </div>
+          <div style="font-size:12px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Step 3 of 7</div>
+          <div style="font-size:18px;font-weight:700;color:var(--gray-900);margin-bottom:8px;">Your first query just arrived 🎉</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.6;margin-bottom:20px;">NAMA automatically captured a Bali enquiry from WhatsApp and created a lead. No manual entry needed. The AI has already extracted all key details.</div>
+          <div style="background:var(--gray-50);border-radius:8px;padding:12px;margin-bottom:16px;text-align:left;">
+            <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:6px;">AI EXTRACTED</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;"><span>📍 Bali</span><span>📅 Jun 8–15</span><span>👥 4 pax</span><span>💰 ₹3L budget</span></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" style="flex:1">← Back</button>
+            <button class="btn btn-teal" style="flex:1" onclick="showScreen('quotes')">Generate Quote →</button>
+          </div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card" style="text-align:center;padding:20px;opacity:0.5;"><div style="font-size:28px;margin-bottom:8px">✅</div><div style="font-size:13px;font-weight:700">Welcome</div><div style="font-size:11px;color:var(--gray-400)">Completed</div></div>
+        <div class="card" style="text-align:center;padding:20px;opacity:0.5;"><div style="font-size:28px;margin-bottom:8px">✅</div><div style="font-size:13px;font-weight:700">Inbox Tour</div><div style="font-size:11px;color:var(--gray-400)">Completed</div></div>
+        <div class="card" style="text-align:center;padding:20px;border:2px solid var(--teal);"><div style="font-size:28px;margin-bottom:8px">⬡</div><div style="font-size:13px;font-weight:700">Query → Lead</div><div style="font-size:11px;color:var(--teal)">In Progress</div></div>
+        <div class="card" style="text-align:center;padding:20px;"><div style="font-size:28px;margin-bottom:8px">4</div><div style="font-size:13px;font-weight:700">Generate Quote</div><div style="font-size:11px;color:var(--gray-400)">Upcoming</div></div>
+        <div class="card" style="text-align:center;padding:20px;"><div style="font-size:28px;margin-bottom:8px">5</div><div style="font-size:13px;font-weight:700">Review Output</div><div style="font-size:11px;color:var(--gray-400)">Upcoming</div></div>
+        <div class="card" style="text-align:center;padding:20px;"><div style="font-size:28px;margin-bottom:8px">6</div><div style="font-size:13px;font-weight:700">Send to Client</div><div style="font-size:11px;color:var(--gray-400)">Upcoming</div></div>
+      </div>
+    </div>
+
+    <!-- Remaining screens (suppliers, rates, documents, whitelabel) -->
+    <div class="screen" id="screen-suppliers">
+      <div class="card"><div class="card-header"><span class="card-title">Supplier Registry</span><button class="btn btn-teal">+ Add Supplier</button></div><div class="card-body"><table class="data-table"><thead><tr><th>Supplier</th><th>Type</th><th>Location</th><th>AI Grade</th><th>KYC</th><th>Status</th></tr></thead><tbody><tr><td><strong>Anantara Hotels</strong></td><td>Hotel</td><td>Bali, ID</td><td><span style="font-family:'DM Mono',monospace;color:var(--green);font-weight:700">A+</span></td><td><span class="badge badge-green">Verified</span></td><td><span class="badge badge-teal">Active</span></td></tr><tr><td><strong>Bali DMC Transfers</strong></td><td>Transfer</td><td>Bali, ID</td><td><span style="font-family:'DM Mono',monospace;color:var(--teal);font-weight:700">A</span></td><td><span class="badge badge-green">Verified</span></td><td><span class="badge badge-teal">Active</span></td></tr><tr><td><strong>Ubud Experience Tours</strong></td><td>Activity</td><td>Ubud, ID</td><td><span style="font-family:'DM Mono',monospace;color:var(--orange);font-weight:700">B+</span></td><td><span class="badge badge-orange">Pending</span></td><td><span class="badge badge-gray">Review</span></td></tr></tbody></table></div></div>
+    </div>
+    <div class="screen" id="screen-rates"><div class="card"><div class="card-header"><span class="card-title">Rates & Contracts</span></div><div class="card-body"><div style="text-align:center;padding:40px;color:var(--gray-400)"><div style="font-size:32px;margin-bottom:12px">📄</div><div style="font-size:14px;font-weight:600;margin-bottom:4px">Upload Rate Sheets</div><div style="font-size:12px">AI will parse PDF/Excel and extract all rate data automatically</div><button class="btn btn-teal" style="margin-top:16px">Upload Rate Sheet</button></div></div></div></div>
+    <div class="screen" id="screen-documents"><div class="card"><div class="card-header"><span class="card-title">Document Management</span></div><div class="card-body"><table class="data-table"><thead><tr><th>Guest</th><th>Document</th><th>Expiry</th><th>Status</th></tr></thead><tbody><tr><td>Sharma, Raj</td><td>Passport IN</td><td>Mar 2029</td><td><span class="badge badge-green">Verified</span></td></tr><tr><td>Sharma, Priya</td><td>Passport IN</td><td>Jul 2027</td><td><span class="badge badge-orange">⚠️ Expires soon</span></td></tr><tr><td>Sharma, Aarav</td><td>Passport IN</td><td>—</td><td><span class="badge badge-red">Missing</span></td></tr></tbody></table></div></div></div>
+    <div class="screen" id="screen-whitelabel"><div class="card"><div class="card-header"><span class="card-title">White-Label Portal — Rajan Travel Co.</span></div><div class="card-body"><div class="grid-2"><div><div style="font-size:13px;font-weight:700;margin-bottom:12px">Brand Configuration</div><div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;"><div style="width:36px;height:36px;background:var(--indigo);border-radius:8px;"></div><span style="font-size:13px;font-weight:600;color:var(--indigo)">Deep Indigo</span></div><div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;"><div style="width:36px;height:36px;background:var(--teal);border-radius:8px;"></div><span style="font-size:13px;font-weight:600;color:var(--teal)">Electric Teal</span></div><div style="font-size:12px;color:var(--gray-500);background:var(--gray-50);border-radius:6px;padding:8px;font-family:'DM Mono',monospace;margin-top:12px;">rajantravelco.nama.app ✓</div></div><div><div style="font-size:13px;font-weight:700;margin-bottom:12px">Sub-Agents</div><div style="font-size:12px;color:var(--gray-700);padding:10px;background:var(--gray-50);border-radius:8px;margin-bottom:6px;">Siti Travels · Jakarta · 15% commission</div><div style="font-size:12px;color:var(--gray-700);padding:10px;background:var(--gray-50);border-radius:8px;margin-bottom:6px;">Gulf Connect Tours · Dubai · 12% commission</div><button class="btn btn-teal" style="margin-top:8px;font-size:11px">+ Invite Sub-Agent</button></div></div></div></div></div>
+
+  </div>
 </div>
 
-<!-- BODY -->
-<div class="body-wrap">
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sb-section">Workspace</div>
-    <div class="sb-item active" id="sb-dashboard" onclick="osSwitch('dashboard',this)"><span class="sb-icon">📊</span> Dashboard</div>
-    <div class="sb-item" id="sb-inbox" onclick="osSwitch('inbox',this)"><span class="sb-icon">📥</span> Inbox <span class="sb-badge">7</span></div>
-    <div class="sb-item" id="sb-pipeline" onclick="osSwitch('pipeline',this)"><span class="sb-icon">◈</span> Pipeline</div>
-
-    <div class="sb-section">Operations</div>
-    <div class="sb-item" id="sb-trips" onclick="osSwitch('trips',this)"><span class="sb-icon">✈️</span> Trips <span class="sb-badge green">3</span></div>
-    <div class="sb-item" id="sb-builder" onclick="osSwitch('builder',this)"><span class="sb-icon">🗺</span> Trip Builder</div>
-    <div class="sb-item" id="sb-proposal" onclick="osSwitch('proposal',this)"><span class="sb-icon">📄</span> Proposals</div>
-    <div class="sb-item" id="sb-contract" onclick="osSwitch('contract',this)"><span class="sb-icon">🤖</span> Contract AI</div>
-
-    <div class="sb-section">Finance</div>
-    <div class="sb-item" id="sb-bookings" onclick="osSwitch('bookings',this)"><span class="sb-icon">📋</span> Bookings</div>
-    <div class="sb-item" id="sb-finance" onclick="osSwitch('finance',this)"><span class="sb-icon">💰</span> Finance</div>
-    <div class="sb-item" id="sb-analytics" onclick="osSwitch('analytics',this)"><span class="sb-icon">📈</span> Analytics</div>
+<!-- SLIDE PANEL -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="slide-panel" id="slide-panel">
+  <div class="panel-header">
+    <div style="font-size:16px;font-weight:700" id="panel-title">Lead Detail</div>
+    <div style="font-size:12px;color:var(--gray-400)" id="panel-sub">CRM Record</div>
+    <button class="panel-close" onclick="closePanel()">✕</button>
   </div>
-
-  <!-- CONTENT PANELS -->
-  <div class="content">
-
-    <!-- ── SCREEN 1: DASHBOARD ── -->
-    <div class="panel active" id="panel-dashboard">
-      <div class="panel-scroll panel-anim">
-        <div class="page-title">Command Centre</div>
-        <div class="page-sub">Good morning, Narayan — here is your travel OS at a glance.</div>
-
-        <div class="grid-4" style="margin-bottom:16px" id="dash-kpis"></div>
-
-        <div class="flex-row" style="margin-bottom:16px">
-          <!-- Tasks -->
-          <div class="card" style="flex:1">
-            <div class="section-label" style="margin-bottom:10px">Follow-ups & Alerts</div>
-            <div id="dash-tasks"></div>
-          </div>
-          <!-- Pipeline snapshot -->
-          <div class="card" style="flex:1">
-            <div class="section-label" style="margin-bottom:10px">Pipeline Snapshot</div>
-            <div id="dash-pipeline"></div>
-          </div>
-        </div>
-
-        <!-- Activity Feed -->
-        <div class="card">
-          <div class="section-label" style="margin-bottom:10px">Recent Activity</div>
-          <div id="dash-activity"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SCREEN 2: INBOX ── -->
-    <div class="panel" id="panel-inbox">
-      <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-shrink:0;background:var(--surface);">
-        <div class="tn-search" style="max-width:220px;flex:1"><span style="color:var(--muted)">🔍</span><input placeholder="Search conversations…"></div>
-        <div class="tag">All</div><div class="tag" style="cursor:pointer">WhatsApp</div><div class="tag" style="cursor:pointer">Email</div>
-        <div class="tag blue" style="cursor:pointer;margin-left:auto">✦ AI Mode ON</div>
-      </div>
-      <div class="inbox-wrap">
-        <div class="inbox-list" id="inbox-list"></div>
-        <div class="inbox-right" id="inbox-right">
-          <div class="inbox-ai-banner">
-            <span style="font-size:14px">✦</span>
-            <div style="flex:1">
-              <div style="font-size:12px;font-weight:500;color:var(--accent)" id="ai-summary-text">Select a conversation to see AI summary</div>
-            </div>
-            <button class="btn-primary" style="font-size:11px;padding:5px 12px" onclick="osSwitch('builder')">Create Trip →</button>
-          </div>
-          <div class="chat-body" id="chat-body"></div>
-          <div class="chat-input-bar">
-            <input class="chat-input" id="chat-input" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendMsg()">
-            <button class="btn-ghost" style="font-size:11px" onclick="showToast('📄','Templates','Message templates loaded')">Templates</button>
-            <button class="btn-primary" style="font-size:11px" onclick="aiReply()">✦ AI Reply</button>
-            <button class="btn-primary" style="font-size:11px" onclick="sendMsg()">Send</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SCREEN 3: LEAD → TRIP VIEW ── -->
-    <div class="panel" id="panel-trips">
-      <div class="lead-detail-wrap">
-        <div class="lead-info-panel" id="lead-info"></div>
-        <div class="lead-itin-panel" id="lead-itin"></div>
-      </div>
-    </div>
-
-    <!-- ── SCREEN 4: TRIP BUILDER ── -->
-    <div class="panel" id="panel-builder">
-      <div class="sticky-bar" id="builder-sticky"></div>
-      <div class="builder-wrap">
-        <div class="builder-sidebar">
-          <div class="builder-side-tabs">
-            <div class="builder-side-tab active" onclick="bsTab(0,this)">🏨 Hotels</div>
-            <div class="builder-side-tab" onclick="bsTab(1,this)">🚗 Transfers</div>
-            <div class="builder-side-tab" onclick="bsTab(2,this)">🎭 Activities</div>
-          </div>
-          <div style="padding:8px;border-bottom:1px solid var(--border)">
-            <div class="tn-search"><span style="color:var(--muted)">🔍</span><input placeholder="Search services…"></div>
-          </div>
-          <div style="flex:1;overflow-y:auto" id="builder-items"></div>
-        </div>
-        <div class="builder-canvas" id="builder-canvas"></div>
-        <div class="builder-pricing" id="builder-pricing"></div>
-      </div>
-    </div>
-
-    <!-- ── SCREEN 5: PROPOSAL ── -->
-    <div class="panel" id="panel-proposal">
-      <div class="proposal-wrap flex-col" style="flex:1;overflow-y:auto" id="proposal-content"></div>
-    </div>
-
-    <!-- ── SCREEN 6: PIPELINE ── -->
-    <div class="panel" id="panel-pipeline" style="flex-direction:column;">
-      <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:var(--surface)">
-        <div style="font-size:15px;font-weight:500">Sales Pipeline</div>
-        <div style="display:flex;gap:8px">
-          <button class="btn-ghost" onclick="showToast('⚙','Filter','Filter options')">Filter</button>
-          <button class="btn-primary" onclick="showToast('✦','New Lead','Lead form ready')">+ Add Lead</button>
-        </div>
-      </div>
-      <div class="pipeline-wrap" id="pipeline-wrap"></div>
-    </div>
-
-    <!-- ── SCREEN 7: CONTRACT AI ── -->
-    <div class="panel" id="panel-contract" style="flex-direction:column;">
-      <div style="padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--surface)">
-        <div style="font-size:15px;font-weight:500">Contract AI — Supplier Contract Parser</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px">Upload any hotel contract PDF. AI extracts rates, seasons, policies instantly.</div>
-      </div>
-      <div class="contract-wrap">
-        <div class="contract-left">
-          <div class="upload-zone" id="upload-zone"
-            ondragover="event.preventDefault();this.classList.add('drag-over')"
-            ondragleave="this.classList.remove('drag-over')"
-            ondrop="event.preventDefault();this.classList.remove('drag-over');startScan()"
-            onclick="startScan()">
-            <div class="upload-icon">📄</div>
-            <div class="upload-title">Drop Supplier Contract PDF Here</div>
-            <div class="upload-sub" style="margin-bottom:16px">Supports PDF, DOCX — any hotel or DMC contract</div>
-            <button class="btn-primary">Browse File</button>
-          </div>
-          <div class="scan-anim" id="scan-anim" style="display:none">
-            <div class="scan-ring" style="width:72px;height:72px;font-size:24px">✦</div>
-            <div style="font-size:15px;font-weight:500" id="scan-step">Scanning document…</div>
-            <div style="font-size:12px;color:var(--muted)">NAMA Contract AI is reading your file</div>
-            <div style="display:flex;gap:5px" id="scan-dots"></div>
-          </div>
-        </div>
-        <div class="contract-right" id="contract-right">
-          <div style="font-size:13.5px;font-weight:500;margin-bottom:14px;color:var(--muted)">Extracted Data will appear here</div>
-          <div id="extract-output"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SCREEN 8: BOOKINGS ── -->
-    <div class="panel" id="panel-bookings" style="flex-direction:column;">
-      <div class="booking-tabs" id="booking-tabs">
-        <div class="booking-tab active" onclick="bkTab('upcoming',this)">✈️ Upcoming</div>
-        <div class="booking-tab" onclick="bkTab('ongoing',this)">🔵 Ongoing</div>
-        <div class="booking-tab" onclick="bkTab('completed',this)">✅ Completed</div>
-      </div>
-      <div style="flex:1;overflow-y:auto;padding:16px" id="bookings-body"></div>
-    </div>
-
-    <!-- ── SCREEN 9: FINANCE ── -->
-    <div class="panel" id="panel-finance">
-      <div class="finance-wrap">
-        <div class="invoice-list" id="invoice-list"></div>
-        <div class="invoice-right" id="invoice-right"></div>
-      </div>
-    </div>
-
-    <!-- ── SCREEN 10: ANALYTICS ── -->
-    <div class="panel" id="panel-analytics">
-      <div class="panel-scroll panel-anim">
-        <div class="page-title">Business Intelligence</div>
-        <div class="page-sub">Revenue, conversion and growth metrics for your travel business.</div>
-        <div class="grid-4" id="analytics-kpis" style="margin-bottom:16px"></div>
-        <div class="grid-2" style="margin-bottom:14px" id="analytics-charts"></div>
-        <div class="grid-2" id="analytics-bottom"></div>
-      </div>
-    </div>
-
-  </div><!-- /content -->
-</div><!-- /body -->
-</div><!-- /shell -->
-
-<!-- TOAST -->
-<div class="toast" id="toast">
-  <span id="toast-icon">✦</span>
-  <div><strong id="toast-title"></strong><div id="toast-msg" style="font-size:11px;color:var(--muted)"></div></div>
+  <div class="panel-body" id="panel-body"></div>
 </div>
 
 <script>
-// ── DATA ──
-const LEADS_DATA = [
-  {id:1,name:'Sharma Family',   dest:'Bali, Indonesia',  budget:'₹3,20,000',pax:4, status:'hot',  winProb:72, lastMsg:'Do you have private pool villas available?', days:8},
-  {id:2,name:'Mehta Couple',    dest:'Switzerland',      budget:'₹6,50,000',pax:2, status:'hot',  winProb:68, lastMsg:'What is included in the Alps package?', days:11},
-  {id:3,name:'Kapoor Group',    dest:'Dubai + Abu Dhabi',budget:'₹8,00,000',pax:8, status:'warm', winProb:61, lastMsg:'We need a 5-night group quote.', days:6},
-  {id:4,name:'Reddy Family',    dest:'Maldives',         budget:'₹5,50,000',pax:4, status:'warm', winProb:55, lastMsg:'Overwater villa — is it available June?', days:5},
-  {id:5,name:'Singh Corporate', dest:'Thailand',         budget:'₹4,20,000',pax:12,status:'new',  winProb:40, lastMsg:'Team outing for 12 people — MICE package?', days:4},
-  {id:6,name:'Joshi Couple',    dest:'Maldives',         budget:'₹3,90,000',pax:2, status:'new',  winProb:35, lastMsg:'Anniversary special package needed.', days:6},
-];
-
-const SERVICES = {
-  hotels:[
-    {name:'The Layar Villas',    emoji:'🏨', meta:'Seminyak, Bali',  price:'₹28,000/n'},
-    {name:'Soneva Fushi',        emoji:'🌊', meta:'Baa Atoll, Maldives',price:'₹85,000/n'},
-    {name:'Marriott JBR Dubai',  emoji:'🏙', meta:'Dubai, UAE',      price:'₹18,500/n'},
-    {name:'NH Hotels Zurich',    emoji:'🏔', meta:'Zurich, Switzerland',price:'₹12,000/n'},
-    {name:'Le Méridien Bangkok', emoji:'🌆', meta:'Bangkok, Thailand',price:'₹8,400/n'},
-  ],
-  transfers:[
-    {name:'Bali Private Driver',    emoji:'🚗', meta:'Full day, Toyota Innova', price:'₹1,200'},
-    {name:'Dubai Airport Transfer', emoji:'🚐', meta:'Mercedes V-Class',        price:'₹2,400'},
-    {name:'Maldives Speedboat',     emoji:'⛵', meta:'Airport → Resort',        price:'₹8,000'},
-    {name:'Swiss Rail Pass',        emoji:'🚄', meta:'3-day unlimited',          price:'₹4,800'},
-  ],
-  activities:[
-    {name:'Mt. Batur Sunrise Trek', emoji:'🏔', meta:'Kintamani, Bali · 8hr', price:'₹800/pax'},
-    {name:'Desert Safari Dubai',    emoji:'🐪', meta:'Evening · 6hr',          price:'₹2,800/pax'},
-    {name:'Jungfraujoch Day Trip',  emoji:'❄️', meta:'Interlaken · Full day',  price:'₹6,200/pax'},
-    {name:'Phi Phi Island Tour',    emoji:'🏝', meta:'Phuket · Full day',      price:'₹2,200/pax'},
-  ]
+const screens = {
+  inbox: { title: 'Query Inbox', sub: '— All Channels', actions: '<button class="btn btn-outline">⌘K Search</button><button class="btn btn-teal" onclick="showScreen(\'quotes\')">+ New Quote</button>' },
+  crm: { title: 'Lead Pipeline', sub: '— 47 active leads', actions: '<button class="btn btn-outline">Filter</button><button class="btn btn-primary">+ New Lead</button>' },
+  quotes: { title: 'Quotation Generator', sub: '— Sharma Family · Bali', actions: '<button class="btn btn-outline">Version 3</button><button class="btn btn-teal">Send to Client</button>' },
+  itinerary: { title: 'Itinerary Builder', sub: '— Bali Family · 8 Days', actions: '<button class="btn btn-outline">Export PDF</button><button class="btn btn-teal">Approve & Send</button>' },
+  finance: { title: 'Finance Dashboard', sub: '— May 2026', actions: '<button class="btn btn-outline">Export</button><button class="btn btn-primary">+ Payment Link</button>' },
+  remittance: { title: 'Remittance Module', sub: '— Supplier Payments', actions: '<button class="btn btn-outline">Transaction History</button><button class="btn btn-teal">+ New Remittance</button>' },
+  corporate: { title: 'Corporate Travel', sub: '— 8 active accounts', actions: '<button class="btn btn-outline">Spend Report</button><button class="btn btn-primary">+ Corporate Account</button>' },
+  departures: { title: 'Fixed Departures', sub: '— Seat Inventory', actions: '<button class="btn btn-outline">Departure Calendar</button><button class="btn btn-teal">+ New Departure</button>' },
+  hierarchy: { title: 'Platform Hierarchy', sub: '— 5-Level Structure', actions: '<button class="btn btn-outline">RBAC Matrix</button>' },
+  subscription: { title: 'Subscription & Billing', sub: '— SaaS Plans', actions: '<button class="btn btn-outline">Invoice History</button>' },
+  onboarding: { title: 'Onboarding Tour', sub: '— Step 3 of 7', actions: '<button class="btn btn-ghost">Skip Tour</button><button class="btn btn-teal">Continue →</button>' },
+  suppliers: { title: 'Supplier Registry', sub: '— 142 suppliers', actions: '<button class="btn btn-outline">Filter</button><button class="btn btn-primary">+ Add Supplier</button>' },
+  rates: { title: 'Rates & Contracts', sub: '— Live Rate Sheets', actions: '<button class="btn btn-teal">Upload Rate Sheet</button>' },
+  documents: { title: 'Document Management', sub: '— Sharma Family booking', actions: '<button class="btn btn-outline">Upload Document</button>' },
+  whitelabel: { title: 'White-Label Platform', sub: '— Rajan Travel Co.', actions: '<button class="btn btn-outline">Preview Portal</button><button class="btn btn-teal">Go Live</button>' },
 };
 
-const ITINERARY = [
-  {day:1, title:'Arrival & Welcome',   loc:'Ngurah Rai Airport → Seminyak', services:[{e:'✈️',n:'Airport Transfer',p:'₹4,200'},{e:'🏨',n:'Villa Check-in',p:'Incl.'},{e:'🍽',n:'Welcome Dinner',p:'₹3,800'}]},
-  {day:2, title:'Ubud Discovery',      loc:'Ubud — Cultural Heart of Bali',  services:[{e:'🌿',n:'Rice Terrace Trek',p:'₹600'},{e:'🐒',n:'Monkey Forest',p:'₹400'},{e:'🎭',n:'Kecak Fire Dance',p:'₹800'}]},
-  {day:3, title:'Temple & Surf',       loc:'Tanah Lot & Seminyak Beach',     services:[{e:'🛕',n:'Tanah Lot Sunrise',p:'₹500'},{e:'🏄',n:'Surf Lesson',p:'₹2,400'},{e:'🛁',n:'Alaya Spa',p:'₹6,800'}]},
-  {day:4, title:'Water Adventures',    loc:'Nusa Dua Marine Park',            services:[{e:'🤿',n:'Snorkeling',p:'₹2,200'},{e:'🚤',n:'Dolphin Cruise',p:'₹3,600'}]},
-  {day:5, title:'Village & Crafts',    loc:'Batubulan & Celuk',              services:[{e:'🎨',n:'Silver Workshop',p:'₹1,200'},{e:'🍳',n:'Cooking Class',p:'₹2,800'}]},
-  {day:6, title:'Mt. Batur Sunrise',   loc:'Kintamani, North Bali',          services:[{e:'🏔',n:'Sunrise Trek',p:'₹3,200'},{e:'♨️',n:'Hot Springs',p:'₹1,400'}]},
-  {day:7, title:'Leisure & Farewell',  loc:'Seminyak & Airport',              services:[{e:'💆',n:'Spa Treatment',p:'₹4,200'},{e:'✈️',n:'Departure',p:'Incl.'}]},
-];
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const target = document.getElementById('screen-' + id);
+  if (target) target.classList.add('active');
+  const nav = Array.from(document.querySelectorAll('.nav-item')).find(n => n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'"));
+  if (nav) nav.classList.add('active');
+  const s = screens[id];
+  if (s) {
+    document.getElementById('screen-title').textContent = s.title;
+    document.getElementById('screen-sub').textContent = s.sub;
+    document.getElementById('topbar-actions').innerHTML = s.actions;
+  }
+  closePanel();
+}
 
-const PIPELINE_DATA = {
-  new:         [{n:'Khanna Group',dest:'Bali',val:'₹6,30,000',last:'1hr ago',tags:['Friends']},{n:'Patel Family',dest:'Switzerland',val:'₹5,20,000',last:'2hr ago',tags:['Europe']}],
-  qualified:   [{n:'Singh Corporate',dest:'Thailand',val:'₹4,20,000',last:'3hr ago',tags:['MICE']},{n:'Joshi Couple',dest:'Maldives',val:'₹3,90,000',last:'4hr ago',tags:['Anniversary']}],
-  quote_sent:  [{n:'Reddy Family',dest:'Maldives',val:'₹5,50,000',last:'1d ago',tags:['Overwater']},{n:'Kapoor Group',dest:'Dubai',val:'₹8,00,000',last:'2d ago',tags:['Corporate']}],
-  negotiation: [{n:'Mehta Couple',dest:'Switzerland',val:'₹6,50,000',last:'2d ago',tags:['Luxury','Honeymoon']}],
-  won:         [{n:'Sharma Family',dest:'Bali',val:'₹3,20,000',last:'3d ago',tags:['Confirmed']},{n:'Iyer Group',dest:'Bali',val:'₹9,00,000',last:'5d ago',tags:['MICE']}],
+function showDetail(id) {
+  document.querySelectorAll('#detail-pane > div').forEach(d => d.style.display = 'none');
+  const el = document.getElementById('detail-' + id);
+  if (el) el.style.display = 'block';
+  document.querySelectorAll('.msg-item').forEach(m => m.classList.remove('active'));
+  event.currentTarget && event.currentTarget.classList.add('active');
+}
+
+function openPanel(leadId) {
+  const panels = {
+    'sharma-lead': { title: 'Sharma Family', sub: 'FIT · Bali · High Priority', body: `<div class="ai-card" style="margin-bottom:14px;"><div class="ai-card-header"><div class="ai-icon">🤖</div><span class="ai-label">AI Insight</span></div><div style="font-size:12px;color:var(--gray-700)">Family with 2 children aged 6 & 9. Previous booking: Rajasthan Dec 2024 (5★). High conversion likelihood — budget is flexible based on itinerary quality. Suggest premium Ubud experience.</div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"><div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">AI SCORE</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--teal)">87</div></div><div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">DEAL VALUE</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;">₹3L</div></div></div><div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px;">Requirements</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;"><span class="badge badge-teal">Family-friendly</span><span class="badge badge-orange">Pool villa</span><span class="badge badge-purple">Cultural</span><span class="badge badge-gray">Cooking class</span></div><button class="btn btn-teal" style="width:100%;margin-bottom:8px;" onclick="closePanel();showScreen('quotes')">Generate Quote</button><button class="btn btn-outline" style="width:100%">Log Activity</button>` },
+    'patel-lead': { title: 'Patel & Co Corporate', sub: 'Corporate · Coorg · 22 pax', body: `<div class="badge badge-purple" style="margin-bottom:12px;font-size:11px;padding:6px 12px;">Corporate Account</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"><div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">SCORE</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--teal)">91</div></div><div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">VALUE</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;">₹8.5L</div></div></div><button class="btn btn-teal" style="width:100%;margin-bottom:8px;" onclick="closePanel();showScreen('corporate')">Open Corporate Module</button><button class="btn btn-outline" style="width:100%">Generate Group Quote</button>` },
+    'iyer-lead': { title: 'Iyer Group Tour', sub: 'GIT · Rajasthan · 12 pax', body: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"><div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">SCORE</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--teal)">78</div></div><div style="background:var(--gray-50);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--gray-400);font-weight:700">VALUE</div><div style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;">₹5.2L</div></div></div><button class="btn btn-teal" style="width:100%;margin-bottom:8px;">Generate Group Quote</button><button class="btn btn-outline" style="width:100%">Log Activity</button>` },
+    'priya-lead': { title: 'Priya Kumar', sub: 'FIT · Maldives · Honeymoon', body: `<div class="ai-card" style="margin-bottom:12px;"><div class="ai-card-header"><div class="ai-icon">💕</div><span class="ai-label">Honeymoon Context</span></div><div style="font-size:12px;color:var(--gray-700)">Romantic trip — prioritise overwater villas, sunset dinners, couple spa. Budget open.</div></div><button class="btn btn-teal" style="width:100%;margin-bottom:8px;">Generate Honeymoon Quote</button>` },
+  };
+  const panel = panels[leadId];
+  if (panel) {
+    document.getElementById('panel-title').textContent = panel.title;
+    document.getElementById('panel-sub').textContent = panel.sub;
+    document.getElementById('panel-body').innerHTML = panel.body;
+    document.getElementById('slide-panel').classList.add('open');
+    document.getElementById('overlay').classList.add('open');
+  }
+}
+
+function closePanel() {
+  document.getElementById('slide-panel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function switchQuoteView(view) {
+  document.getElementById('quote-agent-view').style.display = view === 'agent' ? 'block' : 'none';
+  document.getElementById('quote-client-view').style.display = view === 'client' ? 'block' : 'none';
+  document.getElementById('tab-agent').className = view === 'agent' ? 'tab active' : 'tab';
+  document.getElementById('tab-client').className = view === 'client' ? 'tab active' : 'tab';
+}
+
+function showDay(n) {
+  const titles = { 1:'Day 1 — Arrival in Paradise', 2:'Day 2 — Ubud & Temples', 3:'Day 3 — Rice Terraces & Cooking', 4:'Day 4 — 🎂 Anniversary Celebration', 5:'Day 5 — Lembongan Island', 6:'Day 6 — Kuta & Shopping', 7:'Day 7 — GWK & Spa', 8:'Day 8 — Farewell Bali' };
+  document.getElementById('day-title').textContent = titles[n] || 'Day ' + n;
+}
+
+let billingAnnual = true;
+const prices = {
+  inr: { starter: ['₹4,999', '₹49,990/yr (₹4,166/mo)'], growth: ['₹14,999', '₹1,49,990/yr (₹12,499/mo)'], pro: ['₹39,999', '₹3,99,990/yr (₹33,333/mo)'] },
+  usd: { starter: ['$59', '$590/yr ($49/mo)'], growth: ['$179', '$1,790/yr ($149/mo)'], pro: ['$479', '$4,790/yr ($399/mo)'] },
+  aed: { starter: ['AED 250', 'AED 2,500/yr (AED 208/mo)'], growth: ['AED 750', 'AED 7,500/yr (AED 625/mo)'], pro: ['AED 1,999', 'AED 19,990/yr (AED 1,666/mo)'] },
+  eur: { starter: ['€55', '€550/yr (€46/mo)'], growth: ['€169', '€1,690/yr (€141/mo)'], pro: ['€449', '€4,490/yr (€374/mo)'] },
 };
+let currentCurrency = 'inr';
 
-const BOOKINGS_DATA = {
-  upcoming:[
-    {name:'Mehta Couple',      dest:'Switzerland',  dates:'Apr 10–20',  pax:2,  status:'Confirmed', pay:'Partial', emoji:'🏔'},
-    {name:'Singh Corporate',   dest:'Thailand',     dates:'Jun 10–13',  pax:12, status:'Confirmed', pay:'Pending', emoji:'🌆'},
-    {name:'Joshi Couple',      dest:'Maldives',     dates:'Aug 14–19',  pax:2,  status:'Pending',   pay:'Pending', emoji:'🌊'},
-  ],
-  ongoing:[
-    {name:'Sharma Family',     dest:'Bali',         dates:'Mar 12–19',  pax:4,  status:'En Route',  pay:'Paid',    emoji:'🌴'},
-    {name:'Reddy Family',      dest:'Maldives',     dates:'Mar 15–19',  pax:4,  status:'At Resort', pay:'Paid',    emoji:'🌊'},
-  ],
-  completed:[
-    {name:'Kapoor Group',      dest:'Dubai',        dates:'Mar 3–8',    pax:8,  status:'Completed', pay:'Paid',    emoji:'🏙'},
-    {name:'Gupta Family',      dest:'Kerala',       dates:'Feb 20–25',  pax:6,  status:'Completed', pay:'Paid',    emoji:'🌿'},
-    {name:'Nair Family',       dest:'Dubai',        dates:'Feb 10–16',  pax:5,  status:'Completed', pay:'Paid',    emoji:'🏙'},
-  ]
-};
-
-const INVOICES = [
-  {id:'INV-041',client:'Sharma Family',   amount:'₹3,52,000',status:'Paid',    date:'Mar 19, 2025', dest:'Bali'},
-  {id:'INV-040',client:'Kapoor Group',    amount:'₹8,64,000',status:'Partial', date:'Mar 8, 2025',  dest:'Dubai'},
-  {id:'INV-039',client:'Reddy Family',    amount:'₹5,77,500',status:'Paid',    date:'Mar 5, 2025',  dest:'Maldives'},
-  {id:'INV-038',client:'Gupta Family',    amount:'₹1,98,000',status:'Paid',    date:'Feb 25, 2025', dest:'Kerala'},
-  {id:'INV-037',client:'Mehta Couple',    amount:'₹7,02,000',status:'Pending', date:'Apr 20, 2025', dest:'Switzerland'},
-  {id:'INV-036',client:'Singh Corporate', amount:'₹4,83,000',status:'Pending', date:'Jun 13, 2025', dest:'Thailand'},
-];
-
-let currentChat = 0;
-let currentBookingTab = 'upcoming';
-let currentInvoice = 0;
-let builderMarkup = 20;
-let builderTab = 0;
-let builderCost = 252400;
-
-// ── INIT ──
-function init() {
-  renderDashboard();
-  renderInbox();
-  renderLeadTrip();
-  renderBuilder();
-  renderProposal();
-  renderPipeline();
-  renderBookings('upcoming');
-  renderFinance();
-  renderAnalytics();
+function switchCurrency(c) {
+  currentCurrency = c;
+  document.querySelectorAll('.currency-tab').forEach((t,i) => t.className = 'currency-tab' + (['inr','usd','aed','eur'][i] === c ? ' active' : ''));
+  updatePrices();
 }
 
-// ── SWITCH ──
-function osSwitch(panel, el) {
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
-  const p = document.getElementById('panel-'+panel);
-  if (p) { p.classList.add('active'); const s=p.querySelector('.panel-scroll'); if(s){s.classList.remove('panel-anim');void s.offsetWidth;s.classList.add('panel-anim');} }
-  const sb = document.getElementById('sb-'+panel);
-  if (sb) sb.classList.add('active');
-  if (el) { document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active')); el.classList.add('active'); }
+function toggleBilling() {
+  billingAnnual = !billingAnnual;
+  document.getElementById('toggle-knob').style.right = billingAnnual ? '3px' : 'auto';
+  document.getElementById('toggle-knob').style.left = billingAnnual ? 'auto' : '3px';
+  updatePrices();
 }
 
-// ── TOAST ──
-function showToast(icon, title, msg) {
-  document.getElementById('toast-icon').textContent=icon;
-  document.getElementById('toast-title').textContent=title;
-  document.getElementById('toast-msg').textContent=msg;
-  const t=document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3200);
+function updatePrices() {
+  const p = prices[currentCurrency];
+  ['starter', 'growth', 'pro'].forEach(k => {
+    const el = document.getElementById('price-' + k);
+    const annual = document.getElementById('annual-' + k);
+    if (el) el.textContent = billingAnnual ? p[k][0] : p[k][0];
+    if (annual) annual.textContent = billingAnnual ? 'Annual: ' + p[k][1] : 'Switch to annual to save 17%';
+  });
 }
 
-// ── SCREEN 1: DASHBOARD ──
-function renderDashboard() {
-  const kpis=[
-    {icon:'🎯',lbl:'Leads Today',val:'12',delta:'↑ 4 new',cls:'up',bg:'rgba(200,169,110,0.1)',bc:'rgba(200,169,110,0.2)'},
-    {icon:'💰',lbl:'Revenue MTD',val:'₹48.2L',delta:'↑ 23%',cls:'up',bg:'rgba(74,155,127,0.1)',bc:'rgba(74,155,127,0.2)'},
-    {icon:'📈',lbl:'Conversion',val:'34%',delta:'↑ 8pts',cls:'up',bg:'rgba(91,141,239,0.1)',bc:'rgba(91,141,239,0.2)'},
-    {icon:'⚡',lbl:'Avg Quote Time',val:'4 min',delta:'↓ 94% faster',cls:'up',bg:'rgba(224,154,62,0.1)',bc:'rgba(224,154,62,0.2)'},
-  ];
-  document.getElementById('dash-kpis').innerHTML=kpis.map(k=>`
-    <div class="kpi-card" onclick="showToast('${k.icon}','${k.lbl}','Detailed view coming soon')">
-      <div class="kpi-icon" style="background:${k.bg};border:1px solid ${k.bc}">${k.icon}</div>
-      <div class="stat-lbl">${k.lbl}</div>
-      <div class="stat-val">${k.val}</div>
-      <div class="stat-delta ${k.cls}">${k.delta}</div>
-    </div>`).join('');
-
-  const tasks=[
-    {text:'Call Sharma Family re: Bali villa availability',priority:'🔴',done:false},
-    {text:'Send Switzerland quote to Mehta Couple',priority:'🟠',done:false},
-    {text:'Follow up — Kapoor Group Dubai deposit',priority:'🔴',done:false},
-    {text:'Review Maldives overwater villa pricing',priority:'🟡',done:true},
-    {text:'Confirm Reddy Family June dates',priority:'🟠',done:false},
-  ];
-  document.getElementById('dash-tasks').innerHTML=tasks.map((t,i)=>`
-    <div class="task-item" onclick="toggleTask(this)">
-      <div class="task-check ${t.done?'done':''}" id="tc-${i}"></div>
-      <span style="font-size:12px">${t.priority}</span>
-      <div style="font-size:12.5px;flex:1;${t.done?'text-decoration:line-through;color:var(--muted)':''}">${t.text}</div>
-    </div>`).join('');
-
-  const stages=[
-    {lbl:'New',count:2,pct:40,color:'#5b8def'},
-    {lbl:'Qualified',count:2,pct:50,color:'#c8a96e'},
-    {lbl:'Quote Sent',count:2,pct:60,color:'#e09a3e'},
-    {lbl:'Negotiation',count:1,pct:25,color:'#e05a4e'},
-    {lbl:'Won',count:2,pct:100,color:'#4a9b7f'},
-  ];
-  document.getElementById('dash-pipeline').innerHTML=stages.map(s=>`
-    <div class="kanban-bar">
-      <div style="font-size:11.5px;width:80px;color:var(--muted)">${s.lbl}</div>
-      <div class="kanban-bar-track">
-        <div class="kanban-bar-fill" style="width:${s.pct}%;background:${s.color}">${s.count}</div>
-      </div>
-    </div>`).join('');
-
-  const acts=[
-    {icon:'🎯',text:'Sharma Family lead scored Hot — 72% win probability',color:'#e05a4e',time:'2 min ago'},
-    {icon:'✦',text:'Bali 7N itinerary generated for Sharma Family',color:'#c8a96e',time:'5 min ago'},
-    {icon:'📧',text:'Quote sent to Mehta Couple — ₹6,50,000',color:'#4a9b7f',time:'18 min ago'},
-    {icon:'💳',text:'Payment received — Kapoor Group ₹4,00,000',color:'#4a9b7f',time:'1 hr ago'},
-    {icon:'✈️',text:'Sharma Family departed for Bali',color:'#5b8def',time:'3 hr ago'},
-  ];
-  document.getElementById('dash-activity').innerHTML=acts.map(a=>`
-    <div class="activity-item">
-      <div class="activity-dot" style="background:${a.color}"></div>
-      <div style="flex:1;font-size:12.5px">${a.text}</div>
-      <div style="font-size:10.5px;color:var(--muted);flex-shrink:0">${a.time}</div>
-    </div>`).join('');
-}
-
-function toggleTask(row) {
-  const chk=row.querySelector('.task-check');
-  const txt=row.querySelector('div:last-child');
-  chk.classList.toggle('done');
-  if(chk.classList.contains('done')){txt.style.textDecoration='line-through';txt.style.color='var(--muted)';}
-  else{txt.style.textDecoration='';txt.style.color='';}
-}
-
-// ── SCREEN 2: INBOX ──
-const CHATS = [
-  [{who:'in',txt:'Hi, I want to plan a Bali trip for 4 people in April.'},{who:'out',txt:'Great! What is your approximate budget?'},{who:'in',txt:'Around ₹3-3.5 lakhs total.'},{who:'ai',txt:'✦ AI: High-intent lead. Bali family trip · 4 pax · ₹3.2L budget · April. Suggest 7N villa package. Win probability: 72%.'}],
-  [{who:'in',txt:'Hello, we are looking for a Switzerland Alps honeymoon package.'},{who:'out',txt:'Congratulations! Switzerland in which month?'},{who:'in',txt:'May, 10 nights.'},{who:'ai',txt:'✦ AI: Luxury honeymoon lead · Switzerland · 10N · Budget likely ₹6L+. Suggest Jungfraujoch + Lucerne itinerary.'}],
-  [{who:'in',txt:'We need a corporate group booking for Dubai — 8 people.'},{who:'ai',txt:'✦ AI: Corporate MICE lead · Dubai · 8 pax · High value. Suggest 5N package with desert safari + Burj Khalifa.'}],
-];
-
-function renderInbox() {
-  document.getElementById('inbox-list').innerHTML=LEADS_DATA.map((l,i)=>`
-    <div class="inbox-conv ${i===currentChat?'active':''}" onclick="selectChat(${i})">
-      <div style="display:flex;gap:8px;align-items:flex-start">
-        <div class="avatar-sm" style="background:${['#c8a96e','#e05a4e','#5b8def','#4a9b7f','#e09a3e','#9b59b6'][i%6]}">${l.name[0]}</div>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="inbox-conv-name">${l.name}</div>
-            <span class="tag ${l.status}" style="font-size:9px">${l.status.toUpperCase()}</span>
-          </div>
-          <div class="inbox-conv-dest">${l.dest} · ${l.budget}</div>
-          <div class="inbox-conv-prev">${l.lastMsg}</div>
-        </div>
-      </div>
-    </div>`).join('');
-  renderChat(currentChat);
-}
-
-function selectChat(i) {
-  currentChat=i;
-  document.querySelectorAll('.inbox-conv').forEach((c,j)=>c.classList.toggle('active',j===i));
-  renderChat(i);
-}
-
-function renderChat(i) {
-  const l=LEADS_DATA[i];
-  document.getElementById('ai-summary-text').textContent=`✦ AI: ${l.dest} · ${l.budget} · ${l.pax} pax · Win: ${l.winProb}% — ${l.status==='hot'?'Recommend immediate proposal':'Follow up within 24hr'}`;
-  const msgs=CHATS[Math.min(i,CHATS.length-1)];
-  const cb=document.getElementById('chat-body');
-  cb.innerHTML=msgs.map(m=>`
-    <div style="display:flex;flex-direction:column;align-items:${m.who==='out'?'flex-end':'flex-start'}">
-      <div class="bubble ${m.who}">${m.txt}</div>
-    </div>`).join('');
-  cb.scrollTop=cb.scrollHeight;
-}
-
-function sendMsg() {
-  const inp=document.getElementById('chat-input');
-  if(!inp.value.trim()) return;
-  const cb=document.getElementById('chat-body');
-  const div=document.createElement('div');
-  div.style.cssText='display:flex;flex-direction:column;align-items:flex-end';
-  div.innerHTML=`<div class="bubble out">${inp.value}</div>`;
-  cb.appendChild(div);
-  inp.value='';
-  cb.scrollTop=cb.scrollHeight;
-  setTimeout(()=>{
-    const rd=document.createElement('div');
-    rd.style.cssText='display:flex;flex-direction:column;align-items:flex-start';
-    rd.innerHTML=`<div class="bubble ai">✦ AI drafting reply based on lead profile and conversation context…</div>`;
-    cb.appendChild(rd);
-    cb.scrollTop=cb.scrollHeight;
-  },800);
-}
-
-function aiReply() {
-  const l=LEADS_DATA[currentChat];
-  const replies=[`Great news! I have curated a special ${l.dest} package for ${l.pax} travellers within ${l.budget}. Shall I send the detailed itinerary?`,`For your ${l.dest} trip, I recommend our premium package with private transfers and curated experiences. Can I share the proposal?`,`I have found perfect options for your ${l.dest} trip — let me prepare a customised proposal just for you!`];
-  const cb=document.getElementById('chat-body');
-  const d=document.createElement('div');
-  d.style.cssText='display:flex;flex-direction:column;align-items:flex-end';
-  d.innerHTML=`<div class="bubble out">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
-  cb.appendChild(d);
-  cb.scrollTop=cb.scrollHeight;
-  showToast('✦','AI Reply Sent','Message delivered to '+LEADS_DATA[currentChat].name);
-}
-
-// ── SCREEN 3: LEAD TRIP ──
-function renderLeadTrip() {
-  const l=LEADS_DATA[0];
-  document.getElementById('lead-info').innerHTML=`
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)">
-      <div class="avatar-sm" style="background:var(--accent);width:44px;height:44px;font-size:16px">${l.name[0]}</div>
-      <div><div style="font-size:15px;font-weight:500">${l.name}</div><div style="font-size:11.5px;color:var(--muted)">${l.dest}</div></div>
-      <span class="tag ${l.status}" style="margin-left:auto">${l.status.toUpperCase()}</span>
-    </div>
-    <div class="info-field"><div class="info-field-label">Destination</div><div class="info-field-value">${l.dest}</div></div>
-    <div class="info-field"><div class="info-field-label">Budget</div><div class="info-field-value" style="color:var(--accent)">${l.budget}</div></div>
-    <div class="info-field"><div class="info-field-label">Travellers</div><div class="info-field-value">${l.pax} Pax</div></div>
-    <div class="info-field"><div class="info-field-label">Duration</div><div class="info-field-value">${l.days} Nights</div></div>
-    <div class="info-field"><div class="info-field-label">Win Probability</div><div class="info-field-value" style="color:var(--accent2)">${l.winProb}%</div></div>
-    <div class="info-field">
-      <div class="info-field-label">Preferences</div>
-      <div style="margin-top:4px">
-        ${['Private Villa','Pool','Family Friendly','Breakfast Included','Airport Transfer','Water Activities'].map(p=>`<span class="pref-tag">${p}</span>`).join('')}
-      </div>
-    </div>
-    <div class="info-field"><div class="info-field-label">Notes</div><div class="info-field-value" style="font-size:12.5px;color:var(--muted);line-height:1.65">Repeating client. Traveled with us in 2023. Prefers beachfront. Allergic to shellfish — inform all restaurants.</div></div>
-    <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
-      <button class="btn-primary" onclick="osSwitch('builder')">✦ Open Trip Builder</button>
-      <button class="btn-ghost" onclick="osSwitch('proposal')">View Proposal</button>
-    </div>`;
-
-  document.getElementById('lead-itin').innerHTML=`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div><div style="font-family:'Instrument Serif',serif;font-size:20px">AI Draft Itinerary</div><div style="font-size:11.5px;color:var(--muted)">Bali Family Getaway · 7N/8D · Auto-generated</div></div>
-      <div style="display:flex;gap:8px">
-        <button class="btn-ghost" onclick="showToast('↺','Regenerate','New itinerary generating…')">↺ Regenerate</button>
-        <button class="btn-primary" onclick="osSwitch('builder')">✦ Open Canvas</button>
-      </div>
-    </div>
-    ${ITINERARY.map(d=>`
-      <div style="display:flex;gap:14px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)">
-        <div style="font-family:'Instrument Serif',serif;font-size:24px;color:var(--border);width:32px;flex-shrink:0;line-height:1">0${d.day}</div>
-        <div style="flex:1">
-          <div style="font-size:13.5px;font-weight:500;margin-bottom:2px">${d.title}</div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:8px">📍 ${d.loc}</div>
-          <div style="display:flex;flex-direction:column;gap:4px">
-            ${d.services.map(s=>`
-              <div style="display:flex;align-items:center;gap:8px;font-size:12px">
-                <span>${s.e}</span><span style="flex:1">${s.n}</span>
-                <span style="color:var(--accent)">${s.p}</span>
-              </div>`).join('')}
-          </div>
-        </div>
-      </div>`).join('')}`;
-}
-
-// ── SCREEN 4: BUILDER ──
-function renderBuilder() {
-  document.getElementById('builder-sticky').innerHTML=`
-    <div class="sticky-chip">Trip: <span>Bali Family Escape</span></div>
-    <div class="sticky-chip">Dates: <span>Apr 12–19</span></div>
-    <div class="sticky-chip">Travellers: <span>4 Pax</span></div>
-    <div class="sticky-chip" style="margin-left:auto">Cost: <span>₹2,52,400</span></div>
-    <div class="sticky-chip">Selling: <span id="sb-sell-price">₹3,18,000</span></div>
-    <div class="sticky-chip" style="color:var(--accent2)">Margin: <span id="sb-margin-pct">20%</span></div>`;
-
-  bsTab(0, document.querySelector('.builder-side-tab'));
-
-  document.getElementById('builder-canvas').innerHTML=ITINERARY.map((d,di)=>`
-    <div class="day-card" id="day-${di}">
-      <div class="day-header">
-        <div class="day-title">Day ${d.day} — ${d.title}</div>
-        <span style="font-size:11px;color:var(--muted)">📍 ${d.loc}</span>
-      </div>
-      ${d.services.map(s=>`
-        <div class="service-card">
-          <div class="service-img">${s.e}</div>
-          <div><div class="service-title">${s.n}</div><div class="service-meta">${d.loc}</div></div>
-          <div class="service-price">${s.p}</div>
-        </div>`).join('')}
-      <div class="add-service-btn" onclick="showToast('✦','Add Service','Drag a service from the left panel or search')">+ Add Service</div>
-    </div>`).join('');
-
-  renderBuilderPricing();
-}
-
-function bsTab(idx, el) {
-  builderTab=idx;
-  document.querySelectorAll('.builder-side-tab').forEach(t=>t.classList.remove('active'));
-  if(el) el.classList.add('active');
-  const keys=['hotels','transfers','activities'];
-  const data=SERVICES[keys[idx]];
-  document.getElementById('builder-items').innerHTML=data.map(s=>`
-    <div class="service-card" style="cursor:grab" draggable="true" ondragstart="showToast('✦','Dragging','${s.name} — drop into any day')" onclick="showToast('✦','${s.name}','${s.meta} · ${s.price}')">
-      <div class="service-img">${s.emoji}</div>
-      <div><div class="service-title">${s.name}</div><div class="service-meta">${s.meta}</div></div>
-      <div class="service-price" style="font-size:11px">${s.price}</div>
-    </div>`).join('');
-}
-
-function renderBuilderPricing() {
-  const sell=Math.round(builderCost*(1+builderMarkup/100));
-  const profit=sell-builderCost;
-  document.getElementById('sb-sell-price').textContent='₹'+sell.toLocaleString('en-IN');
-  document.getElementById('sb-margin-pct').textContent=builderMarkup+'%';
-  document.getElementById('builder-pricing').innerHTML=`
-    <div class="section-label">Live Pricing</div>
-    <div class="price-row"><span style="color:var(--muted)">Base Cost</span><span>₹${builderCost.toLocaleString('en-IN')}</span></div>
-    <div class="price-row"><span style="color:var(--muted)">Flights</span><span>₹68,000</span></div>
-    <div class="price-row"><span style="color:var(--muted)">Activities</span><span>₹24,200</span></div>
-    <div class="price-row"><span style="color:var(--muted)">Markup ${builderMarkup}%</span><span style="color:var(--accent2)">+₹${Math.round(builderCost*builderMarkup/100).toLocaleString('en-IN')}</span></div>
-    <div class="price-row total"><span>Client Price</span><span style="color:var(--accent)">₹${sell.toLocaleString('en-IN')}</span></div>
-    <div>
-      <div class="stat-lbl" style="margin-bottom:6px">Markup Slider</div>
-      <input type="range" class="markup-slider" min="10" max="35" value="${builderMarkup}"
-        oninput="builderMarkup=parseInt(this.value);renderBuilderPricing()"
-        style="width:100%">
-      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:3px"><span>10%</span><span>35%</span></div>
-    </div>
-    <div style="background:rgba(74,155,127,0.1);border:1px solid rgba(74,155,127,0.25);border-radius:10px;padding:12px;text-align:center">
-      <div style="font-size:10.5px;color:var(--muted);margin-bottom:3px">Profit</div>
-      <div style="font-family:'Instrument Serif',serif;font-size:24px;color:var(--accent2)">₹${profit.toLocaleString('en-IN')}</div>
-    </div>
-    <button class="btn-primary" style="width:100%" onclick="osSwitch('proposal')">Preview Proposal →</button>
-  `;
-}
-
-// ── SCREEN 5: PROPOSAL ──
-function renderProposal() {
-  document.getElementById('proposal-content').innerHTML=`
-    <div class="proposal-hero">
-      <div class="proposal-hero-content">
-        <div class="proposal-eyebrow">Exclusive Proposal · April 2025</div>
-        <div class="proposal-title">Bali Family Escape</div>
-        <div class="proposal-subtitle">A curated 7-night journey for the Sharma Family · 4 Travellers</div>
-        <div class="proposal-chips">
-          <span class="proposal-chip">✈️ Return Flights</span>
-          <span class="proposal-chip">🏨 Private Villa</span>
-          <span class="proposal-chip">🚗 All Transfers</span>
-          <span class="proposal-chip">🌟 7 Experiences</span>
-          <span class="proposal-chip">🛡 Travel Insurance</span>
-        </div>
-      </div>
-    </div>
-    <div class="proposal-body">
-      <div class="price-block">
-        <div><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Total Package (incl. GST)</div><div style="font-family:'Instrument Serif',serif;font-size:32px;color:var(--accent)">₹3,20,000</div></div>
-        <div style="text-align:right"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Per Person</div><div style="font-family:'Instrument Serif',serif;font-size:22px">₹80,000</div></div>
-      </div>
-      ${ITINERARY.map(d=>`
-        <div class="proposal-day">
-          <div class="proposal-day-num">${String(d.day).padStart(2,'0')}</div>
-          <div class="proposal-day-content">
-            <div class="day-title-p">${d.title}</div>
-            <div class="day-desc-p">${d.services.map(s=>s.n).join(' · ')}</div>
-          </div>
-        </div>`).join('')}
-      <div style="padding:16px;background:var(--surface);border-radius:10px;border:1px solid var(--border);margin-bottom:20px">
-        <div style="font-size:12px;font-weight:500;margin-bottom:8px">Inclusions</div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px">${['Return Flights','Airport Transfers','7N Private Villa','Daily Breakfast','All Activities','Travel Insurance'].map(i=>`<span class="pref-tag" style="color:var(--accent2);border-color:rgba(74,155,127,0.25)">✓ ${i}</span>`).join('')}</div>
-      </div>
-      <div class="approve-bar">
-        <button class="approve-btn btn-primary" style="padding:14px 32px;font-size:14px" onclick="showToast('✅','Booking Confirmed!','Sharma Family booking locked — ₹3,20,000')">✓ Approve & Book</button>
-        <button class="approve-btn btn-ghost" style="padding:14px 24px;font-size:14px" onclick="showToast('✏','Changes Requested','Client requested modifications')">Request Changes</button>
-      </div>
-      <div style="text-align:center;font-size:11.5px;color:var(--muted);margin-top:8px">Valid for 72 hours · Prices include GST · Secure payment via Razorpay</div>
-    </div>`;
-}
-
-// ── SCREEN 6: PIPELINE ──
-function renderPipeline() {
-  const cols=[
-    {key:'new',        lbl:'New',         color:'#5b8def', pct:15},
-    {key:'qualified',  lbl:'Qualified',   color:'#c8a96e', pct:30},
-    {key:'quote_sent', lbl:'Quote Sent',  color:'#e09a3e', pct:55},
-    {key:'negotiation',lbl:'Negotiation', color:'#e05a4e', pct:75},
-    {key:'won',        lbl:'Won ✓',       color:'#4a9b7f', pct:100},
-  ];
-  document.getElementById('pipeline-wrap').innerHTML=cols.map(col=>`
-    <div class="kanban-col">
-      <div class="kanban-col-hdr" style="background:${col.color}22;color:${col.color}">
-        ${col.lbl}
-        <span class="kanban-col-count">${(PIPELINE_DATA[col.key]||[]).length}</span>
-      </div>
-      ${(PIPELINE_DATA[col.key]||[]).map(c=>`
-        <div class="kanban-card" onclick="showToast('◈','${c.n}','${c.dest} · ${c.val}')">
-          <div class="kk-name">${c.n}</div>
-          <div class="kk-dest">${c.dest}</div>
-          <div class="kk-value">${c.val}</div>
-          <div class="kk-footer">
-            <div>${c.tags.map(t=>`<span class="tag" style="font-size:9.5px">${t}</span>`).join('')}</div>
-            <div class="kk-last">${c.last}</div>
-          </div>
-        </div>`).join('')}
-      <div style="border:1px dashed var(--border);border-radius:8px;padding:10px;text-align:center;font-size:11.5px;color:var(--muted);cursor:pointer;margin-top:4px" onclick="showToast('✦','Add Card','Add new lead to ${col.lbl}')">+ Add</div>
-    </div>`).join('');
-}
-
-// ── SCREEN 7: CONTRACT AI ──
-function startScan() {
-  document.getElementById('upload-zone').style.display='none';
-  document.getElementById('scan-anim').style.display='flex';
-  const steps=['Scanning document…','Extracting room types…','Reading rate tables…','Parsing seasonal policies…','Building inventory…','Done ✓'];
-  let i=0;
-  const el=document.getElementById('scan-step');
-  const dots=document.getElementById('scan-dots');
-  dots.innerHTML='<div style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:bdot 1s infinite 0s"></div><div style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:bdot 1s infinite 0.2s"></div><div style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:bdot 1s infinite 0.4s"></div>';
-  const t=setInterval(()=>{
-    el.textContent=steps[i];
-    i++;
-    if(i>=steps.length){
-      clearInterval(t);
-      document.getElementById('scan-anim').style.display='none';
-      renderExtractOutput();
-    }
-  },700);
-}
-
-function renderExtractOutput() {
-  const data=[
-    {k:'Supplier',v:'The Layar Private Villas, Seminyak, Bali'},
-    {k:'Contract ID',v:'TLV-2025-NAMA-007'},
-    {k:'Valid',v:'1 Jan 2025 – 31 Dec 2025'},
-    {k:'Room Types',v:'1BR Villa · 2BR Villa · 3BR Pool Villa'},
-    {k:'Low Season',v:'₹18,000–₹28,000/night'},
-    {k:'High Season',v:'₹24,000–�42,000/night'},
-    {k:'Peak Season',v:'₹34,000–₹58,000/night (Dec 20–Jan 5)'},
-    {k:'Min Stay',v:'3 nights (peak: 7 nights)'},
-    {k:'Meal Plan',v:'Breakfast included · Dinner on request'},
-    {k:'Cancellation',v:'Free up to 21 days · 50% within 14 days'},
-    {k:'Commission',v:'20% net rate'},
-    {k:'Payment',v:'30% deposit · Balance 30 days pre-arrival'},
-  ];
-  document.getElementById('contract-right').innerHTML=`
-    <div style="font-size:13.5px;font-weight:500;margin-bottom:14px;color:var(--accent2)">✓ Contract Parsed Successfully</div>
-    ${data.map(d=>`
-      <div class="extract-row">
-        <div class="extract-key">${d.k}</div>
-        <div class="extract-val">${d.v}</div>
-      </div>`).join('')}
-    <button class="btn-primary" style="width:100%;margin-top:14px" onclick="showToast('✦','Added!','The Layar Villas added to your inventory')">Add to Inventory</button>
-    <button class="btn-ghost" style="width:100%;margin-top:8px" onclick="document.getElementById('upload-zone').style.display='block';document.getElementById('contract-right').innerHTML='<div style=\'font-size:13.5px;font-weight:500;margin-bottom:14px;color:var(--muted)\'>Extracted Data will appear here</div>'">Upload Another</button>`;
-}
-
-// ── SCREEN 8: BOOKINGS ──
-function renderBookings(tab) {
-  currentBookingTab=tab;
-  document.querySelectorAll('.booking-tab').forEach(t=>t.classList.remove('active'));
-  const data=BOOKINGS_DATA[tab]||[];
-  document.getElementById('bookings-body').innerHTML=`
-    <div class="section-label" style="margin-bottom:12px">${data.length} ${tab.charAt(0).toUpperCase()+tab.slice(1)} Bookings</div>
-    ${data.map(b=>`
-      <div class="booking-card" onclick="showToast('${b.emoji}','${b.name}','${b.dest} · ${b.dates}')">
-        <div class="booking-dest-icon" style="background:rgba(200,169,110,0.1)">${b.emoji}</div>
-        <div style="flex:1">
-          <div class="booking-name">${b.name}</div>
-          <div class="booking-meta">${b.dest} · ${b.dates} · ${b.pax} Pax</div>
-        </div>
-        <div class="booking-status">
-          <div style="font-size:12px;font-weight:500;margin-bottom:5px">${b.status}</div>
-          <span class="payment-pill ${b.pay==='Paid'?'paid':b.pay==='Partial'?'partial':'pending'}">${b.pay}</span>
-        </div>
-      </div>`).join('')}`;
-}
-
-function bkTab(tab, el) {
-  document.querySelectorAll('.booking-tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  renderBookings(tab);
-}
-
-// ── SCREEN 9: FINANCE ──
-function renderFinance() {
-  document.getElementById('invoice-list').innerHTML=`
-    <div style="padding:12px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:500">Invoices</div>
-    ${INVOICES.map((inv,i)=>`
-      <div class="invoice-item ${i===currentInvoice?'active':''}" onclick="selectInvoice(${i})">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div>
-            <div style="font-size:12.5px;font-weight:500">${inv.client}</div>
-            <div style="font-size:10.5px;color:var(--muted)">${inv.id} · ${inv.dest}</div>
-          </div>
-          <span class="payment-pill ${inv.status==='Paid'?'paid':inv.status==='Partial'?'partial':'pending'}" style="font-size:9.5px">${inv.status}</span>
-        </div>
-        <div style="font-size:13px;font-weight:500;color:var(--accent);margin-top:4px">${inv.amount}</div>
-      </div>`).join('')}`;
-  renderInvoiceDetail(0);
-}
-
-function selectInvoice(i) {
-  currentInvoice=i;
-  document.querySelectorAll('.invoice-item').forEach((el,j)=>el.classList.toggle('active',j===i));
-  renderInvoiceDetail(i);
-}
-
-function renderInvoiceDetail(i) {
-  const inv=INVOICES[i];
-  const timeline=[
-    {label:'Invoice Created',date:inv.date,color:'var(--accent2)',done:true},
-    {label:'Sent to Client',date:inv.date,color:'var(--accent2)',done:true},
-    {label:'Deposit Received',date:inv.status==='Paid'||inv.status==='Partial'?inv.date:'Pending',color:inv.status!=='Pending'?'var(--accent2)':'var(--muted)',done:inv.status!=='Pending'},
-    {label:'Full Payment',date:inv.status==='Paid'?inv.date:'Pending',color:inv.status==='Paid'?'var(--accent2)':'var(--muted)',done:inv.status==='Paid'},
-  ];
-  document.getElementById('invoice-right').innerHTML=`
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
-      <div>
-        <div style="font-family:'Instrument Serif',serif;font-size:22px;margin-bottom:3px">${inv.client}</div>
-        <div style="font-size:11.5px;color:var(--muted)">${inv.id} · ${inv.dest}</div>
-      </div>
-      <span class="payment-pill ${inv.status==='Paid'?'paid':inv.status==='Partial'?'partial':'pending'}">${inv.status}</span>
-    </div>
-    <div style="font-family:'Instrument Serif',serif;font-size:36px;color:var(--accent);margin-bottom:16px">${inv.amount}</div>
-    <div class="section-label" style="margin-bottom:10px">Payment Timeline</div>
-    ${timeline.map(t=>`
-      <div class="timeline-row">
-        <div class="timeline-dot" style="background:${t.color}"></div>
-        <div style="flex:1;font-size:12.5px">${t.label}</div>
-        <div style="font-size:11px;color:var(--muted)">${t.date}</div>
-      </div>`).join('')}
-    <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px">
-      ${inv.status!=='Paid'?`<button class="btn-primary" style="width:100%" onclick="showToast('💳','Payment Link','Razorpay link sent to ${inv.client}')">💳 Send Payment Link</button>`:''}
-      <button class="btn-ghost" style="width:100%" onclick="showToast('📄','PDF','Invoice PDF generated')">Download Invoice PDF</button>
-    </div>`;
-}
-
-// ── SCREEN 10: ANALYTICS ──
-function renderAnalytics() {
-  document.getElementById('analytics-kpis').innerHTML=[
-    {icon:'💰',lbl:'Revenue MTD',val:'₹48.2L',delta:'↑ 23%',cls:'up'},
-    {icon:'📈',lbl:'Conversion',val:'34%',delta:'↑ 8pts',cls:'up'},
-    {icon:'💼',lbl:'Avg Deal',val:'₹2.8L',delta:'↑ 15%',cls:'up'},
-    {icon:'⚡',lbl:'Leads/Day',val:'12',delta:'↑ 4 today',cls:'up'},
-  ].map(k=>`
-    <div class="kpi-card">
-      <div class="kpi-icon" style="background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.2)">${k.icon}</div>
-      <div class="stat-lbl">${k.lbl}</div>
-      <div class="stat-val">${k.val}</div>
-      <div class="stat-delta ${k.cls}">${k.delta}</div>
-    </div>`).join('');
-
-  const months=['Oct','Nov','Dec','Jan','Feb','Mar'];
-  const vals=[28,32,38,35,42,48];
-  const maxV=Math.max(...vals);
-  document.getElementById('analytics-charts').innerHTML=`
-    <div class="card">
-      <div class="section-label" style="margin-bottom:10px">Revenue (₹ Lakhs)</div>
-      <div class="chart-bar-wrap">
-        ${months.map((m,i)=>`
-          <div class="chart-bar-col">
-            <div class="chart-bar" style="height:${Math.round(vals[i]/maxV*88)}px;background:${i===5?'var(--accent)':'rgba(200,169,110,0.25)'}"></div>
-            <div class="chart-bar-lbl">${m}</div>
-          </div>`).join('')}
-      </div>
-    </div>
-    <div class="card">
-      <div class="section-label" style="margin-bottom:10px">Top Destinations</div>
-      ${[{lbl:'Bali',pct:38,color:'var(--accent)'},{lbl:'Dubai',pct:24,color:'#5b8def'},{lbl:'Maldives',pct:18,color:'var(--accent2)'},{lbl:'Switzerland',pct:14,color:'#e09a3e'},{lbl:'Other',pct:6,color:'var(--muted)'}].map(d=>`
-        <div style="margin-bottom:8px">
-          <div style="display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px">
-            <span>${d.lbl}</span><span style="color:${d.color};font-weight:500">${d.pct}%</span>
-          </div>
-          <div style="background:var(--surface2);border-radius:4px;height:6px;overflow:hidden">
-            <div style="height:100%;width:${d.pct}%;background:${d.color};border-radius:4px"></div>
-          </div>
-        </div>`).join('')}
-    </div>`;
-
-  document.getElementById('analytics-bottom').innerHTML=`
-    <div class="card">
-      <div class="section-label" style="margin-bottom:10px">AI Agent Performance</div>
-      ${[{name:'Planner Agent',calls:1284,time:'2.3s'},{name:'Pricing Agent',calls:986,time:'0.8s'},{name:'Comms Agent',calls:742,time:'1.9s'}].map(a=>`
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
-          <div style="font-size:12.5px">${a.name}</div>
-          <div style="text-align:right">
-            <div style="font-size:12px;font-weight:500">${a.calls.toLocaleString()} calls</div>
-            <div style="font-size:10.5px;color:var(--accent2)">${a.time} avg</div>
-          </div>
-        </div>`).join('')}
-    </div>
-    <div class="card">
-      <div class="section-label" style="margin-bottom:10px">Conversion Funnel</div>
-      ${[{s:'Leads',n:47,pct:100},{s:'Contacted',n:38,pct:81},{s:'Quoted',n:24,pct:51},{s:'Negotiating',n:14,pct:30},{s:'Won',n:12,pct:26}].map(f=>`
-        <div style="margin-bottom:8px">
-          <div style="display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px">
-            <span style="color:var(--muted)">${f.s}</span><span style="font-weight:500">${f.n}</span>
-          </div>
-          <div style="background:var(--surface2);border-radius:4px;height:6px;overflow:hidden">
-            <div style="height:100%;width:${f.pct}%;background:var(--accent2);border-radius:4px"></div>
-          </div>
-        </div>`).join('')}
-    </div>`;
-}
-
-// Boot
-document.addEventListener('DOMContentLoaded', init);
+// Countdown timer
+let seconds = 38;
+setInterval(() => {
+  const el = document.getElementById('countdown');
+  if (el) { seconds = Math.max(0, seconds - 1); el.textContent = '0:' + String(seconds).padStart(2, '0'); if (seconds === 0) seconds = 45; }
+}, 1000);
 </script>
 </body>
 </html>
