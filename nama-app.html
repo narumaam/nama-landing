@@ -6,9 +6,6 @@
 <title>NAMA — AI-Native Travel Operating System</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════
-   DESIGN SYSTEM — Refined Luxury / Editorial
-═══════════════════════════════════════════════ */
 :root {
   --ink: #0A0D1A;
   --ink-mid: #1B2340;
@@ -43,179 +40,7 @@
 html { scroll-behavior:smooth; }
 body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); color:var(--ink); min-height:100vh; -webkit-font-smoothing:antialiased; }
 
-/* ── PAGES ── */
-.page { display:none; min-height:100vh; }
-.page.active { display:flex; flex-direction:column; }
-.page.row { flex-direction:row !important; }
-
-/* ── SPLIT LAYOUT ── */
-.split { display:flex; min-height:100vh; width:100%; }
-.split-panel {
-  width:400px; flex-shrink:0; background:var(--ink);
-  display:flex; flex-direction:column; justify-content:space-between;
-  padding:48px 40px; position:relative; overflow:hidden;
-}
-.split-panel::before {
-  content:''; position:absolute; inset:0;
-  background: radial-gradient(ellipse at 30% 20%, rgba(0,102,255,0.15) 0%, transparent 55%),
-              radial-gradient(ellipse at 70% 80%, rgba(0,196,180,0.08) 0%, transparent 50%);
-  pointer-events:none;
-}
-.split-panel > * { position:relative; z-index:1; }
-.split-form { flex:1; display:flex; align-items:flex-start; justify-content:center; padding:48px 40px; background:white; overflow-y:auto; }
-.split-form-inner { width:100%; max-width:500px; padding:8px 0; }
-
-/* ── BRAND ── */
-.brand-mark { display:flex; align-items:center; gap:10px; }
-.brand-icon { width:36px; height:36px; background:var(--azure); border-radius:9px; display:flex; align-items:center; justify-content:center; }
-.brand-icon svg { width:18px; height:18px; fill:white; }
-.brand-name { font-family:'Instrument Serif',serif; font-size:22px; color:white; letter-spacing:-0.3px; }
-.brand-name-dark { color:var(--ink); }
-.brand-tag { font-size:10px; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:2px; margin-top:2px; }
-
-.panel-headline { font-family:'Instrument Serif',serif; font-size:38px; color:white; line-height:1.2; margin-bottom:16px; }
-.panel-headline em { color:var(--azure-mid); font-style:italic; }
-.panel-body { font-size:13.5px; color:rgba(255,255,255,0.5); line-height:1.8; }
-
-.panel-features { display:flex; flex-direction:column; gap:12px; }
-.panel-feature { display:flex; align-items:flex-start; gap:12px; }
-.panel-feature-dot { width:6px; height:6px; border-radius:50%; background:var(--teal); margin-top:6px; flex-shrink:0; }
-.panel-feature-text { font-size:13px; color:rgba(255,255,255,0.55); line-height:1.6; }
-.panel-feature-text strong { color:white; display:block; font-size:13.5px; font-weight:600; }
-
-/* ── TYPOGRAPHY ── */
-.eyebrow { font-size:11px; font-weight:700; color:var(--azure); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:10px; }
-.page-title { font-family:'Instrument Serif',serif; font-size:30px; color:var(--ink); line-height:1.25; margin-bottom:10px; }
-.page-desc { font-size:14px; color:var(--slate-500); line-height:1.7; margin-bottom:28px; }
-
-/* ── STEP INDICATOR ── */
-.step-rail { display:flex; align-items:center; margin-bottom:32px; }
-.step-node { display:flex; align-items:center; gap:8px; }
-.step-circle { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; transition:all 0.2s; }
-.step-node.done .step-circle { background:var(--teal); color:white; }
-.step-node.active .step-circle { background:var(--azure); color:white; box-shadow:0 0 0 3px rgba(0,102,255,0.2); }
-.step-node.pending .step-circle { background:var(--slate-100); color:var(--slate-400); border:1.5px solid var(--slate-200); }
-.step-label { font-size:11.5px; font-weight:600; color:var(--slate-400); white-space:nowrap; }
-.step-node.active .step-label { color:var(--azure); }
-.step-node.done .step-label { color:var(--teal); }
-.step-connector { flex:1; height:2px; background:var(--slate-200); margin:0 10px; border-radius:2px; }
-.step-connector.done { background:var(--teal); }
-
-/* ── FORMS ── */
-.field { margin-bottom:18px; }
-.field-label { display:block; font-size:12px; font-weight:700; color:var(--slate-700); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
-.field-label .req { color:var(--rose); margin-left:2px; }
-.tip-icon { display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:var(--slate-200); color:var(--slate-500); font-size:9px; font-weight:700; cursor:help; margin-left:4px; vertical-align:middle; position:relative; }
-[data-tooltip]:hover::after { content:attr(data-tooltip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--ink); color:white; font-size:11.5px; line-height:1.5; padding:8px 12px; border-radius:8px; white-space:normal; width:220px; z-index:200; font-family:'Plus Jakarta Sans',sans-serif; font-weight:400; box-shadow:0 8px 24px rgba(0,0,0,0.25); }
-[data-tooltip]:hover::before { content:''; position:absolute; bottom:calc(100% + 4px); left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:var(--ink); z-index:200; }
-.input { width:100%; padding:11px 14px; border:1.5px solid var(--slate-200); border-radius:10px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; color:var(--ink); background:white; outline:none; transition:border-color 0.15s, box-shadow 0.15s; }
-.input:focus { border-color:var(--azure); box-shadow:0 0 0 3px rgba(0,102,255,0.1); }
-.input::placeholder { color:var(--slate-300); }
-.input-select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394A3B8'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 13px center; padding-right:36px; }
-.input-hint { font-size:11.5px; color:var(--slate-400); margin-top:5px; line-height:1.5; }
-.row-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-.row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
-.pw-strength { height:3px; border-radius:100px; margin-top:6px; background:var(--slate-200); transition:all 0.3s; overflow:hidden; }
-.pw-strength-fill { height:100%; border-radius:100px; transition:all 0.3s; }
-
-/* ── BUTTONS ── */
-.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; border-radius:10px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; border:none; transition:all 0.15s; white-space:nowrap; text-decoration:none; }
-.btn-primary { background:var(--azure); color:white; }
-.btn-primary:hover { background:#0052CC; box-shadow:0 4px 14px rgba(0,102,255,0.35); transform:translateY(-1px); }
-.btn-teal { background:var(--teal); color:white; }
-.btn-teal:hover { background:#009E90; box-shadow:0 4px 14px rgba(0,196,180,0.35); transform:translateY(-1px); }
-.btn-ink { background:var(--ink); color:white; }
-.btn-ink:hover { background:var(--ink-mid); }
-.btn-outline { background:transparent; color:var(--slate-700); border:1.5px solid var(--slate-200); }
-.btn-outline:hover { border-color:var(--slate-400); background:var(--slate-50); }
-.btn-ghost { background:transparent; color:var(--slate-400); }
-.btn-ghost:hover { color:var(--slate-700); }
-.btn-danger { background:var(--rose); color:white; }
-.btn-full { width:100%; }
-.btn-lg { padding:14px 28px; font-size:15px; border-radius:12px; }
-.btn-sm { padding:7px 14px; font-size:12px; border-radius:8px; }
-.btn-xs { padding:5px 10px; font-size:11px; border-radius:6px; }
-
-/* ── CARDS & CONTAINERS ── */
-.card { background:white; border:1px solid var(--slate-200); border-radius:14px; overflow:hidden; }
-.card-head { padding:16px 20px; border-bottom:1px solid var(--slate-100); display:flex; align-items:center; justify-content:space-between; }
-.card-title { font-size:14px; font-weight:700; color:var(--ink); }
-.card-body { padding:20px; }
-.section-break { height:1px; background:var(--slate-100); margin:24px 0; }
-
-/* ── BADGES ── */
-.badge { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:100px; font-size:11px; font-weight:600; }
-.badge-azure { background:var(--azure-light); color:var(--azure); }
-.badge-teal { background:var(--teal-light); color:#008B7D; }
-.badge-emerald { background:var(--emerald-light); color:var(--emerald); }
-.badge-amber { background:var(--amber-light); color:#B45309; }
-.badge-rose { background:var(--rose-light); color:var(--rose); }
-.badge-violet { background:var(--violet-light); color:var(--violet); }
-.badge-slate { background:var(--slate-100); color:var(--slate-600); }
-.badge-gold { background:var(--gold-light); color:var(--gold); }
-.badge-ink { background:var(--ink); color:white; }
-
-/* ── PLAN GRID ── */
-.plan-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
-.plan-card { border:2px solid var(--slate-200); border-radius:16px; padding:22px 18px; cursor:pointer; transition:all 0.18s; position:relative; background:white; }
-.plan-card:hover { border-color:var(--azure); transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,102,255,0.08); }
-.plan-card.selected { border-color:var(--azure); box-shadow:0 0 0 4px rgba(0,102,255,0.12); }
-.plan-card.featured { border-color:var(--ink); }
-.plan-card.featured.selected { box-shadow:0 0 0 4px rgba(10,13,26,0.12); }
-.plan-star { position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--ink); color:white; font-size:10px; font-weight:700; padding:3px 12px; border-radius:100px; white-space:nowrap; letter-spacing:0.5px; }
-.plan-tier { font-size:12px; font-weight:700; color:var(--slate-500); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.8px; }
-.plan-price { font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:500; color:var(--ink); line-height:1; }
-.plan-cycle { font-size:12px; color:var(--slate-400); margin-top:4px; }
-.plan-divider { height:1px; background:var(--slate-100); margin:16px 0; }
-.plan-feat { font-size:12.5px; color:var(--slate-600); margin-bottom:8px; display:flex; align-items:flex-start; gap:7px; line-height:1.4; }
-.plan-feat::before { content:'✓'; color:var(--teal); font-weight:700; flex-shrink:0; font-size:11px; margin-top:1px; }
-.plan-feat.off { color:var(--slate-300); }
-.plan-feat.off::before { content:'–'; color:var(--slate-300); }
-
-/* ── TRIAL STRIP ── */
-.trial-strip {
-  background:linear-gradient(105deg, var(--ink) 0%, #1a2d6b 100%);
-  border-radius:16px; padding:22px 28px; margin-bottom:24px;
-  display:flex; align-items:center; gap:24px; flex-wrap:wrap;
-}
-.trial-tag { background:rgba(0,196,180,0.15); border:1px solid rgba(0,196,180,0.3); border-radius:100px; padding:6px 16px; flex-shrink:0; }
-.trial-tag span { font-size:13px; font-weight:700; color:var(--teal); }
-.trial-content h3 { font-family:'Instrument Serif',serif; font-size:22px; color:white; margin-bottom:4px; }
-.trial-content p { font-size:13px; color:rgba(255,255,255,0.55); }
-.trial-checks { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
-.trial-check { font-size:12px; color:rgba(255,255,255,0.65); display:flex; align-items:center; gap:5px; }
-.trial-check::before { content:'✓'; color:var(--teal); font-weight:700; }
-
-/* ── TOGGLE ── */
-.toggle-group { display:flex; align-items:center; gap:12px; justify-content:center; margin-bottom:20px; }
-.toggle-label { font-size:13px; font-weight:500; color:var(--slate-500); }
-.toggle-label.on { color:var(--ink); font-weight:700; }
-.toggle-track { width:46px; height:25px; background:var(--slate-200); border-radius:100px; cursor:pointer; position:relative; transition:background 0.2s; }
-.toggle-track.on { background:var(--azure); }
-.toggle-knob { position:absolute; top:3px; left:3px; width:19px; height:19px; background:white; border-radius:50%; transition:all 0.2s; box-shadow:0 1px 4px rgba(0,0,0,0.15); }
-.toggle-track.on .toggle-knob { left:24px; }
-.save-chip { background:var(--emerald-light); color:var(--emerald); font-size:11px; font-weight:700; padding:3px 9px; border-radius:100px; }
-
-/* ── MODULE SELECTOR ── */
-.module-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
-.module-chip { border:1.5px solid var(--slate-200); border-radius:10px; padding:12px 14px; cursor:pointer; transition:all 0.15s; background:white; position:relative; }
-.module-chip:hover { border-color:var(--azure); background:var(--azure-light); }
-.module-chip.selected { border-color:var(--azure); background:var(--azure-light); }
-.module-chip.locked { opacity:0.45; cursor:not-allowed; }
-.module-chip.locked::after { content:'🔒'; position:absolute; top:8px; right:8px; font-size:10px; }
-.module-chip-icon { font-size:18px; margin-bottom:5px; }
-.module-chip-name { font-size:12px; font-weight:700; color:var(--ink); }
-.module-chip-desc { font-size:10.5px; color:var(--slate-400); margin-top:2px; line-height:1.4; }
-
-/* ── INVITE TABLE ── */
-.inv-table { width:100%; border-collapse:collapse; }
-.inv-table th { text-align:left; font-size:10px; font-weight:700; color:var(--slate-400); text-transform:uppercase; letter-spacing:0.5px; padding:8px 10px; background:var(--slate-50); border-bottom:1px solid var(--slate-200); }
-.inv-table td { padding:8px 8px; border-bottom:1px solid var(--slate-100); font-size:13px; vertical-align:middle; }
-.inv-table tr:last-child td { border-bottom:none; }
-.inv-table input, .inv-table select { width:100%; border:1px solid var(--slate-200); border-radius:7px; padding:7px 10px; font-size:12.5px; font-family:'Plus Jakarta Sans',sans-serif; outline:none; background:white; transition:border-color 0.12s; }
-.inv-table input:focus, .inv-table select:focus { border-color:var(--azure); }
-
-/* ── SETTINGS LAYOUT ── */
+/* ── APP SHELL ── */
 .app-shell { display:flex; height:100vh; width:100%; overflow:hidden; }
 .app-sidebar { width:248px; flex-shrink:0; background:white; border-right:1px solid var(--slate-200); display:flex; flex-direction:column; }
 .sidebar-logo { padding:20px 20px 16px; border-bottom:1px solid var(--slate-100); }
@@ -238,6 +63,13 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
 .topbar-left p { font-size:12px; color:var(--slate-400); }
 .app-content { flex:1; overflow-y:auto; padding:28px; }
 
+/* ── BRAND ── */
+.brand-mark { display:flex; align-items:center; gap:10px; }
+.brand-icon { width:36px; height:36px; background:var(--azure); border-radius:9px; display:flex; align-items:center; justify-content:center; }
+.brand-icon svg { width:18px; height:18px; fill:white; }
+.brand-name { font-family:'Instrument Serif',serif; font-size:22px; color:var(--ink); letter-spacing:-0.3px; }
+.brand-tag { font-size:9px; color:var(--slate-400); text-transform:uppercase; letter-spacing:1.5px; margin-top:2px; }
+
 /* ── SETTINGS SECTIONS ── */
 .settings-sec { display:none; }
 .settings-sec.active { display:block; }
@@ -245,7 +77,57 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
 .sec-head h2 { font-size:20px; font-weight:700; color:var(--ink); margin-bottom:4px; }
 .sec-head p { font-size:13.5px; color:var(--slate-500); }
 
-/* ── PERF DASHBOARD ── */
+/* ── CARDS ── */
+.card { background:white; border:1px solid var(--slate-200); border-radius:14px; overflow:hidden; }
+.card-head { padding:16px 20px; border-bottom:1px solid var(--slate-100); display:flex; align-items:center; justify-content:space-between; }
+.card-title { font-size:14px; font-weight:700; color:var(--ink); }
+.card-body { padding:20px; }
+.section-break { height:1px; background:var(--slate-100); margin:24px 0; }
+
+/* ── BADGES ── */
+.badge { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:100px; font-size:11px; font-weight:600; }
+.badge-azure { background:var(--azure-light); color:var(--azure); }
+.badge-teal { background:var(--teal-light); color:#008B7D; }
+.badge-emerald { background:var(--emerald-light); color:var(--emerald); }
+.badge-amber { background:var(--amber-light); color:#B45309; }
+.badge-rose { background:var(--rose-light); color:var(--rose); }
+.badge-violet { background:var(--violet-light); color:var(--violet); }
+.badge-slate { background:var(--slate-100); color:var(--slate-600); }
+.badge-gold { background:var(--gold-light); color:var(--gold); }
+.badge-ink { background:var(--ink); color:white; }
+
+/* ── FORMS ── */
+.field { margin-bottom:18px; }
+.field-label { display:block; font-size:12px; font-weight:700; color:var(--slate-700); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
+.tip-icon { display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:var(--slate-200); color:var(--slate-500); font-size:9px; font-weight:700; cursor:help; margin-left:4px; vertical-align:middle; position:relative; }
+[data-tooltip]:hover::after { content:attr(data-tooltip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--ink); color:white; font-size:11.5px; line-height:1.5; padding:8px 12px; border-radius:8px; white-space:normal; width:220px; z-index:200; font-family:'Plus Jakarta Sans',sans-serif; font-weight:400; box-shadow:0 8px 24px rgba(0,0,0,0.25); }
+[data-tooltip]:hover::before { content:''; position:absolute; bottom:calc(100% + 4px); left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:var(--ink); z-index:200; }
+.input { width:100%; padding:11px 14px; border:1.5px solid var(--slate-200); border-radius:10px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; color:var(--ink); background:white; outline:none; transition:border-color 0.15s, box-shadow 0.15s; }
+.input:focus { border-color:var(--azure); box-shadow:0 0 0 3px rgba(0,102,255,0.1); }
+.input::placeholder { color:var(--slate-300); }
+.input-select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394A3B8'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 13px center; padding-right:36px; }
+.input-hint { font-size:11.5px; color:var(--slate-400); margin-top:5px; line-height:1.5; }
+.row-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+
+/* ── BUTTONS ── */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; border-radius:10px; font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; border:none; transition:all 0.15s; white-space:nowrap; text-decoration:none; }
+.btn-primary { background:var(--azure); color:white; }
+.btn-primary:hover { background:#0052CC; box-shadow:0 4px 14px rgba(0,102,255,0.35); transform:translateY(-1px); }
+.btn-teal { background:var(--teal); color:white; }
+.btn-teal:hover { background:#009E90; box-shadow:0 4px 14px rgba(0,196,180,0.35); transform:translateY(-1px); }
+.btn-ink { background:var(--ink); color:white; }
+.btn-outline { background:transparent; color:var(--slate-700); border:1.5px solid var(--slate-200); }
+.btn-outline:hover { border-color:var(--slate-400); background:var(--slate-50); }
+.btn-ghost { background:transparent; color:var(--slate-400); }
+.btn-ghost:hover { color:var(--slate-700); }
+.btn-danger { background:var(--rose); color:white; }
+.btn-full { width:100%; }
+.btn-lg { padding:14px 28px; font-size:15px; border-radius:12px; }
+.btn-sm { padding:7px 14px; font-size:12px; border-radius:8px; }
+.btn-xs { padding:5px 10px; font-size:11px; border-radius:6px; }
+
+/* ── KPI GRID ── */
 .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
 .kpi-card { background:white; border:1px solid var(--slate-200); border-radius:12px; padding:18px; }
 .kpi-label { font-size:11px; font-weight:700; color:var(--slate-400); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
@@ -253,6 +135,8 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
 .kpi-delta { font-size:12px; margin-top:4px; display:flex; align-items:center; gap:3px; }
 .kpi-delta.up { color:var(--emerald); }
 .kpi-delta.dn { color:var(--rose); }
+
+/* ── DATA TABLE ── */
 .data-table { width:100%; border-collapse:collapse; }
 .data-table th { text-align:left; font-size:10.5px; font-weight:700; color:var(--slate-400); text-transform:uppercase; letter-spacing:0.4px; padding:10px 14px; background:var(--slate-50); border-bottom:1px solid var(--slate-200); }
 .data-table td { padding:12px 14px; border-bottom:1px solid var(--slate-100); font-size:13px; }
@@ -261,8 +145,68 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
 .mini-bar-fill { height:100%; border-radius:100px; background:linear-gradient(90deg,var(--azure),var(--teal)); }
 .agent-dot { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:white; flex-shrink:0; }
 
+/* ── VOICE GRID ── */
+.voice-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
+.voice-card { border:1.5px solid var(--slate-200); border-radius:12px; padding:14px; cursor:pointer; transition:all 0.15s; position:relative; }
+.voice-card:hover { border-color:var(--azure); background:var(--azure-light); }
+.voice-card.selected { border-color:var(--azure); background:var(--azure-light); }
+.voice-card-name { font-size:13px; font-weight:700; color:var(--ink); margin-bottom:2px; }
+.voice-card-lang { font-size:11px; color:var(--slate-400); }
+.voice-card-play { position:absolute; bottom:10px; right:10px; width:26px; height:26px; background:var(--azure); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; color:white; }
+.voice-waveform { display:flex; align-items:center; gap:2px; height:20px; margin:6px 0; }
+.voice-bar { width:3px; background:var(--azure); border-radius:100px; animation:wave 1.2s ease-in-out infinite; }
+.voice-bar:nth-child(1){height:6px;animation-delay:0s}
+.voice-bar:nth-child(2){height:12px;animation-delay:0.1s}
+.voice-bar:nth-child(3){height:18px;animation-delay:0.2s}
+.voice-bar:nth-child(4){height:10px;animation-delay:0.3s}
+.voice-bar:nth-child(5){height:15px;animation-delay:0.4s}
+.voice-bar:nth-child(6){height:8px;animation-delay:0.5s}
+@keyframes wave { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.4)} }
+
+/* ── TOGGLE ── */
+.toggle-track { width:46px; height:25px; background:var(--slate-200); border-radius:100px; cursor:pointer; position:relative; transition:background 0.2s; }
+.toggle-track.on { background:var(--azure); }
+.toggle-knob { position:absolute; top:3px; left:3px; width:19px; height:19px; background:white; border-radius:50%; transition:all 0.2s; box-shadow:0 1px 4px rgba(0,0,0,0.15); }
+.toggle-track.on .toggle-knob { left:24px; }
+
+/* ── CONTENT STUDIO ── */
+.studio-hero { background:linear-gradient(120deg,var(--ink) 0%,#1a2d6b 60%,#0a4a3a 100%); border-radius:16px; padding:32px; color:white; margin-bottom:20px; position:relative; overflow:hidden; }
+.studio-hero::after { content:''; position:absolute; right:-40px; top:-40px; width:220px; height:220px; border-radius:50%; background:rgba(0,196,180,0.08); }
+.studio-steps { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:20px; }
+.studio-step { background:white; border-radius:12px; padding:16px 14px; text-align:center; border:1px solid var(--slate-200); }
+.studio-step-num { width:28px; height:28px; border-radius:50%; background:var(--azure-light); color:var(--azure); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; }
+.studio-step-icon { font-size:22px; margin-bottom:6px; }
+.studio-step-label { font-size:11.5px; font-weight:700; color:var(--ink); }
+.studio-step-desc { font-size:10.5px; color:var(--slate-400); margin-top:3px; line-height:1.4; }
+.pricing-row { display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--slate-100); }
+.pricing-row:last-child { border-bottom:none; }
+.pricing-service { font-size:13.5px; font-weight:600; color:var(--ink); }
+.pricing-detail { font-size:12px; color:var(--slate-400); margin-top:2px; }
+.pricing-cost { font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:500; color:var(--ink); text-align:right; }
+.pricing-margin { font-size:11px; color:var(--emerald); text-align:right; margin-top:2px; }
+
+/* ── BRANDING ── */
+.color-swatch-row { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.color-swatch { width:44px; height:44px; border-radius:10px; cursor:pointer; border:2px solid transparent; transition:all 0.15s; }
+.color-swatch.active { border-color:var(--ink); transform:scale(1.1); }
+.logo-upload-box { border:2px dashed var(--slate-300); border-radius:12px; padding:28px; text-align:center; cursor:pointer; transition:all 0.15s; }
+.logo-upload-box:hover { border-color:var(--azure); background:var(--azure-light); }
+
+/* ── MISC ── */
+.info-box { background:var(--azure-light); border-left:3px solid var(--azure); border-radius:0 9px 9px 0; padding:12px 16px; font-size:13px; color:#0052CC; margin-bottom:16px; line-height:1.6; }
+.check-row { display:flex; align-items:flex-start; gap:9px; margin-bottom:12px; }
+.check-row input[type=checkbox] { margin-top:3px; accent-color:var(--azure); width:14px; height:14px; flex-shrink:0; }
+.check-row label { font-size:13px; color:var(--slate-600); line-height:1.5; cursor:pointer; }
+.link { color:var(--azure); font-weight:600; cursor:pointer; }
+.link:hover { text-decoration:underline; }
+.avatar-row { display:flex; align-items:center; gap:18px; margin-bottom:22px; }
+.avatar-circle { width:76px; height:76px; border-radius:50%; background:linear-gradient(135deg,var(--azure),var(--teal)); display:flex; align-items:center; justify-content:center; font-family:'Instrument Serif',serif; font-size:28px; color:white; cursor:pointer; flex-shrink:0; overflow:hidden; position:relative; }
+.avatar-circle input { position:absolute; inset:0; opacity:0; cursor:pointer; }
+.avatar-info h4 { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.avatar-info p { font-size:12px; color:var(--slate-400); line-height:1.5; }
+
 /* ── AI ASSISTANT ── */
-.ai-fab { position:fixed; bottom:28px; right:28px; z-index:90; width:52px; height:52px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 8px 28px rgba(10,13,26,0.3); transition:all 0.2s; display:none; }
+.ai-fab { position:fixed; bottom:28px; right:28px; z-index:90; width:52px; height:52px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 8px 28px rgba(10,13,26,0.3); transition:all 0.2s; }
 .ai-fab:hover { transform:scale(1.08); box-shadow:0 10px 36px rgba(0,102,255,0.4); background:var(--azure); }
 .ai-fab svg { width:22px; height:22px; fill:white; }
 .ai-panel { position:fixed; bottom:94px; right:28px; z-index:90; width:370px; background:white; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,0.18); border:1px solid var(--slate-200); overflow:hidden; display:none; flex-direction:column; max-height:520px; }
@@ -313,1023 +257,331 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
 .demo-feat-icon { font-size:22px; margin-bottom:7px; }
 .demo-feat-name { font-size:13px; font-weight:700; color:var(--ink); margin-bottom:3px; }
 .demo-feat-desc { font-size:12px; color:var(--slate-500); line-height:1.5; }
-.demo-preview { background:var(--slate-50); border:1px solid var(--slate-200); border-radius:12px; padding:16px; margin-bottom:16px; }
 .demo-foot { padding:16px 32px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--slate-100); }
 .demo-counter { font-size:12px; color:var(--slate-400); }
 
-/* ── AVATAR ── */
-.avatar-row { display:flex; align-items:center; gap:18px; margin-bottom:22px; }
-.avatar-circle { width:76px; height:76px; border-radius:50%; background:linear-gradient(135deg,var(--azure),var(--teal)); display:flex; align-items:center; justify-content:center; font-family:'Instrument Serif',serif; font-size:28px; color:white; cursor:pointer; flex-shrink:0; overflow:hidden; position:relative; }
-.avatar-circle input { position:absolute; inset:0; opacity:0; cursor:pointer; }
-.avatar-info h4 { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:4px; }
-.avatar-info p { font-size:12px; color:var(--slate-400); line-height:1.5; }
+/* ── TOP DEMO BANNER ── */
+.demo-bar { background:linear-gradient(90deg,#0047FF,#0066FF); padding:9px 24px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.demo-bar span { font-size:12px; font-weight:600; color:rgba(255,255,255,0.9); }
+.demo-bar-actions { display:flex; align-items:center; gap:10px; }
+.demo-bar a { font-size:12px; font-weight:600; color:white; text-decoration:none; padding:4px 12px; border:1px solid rgba(255,255,255,0.35); border-radius:6px; transition:all 0.15s; }
+.demo-bar a:hover { background:rgba(255,255,255,0.15); }
 
-/* ── AI VOICE SECTION ── */
-.voice-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
-.voice-card { border:1.5px solid var(--slate-200); border-radius:12px; padding:14px; cursor:pointer; transition:all 0.15s; position:relative; }
-.voice-card:hover { border-color:var(--azure); background:var(--azure-light); }
-.voice-card.selected { border-color:var(--azure); background:var(--azure-light); }
-.voice-card-name { font-size:13px; font-weight:700; color:var(--ink); margin-bottom:2px; }
-.voice-card-lang { font-size:11px; color:var(--slate-400); }
-.voice-card-play { position:absolute; bottom:10px; right:10px; width:26px; height:26px; background:var(--azure); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; color:white; }
-.voice-waveform { display:flex; align-items:center; gap:2px; height:20px; margin:6px 0; }
-.voice-bar { width:3px; background:var(--azure); border-radius:100px; animation:wave 1.2s ease-in-out infinite; }
-.voice-bar:nth-child(1){height:6px;animation-delay:0s}
-.voice-bar:nth-child(2){height:12px;animation-delay:0.1s}
-.voice-bar:nth-child(3){height:18px;animation-delay:0.2s}
-.voice-bar:nth-child(4){height:10px;animation-delay:0.3s}
-.voice-bar:nth-child(5){height:15px;animation-delay:0.4s}
-.voice-bar:nth-child(6){height:8px;animation-delay:0.5s}
-@keyframes wave { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.4)} }
-
-/* ── CONTENT STUDIO (CUSTOMER-FACING) ── */
-.studio-hero { background:linear-gradient(120deg,var(--ink) 0%,#1a2d6b 60%,#0a4a3a 100%); border-radius:16px; padding:32px; color:white; margin-bottom:20px; position:relative; overflow:hidden; }
-.studio-hero::after { content:''; position:absolute; right:-40px; top:-40px; width:220px; height:220px; border-radius:50%; background:rgba(0,196,180,0.08); }
-.studio-steps { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:20px; }
-.studio-step { background:white; border-radius:12px; padding:16px 14px; text-align:center; border:1px solid var(--slate-200); }
-.studio-step-num { width:28px; height:28px; border-radius:50%; background:var(--azure-light); color:var(--azure); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; }
-.studio-step-icon { font-size:22px; margin-bottom:6px; }
-.studio-step-label { font-size:11.5px; font-weight:700; color:var(--ink); }
-.studio-step-desc { font-size:10.5px; color:var(--slate-400); margin-top:3px; line-height:1.4; }
-.pricing-row { display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--slate-100); }
-.pricing-row:last-child { border-bottom:none; }
-.pricing-service { font-size:13.5px; font-weight:600; color:var(--ink); }
-.pricing-detail { font-size:12px; color:var(--slate-400); margin-top:2px; }
-.pricing-cost { font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:500; color:var(--ink); text-align:right; }
-.pricing-margin { font-size:11px; color:var(--emerald); text-align:right; margin-top:2px; }
-
-/* ── BRANDING PANEL ── */
-.color-swatch-row { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
-.color-swatch { width:44px; height:44px; border-radius:10px; cursor:pointer; border:2px solid transparent; transition:all 0.15s; }
-.color-swatch.active { border-color:var(--ink); transform:scale(1.1); }
-.logo-upload-box { border:2px dashed var(--slate-300); border-radius:12px; padding:28px; text-align:center; cursor:pointer; transition:all 0.15s; }
-.logo-upload-box:hover { border-color:var(--azure); background:var(--azure-light); }
-
-/* ── HELPERS ── */
-.info-box { background:var(--azure-light); border-left:3px solid var(--azure); border-radius:0 9px 9px 0; padding:12px 16px; font-size:13px; color:#0052CC; margin-bottom:16px; line-height:1.6; }
-.warn-box { background:var(--amber-light); border-left:3px solid var(--amber); border-radius:0 9px 9px 0; padding:12px 16px; font-size:13px; color:#92400E; margin-bottom:16px; }
-.link { color:var(--azure); font-weight:600; cursor:pointer; }
-.link:hover { text-decoration:underline; }
-.or-line { display:flex; align-items:center; gap:12px; margin:18px 0; }
-.or-line span { font-size:12px; color:var(--slate-400); }
-.or-line::before,.or-line::after { content:''; flex:1; height:1px; background:var(--slate-200); }
-.check-row { display:flex; align-items:flex-start; gap:9px; margin-bottom:12px; }
-.check-row input[type=checkbox] { margin-top:3px; accent-color:var(--azure); width:14px; height:14px; flex-shrink:0; }
-.check-row label { font-size:13px; color:var(--slate-600); line-height:1.5; cursor:pointer; }
-.drop-zone { border:2px dashed var(--slate-300); border-radius:12px; padding:26px; text-align:center; cursor:pointer; background:var(--slate-50); transition:all 0.15s; }
-.drop-zone:hover { border-color:var(--azure); background:var(--azure-light); }
-.drop-icon { font-size:30px; margin-bottom:8px; }
-.gap { display:block; }
-@media(max-width:900px){.plan-grid{grid-template-columns:1fr 1fr}.split-panel{display:none}}
-@media(max-width:640px){.plan-grid{grid-template-columns:1fr}.row-2,.row-3{grid-template-columns:1fr}.studio-steps{grid-template-columns:1fr 1fr}.kpi-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:860px){ .app-sidebar{ display:none; } }
 </style>
 </head>
-<body><div style="position:fixed;top:0;left:0;right:0;height:36px;background:rgba(10,13,26,0.95);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:9999;backdrop-filter:blur(12px);">
-  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-    <div style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#0066FF,#00C6FF);display:flex;align-items:center;justify-content:center;font-family:serif;font-weight:900;font-size:10px;color:white;">N</div>
-    <span style="font-family:serif;font-size:13px;color:rgba(255,255,255,0.8);letter-spacing:0.1em;">NAMA</span>
-    <span style="font-size:10px;color:rgba(255,255,255,0.3);margin-left:4px;">← Home</span>
-  </a>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <span style="font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.1em;text-transform:uppercase;">CRM Platform</span>
-    <a href="nama-os.html" style="font-size:11px;color:#4a9b7f;text-decoration:none;padding:3px 10px;border:1px solid rgba(74,155,127,0.3);border-radius:6px;background:rgba(74,155,127,0.08);">✦ Open OS View →</a>
-  </div>
-</div>
-<div style="height:36px;"></div>
+<body>
 
-<!-- ══════════════════════════════════════════════════
-     PAGE 1 — PLAN SELECTION
-══════════════════════════════════════════════════ -->
-<div class="page active" id="page-plans" style="background:var(--slate-50);">
-  <!-- Top nav -->
-  <div style="background:white;border-bottom:1px solid var(--slate-200);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;">
-    <div class="brand-mark">
-      <div class="brand-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div>
-      <div><div class="brand-name brand-name-dark">NAMA</div><div style="font-size:9px;color:var(--slate-400);text-transform:uppercase;letter-spacing:1.5px;">Travel OS</div></div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <span style="font-size:13px;color:var(--slate-500);">Already registered?</span>
-      <button class="btn btn-outline btn-sm" onclick="goTo('page-login')">Sign In</button>
-    </div>
-  </div>
-
-  <div style="max-width:1140px;margin:0 auto;padding:40px 28px;width:100%;">
-    <!-- Step rail -->
-    <div class="step-rail" style="max-width:680px;margin:0 auto 36px;">
-      <div class="step-node active"><div class="step-circle">1</div><div class="step-label">Choose Plan</div></div>
-      <div class="step-connector"></div>
-      <div class="step-node pending"><div class="step-circle">2</div><div class="step-label">Register</div></div>
-      <div class="step-connector"></div>
-      <div class="step-node pending"><div class="step-circle">3</div><div class="step-label">Verify</div></div>
-      <div class="step-connector"></div>
-      <div class="step-node pending"><div class="step-circle">4</div><div class="step-label">Profile</div></div>
-      <div class="step-connector"></div>
-      <div class="step-node pending"><div class="step-circle">5</div><div class="step-label">Team</div></div>
-      <div class="step-connector"></div>
-      <div class="step-node pending"><div class="step-circle">6</div><div class="step-label">Modules</div></div>
-    </div>
-
-    <!-- Trial strip -->
-    <div class="trial-strip">
-      <div class="trial-tag"><span>7 Days Free</span></div>
-      <div class="trial-content" style="flex:1;">
-        <h3>Start free — unlimited users, all modules</h3>
-        <div class="trial-checks">
-          <div class="trial-check">No credit card required</div>
-          <div class="trial-check">Unlimited team members during trial</div>
-          <div class="trial-check">All 13 modules unlocked</div>
-          <div class="trial-check">AI Voice included</div>
-          <div class="trial-check">Cancel anytime</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Billing toggle -->
-    <div class="toggle-group">
-      <span class="toggle-label on" id="lbl-mo">Monthly</span>
-      <div class="toggle-track" id="billing-trk" onclick="flipBilling()"><div class="toggle-knob"></div></div>
-      <span class="toggle-label" id="lbl-yr">Annual <span class="save-chip">Save 17%</span></span>
-    </div>
-
-    <!-- Plans -->
-    <div class="plan-grid">
-      <div class="plan-card" id="pc-starter" onclick="pickPlan('starter')">
-        <div class="plan-tier">Starter</div>
-        <div class="plan-price" id="pp-starter">₹4,999</div>
-        <div class="plan-cycle" id="pc2-starter">/month · up to 5 users</div>
-        <div class="plan-divider"></div>
-        <div class="plan-feat">M1–M6 + M8 modules</div>
-        <div class="plan-feat">500 queries/month</div>
-        <div class="plan-feat">100 AI quotes/month</div>
-        <div class="plan-feat">1 white-label portal</div>
-        <div class="plan-feat">Basic branding</div>
-        <div class="plan-feat off">AI Voice</div>
-        <div class="plan-feat off">Finance & Remittance</div>
-        <div class="plan-feat off">Corporate Travel</div>
-        <div class="plan-feat off">Content Studio</div>
-      </div>
-      <div class="plan-card" id="pc-growth" onclick="pickPlan('growth')">
-        <div class="plan-tier">Growth</div>
-        <div class="plan-price" id="pp-growth">₹14,999</div>
-        <div class="plan-cycle" id="pc2-growth">/month · up to 15 users</div>
-        <div class="plan-divider"></div>
-        <div class="plan-feat">All M1–M11 modules</div>
-        <div class="plan-feat">2,000 queries/month</div>
-        <div class="plan-feat">500 AI quotes/month</div>
-        <div class="plan-feat">3 white-label portals</div>
-        <div class="plan-feat">Full branding + custom domain</div>
-        <div class="plan-feat">AI Voice (3 voices)</div>
-        <div class="plan-feat">Finance Dashboard</div>
-        <div class="plan-feat off">Corporate Travel</div>
-        <div class="plan-feat off">Content Studio</div>
-      </div>
-      <div class="plan-card featured" id="pc-pro" onclick="pickPlan('pro')">
-        <div class="plan-star">⭐ Most Popular</div>
-        <div class="plan-tier">Professional</div>
-        <div class="plan-price" id="pp-pro">₹39,999</div>
-        <div class="plan-cycle" id="pc2-pro">/month · up to 30 users</div>
-        <div class="plan-divider"></div>
-        <div class="plan-feat">All 13 modules</div>
-        <div class="plan-feat">10,000 queries/month</div>
-        <div class="plan-feat">2,000 AI quotes/month</div>
-        <div class="plan-feat">10 portals + sub-agents</div>
-        <div class="plan-feat">Full white-label + schema colours</div>
-        <div class="plan-feat">AI Voice (all voices + dialects)</div>
-        <div class="plan-feat">Finance + Remittance</div>
-        <div class="plan-feat">Corporate Travel</div>
-        <div class="plan-feat">Content Studio (for clients)</div>
-      </div>
-      <div class="plan-card" id="pc-enterprise" onclick="pickPlan('enterprise')">
-        <div class="plan-tier">Enterprise</div>
-        <div class="plan-price" style="font-size:20px;margin-top:4px;">Custom</div>
-        <div class="plan-cycle">Unlimited users · bespoke</div>
-        <div class="plan-divider"></div>
-        <div class="plan-feat">Everything in Pro</div>
-        <div class="plan-feat">Unlimited all quotas</div>
-        <div class="plan-feat">Dedicated CSM + SLA</div>
-        <div class="plan-feat">Multi-entity / multi-brand</div>
-        <div class="plan-feat">Custom AI model fine-tuning</div>
-        <div class="plan-feat">White-glove onboarding</div>
-        <div class="plan-feat">Full API + webhook access</div>
-        <div class="plan-feat">Private cloud option</div>
-        <div class="plan-feat">Content Studio unlimited</div>
-      </div>
-    </div>
-
-    <!-- Currency note -->
-    <div style="text-align:center;margin-bottom:24px;">
-      <span style="font-size:12.5px;color:var(--slate-400);">💳 INR via Razorpay &nbsp;·&nbsp; USD / AED / EUR via Stripe &nbsp;·&nbsp; PCI DSS compliant</span>
-    </div>
-
-    <div style="text-align:center;">
-      <button class="btn btn-primary btn-lg" onclick="goTo('page-register')" style="min-width:280px;" id="plan-cta">Start 7-Day Free Trial →</button>
-      <div style="font-size:12px;color:var(--slate-400);margin-top:10px;">No card required · Cancel before Day 8 for $0 charge</div>
-    </div>
-
-    <!-- Add-ons -->
-    <div style="max-width:760px;margin:36px auto 0;">
-      <div style="font-size:13px;font-weight:700;color:var(--slate-700);margin-bottom:14px;text-align:center;">Available Add-Ons</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-        <div style="background:white;border:1px solid var(--slate-200);border-radius:12px;padding:14px;text-align:center;">
-          <div style="font-size:20px;margin-bottom:6px;">🔊</div>
-          <div style="font-size:12px;font-weight:700;color:var(--ink);">AI Voice</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--azure);margin-top:4px;">₹4,999/mo</div>
-          <div style="font-size:10.5px;color:var(--slate-400);margin-top:3px;">Extra voice pack</div>
-        </div>
-        <div style="background:white;border:1px solid var(--slate-200);border-radius:12px;padding:14px;text-align:center;">
-          <div style="font-size:20px;margin-bottom:6px;">🎬</div>
-          <div style="font-size:12px;font-weight:700;color:var(--ink);">Content Studio</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--azure);margin-top:4px;">₹9,999/mo</div>
-          <div style="font-size:10.5px;color:var(--slate-400);margin-top:3px;">Video + audio content</div>
-        </div>
-        <div style="background:white;border:1px solid var(--slate-200);border-radius:12px;padding:14px;text-align:center;">
-          <div style="font-size:20px;margin-bottom:6px;">👤</div>
-          <div style="font-size:12px;font-weight:700;color:var(--ink);">Extra Seats</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--azure);margin-top:4px;">₹999/mo</div>
-          <div style="font-size:10.5px;color:var(--slate-400);margin-top:3px;">Per additional user</div>
-        </div>
-        <div style="background:white;border:1px solid var(--slate-200);border-radius:12px;padding:14px;text-align:center;">
-          <div style="font-size:20px;margin-bottom:6px;">🔌</div>
-          <div style="font-size:12px;font-weight:700;color:var(--ink);">API Access</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--azure);margin-top:4px;">₹14,999/mo</div>
-          <div style="font-size:10.5px;color:var(--slate-400);margin-top:3px;">Full REST + webhooks</div>
-        </div>
-      </div>
-    </div>
+<!-- TOP DEMO BANNER -->
+<div style="display:flex;flex-direction:column;height:100vh;">
+<div class="demo-bar">
+  <span>🎯 NAMA Demo — CRM &amp; Settings Platform</span>
+  <div class="demo-bar-actions">
+    <a href="nama-architecture.html">🏗️ Architecture</a>
+    <a href="nama-os.html">✦ Open OS View →</a>
+    <a href="index.html">↗ Investor Deck</a>
   </div>
 </div>
 
+<!-- APP SHELL -->
+<div class="app-shell" style="flex:1;min-height:0;">
 
-<!-- ══════════════════════════════════════════════════
-     PAGE 2 — REGISTRATION
-══════════════════════════════════════════════════ -->
-<div class="page" id="page-register">
-  <div class="split">
-    <div class="split-panel">
-      <div class="brand-mark"><div class="brand-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div><div><div class="brand-name">NAMA</div><div class="brand-tag">Travel OS</div></div></div>
-      <div><div class="panel-headline">Set up your<br><em>agency workspace</em></div><div class="panel-body">Your master account gives you full control over your team, modules, branding, and AI configuration. Takes 5 minutes.</div></div>
-      <div class="panel-features">
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>You're the Org Admin (L3)</strong>Full control: team, billing, white-label, all modules</div></div>
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>Invite unlimited users during trial</strong>Each gets a personalised email link to complete their profile</div></div>
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>Granular role-based access</strong>R3 Manager → R4 Sales → R5 Ops → R6 Finance → R7 Sub-Agent</div></div>
+  <!-- SIDEBAR -->
+  <div class="app-sidebar">
+    <div class="sidebar-logo">
+      <div class="brand-mark">
+        <div class="brand-icon" style="width:30px;height:30px;border-radius:7px;"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div>
+        <div><div class="brand-name" style="font-size:18px;">NAMA</div><div class="brand-tag">Travel OS</div></div>
       </div>
     </div>
-    <div class="split-form">
-      <div class="split-form-inner">
-        <div class="step-rail" style="margin-bottom:28px;">
-          <div class="step-node done"><div class="step-circle">✓</div><div class="step-label">Plan</div></div>
-          <div class="step-connector done"></div>
-          <div class="step-node active"><div class="step-circle">2</div><div class="step-label">Register</div></div>
-          <div class="step-connector"></div>
-          <div class="step-node pending"><div class="step-circle">3</div><div class="step-label">Verify</div></div>
-          <div class="step-connector"></div>
-          <div class="step-node pending"><div class="step-circle">4</div><div class="step-label">Profile</div></div>
-          <div class="step-connector"></div>
-          <div class="step-node pending"><div class="step-circle">5</div><div class="step-label">Team</div></div>
-          <div class="step-connector"></div>
-          <div class="step-node pending"><div class="step-circle">6</div><div class="step-label">Modules</div></div>
-        </div>
-
-        <div class="eyebrow">Step 2 of 6</div>
-        <div class="page-title">Register your agency</div>
-        <div style="background:var(--gold-light);border-left:3px solid var(--gold);border-radius:0 9px 9px 0;padding:10px 14px;font-size:12.5px;color:#92400E;margin-bottom:20px;">🎯 <strong>Professional plan</strong> · 7-day free trial · All modules unlocked</div>
-
-        <div class="field">
-          <label class="field-label">Company / Agency Name <span class="req">*</span> <span class="tip-icon" data-tooltip="Legal or trading name of your DMC/agency. Appears on invoices and your white-label portal.">?</span></label>
-          <input class="input" type="text" placeholder="e.g. Rajan Travel Co. Pvt. Ltd.">
-        </div>
-        <div class="row-2">
-          <div class="field"><label class="field-label">Your Full Name <span class="req">*</span></label><input class="input" type="text" placeholder="Rajan Mehta"></div>
-          <div class="field"><label class="field-label">Designation <span class="req">*</span> <span class="tip-icon" data-tooltip="Your job title e.g. Managing Director, Owner, CEO">?</span></label><input class="input" type="text" placeholder="Managing Director"></div>
-        </div>
-        <div class="field">
-          <label class="field-label">Work Email <span class="req">*</span></label>
-          <input class="input" type="email" placeholder="rajan@rajantravel.com">
-          <div class="input-hint">This becomes your admin login and receives the verification email.</div>
-        </div>
-        <div class="row-2">
-          <div class="field"><label class="field-label">Mobile <span class="req">*</span></label><input class="input" type="tel" placeholder="+91 98765 43210"></div>
-          <div class="field"><label class="field-label">Country <span class="req">*</span></label><select class="input input-select"><option value="">Select…</option><option selected>India</option><option>UAE</option><option>Thailand</option><option>Indonesia</option><option>UK</option><option>Other</option></select></div>
-        </div>
-        <div class="row-2">
-          <div class="field"><label class="field-label">Password <span class="req">*</span></label><input class="input" type="password" placeholder="Min 10 characters" oninput="checkPw(this.value)"><div class="pw-strength"><div class="pw-strength-fill" id="pw-fill" style="width:0%;background:var(--rose);"></div></div><div class="input-hint" id="pw-hint">Use uppercase, numbers & symbols</div></div>
-          <div class="field"><label class="field-label">Confirm Password <span class="req">*</span></label><input class="input" type="password" placeholder="Re-enter password"></div>
-        </div>
-        <div class="row-2">
-          <div class="field"><label class="field-label">GSTIN / Tax ID <span class="tip-icon" data-tooltip="Optional now. Required later for GST-compliant invoicing. Can be added in Settings.">?</span></label><input class="input" type="text" placeholder="22AAAAA0000A1Z5 (optional)"></div>
-          <div class="field"><label class="field-label">Billing Currency <span class="req">*</span></label><select class="input input-select"><option selected>INR — Razorpay</option><option>USD — Stripe</option><option>AED — Stripe</option><option>EUR — Stripe</option></select></div>
-        </div>
-        <div class="check-row"><input type="checkbox" id="tos"><label for="tos">I agree to NAMA's <span class="link">Terms of Service</span> and <span class="link">Privacy Policy</span>. Trial ends Day 7; no charge unless I add a payment method.</label></div>
-        <button class="btn btn-primary btn-full btn-lg" onclick="goTo('page-verify')" style="margin-top:6px;">Create Account & Start Trial →</button>
-        <div style="text-align:center;margin-top:16px;font-size:13px;color:var(--slate-400);">Already have an account? <span class="link" onclick="goTo('page-login')">Sign in</span></div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Account</div>
+        <div class="nav-item active" onclick="showSec('profile')"><div class="nav-icon">👤</div>My Profile</div>
+        <div class="nav-item" onclick="showSec('security')"><div class="nav-icon">🔐</div>Security &amp; MFA</div>
+        <div class="nav-item" onclick="showSec('notifications')"><div class="nav-icon">🔔</div>Notifications</div>
       </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Organisation</div>
+        <div class="nav-item" onclick="showSec('company')"><div class="nav-icon">🏢</div>Company &amp; GSTIN</div>
+        <div class="nav-item" onclick="showSec('branding')"><div class="nav-icon">🎨</div>Branding &amp; Theme</div>
+        <div class="nav-item" onclick="showSec('team')"><div class="nav-icon">👥</div>Team &amp; Roles</div>
+        <div class="nav-item" onclick="showSec('performance')"><div class="nav-icon">📊</div>User Performance<div class="nav-badge">!</div></div>
+        <div class="nav-item" onclick="showSec('modules')"><div class="nav-icon">🧩</div>Modules</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">AI &amp; Intelligence</div>
+        <div class="nav-item" onclick="showSec('ai')"><div class="nav-icon">🤖</div>AI Configuration</div>
+        <div class="nav-item" onclick="showSec('voice')"><div class="nav-icon">🔊</div>AI Voice</div>
+        <div class="nav-item" onclick="showSec('studio')"><div class="nav-icon">🎬</div>Content Studio</div>
+        <div class="nav-item" onclick="showSec('integrations')"><div class="nav-icon">🔗</div>Integrations</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Billing</div>
+        <div class="nav-item" onclick="showSec('subscription')"><div class="nav-icon">💳</div>Subscription</div>
+        <div class="nav-item" onclick="showSec('invoices')"><div class="nav-icon">📄</div>Invoices &amp; Costs</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Help</div>
+        <div class="nav-item" onclick="openDemo()"><div class="nav-icon">🎬</div>Platform Tour</div>
+        <div class="nav-item" onclick="window.location.href='nama-architecture.html'"><div class="nav-icon">🏗️</div>System Architecture</div>
+        <div class="nav-item" onclick="window.location.href='nama-os.html'"><div class="nav-icon">✦</div>Open OS View</div>
+        <div class="nav-item" onclick="window.location.href='index.html'"><div class="nav-icon">↗</div>Investor Deck</div>
+      </div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar">R</div>
+      <div style="flex:1;min-width:0;"><div class="user-name">Rajan Mehta</div><div class="user-role">Org Admin · R2</div></div>
+      <span class="badge badge-gold" style="font-size:9px;flex-shrink:0;">ADMIN</span>
     </div>
   </div>
-</div>
 
-
-<!-- ══════════════════════════════════════════════════
-     PAGE 3 — EMAIL VERIFICATION
-══════════════════════════════════════════════════ -->
-<div class="page" id="page-verify" style="background:white;align-items:center;justify-content:center;">
-  <div style="max-width:460px;width:100%;padding:40px;text-align:center;">
-    <div class="brand-mark" style="justify-content:center;margin-bottom:36px;"><div class="brand-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div><div class="brand-name brand-name-dark" style="font-size:20px;">NAMA</div></div>
-    <div style="width:72px;height:72px;border-radius:50%;background:var(--azure-light);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px;">📬</div>
-    <div class="page-title">Check your inbox</div>
-    <p style="font-size:14px;color:var(--slate-500);line-height:1.7;margin-bottom:28px;">We sent a secure verification link to <strong>rajan@rajantravel.com</strong>. Click it to confirm your account and begin your 7-day trial.</p>
-    <div style="background:var(--slate-50);border-radius:13px;padding:20px;margin-bottom:24px;text-align:left;">
-      <div style="font-size:12px;font-weight:700;color:var(--slate-700);margin-bottom:12px;">What happens next</div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--slate-600);"><span style="color:var(--azure);font-weight:700;flex-shrink:0;">1.</span>Click the link in your email</div>
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--slate-600);"><span style="color:var(--azure);font-weight:700;flex-shrink:0;">2.</span>Complete your personal profile (photo, address, emergency info)</div>
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--slate-600);"><span style="color:var(--azure);font-weight:700;flex-shrink:0;">3.</span>Invite your team members</div>
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--slate-600);"><span style="color:var(--azure);font-weight:700;flex-shrink:0;">4.</span>Select your module configuration</div>
-        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--slate-600);"><span style="color:var(--azure);font-weight:700;flex-shrink:0;">5.</span>Watch the onboarding demo and go live</div>
-      </div>
+  <!-- MAIN -->
+  <div class="app-main">
+    <div class="app-topbar">
+      <div class="topbar-left"><h2 id="sec-title">My Profile</h2><p id="sec-sub">Rajan Travel Co. · Professional · <span style="color:var(--teal);">Demo Mode</span></p></div>
+      <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="openDemo()">🎬 Tour</button><button class="btn btn-primary btn-sm">+ New Quote</button></div>
     </div>
-    <button class="btn btn-primary btn-full" onclick="goTo('page-profile')">I've verified — Continue ✓</button>
-    <div style="margin-top:14px;"><button class="btn btn-ghost" style="font-size:13px;">Resend verification email</button></div>
-    <div style="font-size:12px;color:var(--slate-400);margin-top:16px;">Not received? Check spam · <span class="link">Contact support</span></div>
-  </div>
-</div>
+    <div class="app-content">
 
-
-<!-- ══════════════════════════════════════════════════
-     PAGE 4 — ADMIN PROFILE
-══════════════════════════════════════════════════ -->
-<div class="page" id="page-profile">
-  <div class="split">
-    <div class="split-panel">
-      <div class="brand-mark"><div class="brand-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div><div><div class="brand-name">NAMA</div><div class="brand-tag">Travel OS</div></div></div>
-      <div><div class="panel-headline">Your profile<br><em>is private & secure</em></div><div class="panel-body">Personal details are AES-256 encrypted. Only Org Admins can access blood group and address data. Emergency info is only revealed in a genuine emergency.</div></div>
-      <div class="panel-features">
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>Emergency data protected</strong>Blood group visible only to Org Admin — never to agents</div></div>
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>MFA mandatory for admins</strong>TOTP via Google Authenticator or Authy</div></div>
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>DPDP compliant</strong>All personal data handled per India's Digital Personal Data Protection Act 2023</div></div>
-      </div>
-    </div>
-    <div class="split-form">
-      <div class="split-form-inner">
-        <div class="step-rail" style="margin-bottom:28px;">
-          <div class="step-node done"><div class="step-circle">✓</div><div class="step-label">Plan</div></div>
-          <div class="step-connector done"></div>
-          <div class="step-node done"><div class="step-circle">✓</div><div class="step-label">Register</div></div>
-          <div class="step-connector done"></div>
-          <div class="step-node done"><div class="step-circle">✓</div><div class="step-label">Verify</div></div>
-          <div class="step-connector done"></div>
-          <div class="step-node active"><div class="step-circle">4</div><div class="step-label">Profile</div></div>
-          <div class="step-connector"></div>
-          <div class="step-node pending"><div class="step-circle">5</div><div class="step-label">Team</div></div>
-          <div class="step-connector"></div>
-          <div class="step-node pending"><div class="step-circle">6</div><div class="step-label">Modules</div></div>
-        </div>
-        <div class="eyebrow">Step 4 of 6 — Profile</div>
-        <div class="page-title">Complete your profile</div>
-        <p class="page-desc">Private — encrypted — only accessible by you and within your admin controls.</p>
-
-        <div class="avatar-row">
-          <div class="avatar-circle" id="av-circle">R<input type="file" accept="image/*" onchange="previewAv(event)"></div>
-          <div class="avatar-info"><h4>Profile Photo</h4><p>Click to upload · JPG PNG WebP · Max 5MB<br>Appears on team directory, documents, and vouchers.</p><button class="btn btn-outline btn-xs" style="margin-top:8px;" onclick="document.querySelector('#av-circle input').click()">Upload Photo</button></div>
-        </div>
-
-        <div class="row-2">
-          <div class="field"><label class="field-label">Date of Birth <span class="tip-icon" data-tooltip="Used for identity verification and birthday recognition in the system.">?</span></label><input class="input" type="date" value="1985-03-15"></div>
-          <div class="field"><label class="field-label">Blood Group <span class="tip-icon" data-tooltip="Stored encrypted. Only Org Admin can access. Used for medical emergencies only.">?</span></label><select class="input input-select"><option>Select…</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option selected>O-</option><option>AB+</option><option>AB-</option></select></div>
-        </div>
-
-        <div class="section-break"></div>
-        <div style="font-size:13px;font-weight:700;color:var(--slate-700);margin-bottom:14px;">🏠 Residential Address</div>
-        <div class="field"><label class="field-label">Address Line 1</label><input class="input" placeholder="Flat / House no., Street"></div>
-        <div class="field"><label class="field-label">Address Line 2</label><input class="input" placeholder="Area, Landmark (optional)"></div>
-        <div class="row-3">
-          <div class="field"><label class="field-label">City</label><input class="input" placeholder="Mumbai"></div>
-          <div class="field"><label class="field-label">State</label><input class="input" placeholder="Maharashtra"></div>
-          <div class="field"><label class="field-label">PIN / ZIP</label><input class="input" placeholder="400001"></div>
-        </div>
-
-        <div class="section-break"></div>
-        <div style="font-size:13px;font-weight:700;color:var(--slate-700);margin-bottom:8px;">🆘 Emergency Contact</div>
-        <div class="row-2">
-          <div class="field"><label class="field-label">Name</label><input class="input" placeholder="Sunita Mehta"></div>
-          <div class="field"><label class="field-label">Phone</label><input class="input" placeholder="+91 98765 00000"></div>
-        </div>
-        <div class="field"><label class="field-label">Relationship</label><select class="input input-select"><option>Spouse</option><option>Parent</option><option>Sibling</option><option>Other</option></select></div>
-
-        <div class="section-break"></div>
-        <div style="font-size:13px;font-weight:700;color:var(--slate-700);margin-bottom:8px;">🔐 Set Up Two-Factor Authentication <span class="badge badge-rose" style="font-size:10px;margin-left:4px;">Required for Admin</span></div>
-        <div class="info-box">Scan this QR code with Google Authenticator or Authy, then verify your 6-digit code below.</div>
-        <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px;">
-          <div style="width:82px;height:82px;background:var(--ink);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,0.5);text-align:center;flex-shrink:0;line-height:1.4;">QR Code<br>Here</div>
-          <div><div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;">Authenticator key (manual entry):</div><code style="font-family:'JetBrains Mono',monospace;background:var(--slate-100);padding:4px 10px;border-radius:6px;font-size:12px;color:var(--ink);">JBSWY3DPEHPK3PXP</code><div style="font-size:12px;color:var(--slate-400);margin-top:6px;">Add to authenticator app, then enter the 6-digit code</div></div>
-        </div>
-        <div class="field"><label class="field-label">Verify 6-Digit Code</label><input class="input" placeholder="— — — — — —" maxlength="6" style="letter-spacing:8px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:22px;"></div>
-
-        <button class="btn btn-primary btn-full btn-lg" onclick="goTo('page-invite')">Save & Continue →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════
-     PAGE 5 — TEAM INVITATIONS
-══════════════════════════════════════════════════ -->
-<div class="page" id="page-invite" style="background:var(--slate-50);align-items:flex-start;justify-content:center;padding:40px 20px;">
-  <div style="width:100%;max-width:960px;">
-    <div style="text-align:center;margin-bottom:8px;"><div class="brand-mark" style="justify-content:center;"><div class="brand-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div><div class="brand-name brand-name-dark">NAMA</div></div></div>
-    <div class="step-rail" style="max-width:640px;margin:20px auto 28px;">
-      <div class="step-node done"><div class="step-circle">✓</div><div class="step-label">Plan</div></div>
-      <div class="step-connector done"></div>
-      <div class="step-node done"><div class="step-circle">✓</div><div class="step-label">Register</div></div>
-      <div class="step-connector done"></div>
-      <div class="step-node done"><div class="step-circle">✓</div><div class="step-label">Verify</div></div>
-      <div class="step-connector done"></div>
-      <div class="step-node done"><div class="step-circle">✓</div><div class="step-label">Profile</div></div>
-      <div class="step-connector done"></div>
-      <div class="step-node active"><div class="step-circle">5</div><div class="step-label">Team</div></div>
-      <div class="step-connector"></div>
-      <div class="step-node pending"><div class="step-circle">6</div><div class="step-label">Modules</div></div>
-    </div>
-
-    <div style="text-align:center;margin-bottom:24px;">
-      <div class="eyebrow" style="text-align:center;">Step 5 of 6</div>
-      <div class="page-title" style="text-align:center;">Invite your team</div>
-      <p style="font-size:14px;color:var(--slate-500);max-width:480px;margin:0 auto;">Unlimited invites during trial. Each invitee receives a personalised email with a secure link to set up their profile, photo, address, and MFA.</p>
-    </div>
-
-    <div class="card" style="margin-bottom:16px;">
-      <div class="card-head">
-        <span class="card-title">Team Members</span>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-outline btn-sm">⬆ Upload CSV / Excel</button>
-          <button class="btn btn-primary btn-sm" onclick="addRow()">+ Add Row</button>
-        </div>
-      </div>
-      <div style="overflow-x:auto;">
-        <table class="inv-table" id="inv-tbl">
-          <thead><tr>
-            <th style="width:170px;">Full Name</th>
-            <th style="width:160px;">Designation</th>
-            <th style="width:155px;">NAMA Role <span class="tip-icon" data-tooltip="Role controls exactly which modules and data this person can access.">?</span></th>
-            <th style="width:200px;">Work Email</th>
-            <th style="width:140px;">Mobile</th>
-            <th style="width:60px;text-align:center;"></th>
-          </tr></thead>
-          <tbody id="inv-body">
-            <tr id="r1"><td><input placeholder="Priya Sharma" value="Priya Sharma"></td><td><input placeholder="Senior Consultant" value="Senior Consultant"></td><td><select><option>Sales Agent (R4)</option><option>Manager (R3)</option><option>Ops Exec (R5)</option><option>Finance (R6)</option><option>Sub-Agent (R7)</option></select></td><td><input type="email" value="priya@rajantravel.com"></td><td><input value="+91 98000 00001"></td><td style="text-align:center;"><button onclick="delRow('r1')" style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:17px;line-height:1;">×</button></td></tr>
-            <tr id="r2"><td><input placeholder="Arjun Nair" value="Arjun Nair"></td><td><input placeholder="Ops Executive" value="Ops Executive"></td><td><select><option>Sales Agent (R4)</option><option>Manager (R3)</option><option selected>Ops Exec (R5)</option><option>Finance (R6)</option><option>Sub-Agent (R7)</option></select></td><td><input type="email" value="arjun@rajantravel.com"></td><td><input value="+91 98000 00002"></td><td style="text-align:center;"><button onclick="delRow('r2')" style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:17px;line-height:1;">×</button></td></tr>
-            <tr id="r3"><td><input placeholder="Neha Kapoor" value="Neha Kapoor"></td><td><input placeholder="Finance Manager" value="Finance Manager"></td><td><select><option>Sales Agent (R4)</option><option>Manager (R3)</option><option>Ops Exec (R5)</option><option selected>Finance (R6)</option><option>Sub-Agent (R7)</option></select></td><td><input type="email" value="neha@rajantravel.com"></td><td><input value="+91 98000 00003"></td><td style="text-align:center;"><button onclick="delRow('r3')" style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:17px;line-height:1;">×</button></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:14px;background:white;border:1px solid var(--slate-200);border-radius:12px;padding:14px 18px;margin-bottom:16px;">
-      <span style="font-size:22px;">📊</span>
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;">Bulk upload via CSV or Excel</div><div style="font-size:12px;color:var(--slate-400);">Columns: Name, Designation, Role, Email, Mobile. AI auto-maps your headers — no exact format required.</div></div>
-      <a href="#" class="link" style="font-size:12px;white-space:nowrap;">↓ Template</a>
-    </div>
-
-    <div class="info-box">📧 Invitees receive a personalised email with a secure 72-hour link. They complete their own photo, address, blood group, emergency contact, and MFA setup. Role and designation are pre-set by you and cannot be changed by the invitee.</div>
-
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <button class="btn btn-ghost" onclick="goTo('page-profile')">← Back</button>
-      <div style="display:flex;gap:10px;">
-        <button class="btn btn-outline" onclick="goTo('page-modules')">Skip for now</button>
-        <button class="btn btn-primary" onclick="goTo('page-modules')">Send <span id="inv-count">3</span> Invites & Continue →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════
-     PAGE 6 — MODULE CONFIGURATION
-══════════════════════════════════════════════════ -->
-<div class="page" id="page-modules" style="background:var(--slate-50);align-items:flex-start;justify-content:center;padding:40px 20px;">
-  <div style="width:100%;max-width:860px;">
-    <div style="text-align:center;margin-bottom:20px;"><div class="brand-mark" style="justify-content:center;margin-bottom:8px;"><div class="brand-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div><div class="brand-name brand-name-dark">NAMA</div></div></div>
-    <div style="text-align:center;margin-bottom:24px;">
-      <div class="eyebrow" style="text-align:center;">Step 6 of 6</div>
-      <div class="page-title" style="text-align:center;">Choose your modules</div>
-      <p style="font-size:14px;color:var(--slate-500);max-width:500px;margin:0 auto;">All modules are unlocked during trial. After trial, access is per your plan. You can change this in Settings → Modules at any time.</p>
-    </div>
-
-    <div class="card" style="margin-bottom:16px;">
-      <div class="card-head"><span class="card-title">Core CRM & Sales</span><span class="badge badge-emerald">Included in all plans</span></div>
-      <div class="card-body">
-        <div class="module-grid">
-          <div class="module-chip selected"><div class="module-chip-icon">📥</div><div class="module-chip-name">M1 Query Inbox</div><div class="module-chip-desc">WhatsApp, email, web form capture with AI extraction</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">📊</div><div class="module-chip-name">M2 Lead Pipeline</div><div class="module-chip-desc">Kanban CRM with AI scoring and agent isolation</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">💬</div><div class="module-chip-name">M3 Quotation Generator</div><div class="module-chip-desc">3-tier AI quote assembly in 60 seconds</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">📄</div><div class="module-chip-name">M4 Document Mgmt</div><div class="module-chip-desc">Passport OCR, visa checklist, AI data extraction</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">💌</div><div class="module-chip-name">M5 Communications</div><div class="module-chip-desc">AI-drafted WhatsApp, email, SMS with personalisation</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">🏨</div><div class="module-chip-name">M6 Supplier Registry</div><div class="module-chip-desc">Onboarding, grading, rate sheet AI parsing</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px;">
-      <div class="card-head"><span class="card-title">Operations & Finance</span><span class="badge badge-azure">Growth plan+</span></div>
-      <div class="card-body">
-        <div class="module-grid">
-          <div class="module-chip selected"><div class="module-chip-icon">✅</div><div class="module-chip-name">M7 Booking Mgmt</div><div class="module-chip-desc">Confirmations, vouchers, booking lifecycle</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">🗺️</div><div class="module-chip-name">M8 Itinerary Builder</div><div class="module-chip-desc">Day-by-day AI narrative itinerary</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">📈</div><div class="module-chip-name">M9 Analytics</div><div class="module-chip-desc">Real-time KPIs, agent leaderboard, forecasting</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">🌐</div><div class="module-chip-name">M10 White-Label Portal</div><div class="module-chip-desc">Branded customer portal with custom domain</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">💰</div><div class="module-chip-name">M11 Finance Dashboard</div><div class="module-chip-desc">P&L per booking, cash flow, receivables</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">🖼️</div><div class="module-chip-name">M12 Content Mgmt</div><div class="module-chip-desc">Destination content, image library, AI copy</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:16px;">
-      <div class="card-head"><span class="card-title">Advanced Modules</span><span class="badge badge-violet">Professional plan+</span></div>
-      <div class="card-body">
-        <div class="module-grid">
-          <div class="module-chip selected"><div class="module-chip-icon">💳</div><div class="module-chip-name">M13 Corporate + Fixed Dep.</div><div class="module-chip-desc">PO workflows, MICE, seat inventory</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">💸</div><div class="module-chip-name">Remittance Module</div><div class="module-chip-desc">Wise + FlyRemit + Razorpay global payments</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">🔊</div><div class="module-chip-name">AI Voice</div><div class="module-chip-desc">Multi-voice, multi-dialect narration for content</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">🎬</div><div class="module-chip-name">Content Studio</div><div class="module-chip-desc">Customer-facing video + audio content creation</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">📡</div><div class="module-chip-name">Call Transcription</div><div class="module-chip-desc">Voice → CRM auto-logging via Whisper AI</div></div>
-          <div class="module-chip selected"><div class="module-chip-icon">🔌</div><div class="module-chip-name">API + Webhooks</div><div class="module-chip-desc">Full programmatic access for integrations</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <button class="btn btn-ghost" onclick="goTo('page-invite')">← Back</button>
-      <button class="btn btn-primary btn-lg" onclick="goTo('page-login')">Save Modules & Go to Login →</button>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════
-     PAGE 7 — LOGIN
-══════════════════════════════════════════════════ -->
-<div class="page" id="page-login">
-  <div class="split">
-    <div class="split-panel">
-      <div class="brand-mark"><div class="brand-icon"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div><div><div class="brand-name">NAMA</div><div class="brand-tag">Travel OS</div></div></div>
-      <div><div class="panel-headline">Welcome<br><em>back.</em></div><div class="panel-body">Your leads, quotes, and bookings are live. Your AI agents captured 4 new queries while you were away.</div></div>
-      <div class="panel-features">
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>4 new leads overnight</strong>AI extracted destination, dates, budget — ready to quote</div></div>
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>₹3.2L quote expiring today</strong>Sharma Family · Bali · Tap to follow up</div></div>
-        <div class="panel-feature"><div class="panel-feature-dot"></div><div class="panel-feature-text"><strong>Trial: 6 days remaining</strong>Add payment method in Settings before Day 8</div></div>
-      </div>
-    </div>
-    <div class="split-form">
-      <div class="split-form-inner">
-        <div class="eyebrow">Welcome Back</div>
-        <div class="page-title">Sign in to NAMA</div>
-        <p class="page-desc">Your workspace is waiting.</p>
-        <div class="field"><label class="field-label">Email</label><input class="input" type="email" value="rajan@rajantravel.com"></div>
-        <div class="field"><label class="field-label">Password</label><input class="input" type="password" value="password123!"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;"><label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--slate-600);cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--azure);"> Remember me</label><span class="link" style="font-size:13px;">Forgot password?</span></div>
-        <div class="field"><label class="field-label">Authenticator Code <span class="tip-icon" data-tooltip="6-digit code from Google Authenticator or Authy. Required for Org Admin (R2) accounts.">?</span></label><input class="input" placeholder="_ _ _ _ _ _" maxlength="6" style="letter-spacing:8px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:22px;" value="482931"></div>
-        <button class="btn btn-primary btn-full btn-lg" onclick="loginAndEnter()">Sign In — Enter Workspace →</button>
-        <div class="or-line"><span>or continue with</span></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
-          <button class="btn btn-outline">🔵 Google</button>
-          <button class="btn btn-outline">🔷 Microsoft</button>
-        </div>
-        <div style="text-align:center;font-size:13px;color:var(--slate-400);">New to NAMA? <span class="link" onclick="goTo('page-plans')">Start free trial</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════
-     PAGE 8 — SETTINGS / DASHBOARD
-══════════════════════════════════════════════════ -->
-<div class="page" id="page-settings">
-  <div class="app-shell">
-    <!-- Sidebar -->
-    <div class="app-sidebar">
-      <div class="sidebar-logo">
-        <div class="brand-mark">
-          <div class="brand-icon" style="width:30px;height:30px;border-radius:7px;"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div>
-          <div><div class="brand-name brand-name-dark" style="font-size:18px;">NAMA</div><div style="font-size:9px;color:var(--slate-400);text-transform:uppercase;letter-spacing:1.5px;">Settings</div></div>
-        </div>
-      </div>
-      <div class="sidebar-nav">
-        <div class="nav-section">
-          <div class="nav-section-label">Account</div>
-          <div class="nav-item active" onclick="showSec('profile')"><div class="nav-icon">👤</div>My Profile</div>
-          <div class="nav-item" onclick="showSec('security')"><div class="nav-icon">🔐</div>Security & MFA</div>
-          <div class="nav-item" onclick="showSec('notifications')"><div class="nav-icon">🔔</div>Notifications</div>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-label">Organisation</div>
-          <div class="nav-item" onclick="showSec('company')"><div class="nav-icon">🏢</div>Company & GSTIN</div>
-          <div class="nav-item" onclick="showSec('branding')"><div class="nav-icon">🎨</div>Branding & Theme</div>
-          <div class="nav-item" onclick="showSec('team')"><div class="nav-icon">👥</div>Team & Roles</div>
-          <div class="nav-item" onclick="showSec('performance')"><div class="nav-icon">📊</div>User Performance<div class="nav-badge">!</div></div>
-          <div class="nav-item" onclick="showSec('modules')"><div class="nav-icon">🧩</div>Modules</div>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-label">AI & Intelligence</div>
-          <div class="nav-item" onclick="showSec('ai')"><div class="nav-icon">🤖</div>AI Configuration</div>
-          <div class="nav-item" onclick="showSec('voice')"><div class="nav-icon">🔊</div>AI Voice</div>
-          <div class="nav-item" onclick="showSec('studio')"><div class="nav-icon">🎬</div>Content Studio</div>
-          <div class="nav-item" onclick="showSec('integrations')"><div class="nav-icon">🔗</div>Integrations</div>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-label">Billing</div>
-          <div class="nav-item" onclick="showSec('subscription')"><div class="nav-icon">💳</div>Subscription</div>
-          <div class="nav-item" onclick="showSec('invoices')"><div class="nav-icon">📄</div>Invoices & Costs</div>
-        </div>
-        <div class="nav-section">
-          <div class="nav-section-label">Help</div>
-          <div class="nav-item" onclick="openDemo()"><div class="nav-icon">🎬</div>Onboarding Demo</div>
-          <div class="nav-item"><div class="nav-icon">📖</div>Documentation</div>
-          <div class="nav-item" onclick="goTo('page-login')"><div class="nav-icon">⬅</div>Back to Login</div>
-        </div>
-      </div>
-      <div class="sidebar-user">
-        <div class="user-avatar">R</div>
-        <div style="flex:1;min-width:0;"><div class="user-name">Rajan Mehta</div><div class="user-role">Org Admin · R2</div></div>
-        <span class="badge badge-gold" style="font-size:9px;flex-shrink:0;">ADMIN</span>
-      </div>
-    </div>
-
-    <!-- Main -->
-    <div class="app-main">
-      <div class="app-topbar">
-        <div class="topbar-left"><h2 id="sec-title">My Profile</h2><p id="sec-sub">Rajan Travel Co. · Professional · <span style="color:var(--teal);">Trial: 6 days left</span></p></div>
-        <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="openDemo()">🎬 Demo</button><button class="btn btn-primary btn-sm">+ New Quote</button></div>
-      </div>
-      <div class="app-content">
-
-        <!-- PROFILE -->
-        <div class="settings-sec active" id="sec-profile">
-          <div class="sec-head"><h2>My Profile</h2><p>Personal details stored encrypted. Blood group and address visible only to Org Admin.</p></div>
-          <div class="card" style="margin-bottom:16px;">
-            <div class="card-head"><span class="card-title">Personal Details</span><button class="btn btn-primary btn-sm">Save Changes</button></div>
-            <div class="card-body">
-              <div class="avatar-row">
-                <div class="avatar-circle">R</div>
-                <div class="avatar-info"><h4>Rajan Mehta</h4><p>Org Admin (R2) · Managing Director · Rajan Travel Co.</p><button class="btn btn-outline btn-xs" style="margin-top:6px;">Change Photo</button></div>
-              </div>
-              <div class="row-2"><div class="field"><label class="field-label">Full Name</label><input class="input" value="Rajan Mehta"></div><div class="field"><label class="field-label">Designation</label><input class="input" value="Managing Director"></div></div>
-              <div class="row-2"><div class="field"><label class="field-label">Work Email</label><input class="input" value="rajan@rajantravel.com" disabled style="background:var(--slate-50);color:var(--slate-400);"></div><div class="field"><label class="field-label">Mobile</label><input class="input" value="+91 98765 43210"></div></div>
-              <div class="row-2"><div class="field"><label class="field-label">Date of Birth</label><input class="input" type="date" value="1985-03-15"></div><div class="field"><label class="field-label">Blood Group <span class="tip-icon" data-tooltip="Encrypted. Org Admin only.">?</span></label><select class="input input-select"><option selected>O-</option><option>A+</option><option>B+</option></select></div></div>
+      <!-- PROFILE -->
+      <div class="settings-sec active" id="sec-profile">
+        <div class="sec-head"><h2>My Profile</h2><p>Personal details stored encrypted. Blood group and address visible only to Org Admin.</p></div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head"><span class="card-title">Personal Details</span><button class="btn btn-primary btn-sm">Save Changes</button></div>
+          <div class="card-body">
+            <div class="avatar-row">
+              <div class="avatar-circle">R<input type="file" accept="image/*" onchange="previewAv(event)"></div>
+              <div class="avatar-info"><h4>Rajan Mehta</h4><p>Org Admin (R2) · Managing Director · Rajan Travel Co.</p><button class="btn btn-outline btn-xs" style="margin-top:6px;">Change Photo</button></div>
             </div>
+            <div class="row-2"><div class="field"><label class="field-label">Full Name</label><input class="input" value="Rajan Mehta"></div><div class="field"><label class="field-label">Designation</label><input class="input" value="Managing Director"></div></div>
+            <div class="row-2"><div class="field"><label class="field-label">Work Email</label><input class="input" value="rajan@rajantravel.com" disabled style="background:var(--slate-50);color:var(--slate-400);"></div><div class="field"><label class="field-label">Mobile</label><input class="input" value="+91 98765 43210"></div></div>
+            <div class="row-2"><div class="field"><label class="field-label">Date of Birth</label><input class="input" type="date" value="1985-03-15"></div><div class="field"><label class="field-label">Blood Group <span class="tip-icon" data-tooltip="Encrypted. Org Admin only.">?</span></label><select class="input input-select"><option selected>O-</option><option>A+</option><option>B+</option></select></div></div>
           </div>
-          <div class="card"><div class="card-head"><span class="card-title">Emergency Contact</span></div><div class="card-body"><div class="row-2"><div class="field"><label class="field-label">Name</label><input class="input" value="Sunita Mehta"></div><div class="field"><label class="field-label">Phone</label><input class="input" value="+91 98765 00000"></div></div></div></div>
         </div>
+        <div class="card"><div class="card-head"><span class="card-title">Emergency Contact</span></div><div class="card-body"><div class="row-2"><div class="field"><label class="field-label">Name</label><input class="input" value="Sunita Mehta"></div><div class="field"><label class="field-label">Phone</label><input class="input" value="+91 98765 00000"></div></div></div></div>
+      </div>
 
-        <!-- BRANDING -->
-        <div class="settings-sec" id="sec-branding">
-          <div class="sec-head"><h2>Branding & Theme</h2><p>Customise the visual identity of your NAMA workspace and white-label customer portals. Each company gets its own schema colours and logo.</p></div>
-          <div class="card" style="margin-bottom:16px;">
-            <div class="card-head"><span class="card-title">Company Logo</span><button class="btn btn-primary btn-sm">Save Branding</button></div>
-            <div class="card-body">
-              <div class="logo-upload-box" style="margin-bottom:20px;">
-                <div class="drop-icon">🖼️</div>
-                <div style="font-size:14px;font-weight:700;color:var(--slate-700);margin-bottom:4px;">Upload your company logo</div>
-                <div style="font-size:12px;color:var(--slate-400);">SVG or PNG · Transparent background recommended · Min 200px wide</div>
-                <button class="btn btn-outline btn-sm" style="margin-top:12px;">Browse files</button>
-              </div>
-              <div class="row-2">
-                <div class="field"><label class="field-label">Portal Name / Tagline</label><input class="input" value="Rajan Travel Co." placeholder="Appears on portal header"></div>
-                <div class="field"><label class="field-label">Favicon URL</label><input class="input" placeholder="https://… or upload"></div>
-              </div>
-            </div>
+      <!-- BRANDING -->
+      <div class="settings-sec" id="sec-branding">
+        <div class="sec-head"><h2>Branding &amp; Theme</h2><p>Customise the visual identity of your NAMA workspace and white-label customer portals.</p></div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head"><span class="card-title">Company Logo</span><button class="btn btn-primary btn-sm">Save Branding</button></div>
+          <div class="card-body">
+            <div class="logo-upload-box" style="margin-bottom:20px;"><div style="font-size:30px;margin-bottom:8px;">🖼️</div><div style="font-size:14px;font-weight:700;color:var(--slate-700);margin-bottom:4px;">Upload your company logo</div><div style="font-size:12px;color:var(--slate-400);">SVG or PNG · Transparent background recommended · Min 200px wide</div><button class="btn btn-outline btn-sm" style="margin-top:12px;">Browse files</button></div>
+            <div class="row-2"><div class="field"><label class="field-label">Portal Name / Tagline</label><input class="input" value="Rajan Travel Co."></div><div class="field"><label class="field-label">Favicon URL</label><input class="input" placeholder="https://… or upload"></div></div>
           </div>
-          <div class="card" style="margin-bottom:16px;">
-            <div class="card-head"><span class="card-title">Schema Colours <span class="tip-icon" data-tooltip="These colours apply to your entire NAMA workspace and white-label portals. Choose 2 brand colours.">?</span></span></div>
-            <div class="card-body">
-              <div style="margin-bottom:16px;">
-                <div style="font-size:12px;font-weight:700;color:var(--slate-700);margin-bottom:10px;">Primary Colour</div>
-                <div class="color-swatch-row">
-                  <div class="color-swatch active" style="background:#0066FF;" onclick="setColor(this,'primary')"></div>
-                  <div class="color-swatch" style="background:#1B2A6B;" onclick="setColor(this,'primary')"></div>
-                  <div class="color-swatch" style="background:#00C4B4;" onclick="setColor(this,'primary')"></div>
-                  <div class="color-swatch" style="background:#7C3AED;" onclick="setColor(this,'primary')"></div>
-                  <div class="color-swatch" style="background:#059669;" onclick="setColor(this,'primary')"></div>
-                  <div class="color-swatch" style="background:#E11D48;" onclick="setColor(this,'primary')"></div>
-                  <div class="color-swatch" style="background:#F59E0B;" onclick="setColor(this,'primary')"></div>
-                  <div class="color-swatch" style="background:#0F172A;" onclick="setColor(this,'primary')"></div>
-                  <div class="color-swatch" style="background:white;border:2px solid var(--slate-200);background-image:conic-gradient(red,yellow,lime,aqua,blue,magenta,red);border-radius:10px;" onclick="showCustomColor()" title="Custom colour"></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:10px;margin-top:10px;"><label style="font-size:12px;color:var(--slate-600);">Custom hex:</label><input class="input" style="max-width:120px;" placeholder="#0066FF" id="custom-color-inp"></div>
-              </div>
-              <div>
-                <div style="font-size:12px;font-weight:700;color:var(--slate-700);margin-bottom:10px;">Accent Colour</div>
-                <div class="color-swatch-row">
-                  <div class="color-swatch active" style="background:#00C4B4;" onclick="setColor(this,'accent')"></div>
-                  <div class="color-swatch" style="background:#0066FF;" onclick="setColor(this,'accent')"></div>
-                  <div class="color-swatch" style="background:#F59E0B;" onclick="setColor(this,'accent')"></div>
-                  <div class="color-swatch" style="background:#059669;" onclick="setColor(this,'accent')"></div>
-                  <div class="color-swatch" style="background:#7C3AED;" onclick="setColor(this,'accent')"></div>
-                  <div class="color-swatch" style="background:#E11D48;" onclick="setColor(this,'accent')"></div>
-                </div>
-              </div>
-              <div style="margin-top:20px;">
-                <div style="font-size:12px;font-weight:700;color:var(--slate-700);margin-bottom:10px;">Preview</div>
-                <div id="brand-preview" style="background:var(--ink);border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px;">
-                  <div id="preview-logo" style="width:40px;height:40px;background:#0066FF;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:18px;color:white;">R</div>
-                  <div><div style="font-family:'Instrument Serif',serif;font-size:18px;color:white;">Rajan Travel Co.</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Powered by NAMA</div></div>
-                  <div style="margin-left:auto;"><div id="preview-btn" style="background:#0066FF;color:white;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;">Get Quote</div></div>
-                </div>
-              </div>
-            </div>
+        </div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head"><span class="card-title">Schema Colours</span></div>
+          <div class="card-body">
+            <div style="margin-bottom:16px;"><div style="font-size:12px;font-weight:700;color:var(--slate-700);margin-bottom:10px;">Primary Colour</div>
+            <div class="color-swatch-row">
+              <div class="color-swatch active" style="background:#0066FF;" onclick="setColor(this,'primary')"></div>
+              <div class="color-swatch" style="background:#1B2A6B;" onclick="setColor(this,'primary')"></div>
+              <div class="color-swatch" style="background:#00C4B4;" onclick="setColor(this,'primary')"></div>
+              <div class="color-swatch" style="background:#7C3AED;" onclick="setColor(this,'primary')"></div>
+              <div class="color-swatch" style="background:#059669;" onclick="setColor(this,'primary')"></div>
+              <div class="color-swatch" style="background:#E11D48;" onclick="setColor(this,'primary')"></div>
+              <div class="color-swatch" style="background:#F59E0B;" onclick="setColor(this,'primary')"></div>
+              <div class="color-swatch" style="background:#0F172A;" onclick="setColor(this,'primary')"></div>
+            </div></div>
+            <div><div style="font-size:12px;font-weight:700;color:var(--slate-700);margin-bottom:10px;">Accent Colour</div>
+            <div class="color-swatch-row">
+              <div class="color-swatch active" style="background:#00C4B4;" onclick="setColor(this,'accent')"></div>
+              <div class="color-swatch" style="background:#0066FF;" onclick="setColor(this,'accent')"></div>
+              <div class="color-swatch" style="background:#F59E0B;" onclick="setColor(this,'accent')"></div>
+              <div class="color-swatch" style="background:#059669;" onclick="setColor(this,'accent')"></div>
+              <div class="color-swatch" style="background:#7C3AED;" onclick="setColor(this,'accent')"></div>
+            </div></div>
+            <div style="margin-top:20px;"><div style="font-size:12px;font-weight:700;color:var(--slate-700);margin-bottom:10px;">Preview</div>
+            <div id="brand-preview" style="background:var(--ink);border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px;">
+              <div id="preview-logo" style="width:40px;height:40px;background:#0066FF;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:18px;color:white;">R</div>
+              <div><div style="font-family:'Instrument Serif',serif;font-size:18px;color:white;">Rajan Travel Co.</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Powered by NAMA</div></div>
+              <div style="margin-left:auto;"><div id="preview-btn" style="background:#0066FF;color:white;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;">Get Quote</div></div>
+            </div></div>
           </div>
-          <div class="card">
-            <div class="card-head"><span class="card-title">Font & Style</span></div>
-            <div class="card-body">
-              <div class="row-2">
-                <div class="field"><label class="field-label">Interface Font</label><select class="input input-select"><option selected>Plus Jakarta Sans (Default)</option><option>Inter</option><option>DM Sans</option><option>Poppins</option><option>Nunito</option></select></div>
-                <div class="field"><label class="field-label">Display / Heading Font</label><select class="input input-select"><option selected>Instrument Serif (Default)</option><option>Playfair Display</option><option>Lora</option><option>None (use Interface font)</option></select></div>
-              </div>
-              <div class="field"><label class="field-label">Corner Radius</label><select class="input input-select"><option>Sharp (0px)</option><option>Subtle (6px)</option><option selected>Rounded (12px — Default)</option><option>Pill (24px)</option></select></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">Font &amp; Style</span></div>
+          <div class="card-body">
+            <div class="row-2">
+              <div class="field"><label class="field-label">Interface Font</label><select class="input input-select"><option selected>Plus Jakarta Sans (Default)</option><option>Inter</option><option>DM Sans</option><option>Poppins</option></select></div>
+              <div class="field"><label class="field-label">Display / Heading Font</label><select class="input input-select"><option selected>Instrument Serif (Default)</option><option>Playfair Display</option><option>Lora</option></select></div>
             </div>
           </div>
         </div>
-
-        <!-- PERFORMANCE -->
-        <div class="settings-sec" id="sec-performance">
-          <div class="sec-head"><h2>User Performance Dashboard</h2><p>Real-time across all team members. Org Admin (R2) sees all; Manager (R3) sees direct reports; agents see only themselves.</p></div>
-          <div class="kpi-grid">
-            <div class="kpi-card"><div class="kpi-label">Queries (MTD)</div><div class="kpi-val">284</div><div class="kpi-delta up">↑ 18% vs Apr</div></div>
-            <div class="kpi-card"><div class="kpi-label">Quotes Sent</div><div class="kpi-val">91</div><div class="kpi-delta up">↑ 12%</div></div>
-            <div class="kpi-card"><div class="kpi-label">Conversion</div><div class="kpi-val">31%</div><div class="kpi-delta up">↑ 4pp</div></div>
-            <div class="kpi-card"><div class="kpi-label">Revenue (MTD)</div><div class="kpi-val">₹28L</div><div class="kpi-delta dn">↓ 3% vs target</div></div>
-          </div>
-          <div class="card">
-            <div class="card-head"><span class="card-title">Individual Performance — May 2026</span><div style="display:flex;gap:8px;"><select style="border:1px solid var(--slate-200);border-radius:7px;padding:5px 10px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;"><option>This month</option><option>Last month</option><option>Q1 2026</option></select><button class="btn btn-outline btn-sm">Export</button></div></div>
-            <div style="overflow-x:auto;">
-              <table class="data-table">
-                <thead><tr><th>Team Member</th><th>Role</th><th>Queries</th><th>Quotes</th><th>Bookings</th><th>Revenue</th><th>Conversion</th><th>AI Score <span class="tip-icon" data-tooltip="0–100: measures how effectively this user leverages AI features — auto-extraction, AI quotes, voice, etc.">?</span></th><th>Status</th></tr></thead>
-                <tbody>
-                  <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--teal);">P</div><div><div style="font-weight:600;">Priya Sharma</div><div style="font-size:11px;color:var(--slate-400);">priya@rajantravel.com</div></div></div></td><td><span class="badge badge-azure">Sales Agent</span></td><td>94</td><td>38</td><td>12</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹11.2L</td><td><div style="font-weight:700;color:var(--emerald);">32%</div><div class="mini-bar"><div class="mini-bar-fill" style="width:64%;"></div></div></td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">88</div></td><td><span class="badge badge-emerald">Active</span></td></tr>
-                  <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--violet);">A</div><div><div style="font-weight:600;">Arjun Nair</div><div style="font-size:11px;color:var(--slate-400);">arjun@rajantravel.com</div></div></div></td><td><span class="badge badge-amber">Ops Exec</span></td><td>—</td><td>—</td><td>18</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹9.4L GMV</td><td style="color:var(--slate-300);">N/A</td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">92</div></td><td><span class="badge badge-emerald">Active</span></td></tr>
-                  <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--emerald);">N</div><div><div style="font-weight:600;">Neha Kapoor</div><div style="font-size:11px;color:var(--slate-400);">neha@rajantravel.com</div></div></div></td><td><span class="badge badge-emerald">Finance</span></td><td>—</td><td>—</td><td>—</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹28L processed</td><td style="color:var(--slate-300);">N/A</td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">95</div></td><td><span class="badge badge-amber">Invite Sent</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- AI VOICE -->
-        <div class="settings-sec" id="sec-voice">
-          <div class="sec-head"><h2>AI Voice</h2><p>Select voice actors for itinerary narrations, content studio voiceovers, and WhatsApp audio messages. Multiple languages and dialects available.</p></div>
-          <div class="card" style="margin-bottom:16px;">
-            <div class="card-head"><span class="card-title">Active Voice Pack</span><span class="badge badge-emerald">AI Voice — Included in Professional</span></div>
-            <div class="card-body">
-              <div class="voice-grid">
-                <div class="voice-card selected" onclick="pickVoice(this)"><div class="voice-card-name">Arya</div><div class="voice-card-lang">Hindi · Female · Warm</div><div class="voice-waveform"><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div></div><div class="voice-card-play">▶</div></div>
-                <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Rohan</div><div class="voice-card-lang">English (IN) · Male · Professional</div><div class="voice-waveform"><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div></div><div class="voice-card-play">▶</div></div>
-                <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Zara</div><div class="voice-card-lang">English (UK) · Female · Luxury</div><div style="height:20px;margin:6px 0;"></div><div class="voice-card-play">▶</div></div>
-                <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Omar</div><div class="voice-card-lang">Arabic · Male · Authoritative</div><div style="height:20px;margin:6px 0;"></div><div class="voice-card-play">▶</div></div>
-                <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Nadia</div><div class="voice-card-lang">English (US) · Female · Conversational</div><div style="height:20px;margin:6px 0;"></div><div class="voice-card-play">▶</div></div>
-                <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Kai</div><div class="voice-card-lang">Mandarin · Male · Clear</div><div style="height:20px;margin:6px 0;"></div><div class="voice-card-play">▶</div></div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-head"><span class="card-title">AI Voice Pricing <span class="tip-icon" data-tooltip="Voice generation costs are per character of text converted. These are usage costs, not subscription fees.">?</span></span></div>
-            <div class="card-body">
-              <div class="pricing-row"><div><div class="pricing-service">Itinerary Narration</div><div class="pricing-detail">Per day of itinerary (~400 chars) · HD voice</div></div><div><div class="pricing-cost">₹0.50 / day</div><div class="pricing-margin">~₹4 for 8-day itinerary</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">WhatsApp Voice Note</div><div class="pricing-detail">Per outbound audio message (~200 chars)</div></div><div><div class="pricing-cost">₹0.25 / message</div><div class="pricing-margin">100 msgs = ₹25</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Content Studio Voiceover</div><div class="pricing-detail">Per minute of finished audio · HD quality</div></div><div><div class="pricing-cost">₹12 / min</div><div class="pricing-margin">3-min destination reel = ₹36</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Bulk itinerary narration</div><div class="pricing-detail">50+ itineraries / month · volume rate</div></div><div><div class="pricing-cost">₹0.35 / day</div><div class="pricing-margin">30% volume discount</div></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CONTENT STUDIO -->
-        <div class="settings-sec" id="sec-studio">
-          <div class="sec-head"><h2>Content Studio</h2><p>AI-powered video and audio content creation for your clients and portals. Your customers can create destination reels, property tours, and travel packages — directly from your white-label portal.</p></div>
-          <div class="studio-hero">
-            <div style="position:relative;z-index:1;">
-              <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><span style="font-size:28px;">🎬</span><div><div style="font-family:'Instrument Serif',serif;font-size:24px;color:white;">Content Studio</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Build videos and audio content for any travel product — in minutes</div></div></div>
-              <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;">
-                <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 18px;"><div style="font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--teal);">₹280</div><div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Average cost per 60-sec reel</div></div>
-                <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 18px;"><div style="font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--teal);">35%</div><div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">More buyer inquiries with video</div></div>
-                <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 18px;"><div style="font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--teal);">5 min</div><div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">From photos to publish-ready</div></div>
-              </div>
-              <div style="font-size:13px;color:rgba(255,255,255,0.55);">Enable this for your customers so they can generate their own destination videos directly from your branded portal — and you earn a margin on each creation.</div>
-            </div>
-          </div>
-
-          <div style="font-size:13px;font-weight:700;color:var(--slate-700);margin-bottom:14px;">How it works — 5 Steps</div>
-          <div class="studio-steps">
-            <div class="studio-step"><div class="studio-step-num">1</div><div class="studio-step-icon">📎</div><div class="studio-step-label">Drop Content</div><div class="studio-step-desc">Photos, URL, or destination name. AI researches highlights & comps.</div></div>
-            <div class="studio-step"><div class="studio-step-num">2</div><div class="studio-step-icon">✍️</div><div class="studio-step-label">AI Script</div><div class="studio-step-desc">Voiceover script optimised for target video length & audience.</div></div>
-            <div class="studio-step"><div class="studio-step-num">3</div><div class="studio-step-icon">🔊</div><div class="studio-step-label">Select Voice</div><div class="studio-step-desc">Multiple AI voices, dialects, and languages. Preview before generate.</div></div>
-            <div class="studio-step"><div class="studio-step-num">4</div><div class="studio-step-icon">🎵</div><div class="studio-step-label">Background Music</div><div class="studio-step-desc">Custom AI-generated music from a text prompt (e.g. "warm tropical morning").</div></div>
-            <div class="studio-step"><div class="studio-step-num">5</div><div class="studio-step-icon">🎞️</div><div class="studio-step-label">Auto-Publish</div><div class="studio-step-desc">Cinematic clips, captions, combined and ready. No editing needed.</div></div>
-          </div>
-
-          <div class="card" style="margin-bottom:16px;">
-            <div class="card-head"><span class="card-title">Content Studio Pricing <span class="tip-icon" data-tooltip="These are NAMA's costs to you. You can set your own customer pricing in the Customer Portal settings below.">?</span></span></div>
-            <div class="card-body">
-              <div class="pricing-row"><div><div class="pricing-service">Destination Reel (60 sec)</div><div class="pricing-detail">Up to 15 photos · AI script · voice · music · captions</div></div><div><div class="pricing-cost">₹280 / reel</div><div class="pricing-margin">Sell to clients at ₹800–₹2,500</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Property / Hotel Tour (90 sec)</div><div class="pricing-detail">Up to 25 photos · cinematic + captions</div></div><div><div class="pricing-cost">₹420 / video</div><div class="pricing-margin">Sell at ₹1,200–₹3,500</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Package Promo (30 sec)</div><div class="pricing-detail">Package highlights · pricing overlay · CTA</div></div><div><div class="pricing-cost">₹160 / video</div><div class="pricing-margin">Sell at ₹500–₹1,500</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Podcast / Audio Travel Guide</div><div class="pricing-detail">5–10 min destination audio guide · AI voice · music</div></div><div><div class="pricing-cost">₹180 / episode</div><div class="pricing-margin">Sell subscription at ₹999/mo</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Bulk — 50+ reels/month</div><div class="pricing-detail">Volume rate for agencies</div></div><div><div class="pricing-cost">₹180 / reel</div><div class="pricing-margin">36% discount</div></div></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-head"><span class="card-title">Customer Portal Integration</span></div>
-            <div class="card-body">
-              <div class="info-box">Enable Content Studio in your white-label customer portal so your clients can self-serve video creation. You set the price. NAMA charges you cost. You earn the margin.</div>
-              <div class="row-2">
-                <div class="field"><label class="field-label">Customer Price (per reel, ₹)</label><input class="input" type="number" value="1200" placeholder="Your selling price"></div>
-                <div class="field"><label class="field-label">Your Margin</label><div class="input" style="background:var(--emerald-light);color:var(--emerald);font-weight:700;font-family:'JetBrains Mono',monospace;">₹920 / reel (77% margin)</div></div>
-              </div>
-              <div class="check-row"><input type="checkbox" checked id="studio-portal"><label for="studio-portal">Enable Content Studio in my customer portal</label></div>
-              <button class="btn btn-primary btn-sm">Save Customer Portal Settings</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- AI CONFIG -->
-        <div class="settings-sec" id="sec-ai">
-          <div class="sec-head"><h2>AI Configuration</h2><p>Control all AI capabilities across your workspace. Every feature can be toggled per org.</p></div>
-          <div class="card">
-            <div class="card-head"><span class="card-title">AI Capabilities</span></div>
-            <div class="card-body">
-              <div style="display:flex;flex-direction:column;gap:0;">
-                <!-- Toggle row helper -->
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);">
-                  <div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;" data-tooltip="Any user can type a question in plain English to retrieve data from NAMA — no menu navigation needed.">🗣 Natural Language Data Retrieval</div><div style="font-size:12.5px;color:var(--slate-400);">Ask anything: leads, quotes, payments, suppliers — in plain English or Hindi</div></div>
-                  <div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);">
-                  <div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">📄 Document Scan & Auto-Population</div><div style="font-size:12.5px;color:var(--slate-400);">Passports, contracts, rate sheets — AI extracts and maps to database fields</div></div>
-                  <div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);">
-                  <div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">📞 Call & Conversation Capture → CRM</div><div style="font-size:12.5px;color:var(--slate-400);">Voice, WhatsApp, email, social — all auto-transcribed and logged as lead activities</div></div>
-                  <div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);">
-                  <div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">💰 Pricing Intelligence & Negotiation Assist</div><div style="font-size:12.5px;color:var(--slate-400);">Rate benchmarking vs platform & competition; negotiation briefs for supplier calls</div></div>
-                  <div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);">
-                  <div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">🧾 AI Invoicing & Voucher Generation</div><div style="font-size:12.5px;color:var(--slate-400);">GSTIN invoices, hotel vouchers, transfer slips — auto-generated on booking confirm</div></div>
-                  <div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);">
-                  <div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">ℹ️ Contextual Help Tooltips</div><div style="font-size:12.5px;color:var(--slate-400);">Hover any field label for instant explanation + link to full documentation</div></div>
-                  <div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;">
-                  <div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">🔊 AI Voice for Itineraries & Content</div><div style="font-size:12.5px;color:var(--slate-400);">AI narrates itineraries, generates audio guides, and powers Content Studio voiceovers</div></div>
-                  <div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SUBSCRIPTION -->
-        <div class="settings-sec" id="sec-subscription">
-          <div class="sec-head"><h2>Subscription & Billing</h2><p>Manage your plan, billing cycle, payment method, and usage.</p></div>
-          <div style="background:linear-gradient(105deg,var(--ink) 0%,#1a2d6b 100%);border-radius:16px;padding:22px 28px;margin-bottom:20px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-            <div><div style="font-size:11px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Current Plan</div><div style="font-family:'Instrument Serif',serif;font-size:24px;color:white;">Professional</div><div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">Trial ends in <strong style="color:var(--teal);">6 days</strong> · No charge until then</div></div>
-            <div style="text-align:right;"><div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:500;color:white;">₹39,999</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">/month after trial</div><button class="btn btn-teal btn-sm" style="margin-top:10px;">Add Payment Method</button></div>
-          </div>
-          <div class="kpi-grid">
-            <div class="kpi-card"><div class="kpi-label">Team Members</div><div class="kpi-val">4 / 30</div></div>
-            <div class="kpi-card"><div class="kpi-label">AI Quotes (MTD)</div><div class="kpi-val">91 / 2K</div></div>
-            <div class="kpi-card"><div class="kpi-label">Voice Credits Used</div><div class="kpi-val">₹18</div><div class="kpi-delta" style="color:var(--slate-400);">of ₹500 included</div></div>
-            <div class="kpi-card"><div class="kpi-label">Content Studio</div><div class="kpi-val">₹560</div><div class="kpi-delta" style="color:var(--slate-400);">2 reels created</div></div>
-          </div>
-        </div>
-
-        <!-- INVOICES & COSTS -->
-        <div class="settings-sec" id="sec-invoices">
-          <div class="sec-head"><h2>Invoices & AI Costs</h2><p>Detailed breakdown of your SaaS subscription invoices and per-use AI service costs.</p></div>
-          <div class="card" style="margin-bottom:16px;">
-            <div class="card-head"><span class="card-title">AI Usage Costs — May 2026 (Trial)</span></div>
-            <div class="card-body">
-              <div class="pricing-row"><div><div class="pricing-service">AI Quote Generation</div><div class="pricing-detail">91 quotes · avg ₹5 per quote</div></div><div><div class="pricing-cost">₹455</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Call Transcription (Whisper)</div><div class="pricing-detail">12 calls · avg 8 min each</div></div><div><div class="pricing-cost">₹96</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Document OCR</div><div class="pricing-detail">8 passports + 3 contracts</div></div><div><div class="pricing-cost">₹44</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">AI Voice — Itinerary Narration</div><div class="pricing-detail">36 days of itinerary content</div></div><div><div class="pricing-cost">₹18</div></div></div>
-              <div class="pricing-row"><div><div class="pricing-service">Content Studio — Reels</div><div class="pricing-detail">2 destination reels (60 sec each)</div></div><div><div class="pricing-cost">₹560</div></div></div>
-              <div style="border-top:2px solid var(--slate-200);padding-top:14px;margin-top:4px;display:flex;justify-content:space-between;align-items:center;"><div style="font-weight:700;color:var(--ink);">Total AI Usage (Trial Month)</div><div style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;color:var(--ink);">₹1,173</div></div>
-            </div>
-          </div>
-          <div class="card"><div class="card-head"><span class="card-title">Subscription Invoices</span></div><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);"><div style="font-size:24px;margin-bottom:8px;">📄</div>No invoices yet — trial period active. Your first invoice will be generated on Day 8 if a payment method is added.</div></div>
-        </div>
-
-        <!-- PLACEHOLDER SECTIONS -->
-        <div class="settings-sec" id="sec-security"><div class="sec-head"><h2>Security & MFA</h2><p>Manage two-factor authentication, sessions, and password.</p></div><div class="card"><div class="card-body"><div class="info-box">✅ MFA active on your account (TOTP — Google Authenticator).</div><div style="display:flex;gap:10px;flex-wrap:wrap;"><button class="btn btn-outline btn-sm">View Active Sessions (3)</button><button class="btn btn-danger btn-sm">Sign out all other devices</button></div></div></div></div>
-        <div class="settings-sec" id="sec-notifications"><div class="sec-head"><h2>Notifications</h2></div><div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);">Notification preferences — coming soon.</div></div></div>
-        <div class="settings-sec" id="sec-company"><div class="sec-head"><h2>Company & GSTIN</h2><p>Legal details for invoicing and correspondence.</p></div><div class="card"><div class="card-body"><div class="field"><label class="field-label">Company Name</label><input class="input" value="Rajan Travel Co. Pvt. Ltd."></div><div class="field"><label class="field-label">GSTIN</label><input class="input" value="27AADCB2230M1ZP"></div><div class="row-2"><div class="field"><label class="field-label">City</label><input class="input" value="Mumbai"></div><div class="field"><label class="field-label">State</label><input class="input" value="Maharashtra"></div></div><button class="btn btn-primary btn-sm">Save</button></div></div></div>
-        <div class="settings-sec" id="sec-team"><div class="sec-head"><h2>Team & Roles</h2></div><div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);">Team management table — view, edit roles, resend invites, deactivate.</div></div></div>
-        <div class="settings-sec" id="sec-modules"><div class="sec-head"><h2>Modules</h2><p>Enable or disable modules for your workspace. Changes take effect immediately.</p></div><div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);">Module configuration panel — same as Step 6 of onboarding, always editable.</div></div></div>
-        <div class="settings-sec" id="sec-integrations"><div class="sec-head"><h2>Integrations</h2></div><div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);">WhatsApp Business, Razorpay, Stripe, Wise, Twilio, SendGrid connection management.</div></div></div>
       </div>
-    </div>
-  </div>
-</div>
 
+      <!-- PERFORMANCE -->
+      <div class="settings-sec" id="sec-performance">
+        <div class="sec-head"><h2>User Performance Dashboard</h2><p>Real-time across all team members. Org Admin sees all; Manager sees direct reports.</p></div>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">Queries (MTD)</div><div class="kpi-val">284</div><div class="kpi-delta up">↑ 18% vs Apr</div></div>
+          <div class="kpi-card"><div class="kpi-label">Quotes Sent</div><div class="kpi-val">91</div><div class="kpi-delta up">↑ 12%</div></div>
+          <div class="kpi-card"><div class="kpi-label">Conversion</div><div class="kpi-val">31%</div><div class="kpi-delta up">↑ 4pp</div></div>
+          <div class="kpi-card"><div class="kpi-label">Revenue (MTD)</div><div class="kpi-val">₹28L</div><div class="kpi-delta dn">↓ 3% vs target</div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">Individual Performance — May 2026</span><div style="display:flex;gap:8px;"><select style="border:1px solid var(--slate-200);border-radius:7px;padding:5px 10px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;"><option>This month</option><option>Last month</option><option>Q1 2026</option></select><button class="btn btn-outline btn-sm">Export</button></div></div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead><tr><th>Team Member</th><th>Role</th><th>Queries</th><th>Quotes</th><th>Bookings</th><th>Revenue</th><th>Conversion</th><th>AI Score</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--teal);">P</div><div><div style="font-weight:600;">Priya Sharma</div><div style="font-size:11px;color:var(--slate-400);">priya@rajantravel.com</div></div></div></td><td><span class="badge badge-azure">Sales Agent</span></td><td>94</td><td>38</td><td>12</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹11.2L</td><td><div style="font-weight:700;color:var(--emerald);">32%</div><div class="mini-bar"><div class="mini-bar-fill" style="width:64%;"></div></div></td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">88</div></td><td><span class="badge badge-emerald">Active</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--violet);">A</div><div><div style="font-weight:600;">Arjun Nair</div><div style="font-size:11px;color:var(--slate-400);">arjun@rajantravel.com</div></div></div></td><td><span class="badge badge-amber">Ops Exec</span></td><td>—</td><td>—</td><td>18</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹9.4L GMV</td><td style="color:var(--slate-300);">N/A</td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">92</div></td><td><span class="badge badge-emerald">Active</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--emerald);">N</div><div><div style="font-weight:600;">Neha Kapoor</div><div style="font-size:11px;color:var(--slate-400);">neha@rajantravel.com</div></div></div></td><td><span class="badge badge-emerald">Finance</span></td><td>—</td><td>—</td><td>—</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹28L processed</td><td style="color:var(--slate-300);">N/A</td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">95</div></td><td><span class="badge badge-amber">Invite Sent</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-<!-- ══════════════════════════════════════════════════
-     ONBOARDING DEMO OVERLAY
-══════════════════════════════════════════════════ -->
+      <!-- AI VOICE -->
+      <div class="settings-sec" id="sec-voice">
+        <div class="sec-head"><h2>AI Voice</h2><p>Select voice actors for itinerary narrations, content studio voiceovers, and WhatsApp audio messages.</p></div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head"><span class="card-title">Active Voice Pack</span><span class="badge badge-emerald">Included in Professional</span></div>
+          <div class="card-body">
+            <div class="voice-grid">
+              <div class="voice-card selected" onclick="pickVoice(this)"><div class="voice-card-name">Arya</div><div class="voice-card-lang">Hindi · Female · Warm</div><div class="voice-waveform"><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div></div><div class="voice-card-play">▶</div></div>
+              <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Rohan</div><div class="voice-card-lang">English (IN) · Male · Professional</div><div class="voice-waveform"><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div><div class="voice-bar"></div></div><div class="voice-card-play">▶</div></div>
+              <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Zara</div><div class="voice-card-lang">English (UK) · Female · Luxury</div><div style="height:20px;margin:6px 0;"></div><div class="voice-card-play">▶</div></div>
+              <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Omar</div><div class="voice-card-lang">Arabic · Male · Authoritative</div><div style="height:20px;margin:6px 0;"></div><div class="voice-card-play">▶</div></div>
+              <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Nadia</div><div class="voice-card-lang">English (US) · Female · Conversational</div><div style="height:20px;margin:6px 0;"></div><div class="voice-card-play">▶</div></div>
+              <div class="voice-card" onclick="pickVoice(this)"><div class="voice-card-name">Kai</div><div class="voice-card-lang">Mandarin · Male · Clear</div><div style="height:20px;margin:6px 0;"></div><div class="voice-card-play">▶</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">AI Voice Pricing</span></div>
+          <div class="card-body">
+            <div class="pricing-row"><div><div class="pricing-service">Itinerary Narration</div><div class="pricing-detail">Per day of itinerary (~400 chars) · HD voice</div></div><div><div class="pricing-cost">₹0.50 / day</div><div class="pricing-margin">~₹4 for 8-day itinerary</div></div></div>
+            <div class="pricing-row"><div><div class="pricing-service">WhatsApp Voice Note</div><div class="pricing-detail">Per outbound audio message (~200 chars)</div></div><div><div class="pricing-cost">₹0.25 / message</div><div class="pricing-margin">100 msgs = ₹25</div></div></div>
+            <div class="pricing-row"><div><div class="pricing-service">Content Studio Voiceover</div><div class="pricing-detail">Per minute of finished audio · HD quality</div></div><div><div class="pricing-cost">₹12 / min</div><div class="pricing-margin">3-min destination reel = ₹36</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT STUDIO -->
+      <div class="settings-sec" id="sec-studio">
+        <div class="sec-head"><h2>Content Studio</h2><p>AI-powered video and audio content creation for your clients and portals.</p></div>
+        <div class="studio-hero">
+          <div style="position:relative;z-index:1;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><span style="font-size:28px;">🎬</span><div><div style="font-family:'Instrument Serif',serif;font-size:24px;color:white;">Content Studio</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Build videos and audio content for any travel product — in minutes</div></div></div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;">
+              <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 18px;"><div style="font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--teal);">₹280</div><div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">Average cost per 60-sec reel</div></div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 18px;"><div style="font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--teal);">35%</div><div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">More buyer inquiries with video</div></div>
+              <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 18px;"><div style="font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--teal);">5 min</div><div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">From photos to publish-ready</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:var(--slate-700);margin-bottom:14px;">How it works — 5 Steps</div>
+        <div class="studio-steps">
+          <div class="studio-step"><div class="studio-step-num">1</div><div class="studio-step-icon">📎</div><div class="studio-step-label">Drop Content</div><div class="studio-step-desc">Photos, URL, or destination name. AI researches highlights.</div></div>
+          <div class="studio-step"><div class="studio-step-num">2</div><div class="studio-step-icon">✍️</div><div class="studio-step-label">AI Script</div><div class="studio-step-desc">Voiceover script optimised for target video length & audience.</div></div>
+          <div class="studio-step"><div class="studio-step-num">3</div><div class="studio-step-icon">🔊</div><div class="studio-step-label">Select Voice</div><div class="studio-step-desc">Multiple AI voices, dialects, and languages.</div></div>
+          <div class="studio-step"><div class="studio-step-num">4</div><div class="studio-step-icon">🎵</div><div class="studio-step-label">Background Music</div><div class="studio-step-desc">Custom AI-generated music from a text prompt.</div></div>
+          <div class="studio-step"><div class="studio-step-num">5</div><div class="studio-step-icon">🎞️</div><div class="studio-step-label">Auto-Publish</div><div class="studio-step-desc">Cinematic clips, captions, combined and ready.</div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">Content Studio Pricing</span></div>
+          <div class="card-body">
+            <div class="pricing-row"><div><div class="pricing-service">Destination Reel (60 sec)</div><div class="pricing-detail">Up to 15 photos · AI script · voice · music · captions</div></div><div><div class="pricing-cost">₹280 / reel</div><div class="pricing-margin">Sell to clients at ₹800–₹2,500</div></div></div>
+            <div class="pricing-row"><div><div class="pricing-service">Property / Hotel Tour (90 sec)</div><div class="pricing-detail">Up to 25 photos · cinematic + captions</div></div><div><div class="pricing-cost">₹420 / video</div><div class="pricing-margin">Sell at ₹1,200–₹3,500</div></div></div>
+            <div class="pricing-row"><div><div class="pricing-service">Package Promo (30 sec)</div><div class="pricing-detail">Package highlights · pricing overlay · CTA</div></div><div><div class="pricing-cost">₹160 / video</div><div class="pricing-margin">Sell at ₹500–₹1,500</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI CONFIG -->
+      <div class="settings-sec" id="sec-ai">
+        <div class="sec-head"><h2>AI Configuration</h2><p>Control all AI capabilities across your workspace.</p></div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">AI Capabilities</span></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:0;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);"><div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">🗣 Natural Language Data Retrieval</div><div style="font-size:12.5px;color:var(--slate-400);">Ask anything in plain English or Hindi</div></div><div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div></div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);"><div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">📄 Document Scan &amp; Auto-Population</div><div style="font-size:12.5px;color:var(--slate-400);">Passports, contracts, rate sheets — AI extracts and maps to database fields</div></div><div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div></div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);"><div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">📞 Call &amp; Conversation Capture → CRM</div><div style="font-size:12.5px;color:var(--slate-400);">Voice, WhatsApp, email — all auto-transcribed and logged</div></div><div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div></div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--slate-100);"><div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">💰 Pricing Intelligence &amp; Negotiation Assist</div><div style="font-size:12.5px;color:var(--slate-400);">Rate benchmarking and negotiation briefs for supplier calls</div></div><div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div></div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;"><div><div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">🔊 AI Voice for Itineraries &amp; Content</div><div style="font-size:12.5px;color:var(--slate-400);">Narrates itineraries and powers Content Studio voiceovers</div></div><div class="toggle-track on" style="flex-shrink:0;margin-top:2px;"><div class="toggle-knob"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBSCRIPTION -->
+      <div class="settings-sec" id="sec-subscription">
+        <div class="sec-head"><h2>Subscription &amp; Billing</h2><p>Manage your plan, billing cycle, payment method, and usage.</p></div>
+        <div style="background:linear-gradient(105deg,var(--ink) 0%,#1a2d6b 100%);border-radius:16px;padding:22px 28px;margin-bottom:20px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+          <div><div style="font-size:11px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Current Plan</div><div style="font-family:'Instrument Serif',serif;font-size:24px;color:white;">Professional</div><div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">Demo mode active</div></div>
+          <div style="text-align:right;"><div style="font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:500;color:white;">₹39,999</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">/month after trial</div><button class="btn btn-teal btn-sm" style="margin-top:10px;">Add Payment Method</button></div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">Team Members</div><div class="kpi-val">4 / 30</div></div>
+          <div class="kpi-card"><div class="kpi-label">AI Quotes (MTD)</div><div class="kpi-val">91 / 2K</div></div>
+          <div class="kpi-card"><div class="kpi-label">Voice Credits Used</div><div class="kpi-val">₹18</div><div class="kpi-delta" style="color:var(--slate-400);">of ₹500 included</div></div>
+          <div class="kpi-card"><div class="kpi-label">Content Studio</div><div class="kpi-val">₹560</div><div class="kpi-delta" style="color:var(--slate-400);">2 reels created</div></div>
+        </div>
+      </div>
+
+      <!-- INVOICES -->
+      <div class="settings-sec" id="sec-invoices">
+        <div class="sec-head"><h2>Invoices &amp; AI Costs</h2><p>Detailed breakdown of your SaaS subscription invoices and per-use AI service costs.</p></div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-head"><span class="card-title">AI Usage Costs — May 2026 (Demo)</span></div>
+          <div class="card-body">
+            <div class="pricing-row"><div><div class="pricing-service">AI Quote Generation</div><div class="pricing-detail">91 quotes · avg ₹5 per quote</div></div><div><div class="pricing-cost">₹455</div></div></div>
+            <div class="pricing-row"><div><div class="pricing-service">Call Transcription (Whisper)</div><div class="pricing-detail">12 calls · avg 8 min each</div></div><div><div class="pricing-cost">₹96</div></div></div>
+            <div class="pricing-row"><div><div class="pricing-service">Document OCR</div><div class="pricing-detail">8 passports + 3 contracts</div></div><div><div class="pricing-cost">₹44</div></div></div>
+            <div class="pricing-row"><div><div class="pricing-service">AI Voice — Itinerary Narration</div><div class="pricing-detail">36 days of itinerary content</div></div><div><div class="pricing-cost">₹18</div></div></div>
+            <div class="pricing-row"><div><div class="pricing-service">Content Studio — Reels</div><div class="pricing-detail">2 destination reels (60 sec each)</div></div><div><div class="pricing-cost">₹560</div></div></div>
+            <div style="border-top:2px solid var(--slate-200);padding-top:14px;margin-top:4px;display:flex;justify-content:space-between;align-items:center;"><div style="font-weight:700;color:var(--ink);">Total AI Usage</div><div style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;color:var(--ink);">₹1,173</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER SECTIONS -->
+      <div class="settings-sec" id="sec-security"><div class="sec-head"><h2>Security &amp; MFA</h2><p>Manage two-factor authentication, sessions, and password.</p></div><div class="card"><div class="card-body"><div class="info-box">✅ MFA active on your account (TOTP — Google Authenticator).</div><div style="display:flex;gap:10px;flex-wrap:wrap;"><button class="btn btn-outline btn-sm">View Active Sessions (3)</button><button class="btn btn-danger btn-sm">Sign out all other devices</button></div></div></div></div>
+      <div class="settings-sec" id="sec-notifications"><div class="sec-head"><h2>Notifications</h2></div><div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);">Notification preferences — coming soon.</div></div></div>
+      <div class="settings-sec" id="sec-company"><div class="sec-head"><h2>Company &amp; GSTIN</h2></div><div class="card"><div class="card-body"><div class="field"><label class="field-label">Company Name</label><input class="input" value="Rajan Travel Co. Pvt. Ltd."></div><div class="field"><label class="field-label">GSTIN</label><input class="input" value="27AADCB2230M1ZP"></div><div class="row-2"><div class="field"><label class="field-label">City</label><input class="input" value="Mumbai"></div><div class="field"><label class="field-label">State</label><input class="input" value="Maharashtra"></div></div><button class="btn btn-primary btn-sm">Save</button></div></div></div>
+      <div class="settings-sec" id="sec-team"><div class="sec-head"><h2>Team &amp; Roles</h2></div><div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);">Team management — view, edit roles, resend invites, deactivate.</div></div></div>
+      <div class="settings-sec" id="sec-modules"><div class="sec-head"><h2>Modules</h2><p>Enable or disable modules for your workspace.</p></div><div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);">Module configuration panel — all 13 modules active in demo.</div></div></div>
+      <div class="settings-sec" id="sec-integrations"><div class="sec-head"><h2>Integrations</h2></div><div class="card"><div class="card-body" style="text-align:center;padding:28px;color:var(--slate-400);">WhatsApp Business, Razorpay, Stripe, Wise, Twilio, SendGrid connections.</div></div></div>
+
+    </div><!-- /app-content -->
+  </div><!-- /app-main -->
+</div><!-- /app-shell -->
+</div><!-- /flex wrapper -->
+
+<!-- ONBOARDING DEMO OVERLAY (optional, triggered by sidebar) -->
 <div class="demo-wrap" id="demo-wrap">
   <div class="demo-modal">
     <div class="demo-top">
       <div class="demo-top-skip"><button class="btn btn-ghost btn-sm" style="color:rgba(255,255,255,0.4);font-size:12px;" onclick="closeDemo()">Skip ✕</button></div>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><div style="width:28px;height:28px;border-radius:7px;background:var(--azure);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 20 20" fill="white"><path d="M10 2L3 7v6l7 5 7-5V7z"/></svg></div><div class="demo-top" style="padding:0;background:none;"><h2>NAMA Onboarding Tour</h2></div></div>
+      <h2>NAMA Platform Tour</h2>
       <p id="demo-role-note">Org Admin (R2) · Full platform demo — all 7 steps</p>
       <div class="demo-rail" id="demo-rail"></div>
     </div>
     <div class="demo-body">
       <div class="demo-step active" id="ds-1">
         <div class="demo-step-tag">Step 1 of 7 — Welcome</div>
-        <h3>Welcome to NAMA, Rajan! 👋</h3>
-        <p>You're seeing the full Admin tour — all 7 steps covering every module. Your team sees a shorter, role-specific version when they first log in.</p>
+        <h3>Welcome to NAMA 👋</h3>
+        <p>Full Admin tour — 7 steps covering every module. Your team sees a shorter, role-specific version.</p>
         <div class="demo-feat-grid">
           <div class="demo-feat"><div class="demo-feat-icon">📥</div><div class="demo-feat-name">Query Inbox</div><div class="demo-feat-desc">WhatsApp, email, web — all in one place. AI extracts destination, budget, dates instantly.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">💬</div><div class="demo-feat-name">AI Quote Generator</div><div class="demo-feat-desc">Budget, Standard, Luxury — all three tiers assembled in 60 seconds from your supplier catalogue.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">💸</div><div class="demo-feat-name">Finance & Remittance</div><div class="demo-feat-desc">P&L per booking. Pay suppliers globally with FX lock and full audit trail.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">🎬</div><div class="demo-feat-name">Content Studio + AI Voice</div><div class="demo-feat-desc">Your clients create destination reels. You earn the margin. Powered by AI.</div></div>
+          <div class="demo-feat"><div class="demo-feat-icon">💬</div><div class="demo-feat-name">AI Quote Generator</div><div class="demo-feat-desc">Budget, Standard, Luxury — all three tiers in 60 seconds.</div></div>
+          <div class="demo-feat"><div class="demo-feat-icon">💸</div><div class="demo-feat-name">Finance &amp; Remittance</div><div class="demo-feat-desc">P&amp;L per booking. Pay suppliers globally with FX lock.</div></div>
+          <div class="demo-feat"><div class="demo-feat-icon">🎬</div><div class="demo-feat-name">Content Studio + AI Voice</div><div class="demo-feat-desc">Clients create destination reels. You earn the margin.</div></div>
         </div>
       </div>
-      <div class="demo-step" id="ds-2">
-        <div class="demo-step-tag">Step 2 of 7 — Query Inbox</div>
-        <h3>Every query, one inbox 📬</h3>
-        <p>WhatsApp, email, web form, social DMs — all arrive here. AI extracts key travel details automatically. The 45-second acknowledgement timer starts immediately.</p>
-        <div class="demo-preview">
-          <div style="display:flex;gap:10px;align-items:flex-start;background:white;border-radius:9px;padding:12px;border:1px solid var(--slate-200);">
-            <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0;"></div>
-            <div style="flex:1;"><div style="font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">Sharma Family · WhatsApp · just now</div><div style="font-size:12.5px;color:var(--slate-600);margin-bottom:8px;">"We want Bali 7 nights June with 2 kids aged 6 and 9. Budget 3 lakhs. Pool villa preferred."</div><div style="background:var(--teal-light);border-radius:7px;padding:8px 12px;font-size:11.5px;color:#008B7D;"><strong>AI Extracted:</strong> Bali · 7N · Jun · 2A+2C · ₹3L · Pool Villa · Family</div></div>
-          </div>
-        </div>
-        <p style="font-size:13px;color:var(--slate-400);">💡 AI drafts a personalised acknowledgement response within 45 seconds — agent reviews and hits send.</p>
-      </div>
-      <div class="demo-step" id="ds-3">
-        <div class="demo-step-tag">Step 3 of 7 — AI Capabilities</div>
-        <h3>AI works across every screen 🤖</h3>
-        <p>The AI Assistant (✦ button, bottom right) answers any question in plain language. Document scanning maps data to DB fields. Call transcription eliminates manual CRM entry.</p>
-        <div class="demo-feat-grid">
-          <div class="demo-feat"><div class="demo-feat-icon">🗣️</div><div class="demo-feat-name">Ask Anything</div><div class="demo-feat-desc">"Which quotes expire today?" "What's Priya's conversion rate?" — instant answers from your live data.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">📄</div><div class="demo-feat-name">Doc Scan → DB</div><div class="demo-feat-desc">Upload passport, contract, or rate sheet. AI extracts fields and maps to the right database columns.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">📞</div><div class="demo-feat-name">Voice → CRM</div><div class="demo-feat-desc">Record or upload calls. Whisper AI transcribes. Claude summarises and logs as lead activity.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">💡</div><div class="demo-feat-name">Hover Help</div><div class="demo-feat-desc">Every field has a tooltip explaining what it means. Click "Learn more →" for full documentation.</div></div>
-        </div>
-      </div>
-      <div class="demo-step" id="ds-4">
-        <div class="demo-step-tag">Step 4 of 7 — Finance (Admin)</div>
-        <h3>P&L on every booking 💰</h3>
-        <p>Finance Dashboard shows revenue, cost, and net margin per booking — live. Remittance Module lets you pay suppliers globally with FX rate lock and 7-year audit trail.</p>
-        <div class="demo-feat-grid">
-          <div class="demo-feat"><div class="demo-feat-icon">📊</div><div class="demo-feat-name">Live P&L</div><div class="demo-feat-desc">Revenue, supplier cost, agent commission, net margin — drillable from summary to line item.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">🌍</div><div class="demo-feat-name">Global Payments</div><div class="demo-feat-desc">Wise (international), FlyRemit (India outbound), Razorpay Payouts (domestic INR).</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">💱</div><div class="demo-feat-name">FX Rate Lock</div><div class="demo-feat-desc">Lock exchange rates for 30 min when approving. Tracks FX gain/loss per transaction.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">🧾</div><div class="demo-feat-name">Auto Invoicing</div><div class="demo-feat-desc">GSTIN-compliant invoices, credit notes, vouchers — generated on booking confirmation.</div></div>
-        </div>
-      </div>
-      <div class="demo-step" id="ds-5">
-        <div class="demo-step-tag">Step 5 of 7 — AI Voice & Content</div>
-        <h3>Give your content a voice 🔊</h3>
-        <p>AI Voice narrates itineraries in the traveller's preferred language. Content Studio turns destination photos into cinematic reels your clients can create from your portal.</p>
-        <div class="demo-preview">
-          <div style="display:flex;align-items:center;gap:12px;background:white;border-radius:9px;padding:14px;border:1px solid var(--slate-200);">
-            <div style="width:44px;height:44px;border-radius:10px;background:var(--azure);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🎬</div>
-            <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;">Bali Family Discovery — 60-sec Reel</div><div style="font-size:12px;color:var(--slate-500);">15 photos · AI script · Arya (Hindi) voice · Tropical music · Auto-captioned</div></div>
-            <div style="text-align:right;"><div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:var(--azure);">₹280</div><div style="font-size:10.5px;color:var(--emerald);">Sell at ₹1,200</div></div>
-          </div>
-        </div>
-        <p style="font-size:13px;color:var(--slate-400);">💡 Clients create content from your branded portal. You set the price. NAMA charges cost. You earn the margin.</p>
-      </div>
-      <div class="demo-step" id="ds-6">
-        <div class="demo-step-tag">Step 6 of 7 — Performance (Admin)</div>
-        <h3>Your team's performance, live 📊</h3>
-        <p>Settings → User Performance shows every agent's conversion rate, revenue, and AI usage score in real-time. Managers see their team; agents see only themselves.</p>
-        <div class="demo-feat-grid">
-          <div class="demo-feat"><div class="demo-feat-icon">🏆</div><div class="demo-feat-name">Agent Leaderboard</div><div class="demo-feat-desc">Quotes, bookings, conversion, revenue, margin per agent — with period filter.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">🤖</div><div class="demo-feat-name">AI Score</div><div class="demo-feat-desc">0–100: how effectively each user leverages AI features. Drives coaching conversations.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">📤</div><div class="demo-feat-name">Export & Schedule</div><div class="demo-feat-desc">Download Excel/PDF. Schedule weekly automated email to admin and managers.</div></div>
-          <div class="demo-feat"><div class="demo-feat-icon">🎨</div><div class="demo-feat-name">Role-Aware View</div><div class="demo-feat-desc">R3 Managers see their team's data. R4 Agents see only their own. Fully controlled by rights.</div></div>
-        </div>
-      </div>
-      <div class="demo-step" id="ds-7">
-        <div class="demo-step-tag">Step 7 of 7 — You're ready!</div>
-        <h3>Your workspace is live 🚀</h3>
-        <p>Here's your go-live checklist. Complete these in the first 48 hours to get the most out of your trial.</p>
-        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
-          <label style="display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--slate-700);cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--azure);width:15px;height:15px;"> Connect your WhatsApp Business number</label>
-          <label style="display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--slate-700);cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--azure);width:15px;height:15px;"> Upload 5 suppliers with rate sheets</label>
-          <label style="display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--slate-700);cursor:pointer;"><input type="checkbox" style="accent-color:var(--azure);width:15px;height:15px;"> Generate your first AI quote</label>
-          <label style="display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--slate-700);cursor:pointer;"><input type="checkbox" style="accent-color:var(--azure);width:15px;height:15px;"> Upload your logo and set brand colours</label>
-          <label style="display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--slate-700);cursor:pointer;"><input type="checkbox" style="accent-color:var(--azure);width:15px;height:15px;"> Create one destination reel in Content Studio</label>
-          <label style="display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--slate-700);cursor:pointer;"><input type="checkbox" style="accent-color:var(--azure);width:15px;height:15px;"> Add payment method before Day 8</label>
-        </div>
-      </div>
+      <div class="demo-step" id="ds-2"><div class="demo-step-tag">Step 2 of 7 — Query Inbox</div><h3>Every query, one inbox 📬</h3><p>WhatsApp, email, web form, social DMs — all arrive here. AI extracts key travel details automatically.</p></div>
+      <div class="demo-step" id="ds-3"><div class="demo-step-tag">Step 3 of 7 — AI Capabilities</div><h3>AI works across every screen 🤖</h3><p>The AI Assistant answers any question in plain language. Document scanning maps data to DB fields. Call transcription eliminates manual CRM entry.</p></div>
+      <div class="demo-step" id="ds-4"><div class="demo-step-tag">Step 4 of 7 — Finance</div><h3>P&amp;L on every booking 💰</h3><p>Finance Dashboard shows revenue, cost, and net margin per booking — live. Remittance Module lets you pay suppliers globally with FX rate lock.</p></div>
+      <div class="demo-step" id="ds-5"><div class="demo-step-tag">Step 5 of 7 — AI Voice &amp; Content</div><h3>Give your content a voice 🔊</h3><p>AI Voice narrates itineraries. Content Studio turns destination photos into cinematic reels your clients can create from your portal.</p></div>
+      <div class="demo-step" id="ds-6"><div class="demo-step-tag">Step 6 of 7 — Performance</div><h3>Your team's performance, live 📊</h3><p>Settings → User Performance shows every agent's conversion rate, revenue, and AI usage score in real-time.</p></div>
+      <div class="demo-step" id="ds-7"><div class="demo-step-tag">Step 7 of 7 — You're ready!</div><h3>Explore freely 🚀</h3><p>Use the sidebar to navigate every section. No restrictions — click anything, change anything. This is your demo environment.</p></div>
     </div>
     <div class="demo-foot">
       <div class="demo-counter" id="demo-ctr">Step 1 of 7</div>
@@ -1338,10 +590,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════════════
-     AI ASSISTANT FAB
-══════════════════════════════════════════════════ -->
+<!-- AI ASSISTANT FAB -->
 <div class="ai-fab" id="ai-fab" onclick="toggleAI()">
   <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1H9a1 1 0 01-1-1v-2.26A7 7 0 0112 2zm-2 17h4v1a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1z"/></svg>
 </div>
@@ -1352,12 +601,11 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
     <div class="ai-close" onclick="toggleAI()">×</div>
   </div>
   <div class="ai-msgs" id="ai-msgs">
-    <div class="msg bot"><div class="bubble">Hi Rajan! Ask me anything about your leads, quotes, bookings, payments, or team performance. I can also help you draft messages or find supplier info.</div></div>
+    <div class="msg bot"><div class="bubble">Hi Rajan! Ask me anything about your leads, quotes, bookings, payments, or team performance.</div></div>
   </div>
   <div class="ai-chips">
     <div class="chip" onclick="qAI('How many leads this month?')">Leads this month?</div>
     <div class="chip" onclick="qAI('Which quotes expire today?')">Expiring quotes</div>
-    <div class="chip" onclick="qAI('Show supplier payment dues')">Payment dues</div>
     <div class="chip" onclick="qAI('Top performing agent?')">Top agent</div>
   </div>
   <div class="ai-input-bar">
@@ -1366,99 +614,8 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
   </div>
 </div>
 
-
 <script>
-// ── NAVIGATION ──────────────────────────────────────────
-function goTo(id) {
-  document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); p.style.display = ''; });
-  const t = document.getElementById(id);
-  if (!t) return;
-  t.classList.add('active');
-  t.style.display = id === 'page-settings' ? '' : '';
-  // AI fab
-  document.getElementById('ai-fab').style.display = id === 'page-settings' ? 'flex' : 'none';
-  window.scrollTo(0,0);
-}
-function loginAndEnter() { goTo('page-settings'); openDemo(); }
-
-// ── PLAN SELECTION ──────────────────────────────────────
-let selPlan = 'pro', annualBilling = false;
-const pp = {
-  starter: { m:'₹4,999', a:'₹4,166', ms:'5 users', as:'billed ₹49,990/yr' },
-  growth:  { m:'₹14,999', a:'₹12,499', ms:'15 users', as:'billed ₹1,49,990/yr' },
-  pro:     { m:'₹39,999', a:'₹33,333', ms:'30 users', as:'billed ₹3,99,990/yr' },
-};
-function pickPlan(p) {
-  selPlan = p;
-  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-  const el = document.getElementById('pc-' + p);
-  if (el) el.classList.add('selected');
-  const cta = document.getElementById('plan-cta');
-  if (cta) cta.textContent = p === 'enterprise' ? 'Contact Sales →' : 'Start 7-Day Free Trial →';
-}
-pickPlan('pro');
-function flipBilling() {
-  annualBilling = !annualBilling;
-  const trk = document.getElementById('billing-trk');
-  trk.classList.toggle('on', annualBilling);
-  document.getElementById('lbl-mo').classList.toggle('on', !annualBilling);
-  document.getElementById('lbl-yr').classList.toggle('on', annualBilling);
-  ['starter','growth','pro'].forEach(k => {
-    const prEl = document.getElementById('pp-' + k);
-    const cyEl = document.getElementById('pc2-' + k);
-    if (prEl && pp[k]) {
-      prEl.textContent = annualBilling ? pp[k].a : pp[k].m;
-      cyEl.textContent = annualBilling ? '/month · ' + pp[k].as : '/month · up to ' + pp[k].ms;
-    }
-  });
-}
-
-// ── PASSWORD ──────────────────────────────────────────────
-function checkPw(v) {
-  let s = 0;
-  if (v.length >= 8) s++;
-  if (v.length >= 12) s++;
-  if (/[A-Z]/.test(v)) s++;
-  if (/[0-9]/.test(v)) s++;
-  if (/[^A-Za-z0-9]/.test(v)) s++;
-  const fill = document.getElementById('pw-fill');
-  const hint = document.getElementById('pw-hint');
-  if (!fill) return;
-  const colors = ['#E11D48','#F59E0B','#F59E0B','#059669','#059669'];
-  const labels = ['Too weak','Weak','Fair','Strong ✓','Very strong ✓'];
-  const pct = ['20%','40%','60%','80%','100%'];
-  const i = Math.min(s, 4);
-  fill.style.width = pct[i]; fill.style.background = colors[i];
-  if (hint) hint.textContent = labels[i];
-}
-
-// ── AVATAR ────────────────────────────────────────────────
-function previewAv(e) {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    const c = document.getElementById('av-circle');
-    if (c) { c.style.backgroundImage = `url(${ev.target.result})`; c.style.backgroundSize = 'cover'; c.style.backgroundPosition = 'center'; c.textContent = ''; }
-  };
-  r.readAsDataURL(f);
-}
-
-// ── INVITE TABLE ──────────────────────────────────────────
-let rCnt = 3;
-function addRow() {
-  rCnt++;
-  const id = 'ir' + rCnt;
-  const tb = document.getElementById('inv-body');
-  const tr = document.createElement('tr');
-  tr.id = id;
-  tr.innerHTML = `<td><input placeholder="Full name"></td><td><input placeholder="Designation"></td><td><select><option>Sales Agent (R4)</option><option>Manager (R3)</option><option>Ops Exec (R5)</option><option>Finance (R6)</option><option>Sub-Agent (R7)</option></select></td><td><input type="email" placeholder="email@company.com"></td><td><input placeholder="+91…"></td><td style="text-align:center;"><button onclick="delRow('${id}')" style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:17px;">×</button></td>`;
-  tb.appendChild(tr);
-  updCount();
-}
-function delRow(id) { const el = document.getElementById(id); if (el) el.remove(); updCount(); }
-function updCount() { const n = document.getElementById('inv-body')?.querySelectorAll('tr').length || 0; const el = document.getElementById('inv-count'); if (el) el.textContent = n; }
-
-// ── SETTINGS SECTIONS ─────────────────────────────────────
+// ── SETTINGS SECTIONS ──
 function showSec(id) {
   document.querySelectorAll('.settings-sec').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -1471,25 +628,33 @@ function showSec(id) {
   if (t && titles[id]) t.textContent = titles[id];
 }
 
-// ── BRANDING ──────────────────────────────────────────────
+// ── BRANDING ──
 function setColor(el, type) {
   const parent = el.parentElement;
   parent.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
   el.classList.add('active');
-  const col = el.style.background;
   if (type === 'primary') {
     const pb = document.getElementById('preview-btn');
     const pl = document.getElementById('preview-logo');
-    if (pb) pb.style.background = col;
-    if (pl) pl.style.background = col;
+    if (pb) pb.style.background = el.style.background;
+    if (pl) pl.style.background = el.style.background;
   }
 }
 function pickVoice(el) {
   document.querySelectorAll('.voice-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
 }
+function previewAv(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    const c = document.getElementById('av-circle');
+    if (c) { c.style.backgroundImage = `url(${ev.target.result})`; c.style.backgroundSize = 'cover'; c.textContent = ''; }
+  };
+  r.readAsDataURL(f);
+}
 
-// ── DEMO ──────────────────────────────────────────────────
+// ── DEMO TOUR ──
 let dStep = 1;
 const dTotal = 7;
 function openDemo() { dStep = 1; renderDemo(); document.getElementById('demo-wrap').classList.add('open'); }
@@ -1505,8 +670,8 @@ function renderDemo() {
   if (back) back.style.display = dStep > 1 ? 'inline-flex' : 'none';
   const next = document.getElementById('demo-next');
   if (next) {
-    next.textContent = dStep === dTotal ? '✓ Enter Workspace' : 'Next →';
-    next.onclick = dStep === dTotal ? () => { closeDemo(); showSec('profile'); } : () => demoStep(1);
+    next.textContent = dStep === dTotal ? '✓ Close Tour' : 'Next →';
+    next.onclick = dStep === dTotal ? () => closeDemo() : () => demoStep(1);
   }
   const rail = document.getElementById('demo-rail');
   if (rail) {
@@ -1514,23 +679,21 @@ function renderDemo() {
     for (let i = 1; i <= dTotal; i++) {
       const d = document.createElement('div');
       d.className = 'demo-dot ' + (i < dStep ? 'done' : i === dStep ? 'active' : 'pending');
-      d.style.flex = '1';
       rail.appendChild(d);
     }
   }
 }
 
-// ── AI ASSISTANT ──────────────────────────────────────────
+// ── AI ASSISTANT ──
 function toggleAI() { document.getElementById('ai-panel').classList.toggle('open'); }
 const aiAnswers = {
   'How many leads this month?': '47 active leads in May: 10 new, 12 qualified, 15 quoted, 7 negotiating, 3 confirmed. Up 18% vs April.',
-  'Which quotes expire today?': '3 quotes expire today:<br>• Sharma Family — Bali ₹3.2L · 6pm<br>• Mehta Couple — Maldives ₹1.8L · 9pm<br>• Iyer Group — Rajasthan ₹5.2L · midnight<br><br>Want me to draft follow-up messages for all three?',
-  'Show supplier payment dues': '2 overdue payments:<br>• Anantara Hotels (Bali) — $1,240 due Jun 15<br>• Mountain Trails (Coorg) — ₹28,000 due Jun 18<br><br>Create remittance requisitions for both?',
-  'Top performing agent?': 'Priya Sharma leads this month: 38 quotes, ₹11.2L confirmed revenue, 32% conversion — 4pp above team average of 28%.',
+  'Which quotes expire today?': '3 quotes expire today:<br>• Sharma Family — Bali ₹3.2L · 6pm<br>• Mehta Couple — Maldives ₹1.8L · 9pm<br>• Iyer Group — Rajasthan ₹5.2L · midnight',
+  'Top performing agent?': 'Priya Sharma leads this month: 38 quotes, ₹11.2L confirmed revenue, 32% conversion — 4pp above team average.',
 };
 function qAI(q) {
   addMsg('usr', q);
-  setTimeout(() => addMsg('bot', aiAnswers[q] || 'Searching your workspace… For best results, ask about leads, quotes, suppliers, bookings, or payments.'), 600);
+  setTimeout(() => addMsg('bot', aiAnswers[q] || 'Searching your workspace data…'), 600);
 }
 function sendAI() {
   const inp = document.getElementById('ai-txt');
@@ -1538,14 +701,11 @@ function sendAI() {
   if (inp) inp.value = '';
   addMsg('usr', q);
   const kw = q.toLowerCase();
-  let reply = 'Searching your workspace data… ';
-  if (kw.includes('lead')) reply += 'You have 47 active leads this month across all stages.';
+  let reply = 'Searching your workspace… ';
+  if (kw.includes('lead')) reply += '47 active leads this month across all stages.';
   else if (kw.includes('quote')) reply += '91 quotes sent this month with 31% conversion rate.';
   else if (kw.includes('booking')) reply += '3 confirmed bookings this month totalling ₹28L GMV.';
-  else if (kw.includes('supplier')) reply += '15 active suppliers. 2 have pending payment requisitions.';
-  else if (kw.includes('payment') || kw.includes('remittance')) reply += '2 overdue supplier payments. Total pending: $1,240 + ₹28,000.';
-  else reply += 'I couldn\'t find exact data for that query. Try asking about leads, quotes, bookings, suppliers, or payments.';
-  reply += '<br><br><span style="font-size:11.5px;opacity:0.7;">Can\'t find what you need? <span style="color:var(--teal);cursor:pointer;text-decoration:underline;" onclick="showReqPopup()">Request info or message your team →</span></span>';
+  else reply += 'Try asking about leads, quotes, bookings, suppliers, or payments.';
   setTimeout(() => addMsg('bot', reply), 700);
 }
 function addMsg(type, html) {
@@ -1555,9 +715,6 @@ function addMsg(type, html) {
   div.innerHTML = `<div class="bubble">${html}</div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
-}
-function showReqPopup() {
-  alert('📬 Information Request\n\nChoose how to reach out:\n\n🔵 Internal Message → Select a team member\n📱 WhatsApp → Send to supplier or contact\n📧 Email → External party (AI pre-drafts the message)\n\nThis panel links to the relevant lead or booking record automatically.');
 }
 </script>
 </body>
