@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAMA — Start Your Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0D1B2A;
+  --ink-2: #1B2F45;
+  --teal: #00B4BC;
+  --teal-dark: #008B92;
+  --teal-light: #E0F7F8;
+  --teal-glow: rgba(0,180,188,0.18);
+  --gold: #E6A817;
+  --gold-light: #FFF8E7;
+  --rose: #E84855;
+  --green: #1A9A5C;
+  --green-light: #E6F7EF;
+  --slate: #EEF1F6;
+  --slate-2: #DDE2EC;
+  --muted: #7A8799;
+  --white: #FFFFFF;
+  --card-shadow: 0 4px 24px rgba(13,27,42,0.10);
+  --card-shadow-lg: 0 12px 48px rgba(13,27,42,0.16);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ink);
+  color: var(--ink);
+  display: flex;
+  align-items: stretch;
+}
+
+/* ── LAYOUT ── */
+.shell { display:flex; width:100vw; height:100vh; overflow:hidden; }
+
+/* Left panel — brand */
+.brand-panel {
+  width: 420px; flex-shrink: 0;
+  background: var(--ink);
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 44px;
+  position: relative; overflow: hidden;
+}
+.brand-panel::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 30% 40%, rgba(0,180,188,0.18) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 50% at 80% 80%, rgba(230,168,23,0.10) 0%, transparent 70%);
+}
+.brand-bg-grid {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.brand-content { position: relative; z-index: 2; }
+.brand-logo { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 48px; }
+.brand-wordmark { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 700; color: white; letter-spacing: -1px; line-height: 1; }
+.brand-version { font-size: 11px; font-weight: 600; color: var(--teal); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.brand-tagline { font-size: 28px; font-weight: 300; color: rgba(255,255,255,0.85); line-height: 1.3; margin-bottom: 32px; }
+.brand-tagline strong { font-weight: 600; color: white; }
+.brand-features { display: flex; flex-direction: column; gap: 16px; }
+.brand-feat { display: flex; align-items: flex-start; gap: 12px; }
+.brand-feat-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(0,180,188,0.15); border: 1px solid rgba(0,180,188,0.25); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+.brand-feat-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.brand-feat-text strong { color: rgba(255,255,255,0.9); display: block; font-size: 13px; font-weight: 600; }
+
+.brand-trial-badge {
+  position: relative; z-index: 2;
+  background: rgba(230,168,23,0.12); border: 1px solid rgba(230,168,23,0.3);
+  border-radius: 14px; padding: 20px 24px;
+}
+.brand-trial-badge .trial-headline { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--gold); margin-bottom: 4px; }
+.brand-trial-badge .trial-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+.trial-dots { display: flex; gap: 6px; margin-top: 12px; }
+.trial-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(230,168,23,0.3); }
+.trial-dot.active { background: var(--gold); }
+
+/* Right panel — form */
+.form-panel {
+  flex: 1;
+  background: #F5F7FC;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.form-inner {
+  flex: 1; display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 48px;
+}
+.form-wrap { width: 100%; max-width: 600px; }
+
+/* Progress stepper */
+.stepper { display: flex; align-items: center; gap: 0; margin-bottom: 40px; }
+.step-item { display: flex; align-items: center; gap: 10px; flex: 1; }
+.step-item:last-child { flex: 0; }
+.step-circle {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0;
+  transition: all 0.3s;
+}
+.step-circle.done { background: var(--teal); color: white; }
+.step-circle.active { background: var(--ink); color: white; box-shadow: 0 0 0 4px rgba(0,180,188,0.2); }
+.step-circle.pending { background: var(--slate-2); color: var(--muted); }
+.step-label { font-size: 11px; font-weight: 600; white-space: nowrap;
+  color: var(--muted); }
+.step-label.active-label { color: var(--ink); }
+.step-line { flex: 1; height: 2px; background: var(--slate-2); margin: 0 8px; }
+.step-line.done { background: var(--teal); }
+
+/* Cards */
+.flow-card {
+  background: white; border-radius: 20px; padding: 40px;
+  box-shadow: var(--card-shadow); display: none;
+}
+.flow-card.active { display: block; animation: fadeUp 0.35s ease; }
+@keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+
+.card-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+.card-title { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 600; color: var(--ink); margin-bottom: 8px; line-height: 1.2; }
+.card-sub { font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.5; }
+
+/* Form elements */
+.form-row { display: grid; gap: 16px; margin-bottom: 16px; }
+.form-row.cols-2 { grid-template-columns: 1fr 1fr; }
+.form-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label {
+  font-size: 12px; font-weight: 600; color: var(--ink-2);
+  display: flex; align-items: center; gap: 6px;
+}
+.tooltip-icon {
+  width: 16px; height: 16px; border-radius: 50%; background: var(--slate);
+  color: var(--muted); font-size: 10px; font-weight: 700; cursor: help;
+  display: inline-flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.tooltip-icon:hover::after {
+  content: attr(data-tip);
+  position: absolute; left: 22px; top: 50%; transform: translateY(-50%);
+  background: var(--ink); color: white; font-size: 11px; font-weight: 400;
+  padding: 6px 10px; border-radius: 8px; white-space: nowrap; z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.form-input, .form-select, .form-textarea {
+  border: 1.5px solid var(--slate-2); border-radius: 10px;
+  padding: 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+  color: var(--ink); background: white; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow);
+}
+.form-input::placeholder { color: var(--muted); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-select { cursor: pointer; }
+.input-prefix {
+  display: flex; align-items: center;
+  border: 1.5px solid var(--slate-2); border-radius: 10px; overflow: hidden;
+  background: white; transition: border-color 0.2s;
+}
+.input-prefix:focus-within { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
+.prefix-tag { padding: 11px 12px; background: var(--slate); font-size: 13px; font-weight: 600; color: var(--muted); border-right: 1.5px solid var(--slate-2); flex-shrink: 0; }
+.input-prefix input { border: none; outline: none; padding: 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--ink); flex: 1; }
+.form-hint { font-size: 11px; color: var(--muted); }
+.form-error { font-size: 11px; color: var(--rose); font-weight: 500; }
+
+/* Password strength */
+.password-strength { margin-top: 6px; }
+.strength-bar { display: flex; gap: 4px; margin-bottom: 4px; }
+.strength-seg { height: 3px; border-radius: 2px; flex: 1; background: var(--slate-2); transition: background 0.3s; }
+.strength-seg.weak { background: var(--rose); }
+.strength-seg.medium { background: var(--gold); }
+.strength-seg.strong { background: var(--green); }
+.strength-label { font-size: 11px; color: var(--muted); }
+
+/* Plan selector */
+.plan-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.plan-card {
+  border: 2px solid var(--slate-2); border-radius: 14px; padding: 18px 16px;
+  cursor: pointer; transition: all 0.2s; position: relative;
+}
+.plan-card:hover { border-color: var(--teal); }
+.plan-card.selected { border-color: var(--teal); background: var(--teal-light); }
+.plan-card .plan-name { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.plan-card .plan-price { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--teal); }
+.plan-card .plan-price span { font-size: 11px; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 400; }
+.plan-card .plan-features { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+.plan-card .plan-feat { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+.plan-card .plan-feat::before { content: '✓'; color: var(--teal); font-weight: 700; }
+.plan-badge {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: white; font-size: 9px; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px; letter-spacing: 0.5px; white-space: nowrap;
+}
+.trial-note {
+  background: var(--gold-light); border: 1px solid rgba(230,168,23,0.3);
+  border-radius: 10px; padding: 12px 16px; font-size: 12px; color: #8B6914;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+}
+.trial-note strong { font-weight: 700; }
+
+/* Buttons */
+.btn-primary {
+  width: 100%; padding: 14px; background: var(--teal); color: white;
+  border: none; border-radius: 12px; font-size: 15px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif; cursor: pointer;
+  transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,180,188,0.35); }
+.btn-secondary {
+  width: 100%; padding: 13px; background: white; color: var(--ink);
+  border: 1.5px solid var(--slate-2); border-radius: 12px; font-size: 14px;
+  font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+.btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.btn-link { background: none; border: none; color: var(--teal); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: none; }
+.btn-link:hover { text-decoration: underline; }
+.back-link { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); cursor: pointer; margin-bottom: 24px; background: none; border: none; font-family: 'DM Sans', sans-serif; }
+.back-link:hover { color: var(--teal); }
+
+/* Divider */
+.or-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+.or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--slate-2); }
+.or-divider span { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+/* Google SSO button */
+.btn-google {
+  width: 100%; padding: 13px; background: white; color: var(--ink);
+  border: 1.5px solid var(--slate-2); border-radius: 12px; font-size: 14px;
+  font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer;
+  transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-google:hover { border-color: #4285F4; box-shadow: 0 2px 12px rgba(66,133,244,0.15); }
+.google-icon { display: flex; }
+
+/* OTP boxes */
+.otp-row { display: flex; gap: 10px; justify-content: center; margin: 24px 0; }
+.otp-box {
+  width: 52px; height: 56px; border: 2px solid var(--slate-2); border-radius: 12px;
+  text-align: center; font-size: 22px; font-family: 'DM Mono', monospace; font-weight: 500;
+  color: var(--ink); outline: none; transition: all 0.2s;
+}
+.otp-box:focus { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
+
+/* Avatar upload */
+.avatar-upload { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+.avatar-circle {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 28px; color: white; font-weight: 600;
+  cursor: pointer; position: relative; overflow: hidden; flex-shrink: 0;
+}
+.avatar-circle:hover::after {
+  content: '📷 Change';
+  position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex;
+  align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 600; color: white;
+}
+.avatar-info .avatar-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.avatar-info .avatar-hint { font-size: 12px; color: var(--muted); }
+
+/* Invite table */
+.invite-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+.invite-table th { font-size: 11px; font-weight: 700; color: var(--muted); text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--slate-2); text-transform: uppercase; letter-spacing: 0.5px; }
+.invite-table td { padding: 8px 6px; border-bottom: 1px solid var(--slate); vertical-align: middle; }
+.invite-table input, .invite-table select {
+  border: 1px solid var(--slate-2); border-radius: 7px; padding: 7px 10px;
+  font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--ink);
+  outline: none; width: 100%; background: white;
+}
+.invite-table input:focus, .invite-table select:focus { border-color: var(--teal); }
+.remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 4px; border-radius: 6px; }
+.remove-btn:hover { color: var(--rose); background: #FEE2E2; }
+.add-row-btn {
+  display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600;
+  color: var(--teal); background: var(--teal-light); border: 1.5px dashed var(--teal);
+  border-radius: 10px; padding: 10px 16px; cursor: pointer; width: 100%;
+  font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+}
+.add-row-btn:hover { background: var(--teal); color: white; }
+
+/* Upload CSV area */
+.upload-zone {
+  border: 2px dashed var(--slate-2); border-radius: 12px; padding: 24px;
+  text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 16px;
+}
+.upload-zone:hover { border-color: var(--teal); background: var(--teal-light); }
+.upload-icon { font-size: 28px; margin-bottom: 8px; }
+.upload-text { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.upload-hint { font-size: 12px; color: var(--muted); }
+
+/* Settings screen */
+.settings-layout { display: flex; gap: 28px; }
+.settings-nav { width: 200px; flex-shrink: 0; }
+.settings-nav-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 500;
+  color: var(--muted); transition: all 0.2s; margin-bottom: 4px;
+}
+.settings-nav-item:hover { background: var(--slate); color: var(--ink); }
+.settings-nav-item.active { background: var(--teal-light); color: var(--teal); font-weight: 600; }
+.settings-nav-icon { font-size: 16px; }
+.settings-content { flex: 1; }
+.settings-section { display: none; }
+.settings-section.active { display: block; animation: fadeUp 0.25s ease; }
+.settings-section-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.settings-section-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.settings-block { background: white; border-radius: 14px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.settings-block-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+.tag-pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+.tag-green { background: var(--green-light); color: var(--green); }
+.tag-teal { background: var(--teal-light); color: var(--teal-dark); }
+.tag-gold { background: var(--gold-light); color: #8B6914; }
+.tag-rose { background: #FEE2E2; color: var(--rose); }
+
+/* Demo / tour overlay */
+.demo-overlay {
+  position: fixed; inset: 0; background: rgba(13,27,42,0.7); backdrop-filter: blur(4px);
+  z-index: 1000; display: none; align-items: center; justify-content: center;
+}
+.demo-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.demo-modal {
+  background: white; border-radius: 24px; padding: 0; overflow: hidden;
+  width: 680px; max-width: 95vw; max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+}
+.demo-header {
+  background: var(--ink); padding: 32px 40px 28px; position: relative;
+  background-image: radial-gradient(ellipse 80% 80% at 80% 50%, rgba(0,180,188,0.2) 0%, transparent 70%);
+}
+.demo-header .demo-tag { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+.demo-header .demo-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600; color: white; margin-bottom: 6px; }
+.demo-header .demo-sub { font-size: 13px; color: rgba(255,255,255,0.5); }
+.demo-progress { display: flex; align-items: center; gap: 6px; margin-top: 20px; }
+.demo-progress-seg { height: 3px; flex: 1; border-radius: 2px; background: rgba(255,255,255,0.15); transition: background 0.3s; }
+.demo-progress-seg.done { background: var(--teal); }
+.demo-progress-seg.active { background: white; }
+.demo-body { padding: 32px 40px; }
+.demo-step { display: none; }
+.demo-step.active { display: block; animation: fadeUp 0.3s ease; }
+.demo-screen-mock {
+  background: var(--slate); border-radius: 14px; height: 200px; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.demo-screen-inner {
+  background: white; border-radius: 10px; padding: 16px 20px;
+  width: 85%; height: 80%; box-shadow: var(--card-shadow);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.demo-mock-row { height: 10px; border-radius: 4px; background: var(--slate-2); }
+.demo-mock-row.wide { width: 80%; }
+.demo-mock-row.medium { width: 55%; }
+.demo-mock-row.narrow { width: 35%; }
+.demo-mock-row.teal { background: var(--teal); width: 45%; height: 28px; border-radius: 8px; }
+.demo-mock-dot { display: flex; gap: 8px; }
+.demo-mock-dot span { width: 10px; height: 10px; border-radius: 50%; display: block; }
+.demo-step-title { font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.demo-step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+.demo-tips { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.demo-tip { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: var(--slate); border-radius: 10px; font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+.demo-tip-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.demo-nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; border-top: 1px solid var(--slate-2); }
+.demo-step-counter { font-size: 12px; color: var(--muted); font-weight: 600; font-family: 'DM Mono', monospace; }
+.demo-role-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.demo-role-tab {
+  padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1.5px solid var(--slate-2); background: white; color: var(--muted);
+  font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+}
+.demo-role-tab.active { border-color: var(--teal); background: var(--teal-light); color: var(--teal-dark); }
+
+/* Success state */
+.success-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 20px; }
+.success-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600; text-align: center; color: var(--ink); margin-bottom: 10px; }
+.success-sub { font-size: 14px; color: var(--muted); text-align: center; margin-bottom: 28px; line-height: 1.6; }
+
+/* Alert box */
+.alert { padding: 12px 16px; border-radius: 10px; font-size: 13px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.alert-info { background: var(--teal-light); color: var(--teal-dark); border: 1px solid rgba(0,180,188,0.2); }
+.alert-gold { background: var(--gold-light); color: #8B6914; border: 1px solid rgba(230,168,23,0.25); }
+
+/* Checklist */
+.checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.check-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; border: 1.5px solid var(--slate-2); background: white; cursor: pointer; transition: all 0.2s; }
+.check-item.checked { border-color: var(--teal); background: var(--teal-light); }
+.check-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--slate-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+.check-item.checked .check-box { background: var(--teal); border-color: var(--teal); color: white; font-size: 12px; }
+.check-text { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+
+/* Password toggle */
+.pass-wrapper { position: relative; }
+.pass-wrapper input { padding-right: 44px; }
+.pass-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); font-size: 16px; padding: 2px; }
+
+/* Phone input */
+.phone-row { display: flex; gap: 0; }
+.phone-code { padding: 11px 12px; background: var(--slate); border: 1.5px solid var(--slate-2); border-right: none; border-radius: 10px 0 0 10px; font-size: 13px; font-weight: 600; color: var(--muted); flex-shrink: 0; }
+.phone-input { border-radius: 0 10px 10px 0 !important; }
+
+/* Invite sent cards */
+.invite-sent-card { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--slate); border-radius: 10px; margin-bottom: 8px; }
+.invite-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--teal), var(--teal-dark)); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; flex-shrink: 0; }
+.invite-info { flex: 1; }
+.invite-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.invite-meta { font-size: 11px; color: var(--muted); }
+.invite-status { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; }
+.status-sent { background: var(--teal-light); color: var(--teal-dark); }
+.status-pending { background: var(--gold-light); color: #8B6914; }
+
+/* Permissions grid */
+.perm-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+.perm-item { padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--slate-2); cursor: pointer; text-align: center; transition: all 0.2s; }
+.perm-item.on { border-color: var(--teal); background: var(--teal-light); }
+.perm-item .perm-icon { font-size: 18px; margin-bottom: 4px; }
+.perm-item .perm-name { font-size: 10px; font-weight: 600; color: var(--muted); }
+.perm-item.on .perm-name { color: var(--teal-dark); }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .brand-panel { display: none; }
+  .form-inner { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ── LEFT BRAND PANEL ── -->
+  <div class="brand-panel">
+    <div class="brand-content">
+      <div class="brand-logo">
+        <div class="brand-wordmark">NAMA</div>
+      </div>
+      <div class="brand-version">Travel OS v2.0</div>
+      <div class="brand-tagline">The <strong>AI brain</strong> your travel business has been waiting for</div>
+      <div class="brand-features">
+        <div class="brand-feat">
+          <div class="brand-feat-icon">🤖</div>
+          <div class="brand-feat-text"><strong>AI-first, not AI-sprinkled</strong>Every workflow is built around intelligence — not bolted on top</div>
+        </div>
+        <div class="brand-feat">
+          <div class="brand-feat-icon">⚡</div>
+          <div class="brand-feat-text"><strong>80% less manual work</strong>From lead capture to payment — all automated</div>
+        </div>
+        <div class="brand-feat">
+          <div class="brand-feat-icon">🌍</div>
+          <div class="brand-feat-text"><strong>Multi-currency, multi-market</strong>India · UAE · SEA — one platform</div>
+        </div>
+        <div class="brand-feat">
+          <div class="brand-feat-icon">🏢</div>
+          <div class="brand-feat-text"><strong>Built for your whole team</strong>Unlimited users, granular roles, complete audit trail</div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-trial-badge">
+      <div class="trial-headline">7-Day Free Trial</div>
+      <div class="trial-sub">No credit card · Unlimited users · Full feature access</div>
+      <div class="trial-dots">
+        <div class="trial-dot active" id="tdot-0"></div>
+        <div class="trial-dot active" id="tdot-1"></div>
+        <div class="trial-dot active" id="tdot-2"></div>
+        <div class="trial-dot" id="tdot-3"></div>
+        <div class="trial-dot" id="tdot-4"></div>
+        <div class="trial-dot" id="tdot-5"></div>
+        <div class="trial-dot" id="tdot-6"></div>
+      </div>
+    </div>
+    <div class="brand-bg-grid"></div>
+  </div>
+
+  <!-- ── RIGHT FORM PANEL ── -->
+  <div class="form-panel">
+    <div class="form-inner">
+      <div class="form-wrap">
+
+        <!-- STEPPER -->
+        <div class="stepper" id="stepper">
+          <div class="step-item">
+            <div class="step-circle active" id="sc-1">1</div>
+            <div class="step-label active-label" id="sl-1">Choose Plan</div>
+          </div>
+          <div class="step-line" id="sline-1"></div>
+          <div class="step-item">
+            <div class="step-circle pending" id="sc-2">2</div>
+            <div class="step-label" id="sl-2">Register</div>
+          </div>
+          <div class="step-line" id="sline-2"></div>
+          <div class="step-item">
+            <div class="step-circle pending" id="sc-3">3</div>
+            <div class="step-label" id="sl-3">Verify</div>
+          </div>
+          <div class="step-line" id="sline-3"></div>
+          <div class="step-item">
+            <div class="step-circle pending" id="sc-4">4</div>
+            <div class="step-label" id="sl-4">Your Profile</div>
+          </div>
+          <div class="step-line" id="sline-4"></div>
+          <div class="step-item">
+            <div class="step-circle pending" id="sc-5">5</div>
+            <div class="step-label" id="sl-5">Team</div>
+          </div>
+          <div class="step-line" id="sline-5"></div>
+          <div class="step-item">
+            <div class="step-circle pending" id="sc-6">6</div>
+            <div class="step-label" id="sl-6">Settings</div>
+          </div>
+        </div>
+
+        <!-- ══════════ STEP 1: PLAN SELECTION ══════════ -->
+        <div class="flow-card active" id="step-1">
+          <div class="card-eyebrow">Step 1 of 6</div>
+          <div class="card-title">Start your free trial</div>
+          <div class="card-sub">Choose your plan — no credit card required. All plans include 7 days free with unlimited users.</div>
+
+          <div class="trial-note">
+            <span>🎁</span>
+            <span><strong>Free Trial:</strong> All plans start with 7 days free. Full feature access. Cancel anytime. Unlimited team members during trial.</span>
+          </div>
+
+          <div class="plan-grid">
+            <div class="plan-card" onclick="selectPlan(this,'starter')">
+              <div class="plan-name">Starter</div>
+              <div class="plan-price">₹4,999<span>/mo</span></div>
+              <div class="plan-features">
+                <div class="plan-feat">3 users</div>
+                <div class="plan-feat">M1–M6 modules</div>
+                <div class="plan-feat">500 queries/mo</div>
+                <div class="plan-feat">1 portal</div>
+              </div>
+            </div>
+            <div class="plan-card selected" onclick="selectPlan(this,'growth')">
+              <div class="plan-badge">Most Popular</div>
+              <div class="plan-name">Growth</div>
+              <div class="plan-price">₹14,999<span>/mo</span></div>
+              <div class="plan-features">
+                <div class="plan-feat">10 users</div>
+                <div class="plan-feat">M1–M11 modules</div>
+                <div class="plan-feat">2,000 queries/mo</div>
+                <div class="plan-feat">3 portals</div>
+              </div>
+            </div>
+            <div class="plan-card" onclick="selectPlan(this,'professional')">
+              <div class="plan-name">Professional</div>
+              <div class="plan-price">₹39,999<span>/mo</span></div>
+              <div class="plan-features">
+                <div class="plan-feat">25 users</div>
+                <div class="plan-feat">All 13 modules</div>
+                <div class="plan-feat">10,000 queries/mo</div>
+                <div class="plan-feat">10 portals</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-info">
+            <span>ℹ️</span>
+            <span>During your 7-day trial, you get <strong>unlimited users</strong> regardless of plan. Invite your entire team now.</span>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn-primary" onclick="goStep(2)">Start Free Trial →</button>
+            <div style="text-align:center; font-size:12px; color:var(--muted)">Annual billing available — save 17%. Change anytime.</div>
+          </div>
+        </div>
+
+        <!-- ══════════ STEP 2: REGISTRATION ══════════ -->
+        <div class="flow-card" id="step-2">
+          <button class="back-link" onclick="goStep(1)">← Back</button>
+          <div class="card-eyebrow">Step 2 of 6</div>
+          <div class="card-title">Create your account</div>
+          <div class="card-sub">You'll be the <strong>Admin</strong> for your organisation on NAMA.</div>
+
+          <button class="btn-google" onclick="goStep(3)">
+            <span class="google-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+            </span>
+            Continue with Google
+          </button>
+
+          <div class="or-divider"><span>or register with email</span></div>
+
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label">First Name <span class="tooltip-icon" data-tip="Your legal first name as it appears on official documents">?</span></label>
+              <input class="form-input" type="text" placeholder="Rajan" id="fn">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input class="form-input" type="text" placeholder="Kapoor" id="ln">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Work Email <span class="tooltip-icon" data-tip="Use your business email — this becomes your login ID and is visible to your team">?</span></label>
+              <input class="form-input" type="email" placeholder="rajan@rajantravel.com" id="email">
+            </div>
+          </div>
+
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label">Company / Organisation Name</label>
+              <input class="form-input" type="text" placeholder="Rajan Travel Co." id="company">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Country <span class="tooltip-icon" data-tip="Determines billing currency and tax settings">?</span></label>
+              <select class="form-select" id="country">
+                <option value="">Select country</option>
+                <option selected>India</option>
+                <option>United Arab Emirates</option>
+                <option>Indonesia</option>
+                <option>Thailand</option>
+                <option>Singapore</option>
+                <option>United Kingdom</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <div class="pass-wrapper">
+                <input class="form-input" type="password" placeholder="Min. 8 characters" id="pass" oninput="checkStrength(this.value)">
+                <button class="pass-toggle" onclick="togglePass('pass')" type="button">👁</button>
+              </div>
+              <div class="password-strength">
+                <div class="strength-bar">
+                  <div class="strength-seg" id="ps1"></div>
+                  <div class="strength-seg" id="ps2"></div>
+                  <div class="strength-seg" id="ps3"></div>
+                  <div class="strength-seg" id="ps4"></div>
+                </div>
+                <div class="strength-label" id="slabel">Enter a password</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Confirm Password</label>
+              <div class="pass-wrapper">
+                <input class="form-input" type="password" placeholder="Repeat password" id="pass2">
+                <button class="pass-toggle" onclick="togglePass('pass2')" type="button">👁</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Mobile Number <span class="tooltip-icon" data-tip="Used for OTP verification and WhatsApp notifications">?</span></label>
+              <div class="phone-row">
+                <span class="phone-code">🇮🇳 +91</span>
+                <input class="form-input phone-input" type="tel" placeholder="98765 43210" style="border-radius:0 10px 10px 0">
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn-primary" onclick="goStep(3)">Create Account & Verify →</button>
+            <div style="text-align:center; font-size:12px; color:var(--muted)">
+              Already have an account? <button class="btn-link" onclick="showLogin()">Sign in</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════ STEP 2b: SIGN IN ══════════ -->
+        <div class="flow-card" id="step-login" style="display:none">
+          <button class="back-link" onclick="hideLogin()">← Back</button>
+          <div class="card-eyebrow">Welcome back</div>
+          <div class="card-title">Sign in to NAMA</div>
+          <div class="card-sub">Enter your credentials to access your workspace.</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" placeholder="your@email.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <div class="pass-wrapper">
+                <input class="form-input" type="password" placeholder="Your password">
+                <button class="pass-toggle" type="button">👁</button>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+            <button class="btn-link" style="font-size:12px">Forgot password?</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn-primary" onclick="goStep(4)">Sign In →</button>
+            <button class="btn-google">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+              Continue with Google
+            </button>
+          </div>
+        </div>
+
+        <!-- ══════════ STEP 3: OTP VERIFY ══════════ -->
+        <div class="flow-card" id="step-3">
+          <button class="back-link" onclick="goStep(2)">← Back</button>
+          <div class="card-eyebrow">Step 3 of 6 — Verification</div>
+          <div class="card-title">Check your inbox</div>
+          <div class="card-sub">We've sent a 6-digit code to <strong id="otp-email">rajan@rajantravel.com</strong> and your mobile. Enter the code below to verify.</div>
+
+          <div class="otp-row">
+            <input class="otp-box" maxlength="1" id="otp1" oninput="otpMove(this,'otp2')">
+            <input class="otp-box" maxlength="1" id="otp2" oninput="otpMove(this,'otp3')">
+            <input class="otp-box" maxlength="1" id="otp3" oninput="otpMove(this,'otp4')">
+            <input class="otp-box" maxlength="1" id="otp4" oninput="otpMove(this,'otp5')">
+            <input class="otp-box" maxlength="1" id="otp5" oninput="otpMove(this,'otp6')">
+            <input class="otp-box" maxlength="1" id="otp6" oninput="otpComplete()">
+          </div>
+
+          <div style="text-align:center; font-size:12px; color:var(--muted); margin-bottom:20px;">
+            Didn't receive? <button class="btn-link" style="font-size:12px">Resend code</button> · <span id="otp-timer" style="font-family:'DM Mono',monospace;">0:45</span>
+          </div>
+
+          <button class="btn-primary" onclick="goStep(4)">Verify & Continue →</button>
+        </div>
+
+        <!-- ══════════ STEP 4: ADMIN PROFILE ══════════ -->
+        <div class="flow-card" id="step-4">
+          <button class="back-link" onclick="goStep(3)">← Back</button>
+          <div class="card-eyebrow">Step 4 of 6 — Your Profile</div>
+          <div class="card-title">Complete your profile</div>
+          <div class="card-sub">This information helps your team identify you and is used for access, communications, and emergency contacts.</div>
+
+          <div class="avatar-upload">
+            <div class="avatar-circle" id="av-circle" onclick="triggerAvatarUpload()">R</div>
+            <div class="avatar-info">
+              <div class="avatar-name" id="av-name">Rajan Kapoor</div>
+              <div class="avatar-hint">Click on your avatar to upload a photo.<br>JPG or PNG, max 2MB recommended.</div>
+              <input type="file" id="avatar-file" style="display:none" accept="image/*" onchange="previewAvatar(this)">
+            </div>
+          </div>
+
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label">Designation / Title <span class="tooltip-icon" data-tip="Your role title as it will appear to your team members">?</span></label>
+              <input class="form-input" type="text" placeholder="Director, Owner, Head of Ops…">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Birth</label>
+              <input class="form-input" type="date">
+            </div>
+          </div>
+
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label">Blood Group <span class="tooltip-icon" data-tip="Stored securely — used only for emergency contact records. Optional but recommended.">?</span></label>
+              <select class="form-select">
+                <option value="">Select</option>
+                <option>A+</option><option>A−</option>
+                <option>B+</option><option>B−</option>
+                <option>AB+</option><option>AB−</option>
+                <option>O+</option><option>O−</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gender</label>
+              <select class="form-select">
+                <option value="">Select</option>
+                <option>Male</option><option>Female</option>
+                <option>Non-binary</option><option>Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:16px;">
+            <label class="form-label">Residential Address Line 1</label>
+            <input class="form-input" type="text" placeholder="Flat / House No., Building Name, Street">
+          </div>
+
+          <div class="form-row cols-3">
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input class="form-input" type="text" placeholder="Mumbai">
+            </div>
+            <div class="form-group">
+              <label class="form-label">State / Region</label>
+              <input class="form-input" type="text" placeholder="Maharashtra">
+            </div>
+            <div class="form-group">
+              <label class="form-label">PIN / ZIP</label>
+              <input class="form-input" type="text" placeholder="400001">
+            </div>
+          </div>
+
+          <div class="form-row cols-2">
+            <div class="form-group">
+              <label class="form-label">Emergency Contact Name</label>
+              <input class="form-input" type="text" placeholder="Family member name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Emergency Contact Mobile</label>
+              <input class="form-input" type="tel" placeholder="+91 98765 43210">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Brief Bio / About <span class="tooltip-icon" data-tip="Optional — shown to team members on your profile card">?</span></label>
+              <textarea class="form-textarea" placeholder="E.g. 15 years in travel, specialising in Southeast Asia and luxury DMC operations…"></textarea>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn-primary" onclick="goStep(5)">Save Profile & Invite Team →</button>
+            <button class="btn-secondary" onclick="goStep(5)">Skip for now</button>
+          </div>
+        </div>
+
+        <!-- ══════════ STEP 5: INVITE TEAM ══════════ -->
+        <div class="flow-card" id="step-5">
+          <button class="back-link" onclick="goStep(4)">← Back</button>
+          <div class="card-eyebrow">Step 5 of 6 — Your Team</div>
+          <div class="card-title">Invite your team</div>
+          <div class="card-sub">Add team members now or later from Settings. During your 7-day trial, invite <strong>unlimited users</strong> — they'll receive a personalised link to complete their own profile.</div>
+
+          <div class="alert alert-gold" style="margin-bottom:20px;">
+            <span>⚡</span>
+            <span>Invitees receive a magic link by email. They complete their personal details, photo, address, and blood group independently — you just set their role and permissions.</span>
+          </div>
+
+          <!-- Invite table -->
+          <table class="invite-table" id="invite-table">
+            <thead>
+              <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Designation</th>
+                <th>Role <span class="tooltip-icon" data-tip="Role determines what this person can access in NAMA" style="vertical-align:middle">?</span></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="invite-body">
+              <tr>
+                <td><input type="text" placeholder="Priya Mehta"></td>
+                <td><input type="email" placeholder="priya@rajantravel.com"></td>
+                <td><input type="text" placeholder="Sr. Consultant"></td>
+                <td>
+                  <select>
+                    <option>Sales Agent</option>
+                    <option>Manager</option>
+                    <option>Ops Executive</option>
+                    <option>Finance</option>
+                    <option>Sub-Agent</option>
+                  </select>
+                </td>
+                <td><button class="remove-btn" onclick="removeRow(this)">✕</button></td>
+              </tr>
+              <tr>
+                <td><input type="text" placeholder="Arjun Singh"></td>
+                <td><input type="email" placeholder="arjun@rajantravel.com"></td>
+                <td><input type="text" placeholder="Ops Executive"></td>
+                <td>
+                  <select>
+                    <option>Sales Agent</option>
+                    <option>Manager</option>
+                    <option selected>Ops Executive</option>
+                    <option>Finance</option>
+                    <option>Sub-Agent</option>
+                  </select>
+                </td>
+                <td><button class="remove-btn" onclick="removeRow(this)">✕</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button class="add-row-btn" onclick="addInviteRow()">+ Add another team member</button>
+
+          <div class="or-divider" style="margin:20px 0"><span>or bulk upload</span></div>
+
+          <div class="upload-zone" onclick="alert('CSV upload: Name, Email, Designation, Role columns')">
+            <div class="upload-icon">📋</div>
+            <div class="upload-text">Upload CSV / Excel</div>
+            <div class="upload-hint">Columns: Name, Email, Designation, Role · Download template →</div>
+          </div>
+
+          <!-- Permissions preview -->
+          <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px;">Quick permissions preview</div>
+          <div class="perm-grid" id="perm-grid">
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">📥</div><div class="perm-name">Queries</div></div>
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">📊</div><div class="perm-name">Pipeline</div></div>
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">📄</div><div class="perm-name">Quotes</div></div>
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">🗺️</div><div class="perm-name">Itinerary</div></div>
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">📦</div><div class="perm-name">Suppliers</div></div>
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">📁</div><div class="perm-name">Documents</div></div>
+            <div class="perm-item" onclick="togglePerm(this)"><div class="perm-icon">💰</div><div class="perm-name">Finance</div></div>
+            <div class="perm-item" onclick="togglePerm(this)"><div class="perm-icon">💸</div><div class="perm-name">Remittance</div></div>
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">🏢</div><div class="perm-name">Corporate</div></div>
+            <div class="perm-item" onclick="togglePerm(this)"><div class="perm-icon">⚙️</div><div class="perm-name">Settings</div></div>
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">📈</div><div class="perm-name">Analytics</div></div>
+            <div class="perm-item on" onclick="togglePerm(this)"><div class="perm-icon">🤖</div><div class="perm-name">AI Chat</div></div>
+          </div>
+          <div class="form-hint" style="margin-bottom:20px">Permissions shown are for <strong>Sales Agent</strong> role. Fine-tune per user in Settings → Team.</div>
+
+          <div class="btn-group">
+            <button class="btn-primary" onclick="sendInvitesAndContinue()">Send Invites & Continue →</button>
+            <button class="btn-secondary" onclick="goStep(6)">Skip — invite later</button>
+          </div>
+        </div>
+
+        <!-- ══════════ STEP 6: SETTINGS ══════════ -->
+        <div class="flow-card" id="step-6" style="padding:32px;">
+          <div class="card-eyebrow" style="margin-bottom:6px;">Step 6 of 6 — Settings</div>
+          <div class="card-title" style="margin-bottom:6px;">Configure your workspace</div>
+          <div class="card-sub" style="margin-bottom:24px;">Set up your organisation basics. You can change everything here anytime.</div>
+
+          <div class="settings-layout">
+            <!-- Nav -->
+            <div class="settings-nav">
+              <div class="settings-nav-item active" onclick="switchSettings('org')"><span class="settings-nav-icon">🏢</span> Organisation</div>
+              <div class="settings-nav-item" onclick="switchSettings('brand')"><span class="settings-nav-icon">🎨</span> Branding</div>
+              <div class="settings-nav-item" onclick="switchSettings('ai')"><span class="settings-nav-icon">🤖</span> AI Config</div>
+              <div class="settings-nav-item" onclick="switchSettings('notif')"><span class="settings-nav-icon">🔔</span> Notifications</div>
+              <div class="settings-nav-item" onclick="switchSettings('integrations')"><span class="settings-nav-icon">🔗</span> Integrations</div>
+              <div class="settings-nav-item" onclick="switchSettings('billing')"><span class="settings-nav-icon">💳</span> Billing</div>
+            </div>
+
+            <!-- Content -->
+            <div class="settings-content">
+
+              <!-- Org -->
+              <div class="settings-section active" id="ss-org">
+                <div class="settings-section-title">Organisation</div>
+                <div class="settings-section-sub">Basic company details and locale preferences</div>
+                <div class="settings-block">
+                  <div class="settings-block-title">Company Details</div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Organisation Name</label>
+                      <input class="form-input" type="text" value="Rajan Travel Co.">
+                    </div>
+                  </div>
+                  <div class="form-row cols-2">
+                    <div class="form-group">
+                      <label class="form-label">GSTIN <span class="tooltip-icon" data-tip="Required for Indian GST invoicing. Leave blank if not registered.">?</span></label>
+                      <input class="form-input" placeholder="22AAAAA0000A1Z5">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Currency</label>
+                      <select class="form-select">
+                        <option selected>INR — ₹ Indian Rupee</option>
+                        <option>USD — $ US Dollar</option>
+                        <option>AED — د.إ UAE Dirham</option>
+                        <option>EUR — € Euro</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row cols-2">
+                    <div class="form-group">
+                      <label class="form-label">Business Type</label>
+                      <select class="form-select">
+                        <option>DMC</option>
+                        <option>Tour Operator</option>
+                        <option>Travel Agency</option>
+                        <option>OTA</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Timezone</label>
+                      <select class="form-select">
+                        <option selected>Asia/Kolkata (IST +5:30)</option>
+                        <option>Asia/Dubai (GST +4)</option>
+                        <option>Asia/Bangkok (ICT +7)</option>
+                        <option>Europe/London (GMT+0)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="settings-block">
+                  <div class="settings-block-title">Query SLA Settings <span class="tooltip-icon" style="margin-left:6px" data-tip="Set the target response time for incoming queries. AI will countdown and alert agents.">?</span></div>
+                  <div class="form-row cols-2">
+                    <div class="form-group">
+                      <label class="form-label">First Response SLA</label>
+                      <select class="form-select">
+                        <option>45 seconds (AI acknowledgement)</option>
+                        <option>2 minutes</option>
+                        <option>5 minutes</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Quote Turnaround Target</label>
+                      <select class="form-select">
+                        <option>4 hours</option>
+                        <option selected>2 hours</option>
+                        <option>1 hour</option>
+                        <option>30 minutes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn-primary" onclick="launchDemo()" style="margin-top:8px">Save & Launch NAMA →</button>
+              </div>
+
+              <!-- Branding -->
+              <div class="settings-section" id="ss-brand">
+                <div class="settings-section-title">Branding</div>
+                <div class="settings-section-sub">Configure your white-label portal appearance</div>
+                <div class="settings-block">
+                  <div class="settings-block-title">Brand Identity</div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Company Logo</label>
+                      <div class="upload-zone" style="padding:16px">
+                        <div class="upload-text" style="font-size:12px">Drop logo file here or click to upload</div>
+                        <div class="upload-hint">SVG or PNG, 200×60px recommended, transparent background</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row cols-2">
+                    <div class="form-group">
+                      <label class="form-label">Primary Colour</label>
+                      <div class="input-prefix">
+                        <span class="prefix-tag" style="background:#1B2A6B; width:28px; border:none; padding:0 6px;">&nbsp;</span>
+                        <input type="text" value="#1B2A6B" style="border:none;outline:none;padding:11px 14px;font-family:'DM Mono',monospace;font-size:13px;">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Accent Colour</label>
+                      <div class="input-prefix">
+                        <span class="prefix-tag" style="background:#00B4BC; width:28px; border:none; padding:0 6px;">&nbsp;</span>
+                        <input type="text" value="#00B4BC" style="border:none;outline:none;padding:11px 14px;font-family:'DM Mono',monospace;font-size:13px;">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Portal Domain <span class="tooltip-icon" data-tip="Your clients will access quotes and itineraries at this URL. We provide SSL automatically.">?</span></label>
+                      <div class="input-prefix">
+                        <span class="prefix-tag">portal.</span>
+                        <input type="text" value="rajantravel.com" style="border:none;outline:none;padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;">
+                      </div>
+                      <span class="form-hint">Point your CNAME to portal.nama.app — SSL auto-provisioned within 5 minutes</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI Config -->
+              <div class="settings-section" id="ss-ai">
+                <div class="settings-section-title">AI Configuration</div>
+                <div class="settings-section-sub">Control how NAMA's AI behaves for your team</div>
+                <div class="settings-block">
+                  <div class="settings-block-title">AI Modules <span style="font-size:11px;font-weight:400;color:var(--muted)">Toggle which AI features are active</span></div>
+                  <div class="checklist">
+                    <div class="check-item checked" onclick="toggleCheck(this)">
+                      <div class="check-box">✓</div>
+                      <div class="check-text">🤖 AI Query Extraction — Auto-extract destination, dates, pax, budget from every message</div>
+                    </div>
+                    <div class="check-item checked" onclick="toggleCheck(this)">
+                      <div class="check-box">✓</div>
+                      <div class="check-text">💬 AI Chat Assistant — Team can ask NAMA anything in natural language</div>
+                    </div>
+                    <div class="check-item checked" onclick="toggleCheck(this)">
+                      <div class="check-box">✓</div>
+                      <div class="check-text">📝 AI Quote Assembly — 3-tier quote generation with substitution intelligence</div>
+                    </div>
+                    <div class="check-item checked" onclick="toggleCheck(this)">
+                      <div class="check-box">✓</div>
+                      <div class="check-text">📖 AI Itinerary Narrative — Day-by-day travel story auto-generated</div>
+                    </div>
+                    <div class="check-item checked" onclick="toggleCheck(this)">
+                      <div class="check-box">✓</div>
+                      <div class="check-text">🔍 AI Document Scanner — Auto-extract data from passports, contracts, rate sheets</div>
+                    </div>
+                    <div class="check-item checked" onclick="toggleCheck(this)">
+                      <div class="check-box">✓</div>
+                      <div class="check-text">💰 AI Pricing Intelligence — Competition monitoring and supplier rate comparison</div>
+                    </div>
+                    <div class="check-item" onclick="toggleCheck(this)">
+                      <div class="check-box"></div>
+                      <div class="check-text">🧾 AI Invoice & Voucher Generator — Auto-create GST invoices and supplier vouchers</div>
+                    </div>
+                    <div class="check-item checked" onclick="toggleCheck(this)">
+                      <div class="check-box">✓</div>
+                      <div class="check-text">📞 AI Voice & Call Capture — Transcribe and structure call notes automatically</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="settings-block">
+                  <div class="settings-block-title">Tooltip & Help System</div>
+                  <div class="form-row cols-2">
+                    <div class="form-group">
+                      <label class="form-label">Contextual Tooltips</label>
+                      <select class="form-select">
+                        <option selected>Always show on hover</option>
+                        <option>Show for new users only</option>
+                        <option>Off</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Help Documentation Link</label>
+                      <select class="form-select">
+                        <option selected>Link to NAMA docs</option>
+                        <option>Custom URL per field</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Notifications -->
+              <div class="settings-section" id="ss-notif">
+                <div class="settings-section-title">Notifications</div>
+                <div class="settings-section-sub">Configure alert channels for your team</div>
+                <div class="settings-block">
+                  <div class="settings-block-title">Channels</div>
+                  <div class="form-row cols-2">
+                    <div class="form-group">
+                      <label class="form-label">WhatsApp Business</label>
+                      <div class="input-prefix">
+                        <span class="prefix-tag">+91</span>
+                        <input type="tel" placeholder="Business number" style="border:none;outline:none;padding:11px;font-size:14px;font-family:'DM Sans',sans-serif;">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Notification Email</label>
+                      <input class="form-input" type="email" placeholder="alerts@rajantravel.com">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Integrations -->
+              <div class="settings-section" id="ss-integrations">
+                <div class="settings-section-title">Integrations</div>
+                <div class="settings-section-sub">Connect your existing tools</div>
+                <div class="settings-block">
+                  <div class="settings-block-title">Available Integrations</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    <div style="border:1.5px solid var(--slate-2);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:10px;">
+                      <span style="font-size:22px">💬</span>
+                      <div><div style="font-size:13px;font-weight:600">WhatsApp Business</div><div style="font-size:11px;color:var(--muted)">Lead capture & communication</div></div>
+                      <span class="tag-pill tag-green" style="margin-left:auto">Active</span>
+                    </div>
+                    <div style="border:1.5px solid var(--slate-2);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:10px;">
+                      <span style="font-size:22px">📧</span>
+                      <div><div style="font-size:13px;font-weight:600">Gmail / Outlook</div><div style="font-size:11px;color:var(--muted)">Email lead capture</div></div>
+                      <span class="tag-pill tag-teal" style="margin-left:auto">Connect</span>
+                    </div>
+                    <div style="border:1.5px solid var(--slate-2);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:10px;">
+                      <span style="font-size:22px">💳</span>
+                      <div><div style="font-size:13px;font-weight:600">Razorpay</div><div style="font-size:11px;color:var(--muted)">Payments & subscriptions</div></div>
+                      <span class="tag-pill tag-gold" style="margin-left:auto">Setup</span>
+                    </div>
+                    <div style="border:1.5px solid var(--slate-2);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:10px;">
+                      <span style="font-size:22px">🌐</span>
+                      <div><div style="font-size:13px;font-weight:600">Wise Business</div><div style="font-size:11px;color:var(--muted)">International remittances</div></div>
+                      <span class="tag-pill tag-teal" style="margin-left:auto">Connect</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Billing -->
+              <div class="settings-section" id="ss-billing">
+                <div class="settings-section-title">Billing</div>
+                <div class="settings-section-sub">Manage your subscription and payment methods</div>
+                <div class="settings-block">
+                  <div class="settings-block-title">Current Plan <span class="tag-pill tag-gold" style="margin-left:8px">🎁 Trial — 7 days left</span></div>
+                  <div style="font-size:24px;font-family:'Fraunces',serif;font-weight:600;color:var(--teal);margin-bottom:4px;">Growth Plan</div>
+                  <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">₹14,999/mo · Billed monthly · Up to 10 users</div>
+                  <div style="font-size:12px;color:var(--muted);background:var(--slate);border-radius:8px;padding:10px 14px;">
+                    💳 Add a payment method before <strong>Day 7</strong> to continue without interruption. No charge until trial ends.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ DEMO OVERLAY ══════════ -->
+<div class="demo-overlay" id="demo-overlay">
+  <div class="demo-modal">
+    <div class="demo-header">
+      <div class="demo-tag">Welcome to NAMA</div>
+      <div class="demo-title" id="demo-title">Let's get you up to speed</div>
+      <div class="demo-sub" id="demo-sub">A quick interactive tour of your workspace · 7 steps · ~3 min</div>
+      <div class="demo-progress" id="demo-progress">
+        <div class="demo-progress-seg active" id="dp-0"></div>
+        <div class="demo-progress-seg" id="dp-1"></div>
+        <div class="demo-progress-seg" id="dp-2"></div>
+        <div class="demo-progress-seg" id="dp-3"></div>
+        <div class="demo-progress-seg" id="dp-4"></div>
+        <div class="demo-progress-seg" id="dp-5"></div>
+        <div class="demo-progress-seg" id="dp-6"></div>
+      </div>
+    </div>
+    <div class="demo-body">
+
+      <!-- Role tabs — shown only on step 0 -->
+      <div id="role-tabs-wrap">
+        <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;">I am a:</div>
+        <div class="demo-role-tabs">
+          <div class="demo-role-tab active" id="dtab-admin" onclick="setDemoRole('admin')">Admin</div>
+          <div class="demo-role-tab" id="dtab-sales" onclick="setDemoRole('sales')">Sales Agent</div>
+          <div class="demo-role-tab" id="dtab-ops" onclick="setDemoRole('ops')">Ops Executive</div>
+          <div class="demo-role-tab" id="dtab-finance" onclick="setDemoRole('finance')">Finance</div>
+        </div>
+      </div>
+
+      <!-- Step 0: Welcome -->
+      <div class="demo-step active" id="ds-0">
+        <div class="demo-screen-mock" style="background: linear-gradient(135deg,var(--ink),var(--ink-2));">
+          <div style="text-align:center;color:white;">
+            <div style="font-family:'Fraunces',serif;font-size:40px;font-weight:700;margin-bottom:8px;">NAMA</div>
+            <div style="font-size:13px;opacity:0.6;letter-spacing:2px;text-transform:uppercase;">Your AI Travel OS</div>
+          </div>
+        </div>
+        <div class="demo-step-title">Welcome, Rajan! 👋</div>
+        <div class="demo-step-desc">NAMA is your team's unified command centre. Every lead, quote, booking, supplier, and payment — in one intelligent platform. This tour takes <strong>~3 minutes</strong> and is tailored to your role.</div>
+        <div class="demo-tips">
+          <div class="demo-tip"><span class="demo-tip-icon">🎯</span>As <strong>Admin</strong>, you'll see all 13 modules plus team management, performance dashboards, and billing.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">💡</span>Hover over any label or field heading in NAMA to get a contextual tooltip explaining what it does — and a link to full documentation.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">🔄</span>This tour is <strong>resumable</strong> — dismiss anytime and restart from Help → Restart Tour.</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Query Inbox -->
+      <div class="demo-step" id="ds-1">
+        <div class="demo-screen-mock" style="background:var(--slate)">
+          <div class="demo-screen-inner">
+            <div style="display:flex;gap:6px;margin-bottom:6px;">
+              <span style="font-size:9px;background:var(--teal);color:white;padding:2px 6px;border-radius:4px;font-weight:700;">WhatsApp</span>
+              <span style="font-size:9px;background:var(--slate-2);color:var(--muted);padding:2px 6px;border-radius:4px;font-weight:700;">Email</span>
+              <span style="font-size:9px;background:var(--slate-2);color:var(--muted);padding:2px 6px;border-radius:4px;font-weight:700;">Web Form</span>
+            </div>
+            <div class="demo-mock-row wide"></div>
+            <div class="demo-mock-row medium" style="background:var(--teal-light)"></div>
+            <div class="demo-mock-row narrow"></div>
+            <div style="display:flex;justify-content:flex-end;margin-top:8px;">
+              <div style="background:var(--teal);color:white;font-size:9px;padding:4px 10px;border-radius:6px;font-weight:700;">AI Extracted ✓</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-step-title">M1 — Query Inbox</div>
+        <div class="demo-step-desc">Every message from WhatsApp, email, web forms, and social media lands here. <strong>AI instantly extracts</strong> destination, dates, pax count, and budget — no manual entry.</div>
+        <div class="demo-tips">
+          <div class="demo-tip"><span class="demo-tip-icon">⚡</span>AI sends a personalised acknowledgement within 45 seconds — your SLA clock starts the moment a query arrives.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">🎤</span>Voice notes from WhatsApp are auto-transcribed and structured. Call recordings can be uploaded for instant extraction.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">📋</span>If any required info is missing, AI raises a <strong>Request Info popup</strong> — send the follow-up internally or directly to the client via WhatsApp/email.</div>
+        </div>
+      </div>
+
+      <!-- Step 2: AI Chat -->
+      <div class="demo-step" id="ds-2">
+        <div class="demo-screen-mock" style="background:var(--slate)">
+          <div class="demo-screen-inner" style="gap:6px;">
+            <div style="background:var(--slate-2);border-radius:8px 8px 8px 2px;padding:8px 12px;font-size:11px;color:var(--muted);max-width:75%;">Show me all Bali bookings this month with margins below 20%</div>
+            <div style="background:var(--teal-light);border-radius:8px 8px 2px 8px;padding:8px 12px;font-size:11px;color:var(--teal-dark);max-width:80%;align-self:flex-end;">Found 4 bookings. Sharma family (12%), Iyer group (18%)... <strong>View all →</strong></div>
+            <div style="background:var(--slate-2);border-radius:8px 8px 8px 2px;padding:8px 12px;font-size:11px;color:var(--muted);max-width:65%;margin-top:4px;">How much did we pay Anantara last quarter?</div>
+          </div>
+        </div>
+        <div class="demo-step-title">AI Chat — Ask NAMA Anything</div>
+        <div class="demo-step-desc">Any team member can chat with NAMA in natural language to retrieve data, get insights, or take actions. No reports training needed — just ask.</div>
+        <div class="demo-tips">
+          <div class="demo-tip"><span class="demo-tip-icon">🔎</span>Ask things like: <em>"What's Priya's conversion rate this month?"</em> or <em>"Show all unpaid invoices over ₹50,000"</em> — NAMA queries the database and responds in seconds.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">📩</span>If info isn't available, a <strong>Request Info popup</strong> appears — send a request to a team member internally, or by WhatsApp/email externally.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">📊</span>Admin gets additional queries like team performance, cash flow forecasts, and AI cost summaries.</div>
+        </div>
+      </div>
+
+      <!-- Step 3: Quote + AI -->
+      <div class="demo-step" id="ds-3">
+        <div class="demo-screen-mock" style="background:var(--slate)">
+          <div class="demo-screen-inner">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;height:100%">
+              <div style="border:1.5px solid var(--slate-2);border-radius:8px;padding:8px;"><div style="font-size:9px;font-weight:700;color:var(--muted);margin-bottom:4px">BUDGET</div><div class="demo-mock-row medium" style="height:6px;margin-bottom:4px"></div><div class="demo-mock-row narrow" style="height:6px"></div></div>
+              <div style="border:2px solid var(--teal);border-radius:8px;padding:8px;background:var(--teal-light);"><div style="font-size:9px;font-weight:700;color:var(--teal);margin-bottom:4px">STANDARD ★</div><div class="demo-mock-row medium" style="height:6px;margin-bottom:4px;background:var(--teal)"></div><div class="demo-mock-row narrow" style="height:6px;background:var(--teal);opacity:.4"></div></div>
+              <div style="border:1.5px solid var(--slate-2);border-radius:8px;padding:8px;"><div style="font-size:9px;font-weight:700;color:var(--gold);margin-bottom:4px">LUXURY ✦</div><div class="demo-mock-row medium" style="height:6px;margin-bottom:4px;background:var(--gold)"></div><div class="demo-mock-row narrow" style="height:6px;background:var(--gold);opacity:.4"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-step-title">M3 — AI Quote Generator</div>
+        <div class="demo-step-desc">NAMA assembles <strong>three quote tiers simultaneously</strong> — Budget, Standard, and Luxury — from your live supplier rates. What used to take 4–6 hours takes under 2 minutes.</div>
+        <div class="demo-tips">
+          <div class="demo-tip"><span class="demo-tip-icon">💰</span>AI compares your supplier pricing against market intelligence — flags if a hotel is overpriced vs current market rates.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">📄</span>One click switches between Agent View (with net rates and markup) and Client View (branded, clean proposal with payment link).</div>
+          <div class="demo-tip"><span class="demo-tip-icon">🧾</span>AI can generate GST invoices and supplier vouchers directly from the confirmed quote — pre-filled with all relevant data.</div>
+        </div>
+      </div>
+
+      <!-- Step 4: Document Scanner -->
+      <div class="demo-step" id="ds-4">
+        <div class="demo-screen-mock" style="background:var(--slate)">
+          <div class="demo-screen-inner" style="justify-content:center;align-items:center;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:28px">📄</div>
+            <div style="font-size:11px;font-weight:700;color:var(--muted)">Scanning passport…</div>
+            <div style="width:70%;background:var(--slate-2);height:4px;border-radius:2px;overflow:hidden;"><div style="height:100%;background:var(--teal);width:75%;border-radius:2px;"></div></div>
+            <div style="font-size:10px;color:var(--teal);font-weight:600;">Name · DOB · Passport No · Expiry ✓</div>
+          </div>
+        </div>
+        <div class="demo-step-title">M4 — AI Document Scanner</div>
+        <div class="demo-step-desc">Upload passports, contracts, supplier rate sheets, or insurance documents — AI extracts all relevant data and populates the correct database fields automatically.</div>
+        <div class="demo-tips">
+          <div class="demo-tip"><span class="demo-tip-icon">🛂</span>Passports: Name, DOB, nationality, passport number, expiry date extracted in seconds. Multi-pax batch scanning supported.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">📊</span>Rate sheets: Upload a PDF or Excel — AI parses every hotel, room type, and season rate into structured line items.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">📝</span>Contracts: AI identifies key clauses, payment terms, cancellation policies, and validity dates — even if each supplier uses a different template format.</div>
+        </div>
+      </div>
+
+      <!-- Step 5: Performance Dashboard (Admin only) -->
+      <div class="demo-step" id="ds-5">
+        <div class="demo-screen-mock" style="background:var(--slate)">
+          <div class="demo-screen-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:var(--teal-light);border-radius:8px;padding:10px;"><div style="font-size:9px;font-weight:700;color:var(--teal);margin-bottom:6px">CONVERSION RATE</div><div style="font-size:20px;font-family:'DM Mono',monospace;font-weight:500;color:var(--teal)">34%</div></div>
+            <div style="background:var(--slate);border-radius:8px;padding:10px;border:1px solid var(--slate-2)"><div style="font-size:9px;font-weight:700;color:var(--muted);margin-bottom:6px">TOP AGENT</div><div style="font-size:13px;font-weight:700;color:var(--ink)">Priya M.</div></div>
+            <div style="background:var(--gold-light);border-radius:8px;padding:10px;"><div style="font-size:9px;font-weight:700;color:var(--gold);margin-bottom:6px">QUOTES TODAY</div><div style="font-size:20px;font-family:'DM Mono',monospace;font-weight:500;color:var(--gold)">12</div></div>
+            <div style="background:var(--green-light);border-radius:8px;padding:10px;"><div style="font-size:9px;font-weight:700;color:var(--green);margin-bottom:6px">REVENUE MTD</div><div style="font-size:13px;font-family:'DM Mono',monospace;font-weight:500;color:var(--green)">₹8.4L</div></div>
+          </div>
+        </div>
+        <div class="demo-step-title">Team Performance Dashboard</div>
+        <div class="demo-step-desc">As Admin, you see every team member's performance in real time — quotes generated, conversion rates, revenue, response times, and AI usage. Managers see their sub-team's data.</div>
+        <div class="demo-tips">
+          <div class="demo-tip"><span class="demo-tip-icon">📊</span>Drill down from org-level → team → individual agent. Compare this week vs last week, or this month vs same month last year.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">⚠️</span>AI flags anomalies automatically: an agent with unusually low margins, a supplier with rising rejection rates, or a lead overdue for follow-up.</div>
+          <div class="demo-tip"><span class="demo-tip-icon">🔐</span>Managers see only their team's data. Finance sees only financial KPIs. Data access is governed by the role settings you configured.</div>
+        </div>
+      </div>
+
+      <!-- Step 6: Done -->
+      <div class="demo-step" id="ds-6">
+        <div style="text-align:center;padding:20px 0;">
+          <div class="success-icon">🚀</div>
+          <div class="success-title">You're ready to go!</div>
+          <div class="success-sub">Your workspace is set up. Your team invites have been sent. NAMA is ready to work. Start by checking your Query Inbox — or let AI show you around.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;">
+            <div style="border:1.5px solid var(--slate-2);border-radius:12px;padding:16px;text-align:left;cursor:pointer;" onclick="closeDemoAndLaunch()">
+              <div style="font-size:18px;margin-bottom:6px">📥</div>
+              <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px">Open Query Inbox</div>
+              <div style="font-size:11px;color:var(--muted)">See your incoming leads</div>
+            </div>
+            <div style="border:1.5px solid var(--slate-2);border-radius:12px;padding:16px;text-align:left;cursor:pointer;" onclick="closeDemoAndLaunch()">
+              <div style="font-size:18px;margin-bottom:6px">🤖</div>
+              <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px">Chat with AI</div>
+              <div style="font-size:11px;color:var(--muted)">Ask NAMA anything</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="demo-nav">
+      <div class="demo-step-counter" id="demo-counter">Step 1 of 7</div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn-secondary" style="width:auto;padding:9px 18px;font-size:13px" onclick="skipDemo()">Skip tour</button>
+        <button class="btn-primary" style="width:auto;padding:9px 24px;font-size:13px" id="demo-next-btn" onclick="demoContinue()">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STEP NAVIGATION ──────────────────────────────────────────────────────────
+let currentStep = 1;
+
+function goStep(n) {
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  
+  // Update stepper
+  for (let i = 1; i <= 6; i++) {
+    const circle = document.getElementById('sc-' + i);
+    const label = document.getElementById('sl-' + i);
+    const line = document.getElementById('sline-' + i);
+    if (i < n) {
+      circle.className = 'step-circle done';
+      circle.textContent = '✓';
+      label.className = 'step-label';
+      if (line) line.className = 'step-line done';
+    } else if (i === n) {
+      circle.className = 'step-circle active';
+      circle.textContent = i;
+      label.className = 'step-label active-label';
+    } else {
+      circle.className = 'step-circle pending';
+      circle.textContent = i;
+      label.className = 'step-label';
+      if (line && i > 1) document.getElementById('sline-' + (i-1)).className = i <= n ? 'step-line done' : 'step-line';
+    }
+  }
+  
+  currentStep = n;
+  const card = document.getElementById('step-' + n);
+  if (card) {
+    card.style.display = 'block';
+    setTimeout(() => card.classList.add('active'), 10);
+  }
+  
+  // Update trial dots
+  for (let d = 0; d < 7; d++) {
+    const dot = document.getElementById('tdot-' + d);
+    if (dot) dot.className = 'trial-dot' + (d < n ? ' active' : '');
+  }
+}
+
+function showLogin() {
+  document.getElementById('step-2').style.display = 'none';
+  const login = document.getElementById('step-login');
+  login.style.display = 'block';
+  login.classList.add('active');
+}
+function hideLogin() {
+  document.getElementById('step-login').style.display = 'none';
+  document.getElementById('step-2').style.display = 'block';
+}
+
+function selectPlan(el, plan) {
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── PASSWORD ─────────────────────────────────────────────────────────────────
+function checkStrength(v) {
+  const segs = [document.getElementById('ps1'), document.getElementById('ps2'), document.getElementById('ps3'), document.getElementById('ps4')];
+  const lbl = document.getElementById('slabel');
+  segs.forEach(s => s.className = 'strength-seg');
+  if (!v) { lbl.textContent = 'Enter a password'; return; }
+  let score = 0;
+  if (v.length >= 8) score++;
+  if (/[A-Z]/.test(v)) score++;
+  if (/[0-9]/.test(v)) score++;
+  if (/[^A-Za-z0-9]/.test(v)) score++;
+  const cls = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
+  const labels = ['', 'Weak', 'Weak', 'Good', 'Strong'];
+  for (let i = 0; i < score; i++) segs[i].classList.add(cls);
+  lbl.textContent = labels[score] || '';
+  lbl.style.color = cls === 'weak' ? 'var(--rose)' : cls === 'medium' ? 'var(--gold)' : 'var(--green)';
+}
+
+function togglePass(id) {
+  const el = document.getElementById(id);
+  el.type = el.type === 'password' ? 'text' : 'password';
+}
+
+// ── OTP ──────────────────────────────────────────────────────────────────────
+function otpMove(el, nextId) {
+  if (el.value.length === 1) {
+    const next = document.getElementById(nextId);
+    if (next) next.focus();
+  }
+}
+function otpComplete() {
+  setTimeout(() => goStep(4), 300);
+}
+
+let otpSec = 45;
+setInterval(() => {
+  const el = document.getElementById('otp-timer');
+  if (el && otpSec > 0) { otpSec--; el.textContent = '0:' + String(otpSec).padStart(2,'0'); }
+  if (otpSec === 0) otpSec = 45;
+}, 1000);
+
+// ── AVATAR ───────────────────────────────────────────────────────────────────
+function triggerAvatarUpload() {
+  document.getElementById('avatar-file').click();
+}
+function previewAvatar(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const circle = document.getElementById('av-circle');
+    circle.style.backgroundImage = 'url(' + e.target.result + ')';
+    circle.style.backgroundSize = 'cover';
+    circle.textContent = '';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── INVITE TABLE ─────────────────────────────────────────────────────────────
+function addInviteRow() {
+  const tbody = document.getElementById('invite-body');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Full name"></td>
+    <td><input type="email" placeholder="email@company.com"></td>
+    <td><input type="text" placeholder="Designation"></td>
+    <td><select><option>Sales Agent</option><option>Manager</option><option>Ops Executive</option><option>Finance</option><option>Sub-Agent</option></select></td>
+    <td><button class="remove-btn" onclick="removeRow(this)">✕</button></td>`;
+  tbody.appendChild(tr);
+  tr.querySelector('input').focus();
+}
+function removeRow(btn) {
+  btn.closest('tr').remove();
+}
+
+function sendInvitesAndContinue() {
+  const rows = document.querySelectorAll('#invite-body tr');
+  const names = [];
+  rows.forEach(r => {
+    const name = r.querySelector('input').value;
+    if (name) names.push(name);
+  });
+  if (names.length === 0) { goStep(6); return; }
+  
+  // Show sent confirmation briefly
+  const btn = document.querySelector('#step-5 .btn-primary');
+  btn.textContent = '✓ Invites sent to ' + names.length + ' member' + (names.length > 1 ? 's' : '') + '!';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => goStep(6), 1200);
+}
+
+// ── PERMISSIONS TOGGLE ───────────────────────────────────────────────────────
+function togglePerm(el) {
+  el.classList.toggle('on');
+}
+
+// ── CHECKLIST ───────────────────────────────────────────────────────────────
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  const box = el.querySelector('.check-box');
+  box.textContent = el.classList.contains('checked') ? '✓' : '';
+}
+
+// ── SETTINGS NAV ─────────────────────────────────────────────────────────────
+function switchSettings(id) {
+  document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  const section = document.getElementById('ss-' + id);
+  if (section) section.classList.add('active');
+}
+
+// ── DEMO ─────────────────────────────────────────────────────────────────────
+let demoStep = 0;
+const demoTotalSteps = 7;
+let demoRole = 'admin';
+
+function launchDemo() {
+  document.getElementById('demo-overlay').classList.add('active');
+  updateDemoProgress();
+}
+
+function setDemoRole(role) {
+  demoRole = role;
+  document.querySelectorAll('.demo-role-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('dtab-' + role).classList.add('active');
+  
+  // Adjust step 5 title based on role
+  const step5title = {
+    admin: 'Team Performance Dashboard',
+    sales: 'Your Personal Dashboard',
+    ops: 'Booking Operations View',
+    finance: 'Finance Dashboard'
+  };
+  const step5desc = {
+    admin: 'As Admin, you see every team member\'s performance in real time — quotes generated, conversion rates, revenue, response times, and AI usage.',
+    sales: 'Your personal dashboard shows your leads, quotes sent, conversion rate, and earnings. Only your own data — private to you.',
+    ops: 'See all confirmed bookings, pending supplier confirmations, document collection status, and upcoming departures.',
+    finance: 'Full financial dashboard — receivables, payables, cash flow forecast, remittance queue, and FX positions.'
+  };
+  const t = document.querySelector('#ds-5 .demo-step-title');
+  const d = document.querySelector('#ds-5 .demo-step-desc');
+  if (t) t.textContent = step5title[role] || step5title.admin;
+  if (d) d.textContent = step5desc[role] || step5desc.admin;
+}
+
+function demoContinue() {
+  const btn = document.getElementById('demo-next-btn');
+  if (demoStep < demoTotalSteps - 1) {
+    document.getElementById('ds-' + demoStep).classList.remove('active');
+    demoStep++;
+    document.getElementById('ds-' + demoStep).classList.add('active');
+    
+    // Hide role tabs after step 0
+    document.getElementById('role-tabs-wrap').style.display = demoStep === 0 ? 'block' : 'none';
+    
+    // Last step
+    if (demoStep === demoTotalSteps - 1) {
+      btn.textContent = 'Launch NAMA 🚀';
+      btn.onclick = closeDemoAndLaunch;
+    }
+    
+    updateDemoProgress();
+  } else {
+    closeDemoAndLaunch();
+  }
+}
+
+function updateDemoProgress() {
+  for (let i = 0; i < demoTotalSteps; i++) {
+    const seg = document.getElementById('dp-' + i);
+    if (seg) {
+      seg.className = 'demo-progress-seg' + (i < demoStep ? ' done' : i === demoStep ? ' active' : '');
+    }
+  }
+  const counter = document.getElementById('demo-counter');
+  if (counter) counter.textContent = 'Step ' + (demoStep + 1) + ' of ' + demoTotalSteps;
+}
+
+function skipDemo() {
+  if (confirm('Skip the tour? You can restart it anytime from Help → Restart Tour.')) {
+    closeDemoAndLaunch();
+  }
+}
+
+function closeDemoAndLaunch() {
+  document.getElementById('demo-overlay').classList.remove('active');
+  // In production: redirect to /app/inbox
+  showLaunchToast();
+}
+
+function showLaunchToast() {
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;z-index:2000;box-shadow:0 8px 32px rgba(0,0,0,0.3);display:flex;align-items:center;gap:10px;animation:fadeUp 0.4s ease;';
+  toast.innerHTML = '<span>🚀</span> Launching your NAMA workspace…';
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0'; toast.style.transition = 'opacity 0.4s';
+    setTimeout(() => toast.remove(), 400);
+  }, 2500);
+}
+
+// ── MISC ─────────────────────────────────────────────────────────────────────
+// Simulate trial day countdown
+setInterval(() => {
+  const dots = document.querySelectorAll('.trial-dot');
+  // just animate the last active dot
+}, 86400000);
+</script>
+</body>
+</html>
