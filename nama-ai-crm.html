@@ -30,8 +30,50 @@ body{font-family:'DM Sans',sans-serif;background:#06090F;color:#E2E8F0;-webkit-f
 /* ── LEFT PANEL (chat) ── */
 .chat-panel{width:480px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--border);background:var(--bg);}
 
-/* ── RIGHT PANEL (results) ── */
-.result-panel{flex:1;display:flex;flex-direction:column;background:var(--bg2);overflow:hidden;}
+/* ── TABS ── */
+.panel-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
+.ptab{flex:1;padding:10px 0;text-align:center;font-size:12px;font-weight:600;color:var(--text-d);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;}
+.ptab:hover{color:var(--text-m);}
+.ptab.active{color:var(--teal-l);border-bottom-color:var(--teal);}
+.ptab-badge{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:100px;background:var(--red);color:white;margin-left:4px;vertical-align:middle;}
+
+/* ── PANEL VIEWS ── */
+.panel-view{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.panel-view.active{display:flex;}
+
+/* ── TEAM CHAT ── */
+.team-header{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.team-channel{font-size:12px;font-weight:600;color:var(--text-m);padding:4px 10px;border-radius:100px;cursor:pointer;transition:all 0.15s;}
+.team-channel:hover{background:rgba(255,255,255,0.06);color:var(--text);}
+.team-channel.active{background:var(--teal-dim);color:var(--teal-l);border:1px solid rgba(13,148,136,0.3);}
+.team-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.team-msgs::-webkit-scrollbar{width:3px;}
+.team-msgs::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px;}
+.tm-msg{display:flex;gap:8px;align-items:flex-start;}
+.tm-msg.me{flex-direction:row-reverse;}
+.tm-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;margin-top:2px;}
+.tm-body{max-width:78%;}
+.tm-name-time{font-size:10px;color:var(--text-d);margin-bottom:3px;}
+.tm-msg.me .tm-name-time{text-align:right;}
+.tm-bubble{padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.55;word-break:break-word;}
+.tm-bubble.other{background:var(--bg3);color:var(--text);border-radius:12px 12px 12px 4px;}
+.tm-bubble.me{background:var(--teal);color:#0D1117;border-radius:12px 12px 4px 12px;font-weight:500;}
+.tm-bubble.system{background:transparent;color:var(--text-d);font-size:11px;font-style:italic;padding:4px 0;}
+.team-input-area{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0;}
+.team-input-wrap{display:flex;align-items:flex-end;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:6px 6px 6px 12px;transition:border-color 0.15s;}
+.team-input-wrap:focus-within{border-color:rgba(13,148,136,0.4);}
+#team-input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;resize:none;max-height:100px;line-height:1.5;padding:4px 0;}
+#team-input::placeholder{color:var(--text-d);}
+.tm-send-btn{width:30px;height:30px;border-radius:8px;background:var(--teal);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;}
+.tm-send-btn:hover{background:#0F766E;}
+.tm-send-btn svg{width:12px;height:12px;fill:#0D1117;}
+.team-typing{font-size:11px;color:var(--text-d);padding:4px 16px;min-height:20px;}
+
+/* ── MIC BUTTON ── */
+.mic-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border2);background:rgba(255,255,255,0.04);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all 0.2s;}
+.mic-btn:hover{background:var(--teal-dim);border-color:rgba(13,148,136,0.4);}
+.mic-btn.recording{background:rgba(220,38,38,0.2);border-color:#DC2626;animation:mic-pulse 1s ease-in-out infinite;}
+@keyframes mic-pulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.3);}50%{box-shadow:0 0 0 6px rgba(220,38,38,0);}}
 
 /* ── TOPBAR ── */
 .topbar{height:52px;display:flex;align-items:center;padding:0 20px;border-bottom:1px solid var(--border);gap:12px;flex-shrink:0;background:var(--bg);}
@@ -212,52 +254,88 @@ body{font-family:'DM Sans',sans-serif;background:#06090F;color:#E2E8F0;-webkit-f
     <div class="tb-logo">
       <div class="tb-icon">N</div>
       <span class="tb-name">NAMA AI</span>
-      <span class="tb-badge">CRM Intelligence</span>
+      <span class="tb-badge">Intelligence</span>
     </div>
     <div class="tb-sep"></div>
     <span style="font-size:11px;color:var(--text-d);">Rajan Travel Co.</span>
     <div class="tb-right">
-      <a href="nama-app.html" class="tb-link">⚙ Settings</a>
+      <a href="nama-app.html" class="tb-link">⚙</a>
       <a href="nama-os.html" class="tb-link accent">✦ OS</a>
     </div>
   </div>
 
-  <!-- Messages -->
-  <div class="chat-msgs" id="chat-msgs">
+  <!-- TABS -->
+  <div class="panel-tabs">
+    <div class="ptab active" id="tab-ai" onclick="switchTab('ai')">✦ NAMA AI</div>
+    <div class="ptab" id="tab-team" onclick="switchTab('team')">💬 Team Chat <span class="ptab-badge" id="team-badge" style="display:none">3</span></div>
+  </div>
 
-    <!-- Welcome message -->
-    <div class="msg" id="welcome-msg">
-      <div class="msg-avatar ai">N</div>
-      <div class="msg-body">
-        <div class="bubble ai">
-          Hi Rajan 👋 I'm your NAMA AI. Ask me anything about your leads, bookings, quotes, agents, or finances. I'll show you the data — not just describe it.
+  <!-- ── AI CHAT VIEW ── -->
+  <div class="panel-view active" id="view-ai">
+    <div class="chat-msgs" id="chat-msgs">
+      <div class="msg">
+        <div class="msg-avatar ai">N</div>
+        <div class="msg-body">
+          <div class="bubble ai">Hi Rajan 👋 Ask me anything about your leads, bookings, quotes, or finances. You can also <strong>speak</strong> using the mic button.</div>
+          <div class="msg-time">Now</div>
         </div>
-        <div class="msg-time">Now</div>
       </div>
     </div>
-
+    <div class="quick-prompts" id="quick-prompts">
+      <div class="qp" onclick="sendQuick(this)">Hot leads this week</div>
+      <div class="qp" onclick="sendQuick(this)">Quotes expiring today</div>
+      <div class="qp" onclick="sendQuick(this)">Bali leads over ₹3L</div>
+      <div class="qp" onclick="sendQuick(this)">Show pipeline</div>
+      <div class="qp" onclick="sendQuick(this)">Top agent this month</div>
+      <div class="qp" onclick="sendQuick(this)">Pending payments</div>
+      <div class="qp" onclick="sendQuick(this)">Generate Bali quote</div>
+      <div class="qp" onclick="sendQuick(this)">Monthly revenue</div>
+    </div>
+    <div class="input-area">
+      <div class="input-wrap">
+        <textarea id="chat-input" placeholder="Ask anything, or click 🎤 to speak…" rows="1"
+          onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <button class="mic-btn" id="ai-mic-btn" onclick="aiMicToggle()" title="Speak your question">🎤</button>
+        <button class="send-btn" id="send-btn" onclick="sendMessage()">
+          <svg viewBox="0 0 20 20"><path d="M2 10l16-8-6 16-3-5-7-3z"/></svg>
+        </button>
+      </div>
+      <div id="ai-mic-status" style="display:none;font-size:11px;color:var(--teal-l);padding:5px 4px 0;display:flex;align-items:center;gap:5px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--teal-l);display:inline-block;animation:blink 1s infinite;"></span>
+        <span id="ai-mic-text">Listening…</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Quick prompts -->
-  <div class="quick-prompts" id="quick-prompts">
-    <div class="qp" onclick="sendQuick(this)">Hot leads this week</div>
-    <div class="qp" onclick="sendQuick(this)">Quotes expiring today</div>
-    <div class="qp" onclick="sendQuick(this)">Bali leads over ₹3L</div>
-    <div class="qp" onclick="sendQuick(this)">Show pipeline</div>
-    <div class="qp" onclick="sendQuick(this)">Top agent this month</div>
-    <div class="qp" onclick="sendQuick(this)">Pending payments</div>
-    <div class="qp" onclick="sendQuick(this)">Generate Bali quote</div>
-    <div class="qp" onclick="sendQuick(this)">Monthly revenue</div>
-  </div>
-
-  <!-- Input -->
-  <div class="input-area">
-    <div class="input-wrap">
-      <textarea id="chat-input" placeholder="Ask anything about your CRM data…" rows="1"
-        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-      <button class="send-btn" id="send-btn" onclick="sendMessage()">
-        <svg viewBox="0 0 20 20"><path d="M2 10l16-8-6 16-3-5-7-3z"/></svg>
-      </button>
+  <!-- ── TEAM CHAT VIEW ── -->
+  <div class="panel-view" id="view-team">
+    <div class="team-header">
+      <div class="team-channel active" id="ch-general" onclick="switchChannel('general',this)"># general</div>
+      <div class="team-channel" id="ch-leads" onclick="switchChannel('leads',this)"># leads</div>
+      <div class="team-channel" id="ch-ops" onclick="switchChannel('ops',this)"># ops</div>
+    </div>
+    <div class="team-msgs" id="team-msgs"></div>
+    <div class="team-typing" id="team-typing"></div>
+    <div class="team-input-area">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <select id="team-sender" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:5px 10px;color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;outline:none;">
+          <option value="Rajan">Rajan Mehta (You)</option>
+          <option value="Priya">Priya Sharma</option>
+          <option value="Rohan">Rohan Kumar</option>
+        </select>
+        <button class="mic-btn" id="team-mic-btn" onclick="teamMicToggle()" title="Speak your message">🎤</button>
+      </div>
+      <div class="team-input-wrap">
+        <textarea id="team-input" placeholder="Message the team…" rows="1"
+          onkeydown="teamHandleKey(event)" oninput="autoResizeEl(this)"></textarea>
+        <button class="tm-send-btn" onclick="teamSend()">
+          <svg viewBox="0 0 20 20"><path d="M2 10l16-8-6 16-3-5-7-3z"/></svg>
+        </button>
+      </div>
+      <div id="team-mic-status" style="display:none;font-size:11px;color:var(--teal-l);padding:5px 4px 0;display:flex;align-items:center;gap:5px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--teal-l);display:inline-block;animation:blink 1s infinite;"></span>
+        <span id="team-mic-text">Listening…</span>
+      </div>
     </div>
   </div>
 
@@ -673,6 +751,287 @@ function handleKey(e) {
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function autoResizeEl(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+// ══════════════════════════════════════
+// TAB SWITCHING
+// ══════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel-view').forEach(v => v.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('view-' + tab).classList.add('active');
+  if (tab === 'team') {
+    document.getElementById('team-badge').style.display = 'none';
+    teamRender();
+    setTimeout(() => {
+      const msgs = document.getElementById('team-msgs');
+      if (msgs) msgs.scrollTop = msgs.scrollHeight;
+    }, 50);
+  }
+}
+
+// ══════════════════════════════════════
+// VOICE INPUT — AI CHAT
+// ══════════════════════════════════════
+let aiMicRecog = null, aiMicActive = false;
+
+function aiMicToggle() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Speech recognition requires Chrome or Edge.'); return;
+  }
+  if (aiMicActive) { aiMicRecog && aiMicRecog.stop(); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  aiMicRecog = new SR();
+  aiMicRecog.continuous = false;
+  aiMicRecog.interimResults = true;
+  aiMicRecog.lang = 'en-IN';
+  aiMicActive = true;
+  const btn = document.getElementById('ai-mic-btn');
+  btn.classList.add('recording');
+  btn.textContent = '⏹';
+  const statusEl = document.getElementById('ai-mic-status');
+  statusEl.style.display = 'flex';
+  document.getElementById('ai-mic-text').textContent = 'Listening…';
+
+  aiMicRecog.onresult = e => {
+    let interim = '', final = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    const inp = document.getElementById('chat-input');
+    if (interim) { document.getElementById('ai-mic-text').textContent = '"' + interim + '"'; }
+    if (final) {
+      inp.value = final;
+      autoResize(inp);
+      document.getElementById('ai-mic-text').textContent = '"' + final + '"';
+      aiMicStop();
+      setTimeout(() => sendMessage(), 400);
+    }
+  };
+  aiMicRecog.onerror = () => aiMicStop();
+  aiMicRecog.onend = () => aiMicStop();
+  aiMicRecog.start();
+}
+
+function aiMicStop() {
+  aiMicActive = false;
+  const btn = document.getElementById('ai-mic-btn');
+  if (btn) { btn.classList.remove('recording'); btn.textContent = '🎤'; }
+  const st = document.getElementById('ai-mic-status');
+  if (st) st.style.display = 'none';
+}
+
+// ══════════════════════════════════════
+// TEAM CHAT
+// ══════════════════════════════════════
+const TEAM_KEY = 'nama_team_chat_v1';
+let currentChannel = 'general';
+
+const TEAM_MEMBERS = {
+  Rajan:  { color: '#2563EB', initial: 'R' },
+  Priya:  { color: '#0D9488', initial: 'P' },
+  Rohan:  { color: '#7C3AED', initial: 'Ro' },
+  NAMA_AI:{ color: '#D97706', initial: '✦' },
+};
+
+const SEED_MESSAGES = {
+  general: [
+    { sender:'Priya',   text:'Good morning team! 3 new leads overnight from WhatsApp 🎯', time: hm(-55) },
+    { sender:'Rohan',   text:'On it — Sharma Family looks hot, score 87. Generating quote now.', time: hm(-48) },
+    { sender:'NAMA_AI', text:'Heads up: Mehta Anniversary quote expires tonight at 6pm. They opened the PDF twice yesterday — high intent signal.', time: hm(-40) },
+    { sender:'Rajan',   text:'Priya please follow up on Mehta before 4pm. Rohan get the Sharma quote done by noon.', time: hm(-32) },
+    { sender:'Priya',   text:'On it! Will call them now.', time: hm(-28) },
+  ],
+  leads: [
+    { sender:'Rohan',   text:'Patel & Co corporate — 22 pax Coorg, budget ₹8.5L. PO number confirmed. Moving to Qualified.', time: hm(-90) },
+    { sender:'Priya',   text:'Iyer Group 12 pax Rajasthan — client wants itinerary by tomorrow. Can someone help?', time: hm(-60) },
+    { sender:'Rajan',   text:'I\'ll handle Iyer. Priya focus on Sharma Family — that\'s your lead.', time: hm(-52) },
+    { sender:'NAMA_AI', text:'Iyer Group briefing ready: 12 pax, 8N, ₹5.2L budget, prefer 5★, vegetarian meals, no adventure activities. Rajasthan circuit suggested: Jaipur → Jodhpur → Udaipur.', time: hm(-44) },
+    { sender:'Priya',   text:'Sharma Family confirmed — they want the Standard tier! Sending deposit link now 🎉', time: hm(-15) },
+  ],
+  ops: [
+    { sender:'Rohan',   text:'Anantara Seminyak voucher for Sharma booking — can someone approve the remittance? $3,200 due.', time: hm(-120) },
+    { sender:'Rajan',   text:'Approved. FX locked at 83.30. Processing via Wise.', time: hm(-110) },
+    { sender:'NAMA_AI', text:'Remittance queued: Anantara Seminyak $3,200 → ₹2,66,560 via Wise Business. ETA 2 business days. Ref: WS-2026-4421.', time: hm(-105) },
+    { sender:'Priya',   text:'Gupta Wedding group 45 pax Thailand — all vouchers sent to hotel ✅', time: hm(-30) },
+  ],
+};
+
+function hm(minutesAgo) {
+  const d = new Date(Date.now() + minutesAgo * 60000);
+  return d.getHours() + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+
+function teamLoad() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(TEAM_KEY) || '{}');
+    // Merge seed with stored (seed first, then stored additions)
+    const result = {};
+    ['general','leads','ops'].forEach(ch => {
+      result[ch] = [...(SEED_MESSAGES[ch] || []), ...(stored[ch] || [])];
+    });
+    return result;
+  } catch(e) {
+    return SEED_MESSAGES;
+  }
+}
+
+function teamSaveNew(channel, msg) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(TEAM_KEY) || '{}');
+    if (!stored[channel]) stored[channel] = [];
+    stored[channel].push(msg);
+    localStorage.setItem(TEAM_KEY, JSON.stringify(stored));
+  } catch(e) {}
+}
+
+function teamRender() {
+  const msgs = document.getElementById('team-msgs');
+  if (!msgs) return;
+  const allMsgs = teamLoad();
+  const channelMsgs = allMsgs[currentChannel] || [];
+  msgs.innerHTML = '';
+
+  // Date divider
+  const div = document.createElement('div');
+  div.innerHTML = `<div style="text-align:center;font-size:10px;color:var(--text-d);padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:8px;">Today · ${new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}</div>`;
+  msgs.appendChild(div);
+
+  channelMsgs.forEach(m => {
+    const isMe = m.sender === 'Rajan';
+    const isAI = m.sender === 'NAMA_AI';
+    const member = TEAM_MEMBERS[m.sender] || { color:'#6B7280', initial: m.sender[0] };
+    const el = document.createElement('div');
+    el.className = 'tm-msg' + (isMe ? ' me' : '');
+
+    if (isAI) {
+      el.innerHTML = `
+        <div class="tm-avatar" style="background:${member.color};font-size:12px;">${member.initial}</div>
+        <div class="tm-body">
+          <div class="tm-name-time"><strong style="color:${member.color}">NAMA AI</strong> · ${m.time}</div>
+          <div class="tm-bubble other" style="background:rgba(217,119,6,0.12);border:1px solid rgba(217,119,6,0.25);color:rgba(255,255,255,0.85);">${m.text}</div>
+        </div>`;
+    } else {
+      el.innerHTML = `
+        ${!isMe ? `<div class="tm-avatar" style="background:${member.color}">${member.initial}</div>` : ''}
+        <div class="tm-body">
+          <div class="tm-name-time">${!isMe ? `<strong style="color:${member.color}">${m.sender}</strong> · ` : ''}${m.time}</div>
+          <div class="tm-bubble ${isMe ? 'me' : 'other'}">${m.text}</div>
+        </div>
+        ${isMe ? `<div class="tm-avatar" style="background:${member.color}">${member.initial}</div>` : ''}`;
+    }
+    msgs.appendChild(el);
+  });
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function teamSend() {
+  const inp = document.getElementById('team-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  const sender = document.getElementById('team-sender').value;
+  const now = new Date();
+  const time = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+  const msg = { sender, text, time };
+  teamSaveNew(currentChannel, msg);
+  inp.value = '';
+  autoResizeEl(inp);
+  teamRender();
+
+  // NAMA AI auto-reply for certain keywords
+  const lower = text.toLowerCase();
+  if (lower.includes('who') || lower.includes('leads') || lower.includes('quote') || lower.includes('score') || lower.includes('follow') || lower.includes('payment') || lower.includes('?')) {
+    setTimeout(() => {
+      const replies = [
+        lower.includes('lead') ? 'Currently 47 active leads. 3 hot leads need follow-up today — Sharma Family, Kapoor Family, and Mehta Anniversary. Sharma Family is highest priority at score 87.' : null,
+        lower.includes('quote') ? 'Mehta Anniversary quote expires at 6pm today — ₹4.1L. Priya opened the PDF twice. Recommend a WhatsApp nudge now.' : null,
+        lower.includes('payment') ? '2 supplier payments pending: Anantara Seminyak $3,200 (overdue 3 days) and Bali DMC IDR 8.2M. Approve remittance?' : null,
+        lower.includes('follow') ? 'I\'ll draft follow-up messages for all 3 expiring quotes. Send via WhatsApp?' : null,
+        'On it! I\'ve noted this in the lead activity log.',
+      ].filter(Boolean);
+      const reply = replies[0] || replies[Math.floor(Math.random() * replies.length)];
+      const aiMsg = { sender:'NAMA_AI', text: reply, time: new Date().getHours()+':'+String(new Date().getMinutes()).padStart(2,'0') };
+      teamSaveNew(currentChannel, aiMsg);
+      teamRender();
+      // Show badge if not on team tab
+      if (document.getElementById('tab-team') && !document.getElementById('tab-team').classList.contains('active')) {
+        const badge = document.getElementById('team-badge');
+        badge.style.display = 'inline-block';
+      }
+    }, 1200 + Math.random() * 800);
+  }
+}
+
+function teamHandleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); teamSend(); }
+}
+
+function switchChannel(ch, el) {
+  currentChannel = ch;
+  document.querySelectorAll('.team-channel').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  teamRender();
+}
+
+// ══════════════════════════════════════
+// VOICE INPUT — TEAM CHAT
+// ══════════════════════════════════════
+let teamMicRecog = null, teamMicActive = false;
+
+function teamMicToggle() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Speech recognition requires Chrome or Edge.'); return;
+  }
+  if (teamMicActive) { teamMicRecog && teamMicRecog.stop(); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  teamMicRecog = new SR();
+  teamMicRecog.continuous = false;
+  teamMicRecog.interimResults = true;
+  teamMicRecog.lang = 'en-IN';
+  teamMicActive = true;
+  const btn = document.getElementById('team-mic-btn');
+  btn.classList.add('recording');
+  btn.textContent = '⏹';
+  const statusEl = document.getElementById('team-mic-status');
+  statusEl.style.display = 'flex';
+  document.getElementById('team-mic-text').textContent = 'Listening…';
+
+  teamMicRecog.onresult = e => {
+    let interim = '', final = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    const inp = document.getElementById('team-input');
+    if (interim) {
+      inp.value = interim;
+      autoResizeEl(inp);
+      document.getElementById('team-mic-text').textContent = '"' + interim + '"';
+    }
+    if (final) {
+      inp.value = final;
+      autoResizeEl(inp);
+      teamMicStop();
+    }
+  };
+  teamMicRecog.onerror = () => teamMicStop();
+  teamMicRecog.onend = () => teamMicStop();
+  teamMicRecog.start();
+}
+
+function teamMicStop() {
+  teamMicActive = false;
+  const btn = document.getElementById('team-mic-btn');
+  if (btn) { btn.classList.remove('recording'); btn.textContent = '🎤'; }
+  const st = document.getElementById('team-mic-status');
+  if (st) st.style.display = 'none';
 }
 </script>
 </body>
