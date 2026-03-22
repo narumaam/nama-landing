@@ -269,6 +269,8 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
 
 @media(max-width:860px){ .app-sidebar{ display:none; } }
 </style>
+<!-- REDIRECT: nama-app.html now goes straight to the CRM dashboard -->
+<script>window.location.replace('nama-os.html');</script>
 </head>
 <body>
 
@@ -339,7 +341,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
   <!-- MAIN -->
   <div class="app-main">
     <div class="app-topbar">
-      <div class="topbar-left"><h2 id="sec-title">My Profile</h2><p id="sec-sub">Rajan Travel Co. · Professional · <span style="color:var(--teal);">Demo Mode</span></p></div>
+      <div class="topbar-left"><h2 id="sec-title">Settings</h2><p id="sec-sub">Rajan Travel Co. · Professional · <span style="color:var(--teal);">Demo Mode</span></p></div>
       <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="openDemo()">🎬 Tour</button><button class="btn btn-primary btn-sm">+ New Quote</button></div>
     </div>
     <div class="app-content">
@@ -428,9 +430,9 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
             <table class="data-table">
               <thead><tr><th>Team Member</th><th>Role</th><th>Queries</th><th>Quotes</th><th>Bookings</th><th>Revenue</th><th>Conversion</th><th>AI Score</th><th>Status</th></tr></thead>
               <tbody>
-                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--teal);">P</div><div><div style="font-weight:600;">Priya Sharma</div><div style="font-size:11px;color:var(--slate-400);">priya@rajantravel.com</div></div></div></td><td><span class="badge badge-azure">Sales Agent</span></td><td>94</td><td>38</td><td>12</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹11.2L</td><td><div style="font-weight:700;color:var(--emerald);">32%</div><div class="mini-bar"><div class="mini-bar-fill" style="width:64%;"></div></div></td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">88</div></td><td><span class="badge badge-emerald">Active</span></td></tr>
-                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--violet);">A</div><div><div style="font-weight:600;">Arjun Nair</div><div style="font-size:11px;color:var(--slate-400);">arjun@rajantravel.com</div></div></div></td><td><span class="badge badge-amber">Ops Exec</span></td><td>—</td><td>—</td><td>18</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹9.4L GMV</td><td style="color:var(--slate-300);">N/A</td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">92</div></td><td><span class="badge badge-emerald">Active</span></td></tr>
-                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--emerald);">N</div><div><div style="font-weight:600;">Neha Kapoor</div><div style="font-size:11px;color:var(--slate-400);">neha@rajantravel.com</div></div></div></td><td><span class="badge badge-emerald">Finance</span></td><td>—</td><td>—</td><td>—</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹28L processed</td><td style="color:var(--slate-300);">N/A</td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">95</div></td><td><span class="badge badge-amber">Invite Sent</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--teal);">P</div><div><div style="font-weight:600;">Priya Sharma</div><div style="font-size:11px;color:var(--slate-400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="39494b504058794b585358574d4b584f5c55175a5654">[email&#160;protected]</a></div></div></div></td><td><span class="badge badge-azure">Sales Agent</span></td><td>94</td><td>38</td><td>12</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹11.2L</td><td><div style="font-weight:700;color:var(--emerald);">32%</div><div class="mini-bar"><div class="mini-bar-fill" style="width:64%;"></div></div></td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">88</div></td><td><span class="badge badge-emerald">Active</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--violet);">A</div><div><div style="font-weight:600;">Arjun Nair</div><div style="font-size:11px;color:var(--slate-400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3b2a1b9a6bd93a1b2b9b2bda7a1b2a5b6bffdb0bcbe">[email&#160;protected]</a></div></div></div></td><td><span class="badge badge-amber">Ops Exec</span></td><td>—</td><td>—</td><td>18</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹9.4L GMV</td><td style="color:var(--slate-300);">N/A</td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">92</div></td><td><span class="badge badge-emerald">Active</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:9px;"><div class="agent-dot" style="background:var(--emerald);">N</div><div><div style="font-weight:600;">Neha Kapoor</div><div style="font-size:11px;color:var(--slate-400);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5a343f323b1a283b303b342e283b2c3f3674393537">[email&#160;protected]</a></div></div></div></td><td><span class="badge badge-emerald">Finance</span></td><td>—</td><td>—</td><td>—</td><td style="font-family:'JetBrains Mono',monospace;font-weight:600;">₹28L processed</td><td style="color:var(--slate-300);">N/A</td><td><div style="font-family:'JetBrains Mono',monospace;color:var(--teal);font-weight:700;">95</div></td><td><span class="badge badge-amber">Invite Sent</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -614,7 +616,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--slate-50); c
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── SETTINGS SECTIONS ──
 function showSec(id) {
   document.querySelectorAll('.settings-sec').forEach(s => s.classList.remove('active'));
@@ -704,18 +706,4 @@ function sendAI() {
   let reply = 'Searching your workspace… ';
   if (kw.includes('lead')) reply += '47 active leads this month across all stages.';
   else if (kw.includes('quote')) reply += '91 quotes sent this month with 31% conversion rate.';
-  else if (kw.includes('booking')) reply += '3 confirmed bookings this month totalling ₹28L GMV.';
-  else reply += 'Try asking about leads, quotes, bookings, suppliers, or payments.';
-  setTimeout(() => addMsg('bot', reply), 700);
-}
-function addMsg(type, html) {
-  const msgs = document.getElementById('ai-msgs');
-  const div = document.createElement('div');
-  div.className = 'msg ' + type;
-  div.innerHTML = `<div class="bubble">${html}</div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-</script>
-</body>
-</html>
+  else if (kw.includes('booking')) reply += '3 confirmed book
